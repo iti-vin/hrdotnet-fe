@@ -1,50 +1,26 @@
 import { create } from "zustand";
 import data from "@shared/services/offset.json";
-type OffsetItem = {
-  id: number;
-  code: string;
-  name: string;
-  companyId: number;
-  branchId: number;
-  departmentId: number;
-  filing: {
-    id: number;
-    guid: string;
-    dateFiled: string;
-    documentNo: string;
-    actual: {
-      dateFrom: string;
-      dateTo: string;
-    };
-    filingStatus: {
-      id: number;
-      name: string;
-    };
-    totalCredits: number;
-    usedCredits: number;
-    currentCredits: number;
-    reason: string;
-    dateTransaction: string;
-  };
-  dateTransaction: string;
-};
-
+import { Items } from "@/modules/Offset/assets/types";
 interface OffsetProps {
-  items: OffsetItem[];
+  items: Items[];
   page: number;
   pageSize: number;
   pageCount: number;
   total: number;
-  setSelectedData?: (selected_items: OffsetItem[]) => void;
-  selectedData?: OffsetItem[];
+  setSelectedData?: (selected_items: Items[]) => void;
+  selectedData?: any;
 }
 
-const useOffsetStore = create<OffsetProps>(() => ({
+const useOffsetStore = create<OffsetProps>((set) => ({
   items: data.items,
   page: data.page,
   pageSize: data.pageSize,
   pageCount: data.pageCount,
   total: data.total,
+  selectedData: {},
+
+  setSelectedData: (selected_items: Items[]) =>
+    set({ selectedData: selected_items }),
 }));
 
 export default useOffsetStore;

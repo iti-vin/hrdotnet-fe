@@ -21,7 +21,6 @@ export const Notifications = () => {
       offset={{ mainAxis: 7 }}
       width={450}
       radius={10}
-      zIndex={9999}
     >
       <Popover.Target>
         <Indicator

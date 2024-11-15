@@ -13,7 +13,6 @@ export const Settings = () => {
       width={250}
       position="bottom-end"
       radius={20}
-      zIndex={9999}
       transitionProps={{ transition: "fade-down", duration: 100 }}
     >
       <Menu.Target>

@@ -1,18 +1,27 @@
+/**
+ * @version    HRDotNet(v.2.0.0)
+ * @author     Hersvin Fred De La Cruz Labastida
+ */
+
 //--- Mantine Modules
 import { Flex, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+
 //--- Tabler Icons
 import { IconFileText } from "@tabler/icons-react";
-//--- Template Modules
-import { Container, Filter, Header, StatusChip } from "@shared/template";
+
+//--- Components(Overtime)
 import {
   NewRequest,
   ViewDetails,
   DrawerFilter,
-} from "@/modules/Overtime/pages/components/";
-//--- Utils Modules
-import { Table } from "@/modules/Overtime/pages/components/";
-//--- Sample Service
+  Table,
+} from "@/modules/Overtime/components/";
+
+//--- Shared
+import { FilingStatus } from "@shared/assets/types/Global";
+import { Container, Filter, Header, StatusChip } from "@shared/template";
+
 import pdf from "@/modules/Overtime/assets/file.pdf";
 
 export default function List() {
@@ -33,7 +42,12 @@ export default function List() {
 
       <Filter filterOpen={filterOpen} />
       <Table
-        statuses={["Filed", "Approved", "Cancelled", "Reviewed"]}
+        statuses={[
+          FilingStatus.Filed,
+          FilingStatus.Approved,
+          FilingStatus.Cancelled,
+          FilingStatus.Reviewed,
+        ]}
         columns={[
           { accessor: "documentNo", title: "Document No" },
           { accessor: "sched", title: "Schedule" },

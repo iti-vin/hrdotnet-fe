@@ -6,18 +6,23 @@
 //--- Mantine Modules
 import { Flex, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+
 //--- Tabler Icons
 import { IconFileText } from "@tabler/icons-react";
+
 //--- Components for Offset
 import {
   DrawerFilter,
   NewRequest,
   Table,
   ViewDetails,
-} from "@/modules/Offset/pages/components";
-import pdf from "@/modules/Offset/assets/file.pdf";
-//--- Template Modules
+} from "@/modules/Offset/components";
+
+//--- Shared
+import { FilingStatus } from "@shared/assets/types/Global";
 import { Container, Filter, Header, StatusChip } from "@shared/template";
+
+import pdf from "@/modules/Offset/assets/file.pdf";
 
 export default function List() {
   const [addRequest, { open: requestOpen, close: requestClose }] =
@@ -35,7 +40,12 @@ export default function List() {
       <Filter filterOpen={filterOpen} />
 
       <Table
-        statuses={["Filed", "Reviewed", "Cancelled", "Approved"]}
+        statuses={[
+          FilingStatus.Filed,
+          FilingStatus.Approved,
+          FilingStatus.Cancelled,
+          FilingStatus.Reviewed,
+        ]}
         columns={[
           { accessor: "documentNo", title: "Document No" },
           { accessor: "dateFiled", title: "Schedule" },

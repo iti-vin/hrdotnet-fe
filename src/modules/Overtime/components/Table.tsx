@@ -1,36 +1,25 @@
-/**
- * @version    HRDotNet(v.2.0.0)
- * @file       Table Components for Offset
- * @author     Hersvin Fred De La Cruz Labastida
- */
-
 //--- Mantine Modules
 import { DataTable, DataTableColumn } from "mantine-datatable";
-//--- Shared Template for Table Container
+//--- Own Modules
 import { Footer } from "@shared/template";
-//--- Shared Utils for Date Formatting
+//--- Shared Utils
 import { DateTimeUtils } from "@shared/utils/DateTimeUtils";
-//--- Data Store for Offset
-import useOffsetStore from "@/modules/Offset/store/useOff";
+import { FilingStatus } from "@shared/assets/types/Global";
+//--- Data Store for Overtime
+import { useOvertimeStore } from "@/modules/Overtime/store/useOT";
 
-// Data Table Offset Props
-interface DTOFFP {
-  statuses: ("Approved" | "Cancelled" | "Reviewed" | "Filed")[];
+// Data Table Overtime Props
+interface DTOTP {
+  statuses: FilingStatus[];
   columns: DataTableColumn<{}>[];
-  rowClick?: () => void;
+  rowClick: () => void;
 }
-
-// String that accept for status
-type Status = {
-  status: "Approved" | "Cancelled" | "Reviewed" | "Filed";
-};
-
-export default function Table({ statuses, columns, rowClick }: DTOFFP) {
-  const { items, total, pageSize, page } = useOffsetStore();
+export default function Table({ statuses, columns, rowClick }: DTOTP) {
+  const { items, pageSize, total, page, setSelectedData } = useOvertimeStore();
 
   const records = items
     .filter((item) =>
-      statuses.includes(item.filing.filingStatus.name as Status["status"])
+      statuses.includes(item.filing.filingStatus.name as FilingStatus)
     )
     .map((item) => {
       const fromHours = item.filing.actual.dateFrom;
@@ -52,6 +41,11 @@ export default function Table({ statuses, columns, rowClick }: DTOFFP) {
         dateTransaction: DateTimeUtils.dayWithFullDate(
           item.filing.dateTransaction
         ),
+        actualFrom: item.filing.actual.dateFrom,
+        actualTo: item.filing.actual.dateTo,
+        requestedFrom: item.filing.requested.dateFrom,
+        requestedTo: item.filing.requested.dateTo,
+        sched: "8:00 AM - 6:00 PM",
       };
     });
 
@@ -60,12 +54,16 @@ export default function Table({ statuses, columns, rowClick }: DTOFFP) {
       <DataTable
         columns={columns}
         idAccessor="documentNo"
+        key="documentNo"
         records={records}
         striped={true}
         highlightOnHover={true}
         withTableBorder={true}
         className="select-none"
-        onRowClick={rowClick}
+        onRowClick={(data) => {
+          setSelectedData(data.record);
+          rowClick();
+        }}
         onRowDoubleClick={() => {
           console.log("Clicked Double");
         }}

@@ -6,17 +6,18 @@
 //--- Mantine Modules
 import { Flex, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+
 //--- Tabler Icons
 import { IconFileText, IconFolderPlus } from "@tabler/icons-react";
+
 //--- Components for Offset
-import {
-  DrawerFilter,
-  Table,
-  ViewDetails,
-} from "@/modules/Offset/pages/components";
-import pdf from "@/modules/Offset/assets/file.pdf";
-//--- Template Modules
+import { DrawerFilter, Table, ViewDetails } from "@/modules/Offset/components";
+
+//--- Shared
+import { FilingStatus } from "@shared/assets/types/Global";
 import { Container, Filter, Header, StatusChip } from "@shared/template";
+
+import pdf from "@/modules/Overtime/assets/file.pdf";
 
 export default function Review() {
   const [filter, { open: filterOpen, close: filterClose }] =
@@ -35,7 +36,7 @@ export default function Review() {
       <Filter filterOpen={filterOpen} />
 
       <Table
-        statuses={["Filed"]}
+        statuses={[FilingStatus.Filed]}
         columns={[
           { accessor: "documentNo", title: "Document No" },
           { accessor: "branchCode", title: "Branch Code" },

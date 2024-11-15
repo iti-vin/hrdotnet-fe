@@ -28,7 +28,6 @@ export default function ITIModal({
       centered={centered}
       size={size}
       withCloseButton={false}
-      zIndex={9999}
     >
       <Stack className="w-full  py-4 px-6">
         <Flex direction="row" justify="space-between">

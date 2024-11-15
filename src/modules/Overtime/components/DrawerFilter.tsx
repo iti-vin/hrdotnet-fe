@@ -36,7 +36,7 @@ export default function DrawerFilter({ opened, closed }: Props) {
       withCloseButton={false}
       overlayProps={{ backgroundOpacity: 0, blur: 0 }}
     >
-      <Stack px={10} className="w-full h-lvh mt-20" style={{ height: "100%" }}>
+      <Stack px={10} className="w-full h-full" style={{ height: "100%" }}>
         <Group className="w-full">
           <Flex className="w-full" direction="column" gap={10}>
             <Flex direction="row" justify="space-between">

@@ -2,10 +2,10 @@ import { Pagination, Group, Text, em } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 interface PaginationTypes {
   total: number;
-  onChange: (page: any) => void;
+  onChange: (page: number) => void;
   pageSize: number;
   recordsLength: number;
-  currentPage?: any;
+  currentPage: number;
 }
 export default function Footer({
   total,

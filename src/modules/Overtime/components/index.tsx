@@ -1,6 +1,5 @@
 import ViewDetails from "./ViewDetails";
 import NewRequest from "./NewRequest";
-import Filter from "./Filter";
 import Table from "./Table";
 import DrawerFilter from "./DrawerFilter";
 import {
@@ -13,7 +12,6 @@ import {
 export {
   ViewDetails,
   NewRequest,
-  Filter,
   Table,
   DrawerFilter,
   SuccessRequest,
