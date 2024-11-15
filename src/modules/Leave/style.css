@@ -1,0 +1,36 @@
+.activeLink{
+    text-align: center;
+    width: 6rem;
+    padding-top: 0.3em;
+    padding-bottom: 0.3em;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    background-color: white;
+    border-radius: 0.5rem;
+    color: #559cda;
+    font-weight: 500;
+}
+.inactiveLink{
+    text-align: center;
+    width: 6rem;
+    padding-top: 0.3em;
+    padding-bottom: 0.3em;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    border-radius: 0.5rem;
+    color: white;
+    font-weight: 500;
+}
+
+.mantine-Modal-title{
+    color: aqua;
+}
+
+.mantine-Table-td{
+    padding: 0.6rem;
+}
+
+.mantine-datatable-table tbody .mantine-Table-tr{
+    padding: 0.6rem;
+    @apply cursor-pointer hover:bg-gray-50
+}

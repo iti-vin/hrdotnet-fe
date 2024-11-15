@@ -1,0 +1,98 @@
+{
+  "menu": [
+    {
+      "label": "Change of Schedule",
+      "path": "/change-of-schedule",
+      "id": 1,
+      "icon": "IconCalendarEvent"
+    },
+    {
+      "label": "CTO",
+      "path": "/cto",
+      "id": 2,
+      "icon": "IconCalendarTime"
+    },
+    {
+      "label": "Leave",
+      "path": "/leave",
+      "id": 3,
+      "icon": "IconBriefcase"
+    },
+    {
+      "label": "Missed Log",
+      "path": "/missed-log",
+      "id": 4,
+      "icon": "IconClockX"
+    },
+    {
+      "label": "Official Business",
+      "path": "/official-business",
+      "id": 5,
+      "icon": "IconBuildings"
+    },
+    {
+      "label": "Offset",
+      "path": "/offset",
+      "id": 6,
+      "icon": "IconAlarm"
+    },
+    {
+      "label": "Overtime",
+      "path": "/overtime",
+      "id": 7,
+      "icon": "IconClockPlay"
+    },
+    {
+      "label": "Loan",
+      "path": "/loan",
+      "id": 8,
+      "icon": "IconCalculator"
+    }
+  ],
+  "main": [
+    {
+      "label": "Dashboard",
+      "path": "/",
+      "id": 1,
+      "icon": "IconLayoutDashboard"
+    },
+    {
+      "label": "Calendar",
+      "path": "/calendar",
+      "id": 2,
+      "icon": "IconCalendarMonth"
+    }
+  ],
+  "human-resource": [
+    {
+      "label": "201 Files",
+      "path": "/201-files",
+      "id": 1,
+      "icon": "IconId"
+    },
+    {
+      "label": "Employee Fillings",
+      "path": "/employee-fillings",
+      "id": 2,
+      "icon": "IconArchive"
+    },
+    {
+      "label": "Payroll",
+      "path": "/payroll",
+      "id": 3,
+      "icon": "IconNotes"
+    },
+    {
+      "label": "Reports",
+      "path": "/reports",
+      "id": 4,
+      "icon": "IconTimeline"
+    },
+    {
+      "label": "Timekeeping",
+      "path": "/timekeeping",
+      "id": 5,
+      "icon": "IconHourglass"
+    }
+  ]
+}
