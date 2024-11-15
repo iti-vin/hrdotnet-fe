@@ -1,0 +1,10 @@
+.active {
+  @apply pt-1 pb-1 px-5 bg-white rounded-md text-blue-500 font-medium;
+}
+.inactive {
+  @apply pt-1 pb-1 px-5 text-white font-medium;
+}
+
+.container-view {
+  @apply w-full border-2 border-[#559cda] rounded-md py-3;
+}
