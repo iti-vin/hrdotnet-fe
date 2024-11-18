@@ -28,6 +28,7 @@ export default function Review() {
     useDisclosure(false);
   const [details, { open: detailsOpen, close: detailsClose }] =
     useDisclosure(false);
+
   return (
     <Container>
       <Header
@@ -38,30 +39,28 @@ export default function Review() {
 
       <Filter filterOpen={filterOpen} />
       <Table
-        statuses={[FilingStatus.Filed]}
+        statuses={[FilingStatus.Filed, FilingStatus.Reviewed]}
         columns={[
           { accessor: "documentNo", title: "Document No" },
+          { accessor: "dateTransaction", title: "Transaction Date" },
           { accessor: "sched", title: "Schedule" },
           { accessor: "branchCode", title: "Branch Code" },
-          { accessor: "code", title: "Employee Code" },
-          { accessor: "dateFiled", title: "OT Date" },
-          { accessor: "numberOfHours", title: "OT Hours" },
-          { accessor: "dateTransaction", title: "Transaction Date" },
           {
             accessor: "name",
-            title: "Processed By",
+            title: "Employee Name",
             textAlign: "center",
             render: (row: any) => (
               <Flex direction="column" align="center">
                 <Text fw={500} size="sm">
                   {row.name}
                 </Text>
-                <Text fw={300} size="xs">
-                  {row.name}
-                </Text>
               </Flex>
             ),
           },
+          { accessor: "code", title: "Employee Code" },
+          { accessor: "dateFiled", title: "OT Date" },
+          { accessor: "numberOfHours", title: "OT Hours" },
+
           {
             accessor: "filingStatus",
             title: "Status",
@@ -90,6 +89,7 @@ export default function Review() {
       <DrawerFilter opened={filter} closed={filterClose} />
 
       <ViewDetails
+        tabs="Review"
         opened={details}
         onClose={detailsClose}
         buttonClose={detailsClose}

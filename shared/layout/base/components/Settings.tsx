@@ -12,7 +12,7 @@ export const Settings = () => {
       shadow="md"
       width={250}
       position="bottom-end"
-      radius={20}
+      radius={10}
       transitionProps={{ transition: "fade-down", duration: 100 }}
     >
       <Menu.Target>
@@ -29,6 +29,7 @@ export const Settings = () => {
         <Menu.Label>Settings</Menu.Label>
         <Menu.Item
           className="poppins"
+          color="#6d6d6d"
           fw={500}
           leftSection={
             <IconUserCircle
@@ -41,6 +42,7 @@ export const Settings = () => {
         </Menu.Item>
         <Menu.Item
           className="poppins"
+          color="#6d6d6d"
           fw={500}
           leftSection={
             <IconBuildings style={{ width: rem(20), height: rem(20) }} />
@@ -50,6 +52,7 @@ export const Settings = () => {
         </Menu.Item>
         <Menu.Item
           className="poppins"
+          color="#6d6d6d"
           fw={500}
           leftSection={<IconLock style={{ width: rem(20), height: rem(20) }} />}
         >

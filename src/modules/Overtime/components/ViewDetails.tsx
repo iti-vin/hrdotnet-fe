@@ -8,7 +8,6 @@ import {
 import { Modal } from "@shared/template/";
 
 import {
-  Button,
   Container,
   Flex,
   Group,
@@ -19,21 +18,26 @@ import {
   TextInput,
   useMatches,
 } from "@mantine/core";
-import { DatePickerInput, DateTimePicker, TimeInput } from "@mantine/dates";
+import { DatePickerInput, TimeInput } from "@mantine/dates";
 import Attachment from "@shared/template/main/Dropzone";
 import { useOvertimeStore } from "@/modules/Overtime/store/useOT";
 import { DateTimeUtils } from "@shared/utils/DateTimeUtils";
+import { Buttons } from "@/modules/Overtime/components/Button";
+import { useDisclosure } from "@mantine/hooks";
+import { Alerts } from "@/modules/Overtime/components/AlertOT";
 
 interface ModalViewProps {
   opened: boolean;
   onClose: () => void;
   buttonClose: () => void;
+  tabs?: "List" | "Review" | "Approve";
 }
 
-export default function ViewDetails({
+export default function Viewdialog({
   opened,
   onClose,
   buttonClose,
+  tabs = "List",
 }: ModalViewProps) {
   const size = useMatches({
     base: "100%",
@@ -61,327 +65,299 @@ export default function ViewDetails({
   }
   const [timeValue, setTimeValue] = React.useState("10:30 AM");
 
+  const [dialog, { open: dialogOpen, close: dialogClose }] =
+    useDisclosure(false);
+
   return (
-    <Modal
-      opened={opened}
-      onClose={() => {
-        setSelectedData({});
-        onClose();
-      }}
-      centered
-      size={size}
-      buttonClose={() => {
-        setSelectedData({});
-        buttonClose();
-      }}
-      title="View Details"
-    >
-      <Container size="lg" className="container-view">
-        <Text className="text-[#559cda] font-bold">General Information</Text>
-        <Group gap={10}>
-          <MultiSelect
-            size="md"
-            label="Overtime Date"
-            withAsterisk
-            placeholder={selectedData.dateFiled}
-            radius={8}
-            data={["React", "Angular", "Vue", "Svelte"]}
-            rightSection={<IconDots />}
-            className="border-none w-full"
-          />
-          <Flex
-            direction={{ base: "column", sm: "row" }}
-            justify="space-between"
-            className="w-full"
-            gap={20}
-          >
-            <Select
-              size="md"
-              label="Shift"
-              withAsterisk
-              placeholder="Schedule 001"
-              radius={8}
-              data={["React", "Angular", "Vue", "Svelte"]}
-              rightSection={<IconChevronDown />}
-              className="border-none w-full"
-            />
-            <TextInput
-              size="md"
-              radius={8}
-              label="Reference No."
-              placeholder="0000-0000-0000"
-              withAsterisk
-              className="w-full"
-              disabled
-            />
-          </Flex>
-          <Flex
-            direction={{ base: "column", sm: "row" }}
-            justify="space-between"
-            className="w-full"
-            gap={20}
-          >
-            <TimeInput
-              size="md"
-              radius={8}
-              label="Actual OT In"
-              withAsterisk
-              className="w-full"
-              value={timeValue}
-              placeholder={timeValue}
-              onChange={(value: any) => setTimeValue(value)}
-            />
-            <TimeInput
-              size="md"
-              radius={8}
-              label="Actual OT out"
-              value={DateTimeUtils.getIsoTimeDefaultWithUnits(
-                selectedData.actualFrom
-              )}
-              placeholder={DateTimeUtils.getIsoTimeDefaultWithUnits(
-                selectedData.actualFrom
-              )}
-              withAsterisk
-              className="w-full"
-            />
-          </Flex>
-          <Flex
-            direction={{ base: "column", sm: "row" }}
-            justify="space-between"
-            className="w-full"
-            gap={20}
-          >
-            <TimeInput
-              size="md"
-              radius={8}
-              label="OT From"
-              withAsterisk
-              className="w-full"
-            />
-            <TimeInput
-              size="md"
-              radius={8}
-              label="OT To"
-              withAsterisk
-              className="w-full"
-            />
-          </Flex>
-          <DatePickerInput
-            valueFormat="YYYY MMM DD"
-            label="Duration"
-            placeholder="Pick date"
-            className="w-full"
-            size="md"
-            radius={8}
-            withAsterisk
-            rightSection={<IconCalendar />}
-          />
-        </Group>
-      </Container>
-
-      <Container size="lg" className="container-view">
-        <Text className="text-[#559cda] font-bold">Detailed Information</Text>
-
-        <Group className="w-full">
-          <Flex direction="column" className="w-full" gap={2}>
-            <Text size="md" fw={500} className=" flex gap-1">
-              Status
-              <span className="text-red-400 font-semibold">*</span>
-            </Text>
-            <Text
-              size="md"
-              className="w-full flex flex-col text-center justify-center h-10 rounded-md"
-              c="white"
-              bg={color}
-              children={selectedData.filingStatus}
-            />
-          </Flex>
-
-          <Flex
-            direction={{ base: "column", sm: "row" }}
-            className="w-full"
-            gap={20}
-          >
-            <TextInput
-              size="md"
-              radius={8}
-              label="Document No."
-              placeholder={selectedData.documentNo}
-              withAsterisk
-              className="w-full"
-            />
-            <DatePickerInput
-              valueFormat="YYYY MMM DD"
-              label="Transaction Date"
-              placeholder={selectedData.dateTransaction}
-              className="w-full"
-              size="md"
-              radius={8}
-              withAsterisk
-              rightSection={<IconCalendar />}
-            />
-          </Flex>
-
-          <Flex
-            direction={{ base: "column", sm: "row" }}
-            className="w-full"
-            gap={20}
-          >
-            <DateTimePicker
-              valueFormat="YYYY MMM DD"
-              label="Endorsement Date and Time"
-              placeholder="mm/dd/yyyy h:mm"
-              className="w-full"
-              size="md"
-              radius={8}
-              withAsterisk
-              rightSection={<IconCalendar />}
-            />
-            <TextInput
-              size="md"
-              radius={8}
-              label="Endorsed By"
-              placeholder="Reviewer's Name"
-              withAsterisk
-              className="w-full"
-            />
-            <TextInput
-              size="md"
-              radius={8}
-              label="Endorsement Type"
-              placeholder="Manual"
-              withAsterisk
-              className="w-full"
-            />
-          </Flex>
-          <Flex
-            direction={{ base: "column", sm: "row" }}
-            className="w-full"
-            gap={20}
-          >
-            <DateTimePicker
-              valueFormat="YYYY MMM DD"
-              label="Endorsement Date and Time"
-              placeholder="mm/dd/yyyy h:mm"
-              className="w-full"
-              size="md"
-              radius={8}
-              withAsterisk
-              rightSection={<IconCalendar />}
-            />
-            <TextInput
-              size="md"
-              radius={8}
-              label="Endorsed By"
-              placeholder="Reviewer's Name"
-              withAsterisk
-              className="w-full"
-            />
-            <TextInput
-              size="md"
-              radius={8}
-              label="Endorsement Type"
-              placeholder="Manual"
-              withAsterisk
-              className="w-full"
-            />
-          </Flex>
-          <Flex
-            direction={{ base: "column", sm: "row" }}
-            className="w-full"
-            gap={20}
-          >
-            <DateTimePicker
-              valueFormat="YYYY MMM DD"
-              label="Endorsement Date and Time"
-              placeholder="mm/dd/yyyy h:mm"
-              className="w-full"
-              size="md"
-              radius={8}
-              withAsterisk
-              rightSection={<IconCalendar />}
-            />
-            <TextInput
-              size="md"
-              radius={8}
-              label="Endorsed By"
-              placeholder="Reviewer's Name"
-              withAsterisk
-              className="w-full"
-            />
-            <TextInput
-              size="md"
-              radius={8}
-              label="Endorsement Type"
-              placeholder="Manual"
-              withAsterisk
-              className="w-full"
-            />
-          </Flex>
-        </Group>
-      </Container>
-
-      <Container size="lg" className="container-view">
-        <Textarea
-          size="md"
-          label="Reason"
-          placeholder={selectedData.reason}
-          withAsterisk
+    <>
+      <Modal
+        opened={opened}
+        onClose={() => {
+          setSelectedData({});
+          onClose();
+        }}
+        centered
+        size={size}
+        buttonClose={() => {
+          setSelectedData({});
+          buttonClose();
+        }}
+        title={selectedData.name}
+      >
+        <Flex
+          direction={{ base: "column", sm: "row" }}
           className="w-full"
-          styles={{ input: { height: "100px" } }}
-          radius={8}
-          classNames={{ label: "text-[#559cda] font-bold" }}
-        />
-      </Container>
+          gap={10}
+          px={{ base: 0, sm: 12 }}
+        >
+          <Container size="lg" className="container-view h-auto">
+            <Text className="text-[#559cda] font-bold">
+              General Information
+            </Text>
+            <Flex direction="column" gap={20} justify="space-between">
+              <MultiSelect
+                size="md"
+                label="Overtime Date"
+                placeholder={selectedData.dateFiled}
+                radius={8}
+                data={["React", "Angular", "Vue", "Svelte"]}
+                rightSection={<IconDots />}
+                className="border-none w-full"
+                disabled
+                styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
+              />
+              <Flex
+                direction={{ base: "column", sm: "row" }}
+                justify="space-between"
+                className="w-full"
+                gap={20}
+              >
+                <Select
+                  size="md"
+                  label="Shift"
+                  placeholder="Schedule 001"
+                  radius={8}
+                  data={["React", "Angular", "Vue", "Svelte"]}
+                  rightSection={<IconChevronDown />}
+                  className="border-none w-full"
+                  disabled
+                  styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
+                />
+                <TextInput
+                  size="md"
+                  radius={8}
+                  label="Reference No."
+                  placeholder="0000-0000-0000"
+                  className="w-full"
+                  disabled
+                  styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
+                />
+              </Flex>
+              <Flex
+                direction={{ base: "column", sm: "row" }}
+                justify="space-between"
+                className="w-full"
+                gap={20}
+              >
+                <TimeInput
+                  size="md"
+                  radius={8}
+                  label="Actual OT In"
+                  className="w-full"
+                  value={timeValue}
+                  placeholder={timeValue}
+                  onChange={(value: any) => setTimeValue(value)}
+                  disabled
+                  styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
+                />
+                <TimeInput
+                  size="md"
+                  radius={8}
+                  label="Actual OT Out"
+                  value={DateTimeUtils.getIsoTimeDefaultWithUnits(
+                    selectedData.actualFrom
+                  )}
+                  placeholder={DateTimeUtils.getIsoTimeDefaultWithUnits(
+                    selectedData.actualFrom
+                  )}
+                  className="w-full"
+                  disabled
+                  styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
+                />
+              </Flex>
+              <Flex
+                direction={{ base: "column", sm: "row" }}
+                justify="space-between"
+                className="w-full"
+                gap={20}
+              >
+                <TimeInput
+                  size="md"
+                  radius={8}
+                  label="OT From"
+                  className="w-full"
+                  disabled
+                  styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
+                />
+                <TimeInput
+                  size="md"
+                  radius={8}
+                  label="OT To"
+                  className="w-full"
+                  disabled
+                  styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
+                />
+              </Flex>
+              <DatePickerInput
+                valueFormat="YYYY MMM DD"
+                label="Duration"
+                placeholder="Pick date"
+                className="w-full"
+                size="md"
+                radius={8}
+                rightSection={<IconCalendar />}
+                disabled
+                styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
+              />
+            </Flex>
+          </Container>
 
-      <Container size="lg" className="container-view">
-        <Attachment
-          isColored
-          isBold
-          content={
-            <Flex gap={5} direction="column" align="center">
-              <Flex direction="row" align="center" gap={5}>
-                <IconNotes color="#6d6d6d" />
+          <Container size="lg" className="container-view">
+            <Text className="text-[#559cda] font-bold">
+              Detailed Information
+            </Text>
+
+            <Group className="w-full">
+              <Flex direction="column" className="w-full" gap={2}>
+                <Text size="md" fw={500} className=" flex gap-1" c="#6d6d6d">
+                  Status
+                </Text>
                 <Text
                   size="md"
-                  c="#6d6d6d"
-                  fw={500}
-                  inline
-                  className="flex justify-center"
-                >
-                  File: Attachment.pdf Size: 20mb
-                </Text>
+                  className="w-full flex flex-col text-center justify-center h-10 rounded-md"
+                  c="white"
+                  bg={color}
+                  children={selectedData.filingStatus}
+                />
               </Flex>
-              <Text size="xs" c="#6d6d6d">
-                Replace existing
-                <span className="text-blue-400 underline">File.</span>
-              </Text>
-            </Flex>
-          }
-        />
-      </Container>
 
-      <Container size="lg" className="container-view">
-        <Textarea
-          size="md"
-          label="Edit Log"
-          disabled
-          placeholder="Briefly state the reason for filing overtime"
-          className="w-full"
-          styles={{ input: { height: "100px" } }}
-          radius={8}
-          classNames={{ label: "text-[#559cda] font-bold" }}
-        />
-      </Container>
+              <Flex
+                direction={{ base: "column", sm: "row" }}
+                className="w-full"
+                gap={20}
+              >
+                <TextInput
+                  disabled
+                  size="md"
+                  radius={8}
+                  label="Document No."
+                  placeholder={selectedData.documentNo}
+                  className="w-full"
+                  styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
+                />
+                <DatePickerInput
+                  disabled
+                  valueFormat="YYYY MMM DD"
+                  label="Transaction Date"
+                  placeholder={selectedData.dateTransaction}
+                  className="w-full"
+                  size="md"
+                  radius={8}
+                  rightSection={<IconCalendar />}
+                  styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
+                />
+              </Flex>
 
-      <Flex px={10} align="center" justify="flex-end" gap={10}>
-        <Button variant="outline" size="md" radius={10} w={180}>
-          Cancel
-        </Button>
-        <Button size="md" radius={10} w={180} classNames={{ root: "test" }}>
-          Update
-        </Button>
-      </Flex>
-    </Modal>
+              <Textarea
+                disabled
+                size="md"
+                radius="md"
+                label="Endorsement Information"
+                placeholder="Endorsed by Jane Smith on October 25, 2024 at 6:43 PM."
+                className="w-full"
+                styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
+              />
+              <Textarea
+                disabled
+                size="md"
+                radius="md"
+                label="Approval Information"
+                placeholder="Approved by Jane Smith on October 25, 2024 at 6:43 PM (Batch Approval)"
+                className="w-full"
+                styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
+              />
+              <Textarea
+                disabled
+                size="md"
+                radius="md"
+                label="Cancellation Information"
+                placeholder="No Information"
+                className="w-full"
+                styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
+              />
+            </Group>
+          </Container>
+        </Flex>
+
+        <Container size="lg" className="container-view">
+          <Textarea
+            size="md"
+            label="Reason"
+            placeholder={selectedData.reason}
+            disabled
+            className="w-full"
+            styles={{ input: { height: "100px" }, label: { fontSize: "16px" } }}
+            radius={8}
+            classNames={{ label: "text-[#559cda] font-bold" }}
+          />
+        </Container>
+
+        <Container size="lg" className="container-view">
+          <Attachment
+            itHasValue
+            isColored
+            isBold
+            content={
+              <Flex
+                gap={5}
+                direction="row"
+                align="center"
+                justify="center"
+                className="w-full"
+                bg="#EEEEEE"
+                p={5}
+              >
+                <Flex direction="row" align="center" gap={5}>
+                  <IconNotes color="#6d6d6d" />
+                  <Text
+                    size="sm"
+                    c="#6d6d6d"
+                    fw={500}
+                    inline
+                    className="flex justify-center"
+                  >
+                    File: Attachment.pdf Size: 20 MB
+                  </Text>
+                </Flex>
+              </Flex>
+            }
+          />
+        </Container>
+
+        <Container size="lg" className="container-view">
+          <Textarea
+            size="md"
+            label="Edit Log"
+            disabled
+            placeholder="Briefly state the reason for filing overtime"
+            className="w-full"
+            styles={{ input: { height: "100px" }, label: { color: "#6d6d6d" } }}
+            radius={8}
+            classNames={{ label: "text-[#559cda] font-bold" }}
+          />
+        </Container>
+
+        <Buttons
+          tabs={tabs}
+          status={selectedData.filingStatus}
+          open={() => {
+            setSelectedData({});
+            onClose();
+            dialogOpen();
+          }}
+          close={() => {
+            setSelectedData({});
+            buttonClose();
+          }}
+        />
+      </Modal>
+
+      <Alerts
+        opened={dialog}
+        onClose={dialogClose}
+        buttonClose={dialogClose}
+        tabs={tabs}
+      />
+    </>
   );
 }

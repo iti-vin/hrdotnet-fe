@@ -47,26 +47,32 @@ export default function List() {
           FilingStatus.Approved,
           FilingStatus.Cancelled,
           FilingStatus.Reviewed,
+          FilingStatus.Posted,
         ]}
         columns={[
           { accessor: "documentNo", title: "Document No" },
+          { accessor: "dateTransaction", title: "Transaction Date" },
           { accessor: "sched", title: "Schedule" },
-          { accessor: "code", title: "Employee Code" },
           { accessor: "dateFiled", title: "OT Date" },
           { accessor: "numberOfHours", title: "OT Hours" },
-          { accessor: "dateTransaction", title: "Transaction Date" },
           {
             accessor: "name",
             title: "Processed By",
             textAlign: "center",
             render: (row: any) => (
               <Flex direction="column" align="center">
-                <Text fw={500} size="sm">
-                  {row.name}
-                </Text>
-                <Text fw={300} size="xs">
-                  {row.name}
-                </Text>
+                {row.filingStatus === "Filed"
+                  ? null
+                  : row.filingStatus !== "Posted" && (
+                      <>
+                        <Text fw={500} size="sm">
+                          {row.name}
+                        </Text>
+                        <Text fw={300} size="sm">
+                          Developer
+                        </Text>
+                      </>
+                    )}
               </Flex>
             ),
           },
@@ -103,6 +109,7 @@ export default function List() {
         onClose={requestClose}
         buttonClose={requestClose}
       />
+
       <ViewDetails
         opened={details}
         onClose={detailsClose}

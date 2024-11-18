@@ -26,7 +26,7 @@ export default function AlertDialog({
     if (opened) {
       timer = setTimeout(() => {
         onClose();
-      }, 2000);
+      }, 5000);
     }
 
     return () => {

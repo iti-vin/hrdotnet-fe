@@ -3,7 +3,7 @@
     {
       "id": 79,
       "code": "TW303080007",
-      "name": "PADASAS, CHRISTIAN MORCEN",
+      "name": "Christian Padasas",
       "companyId": 2,
       "branchId": 3,
       "departmentId": 42,
@@ -27,7 +27,7 @@
           "name": "Approved"
         },
         "numberOfHours": 0,
-        "reason": "Zz - BATCH REVIEWED BY: PADASAS, CHRISTIAN MORCEN - 10/16/2024 - BATCH APPROVED BY: PADASAS, CHRISTIAN MORCEN - 10/16/2024",
+        "reason": "Zz - BATCH REVIEWED BY: Christian Padasas - 10/16/2024 - BATCH APPROVED BY: Christian Padasas - 10/16/2024",
         "fileAttachment": ""
       },
       "dateTransaction": "2024-10-16T00:00:00"
@@ -35,7 +35,7 @@
     {
       "id": 79,
       "code": "TW303080007",
-      "name": "PADASAS, CHRISTIAN MORCEN",
+      "name": "Christian Padasas",
       "companyId": 2,
       "branchId": 3,
       "departmentId": 42,
@@ -67,7 +67,7 @@
     {
       "id": 79,
       "code": "TW303080007",
-      "name": "PADASAS, CHRISTIAN MORCEN",
+      "name": "Christian Padasas",
       "companyId": 2,
       "branchId": 3,
       "departmentId": 42,
@@ -99,7 +99,7 @@
     {
       "id": 79,
       "code": "TW303080007",
-      "name": "PADASAS, CHRISTIAN MORCEN",
+      "name": "Christian Padasas",
       "companyId": 2,
       "branchId": 3,
       "departmentId": 42,
@@ -131,7 +131,7 @@
     {
       "id": 79,
       "code": "TW303080007",
-      "name": "PADASAS, CHRISTIAN MORCEN",
+      "name": "Christian Padasas",
       "companyId": 2,
       "branchId": 3,
       "departmentId": 42,
@@ -163,7 +163,7 @@
     {
       "id": 79,
       "code": "TW303080007",
-      "name": "PADASAS, CHRISTIAN MORCEN",
+      "name": "Christian Padasas",
       "companyId": 2,
       "branchId": 3,
       "departmentId": 42,
@@ -187,7 +187,7 @@
           "name": "Approved"
         },
         "numberOfHours": 0,
-        "reason": "Zzzzz - BATCH REVIEWED BY: PADASAS, CHRISTIAN MORCEN - 10/16/2024 - BATCH APPROVED BY: PADASAS, CHRISTIAN MORCEN - 10/16/2024",
+        "reason": "Zzzzz - BATCH REVIEWED BY: Christian Padasas - 10/16/2024 - BATCH APPROVED BY: Christian Padasas - 10/16/2024",
         "fileAttachment": ""
       },
       "dateTransaction": "2024-10-16T00:00:00"
@@ -195,7 +195,7 @@
     {
       "id": 79,
       "code": "TW303080007",
-      "name": "PADASAS, CHRISTIAN MORCEN",
+      "name": "Christian Padasas",
       "companyId": 2,
       "branchId": 3,
       "departmentId": 42,
@@ -227,7 +227,7 @@
     {
       "id": 79,
       "code": "TW303080008",
-      "name": "PADASAS, CHRISTIAN MORCEN",
+      "name": "Christian Padasas",
       "companyId": 2,
       "branchId": 3,
       "departmentId": 42,
@@ -259,7 +259,7 @@
     {
       "id": 79,
       "code": "TW303080009",
-      "name": "PADASAS, CHRISTIAN MORCEN",
+      "name": "Christian Padasas",
       "companyId": 2,
       "branchId": 3,
       "departmentId": 42,
@@ -291,7 +291,7 @@
     {
       "id": 79,
       "code": "TW303080010",
-      "name": "PADASAS, CHRISTIAN MORCEN",
+      "name": "Christian Padasas",
       "companyId": 2,
       "branchId": 3,
       "departmentId": 42,
@@ -323,7 +323,7 @@
     {
       "id": 79,
       "code": "TW303080011",
-      "name": "PADASAS, CHRISTIAN MORCEN",
+      "name": "Christian Padasas",
       "companyId": 2,
       "branchId": 3,
       "departmentId": 42,
@@ -355,7 +355,7 @@
     {
       "id": 79,
       "code": "TW303080012",
-      "name": "PADASAS, CHRISTIAN MORCEN",
+      "name": "Christian Padasas",
       "companyId": 2,
       "branchId": 3,
       "departmentId": 42,
@@ -387,7 +387,7 @@
     {
       "id": 79,
       "code": "TW303080013",
-      "name": "PADASAS, CHRISTIAN MORCEN",
+      "name": "Christian Padasas",
       "companyId": 2,
       "branchId": 3,
       "departmentId": 42,
@@ -419,7 +419,7 @@
     {
       "id": 79,
       "code": "TW303080014",
-      "name": "PADASAS, CHRISTIAN MORCEN",
+      "name": "Christian Padasas",
       "companyId": 2,
       "branchId": 3,
       "departmentId": 42,
@@ -450,8 +450,8 @@
     },
     {
       "id": 7,
-      "code": "0810060017",
-      "name": "NOARIN, JONATHAN MAGCAIYO",
+      "code": "PA0810060017",
+      "name": "Jonathan Noarin",
       "companyId": 1,
       "branchId": 160,
       "departmentId": 0,
@@ -482,8 +482,8 @@
     },
     {
       "id": 7,
-      "code": "0810060017",
-      "name": "NOARIN, JONATHAN MAGCAIYO",
+      "code": "PA0810060017",
+      "name": "Jonathan Noarin",
       "companyId": 1,
       "branchId": 160,
       "departmentId": 0,
@@ -514,8 +514,8 @@
     },
     {
       "id": 7,
-      "code": "0810060017",
-      "name": "NOARIN, JONATHAN MAGCAIYO",
+      "code": "PA0810060017",
+      "name": "Jonathan Noarin",
       "companyId": 1,
       "branchId": 160,
       "departmentId": 0,
@@ -546,8 +546,8 @@
     },
     {
       "id": 7,
-      "code": "0810060017",
-      "name": "NOARIN, JONATHAN MAGCAIYO",
+      "code": "PA0810060017",
+      "name": "Jonathan Noarin",
       "companyId": 1,
       "branchId": 160,
       "departmentId": 0,
@@ -578,8 +578,8 @@
     },
     {
       "id": 7,
-      "code": "0810060017",
-      "name": "NOARIN, JONATHAN MAGCAIYO",
+      "code": "PA0810060017",
+      "name": "Jonathan Noarin",
       "companyId": 1,
       "branchId": 160,
       "departmentId": 0,
@@ -610,8 +610,8 @@
     },
     {
       "id": 7,
-      "code": "0810060017",
-      "name": "NOARIN, JONATHAN MAGCAIYO",
+      "code": "PA0810060017",
+      "name": "Jonathan Noarin",
       "companyId": 1,
       "branchId": 160,
       "departmentId": 0,
@@ -642,8 +642,8 @@
     },
     {
       "id": 7,
-      "code": "0810060017",
-      "name": "NOARIN, JONATHAN MAGCAIYO",
+      "code": "PA0810060017",
+      "name": "Jonathan Noarin",
       "companyId": 1,
       "branchId": 160,
       "departmentId": 0,
@@ -674,8 +674,8 @@
     },
     {
       "id": 7,
-      "code": "0810060017",
-      "name": "NOARIN, JONATHAN MAGCAIYO",
+      "code": "PA0810060017",
+      "name": "Jonathan Noarin",
       "companyId": 1,
       "branchId": 160,
       "departmentId": 0,
@@ -706,8 +706,8 @@
     },
     {
       "id": 7,
-      "code": "0810060017",
-      "name": "NOARIN, JONATHAN MAGCAIYO",
+      "code": "PA0810060017",
+      "name": "Jonathan Noarin",
       "companyId": 1,
       "branchId": 160,
       "departmentId": 0,

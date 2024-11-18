@@ -21,7 +21,7 @@ export const SuccessRequest = ({ ...props }: AlertProps) => {
   );
 };
 
-export const SuccessEndorse = ({ ...props }: AlertProps) => {
+const SuccessEndorse = ({ ...props }: AlertProps) => {
   return (
     <Alert
       {...props}
@@ -33,7 +33,7 @@ export const SuccessEndorse = ({ ...props }: AlertProps) => {
   );
 };
 
-export const SuccessApprove = ({ ...props }: AlertProps) => {
+const SuccessApprove = ({ ...props }: AlertProps) => {
   return (
     <Alert
       {...props}

@@ -18,11 +18,11 @@ import useOffsetStore from "@/modules/Offset/store/useOff";
 interface DTOFFP {
   statuses: FilingStatus[];
   columns: DataTableColumn<{}>[];
-  rowClick?: () => void;
+  rowClick: () => void;
 }
 
 export default function Table({ statuses, columns, rowClick }: DTOFFP) {
-  const { items, total, pageSize, page } = useOffsetStore();
+  const { items, total, pageSize, page, setSelectedData } = useOffsetStore();
 
   const records = items
     .filter((item) =>
@@ -40,14 +40,13 @@ export default function Table({ statuses, columns, rowClick }: DTOFFP) {
         documentNo: item.filing.documentNo,
         name: item.name,
         code: item.code,
-        branchCode: item.branchId,
+        branchCode: "Branch 4",
         numberOfHours: `${formattedFromHours} - ${formattedToHours}`,
-        dateFiled: DateTimeUtils.dayWithFullDate(item.filing.dateFiled),
+        dateFiled: DateTimeUtils.dayWithDate(item.filing.dateFiled),
         filingStatus: item.filing.filingStatus.name,
         reason: item.filing.reason,
-        dateTransaction: DateTimeUtils.dayWithFullDate(
-          item.filing.dateTransaction
-        ),
+        dateTransaction: DateTimeUtils.dayWithDate(item.filing.dateTransaction),
+        sched: "Next Day",
       };
     });
 
@@ -61,7 +60,10 @@ export default function Table({ statuses, columns, rowClick }: DTOFFP) {
         highlightOnHover={true}
         withTableBorder={true}
         className="select-none"
-        onRowClick={rowClick}
+        onRowClick={(data) => {
+          setSelectedData(data.record);
+          rowClick();
+        }}
         onRowDoubleClick={() => {
           console.log("Clicked Double");
         }}

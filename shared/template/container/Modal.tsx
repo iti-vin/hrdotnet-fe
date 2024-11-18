@@ -29,7 +29,7 @@ export default function ITIModal({
       size={size}
       withCloseButton={false}
     >
-      <Stack className="w-full  py-4 px-6">
+      <Stack className="w-full  py-4 px-4">
         <Flex direction="row" justify="space-between">
           <Text fw={600} fz={22} c="#559CDA">
             {title}
@@ -45,7 +45,7 @@ export default function ITIModal({
         </Flex>
         <Divider size={2} color="#c9cac9" className="w-full" />
       </Stack>
-      <Stack>{children}</Stack>
+      <Stack px={8}>{children}</Stack>
     </Modal>
   );
 }

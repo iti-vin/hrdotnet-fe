@@ -40,8 +40,8 @@ export const Notifications = () => {
 
       <Popover.Dropdown px={0}>
         <Flex justify="space-between" px={15}>
-          <Text className="text-blue-400 font-semibold text-xl pb-3">
-            Notification
+          <Text className="custom-gradient bg-clip-text text-transparent font-semibold text-xl pb-3 ">
+            Notifications
           </Text>
           <MessageGradient size={22} tooltip="Mark All as Read" />
         </Flex>

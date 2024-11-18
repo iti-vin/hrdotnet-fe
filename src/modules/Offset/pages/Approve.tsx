@@ -29,37 +29,39 @@ export default function Approve() {
       {/* Header consist of title container and the Button */}
       <Header
         title="Offset"
-        buttonLabel="Endorse"
+        buttonLabel="Approve"
         buttonIcon={<IconCircleCheck size={25} stroke={2} />}
       />
       {/* Filter contains the pills and button icons for filtering */}
       <Filter filterOpen={filterOpen} />
 
       <Table
-        statuses={[FilingStatus.Reviewed, FilingStatus.Filed]}
+        statuses={[
+          FilingStatus.Reviewed,
+          FilingStatus.Filed,
+          FilingStatus.Approved,
+          FilingStatus.Cancelled,
+        ]}
         columns={[
           { accessor: "documentNo", title: "Document No" },
+          { accessor: "dateTransaction", title: "Transaction Date" },
           { accessor: "branchCode", title: "Branch Code" },
           { accessor: "dateFiled", title: "Schedule" },
           { accessor: "code", title: "Employee Code" },
-          { accessor: "dateFiled", title: "Offset Date" },
-          { accessor: "numberOfHours", title: "Offset Hours" },
-          { accessor: "dateTransaction", title: "Transaction Date" },
           {
             accessor: "name",
-            title: "Processed By",
+            title: "Employee Name",
             textAlign: "center",
             render: (row: any) => (
               <Flex direction="column" align="center">
                 <Text fw={500} size="sm">
                   {row.name}
                 </Text>
-                <Text fw={300} size="xs">
-                  {row.name}
-                </Text>
               </Flex>
             ),
           },
+          { accessor: "dateFiled", title: "Offset Date" },
+          { accessor: "numberOfHours", title: "Offset Hours" },
           {
             accessor: "filingStatus",
             title: "Status",
@@ -91,6 +93,7 @@ export default function Approve() {
       <DrawerFilter opened={filter} closed={filterClose} />
       {/* Modal to show offset details */}
       <ViewDetails
+        tabs="Approve"
         opened={details}
         onClose={detailsClose}
         buttonClose={detailsClose}

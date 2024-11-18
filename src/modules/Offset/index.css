@@ -6,5 +6,5 @@
 }
 
 .container-view {
-  @apply w-full border-2 border-[#559cda] rounded-md py-3;
+  @apply w-full border-[1px] border-[#559cda] rounded-md py-3;
 }

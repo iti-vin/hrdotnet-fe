@@ -7,8 +7,8 @@ interface OffsetProps {
   pageSize: number;
   pageCount: number;
   total: number;
-  setSelectedData?: (selected_items: Items[]) => void;
-  selectedData?: any;
+  setSelectedData: (selected_items: any) => void;
+  selectedData: any;
 }
 
 const useOffsetStore = create<OffsetProps>((set) => ({
@@ -19,8 +19,7 @@ const useOffsetStore = create<OffsetProps>((set) => ({
   total: data.total,
   selectedData: {},
 
-  setSelectedData: (selected_items: Items[]) =>
-    set({ selectedData: selected_items }),
+  setSelectedData: (selected_items) => set({ selectedData: selected_items }),
 }));
 
 export default useOffsetStore;

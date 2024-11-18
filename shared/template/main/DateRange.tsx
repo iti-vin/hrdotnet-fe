@@ -47,10 +47,10 @@ export const DateRange = ({
             }
             readOnly
             label={fLabel}
-            withAsterisk
             placeholder={fPlaceholder}
             className="w-full cursor-default"
             rightSection={<IconCalendarMonth />}
+            styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
           />
         </Popover.Target>
         <Popover.Dropdown className="w-full">
@@ -62,7 +62,7 @@ export const DateRange = ({
           />
         </Popover.Dropdown>
       </Popover>
-      <Popover position="top" shadow="md">
+      <Popover position="bottom" shadow="md">
         <Popover.Target>
           <TextInput
             value={
@@ -74,8 +74,8 @@ export const DateRange = ({
             label={lLabel}
             placeholder={lPlaceholder}
             rightSection={<IconCalendarMonth />}
-            withAsterisk
             className="w-full"
+            styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
           />
         </Popover.Target>
         <Popover.Dropdown>

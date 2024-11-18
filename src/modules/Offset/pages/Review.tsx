@@ -36,30 +36,28 @@ export default function Review() {
       <Filter filterOpen={filterOpen} />
 
       <Table
-        statuses={[FilingStatus.Filed]}
+        statuses={[FilingStatus.Filed, FilingStatus.Reviewed]}
         columns={[
           { accessor: "documentNo", title: "Document No" },
+          { accessor: "dateTransaction", title: "Transaction Date" },
           { accessor: "branchCode", title: "Branch Code" },
           { accessor: "dateFiled", title: "Schedule" },
           { accessor: "code", title: "Employee Code" },
-          { accessor: "dateFiled", title: "Offset Date" },
-          { accessor: "numberOfHours", title: "Offset Hours" },
-          { accessor: "dateTransaction", title: "Transaction Date" },
           {
             accessor: "name",
-            title: "Processed By",
+            title: "Employee Name",
             textAlign: "center",
             render: (row: any) => (
               <Flex direction="column" align="center">
                 <Text fw={500} size="sm">
                   {row.name}
                 </Text>
-                <Text fw={300} size="xs">
-                  {row.name}
-                </Text>
               </Flex>
             ),
           },
+          { accessor: "dateFiled", title: "Offset Date" },
+          { accessor: "numberOfHours", title: "Offset Hours" },
+
           {
             accessor: "filingStatus",
             title: "Status",
@@ -91,6 +89,7 @@ export default function Review() {
       <DrawerFilter opened={filter} closed={filterClose} />
       {/* Modal to show offset details */}
       <ViewDetails
+        tabs="Review"
         opened={details}
         onClose={detailsClose}
         buttonClose={detailsClose}
