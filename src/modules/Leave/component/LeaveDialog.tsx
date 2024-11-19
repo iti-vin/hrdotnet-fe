@@ -4,6 +4,7 @@ import Approve from './Dialog/Approve'
 import NewRequest from './Dialog/NewRequest'
 import Filter from './Dialog/Filter'
 import SelectData from './Dialog/SelectData'
+import SelectLeaveType from './Dialog/SelectLeaveType'
 export default function LeaveDialog() {
     return (
         <>
@@ -13,6 +14,7 @@ export default function LeaveDialog() {
             <Filter />
             <SelectData />
             <Alert/>
+            <SelectLeaveType/>
         </>
     );
 }

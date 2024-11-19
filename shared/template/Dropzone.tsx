@@ -55,7 +55,7 @@ export default function Attachment() {
               </Text>
             </Group>
             <Text size="sm" c="dimmed" inline mt={7}>
-              Supported formats: PDF, DOC
+              Supported formats: PDF, DOC, JPG, PNG, TXT, PDF
             </Text>
             <Text size="sm" c="dimmed" inline mt={7}>
               Max File Size: 25mb

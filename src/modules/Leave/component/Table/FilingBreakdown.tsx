@@ -1,16 +1,11 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { DataTable } from 'mantine-datatable';
-import { IconFileText } from "@tabler/icons-react";
 import 'mantine-datatable/styles.layer.css';
-import { LeaveStore } from "@/modules/Leave/LeaveStore";
 import '../../style.css'
 import { DateTimeUtils } from "@shared/utils/DateTimeUtils";
 
 export default function FilingBreakdown() {
 
-    const [page, setPage] = useState(1);
-    const PAGE_SIZE = 15;
-  
     const leaveListColumn = [
         { accessor: 'documentNo', title: 'Document No.', textAlign: 'start' },
         {
@@ -33,8 +28,6 @@ export default function FilingBreakdown() {
             },
         },
     ]
-
-  
 
     const leaveRecordsList = [
         {
@@ -77,7 +70,6 @@ export default function FilingBreakdown() {
     ];
 
 
-    const iconStyle = { width: 'rem(100)', height: 'rem(100)', stroke: '1.5', color: "gray", };
 
     const [selectedRecords, setSelectedRecords] = useState<any[]>([]);
 

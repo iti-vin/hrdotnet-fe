@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "devvin": "vite --host=10.0.1.246 --port=5173",
+    "devdane": "vite --host=10.0.1.51 --port=5173",
     "build": "tsc && vite build",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
