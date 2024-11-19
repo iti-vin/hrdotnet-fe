@@ -1,18 +1,27 @@
+/**
+ * @version    HRDotNet(v.2.0.0)
+ * @author     Hersvin Fred De La Cruz Labastida
+ */
+
 //--- Mantine Modules
 import { Flex, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+
 //--- Tabler Icons
 import { IconFileText } from "@tabler/icons-react";
-//--- Template Modules
-import { Container, Filter, Header, StatusChip } from "@shared/template";
+
+//--- Components(Overtime)
 import {
   NewRequest,
   ViewDetails,
   DrawerFilter,
-} from "@/modules/Overtime/pages/components/";
-//--- Utils Modules
-import { Table } from "@/modules/Overtime/pages/components/";
-//--- Sample Service
+  Table,
+} from "@/modules/Overtime/components/";
+
+//--- Shared
+import { FilingStatus } from "@shared/assets/types/Global";
+import { Container, Filter, Header, StatusChip } from "@shared/template";
+
 import pdf from "@/modules/Overtime/assets/file.pdf";
 
 export default function List() {
@@ -33,26 +42,37 @@ export default function List() {
 
       <Filter filterOpen={filterOpen} />
       <Table
-        statuses={["Filed", "Approved", "Cancelled", "Reviewed"]}
+        statuses={[
+          FilingStatus.Filed,
+          FilingStatus.Approved,
+          FilingStatus.Cancelled,
+          FilingStatus.Reviewed,
+          FilingStatus.Posted,
+        ]}
         columns={[
           { accessor: "documentNo", title: "Document No" },
+          { accessor: "dateTransaction", title: "Transaction Date" },
           { accessor: "sched", title: "Schedule" },
-          { accessor: "code", title: "Employee Code" },
           { accessor: "dateFiled", title: "OT Date" },
           { accessor: "numberOfHours", title: "OT Hours" },
-          { accessor: "dateTransaction", title: "Transaction Date" },
           {
             accessor: "name",
             title: "Processed By",
             textAlign: "center",
             render: (row: any) => (
               <Flex direction="column" align="center">
-                <Text fw={500} size="sm">
-                  {row.name}
-                </Text>
-                <Text fw={300} size="xs">
-                  {row.name}
-                </Text>
+                {row.filingStatus === "Filed"
+                  ? null
+                  : row.filingStatus !== "Posted" && (
+                      <>
+                        <Text fw={500} size="sm">
+                          {row.name}
+                        </Text>
+                        <Text fw={300} size="sm">
+                          Developer
+                        </Text>
+                      </>
+                    )}
               </Flex>
             ),
           },
@@ -89,6 +109,7 @@ export default function List() {
         onClose={requestClose}
         buttonClose={requestClose}
       />
+
       <ViewDetails
         opened={details}
         onClose={detailsClose}

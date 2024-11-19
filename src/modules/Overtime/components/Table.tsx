@@ -2,14 +2,15 @@
 import { DataTable, DataTableColumn } from "mantine-datatable";
 //--- Own Modules
 import { Footer } from "@shared/template";
-import { useOvertimeStore } from "@/modules/Overtime/store/useOT";
 //--- Shared Utils
 import { DateTimeUtils } from "@shared/utils/DateTimeUtils";
-import { OTMainTypes } from "../../assets/types";
+import { FilingStatus } from "@shared/assets/types/Global";
+//--- Data Store for Overtime
+import { useOvertimeStore } from "@/modules/Overtime/store/useOT";
 
 // Data Table Overtime Props
 interface DTOTP {
-  statuses: OTMainTypes["statusArray"];
+  statuses: FilingStatus[];
   columns: DataTableColumn<{}>[];
   rowClick: () => void;
 }
@@ -18,9 +19,7 @@ export default function Table({ statuses, columns, rowClick }: DTOTP) {
 
   const records = items
     .filter((item) =>
-      statuses.includes(
-        item.filing.filingStatus.name as OTMainTypes["statusList"]
-      )
+      statuses.includes(item.filing.filingStatus.name as FilingStatus)
     )
     .map((item) => {
       const fromHours = item.filing.actual.dateFrom;
@@ -34,19 +33,17 @@ export default function Table({ statuses, columns, rowClick }: DTOTP) {
         documentNo: item.filing.documentNo,
         name: item.name,
         code: item.code,
-        branchCode: item.branchId,
+        branchCode: "Branch 3",
         numberOfHours: `${formattedFromHours} - ${formattedToHours}`,
-        dateFiled: DateTimeUtils.dayWithFullDate(item.filing.dateFiled),
+        dateFiled: DateTimeUtils.dayWithDate(item.filing.dateFiled),
         filingStatus: item.filing.filingStatus.name,
         reason: item.filing.reason,
-        dateTransaction: DateTimeUtils.dayWithFullDate(
-          item.filing.dateTransaction
-        ),
+        dateTransaction: DateTimeUtils.dayWithDate(item.filing.dateTransaction),
         actualFrom: item.filing.actual.dateFrom,
         actualTo: item.filing.actual.dateTo,
         requestedFrom: item.filing.requested.dateFrom,
         requestedTo: item.filing.requested.dateTo,
-        sched: "8:00 AM - 6:00 PM",
+        sched: "Next Day",
       };
     });
 

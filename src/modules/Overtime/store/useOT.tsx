@@ -1,6 +1,7 @@
 import { create } from "zustand";
 //--- Types
-import { Items, OTMainTypes } from "@/modules/Overtime/assets/types";
+import { Items } from "@/modules/Overtime/assets/types";
+import { Tabs, FilingStatus } from "@shared/assets/types/Global";
 //--- Sample Data
 import data from "@shared/services/overtime.json";
 
@@ -27,21 +28,20 @@ const useOvertimeStore = create<OvertimeProps>((set) => ({
 
 interface AccessProps {
   notAllowed: boolean;
-  tabs: OTMainTypes["tabs"];
-  statuses: OTMainTypes["statusArray"];
+  tabs: Tabs;
+  statuses: FilingStatus[];
 
-  setTabs: (tabs: OTMainTypes["tabs"]) => void;
-  setStatuses: (status: OTMainTypes["statusArray"]) => void;
+  setTabs: (tabs: Tabs) => void;
+  setStatuses: (status: FilingStatus[]) => void;
 }
 
 const useAccess = create<AccessProps>((set) => ({
   notAllowed: true,
-  tabs: "List",
+  tabs: Tabs.List,
   statuses: [],
 
-  setTabs: (tabs: OTMainTypes["tabs"]) => set({ tabs: tabs }),
-  setStatuses: (status: OTMainTypes["statusArray"]) =>
-    set({ statuses: status }),
+  setTabs: (tabs: Tabs) => set({ tabs: tabs }),
+  setStatuses: (status: FilingStatus[]) => set({ statuses: status }),
 }));
 
 export { useOvertimeStore, useAccess };

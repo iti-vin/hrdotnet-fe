@@ -17,8 +17,7 @@ export const Profile = () => {
       shadow="md"
       width={250}
       position="bottom-end"
-      radius={20}
-      zIndex={9999}
+      radius={10}
       transitionProps={{ transition: "fade-down", duration: 100 }}
     >
       <Menu.Target>
@@ -50,12 +49,11 @@ export const Profile = () => {
           <p className="custom-gradient bg-clip-text text-transparent font-semibold poppins text-2xl">
             Welcome, Jane!
           </p>
-          <p className="text-xs text-gray-600 poppins">
-            Customize your account here.
-          </p>
+          <p className="text-xs text-gray-600 poppins">HR Admin</p>
         </Flex>
         <Menu.Item
           className="poppins"
+          color="#6d6d6d"
           fw={500}
           leftSection={
             <IconUserCircle
@@ -69,6 +67,7 @@ export const Profile = () => {
         <Menu.Item
           fw={500}
           className="poppins"
+          color="#6d6d6d"
           leftSection={
             <IconReceipt style={{ width: rem(20), height: rem(20) }} />
           }
@@ -78,6 +77,7 @@ export const Profile = () => {
         <Menu.Item
           fw={500}
           className="poppins"
+          color="#6d6d6d"
           leftSection={
             <IconInfoCircle style={{ width: rem(20), height: rem(20) }} />
           }
@@ -87,6 +87,7 @@ export const Profile = () => {
         <Menu.Item
           fw={500}
           className="poppins"
+          color="#6d6d6d"
           leftSection={
             <IconShieldLock style={{ width: rem(20), height: rem(20) }} />
           }
@@ -96,6 +97,7 @@ export const Profile = () => {
         <Menu.Item
           fw={500}
           className="poppins"
+          color="#6d6d6d"
           leftSection={
             <IconLogout style={{ width: rem(20), height: rem(20) }} />
           }
@@ -113,6 +115,7 @@ export const Profile = () => {
         <Menu.Item
           fw={500}
           className="poppins"
+          color="#6d6d6d"
           leftSection={
             <Avatar
               size="sm"
@@ -127,6 +130,7 @@ export const Profile = () => {
         <Menu.Item
           fw={500}
           className="poppins"
+          color="#6d6d6d"
           leftSection={
             <Avatar
               size="sm"

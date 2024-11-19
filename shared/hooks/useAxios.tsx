@@ -29,8 +29,8 @@ const connect = async (
   url: string,
   type: string,
   cookie?: string,
-  data?: any
-): Promise<AxiosResponse<any>> => {
+  data?: unknown
+): Promise<AxiosResponse<unknown>> => {
   const config: AxiosRequestConfig = {
     method: method,
     url: url,

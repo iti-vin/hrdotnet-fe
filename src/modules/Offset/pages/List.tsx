@@ -6,18 +6,23 @@
 //--- Mantine Modules
 import { Flex, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+
 //--- Tabler Icons
 import { IconFileText } from "@tabler/icons-react";
+
 //--- Components for Offset
 import {
   DrawerFilter,
   NewRequest,
   Table,
   ViewDetails,
-} from "@/modules/Offset/pages/components";
-import pdf from "@/modules/Offset/assets/file.pdf";
-//--- Template Modules
+} from "@/modules/Offset/components";
+
+//--- Shared
+import { FilingStatus } from "@shared/assets/types/Global";
 import { Container, Filter, Header, StatusChip } from "@shared/template";
+
+import pdf from "@/modules/Offset/assets/file.pdf";
 
 export default function List() {
   const [addRequest, { open: requestOpen, close: requestClose }] =
@@ -29,20 +34,29 @@ export default function List() {
   return (
     <Container>
       {/* Header consist of title container and the Button */}
-      <Header buttonClick={requestOpen} title="Offset" buttonLabel="Endorse" />
+      <Header
+        buttonClick={requestOpen}
+        title="Offset"
+        buttonLabel="New Request"
+      />
 
       {/* Filter contains the pills and button icons for filtering */}
       <Filter filterOpen={filterOpen} />
 
       <Table
-        statuses={["Filed", "Reviewed", "Cancelled", "Approved"]}
+        statuses={[
+          FilingStatus.Filed,
+          FilingStatus.Approved,
+          FilingStatus.Cancelled,
+          FilingStatus.Reviewed,
+        ]}
         columns={[
           { accessor: "documentNo", title: "Document No" },
-          { accessor: "dateFiled", title: "Schedule" },
+          { accessor: "dateTransaction", title: "Transaction Date" },
+          { accessor: "sched", title: "Schedule" },
           { accessor: "code", title: "Employee Code" },
           { accessor: "dateFiled", title: "Offset Date" },
           { accessor: "numberOfHours", title: "Offset Hours" },
-          { accessor: "dateTransaction", title: "Transaction Date" },
           {
             accessor: "name",
             title: "Processed By",
@@ -53,7 +67,7 @@ export default function List() {
                   {row.name}
                 </Text>
                 <Text fw={300} size="xs">
-                  {row.name}
+                  Quality Assurance
                 </Text>
               </Flex>
             ),
@@ -97,6 +111,7 @@ export default function List() {
 
       {/* Modal to show offset details */}
       <ViewDetails
+        tabs="List"
         opened={details}
         onClose={detailsClose}
         buttonClose={detailsClose}

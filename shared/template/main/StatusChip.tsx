@@ -24,7 +24,7 @@ export default function StatusChip({ label }: Status) {
   return (
     <Badge
       color={color}
-      className="w-24 h-7 rounded-lg normal-case font-medium text-md"
+      className="w-32 h-8 rounded-xl normal-case font-medium text-[13px]"
     >
       {label}
     </Badge>

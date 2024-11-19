@@ -1,0 +1,347 @@
+//--- React Modules
+import React from "react";
+//--- Mantine Modules
+import {
+  ActionIcon,
+  Button,
+  Flex,
+  Group,
+  rem,
+  Select,
+  Text,
+  Textarea,
+  TextInput,
+  useMatches,
+} from "@mantine/core";
+import { TimeInput } from "@mantine/dates";
+import { useDisclosure } from "@mantine/hooks";
+//--- Tabler Icons
+import { IconCaretDownFilled, IconClock, IconDots } from "@tabler/icons-react";
+//-- Shared Template
+import { Modal, Dropzone } from "@shared/template/";
+import { SuccessRequest } from "./AlertOT";
+import { DataTable } from "mantine-datatable";
+
+interface ModalRequest {
+  opened: boolean;
+  onClose: () => void;
+  buttonClose: () => void;
+}
+
+interface OvertimeData {
+  date: string;
+  schedule: string;
+  actualIn: string;
+  actualOut: string;
+}
+
+export default function NewRequest({
+  opened,
+  onClose,
+  buttonClose,
+}: ModalRequest) {
+  const size = useMatches({
+    base: "100%",
+    sm: "70%",
+  });
+
+  const [successReq, { open: successReqOpen, close: successReqClose }] =
+    useDisclosure(false);
+
+  const [show, setShow] = React.useState(false);
+  const [selectedOption, setSelectedOption] =
+    React.useState<OvertimeData | null>(null);
+
+  const [value, setValue] = React.useState<string>("");
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const input = event.target.value.replace(/\D/g, "");
+    const formattedValue = formatInput(input);
+    setValue(formattedValue);
+  };
+
+  const formatInput = (input: string): string => {
+    const regex = /(\d{0,4})(\d{0,4})(\d{0,4})/;
+    const matches = input.match(regex);
+    if (!matches) return "";
+
+    const part1 = matches[1] || "";
+    const part2 = matches[2] || "";
+    const part3 = matches[3] || "";
+
+    return `${part1}${part2 ? "-" + part2 : ""}${
+      part3 ? "-" + part3 : ""
+    }`.trim();
+  };
+
+  const data: OvertimeData[] = [
+    {
+      date: "10/11/2024",
+      schedule: "Next Day",
+      actualIn: "6:00PM",
+      actualOut: "10:00PM",
+    },
+    {
+      date: "10/12/2024",
+      schedule: "Next Day",
+      actualIn: "7:00PM",
+      actualOut: "10:00PM",
+    },
+    {
+      date: "10/13/2024",
+      schedule: "Same Day",
+      actualIn: "8:00PM",
+      actualOut: "10:00PM",
+    },
+    {
+      date: "10/14/2024",
+      schedule: "Next Day",
+      actualIn: "9:00PM",
+      actualOut: "10:00PM",
+    },
+    {
+      date: "10/15/2024",
+      schedule: "Next Day",
+      actualIn: "9:00PM",
+      actualOut: "10:00PM",
+    },
+    {
+      date: "10/16/2024",
+      schedule: "Next Day",
+      actualIn: "9:00PM",
+      actualOut: "10:00PM",
+    },
+  ];
+
+  const handleSelectClick = () => {
+    setShow(true);
+  };
+
+  const handleOptionSelect = (option: OvertimeData) => {
+    setSelectedOption(option);
+    setShow(false);
+  };
+
+  const ref = React.useRef<HTMLInputElement>(null);
+
+  const pickerControl = (
+    <ActionIcon
+      variant="subtle"
+      color="gray"
+      onClick={() => ref.current?.showPicker()}
+    >
+      <IconClock style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
+    </ActionIcon>
+  );
+
+  return (
+    <>
+      <Modal
+        opened={opened}
+        onClose={onClose}
+        centered
+        size={size}
+        buttonClose={buttonClose}
+        title="New Request"
+      >
+        <Group px={20} className="w-full">
+          <Select
+            size="md"
+            label="Overtime Date"
+            withAsterisk
+            placeholder={
+              selectedOption
+                ? `(${selectedOption.date})  ${selectedOption.actualIn} - ${selectedOption.actualOut}`
+                : ""
+            }
+            radius={8}
+            onClick={handleSelectClick}
+            rightSection={<IconDots />}
+            className="border-none w-full mb-5"
+            styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
+            readOnly
+          />
+
+          <Modal
+            opened={show}
+            onClose={() => setShow(false)}
+            buttonClose={() => setShow(false)}
+            title="Select Overtime Date"
+            size="lg"
+          >
+            <Flex>
+              <Text>Search By:</Text>
+            </Flex>
+            <DataTable
+              columns={[
+                { accessor: "date", title: "Date" },
+                { accessor: "schedule", title: "Schedule" },
+                { accessor: "actualIn", title: "Actual In" },
+                { accessor: "actualOut", title: "Actual Out" },
+              ]}
+              idAccessor="date"
+              key="date"
+              records={data}
+              striped={true}
+              highlightOnHover={true}
+              withTableBorder={true}
+              className="select-none"
+              onRowClick={(data) => {
+                handleOptionSelect(data.record);
+              }}
+              page={1}
+              onPageChange={() => {}}
+              totalRecords={data.length}
+              recordsPerPage={5}
+              paginationText={({ totalRecords }) =>
+                `${totalRecords} items found in (0.225) seconds`
+              }
+              styles={{
+                header: {
+                  color: "rgba(109, 109, 109, 0.6)",
+                  fontWeight: 500,
+                },
+                root: {
+                  color: "rgba(0, 0, 0, 0.6)",
+                },
+              }}
+            />
+          </Modal>
+          <Flex
+            direction={{ base: "column", sm: "row" }}
+            justify="space-between"
+            className="w-full"
+            gap={20}
+          >
+            <Select
+              size="md"
+              label="Shift"
+              withAsterisk
+              placeholder="Schedule 001"
+              radius={8}
+              data={["Next Day", "Same Day"]}
+              rightSection={<IconCaretDownFilled />}
+              className="border-none w-full"
+              styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
+            />
+            <TextInput
+              size="md"
+              radius={8}
+              label="Reference No."
+              placeholder="0000-0000-0000"
+              withAsterisk
+              className="w-full"
+              value={value}
+              onChange={handleChange}
+              max={14}
+              styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
+            />
+          </Flex>
+          <Flex
+            direction={{ base: "column", sm: "row" }}
+            justify="space-between"
+            className="w-full"
+            gap={20}
+          >
+            <TimeInput
+              size="md"
+              radius={8}
+              label="Actual OT In"
+              withAsterisk
+              className="w-full"
+              styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
+            />
+            <TimeInput
+              size="md"
+              radius={8}
+              label="Actual OT out"
+              withAsterisk
+              className="w-full"
+              styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
+            />
+          </Flex>
+          <Flex
+            direction={{ base: "column", sm: "row" }}
+            justify="space-between"
+            className="w-full"
+            gap={20}
+          >
+            <TimeInput
+              size="md"
+              radius={8}
+              label="OT From"
+              withAsterisk
+              className="w-full"
+              styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
+              ref={ref}
+              rightSection={pickerControl}
+            />
+            <TimeInput
+              size="md"
+              radius={8}
+              label="OT To"
+              withAsterisk
+              className="w-full"
+              styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
+              ref={ref}
+              rightSection={pickerControl}
+            />
+          </Flex>
+          <Textarea
+            size="md"
+            label="Reason"
+            placeholder="Briefly state the reason for filing overtime"
+            withAsterisk
+            className="w-full"
+            styles={{
+              input: { height: "100px" },
+              label: { fontSize: "16px", color: "#6d6d6d" },
+            }}
+            radius={8}
+          />
+          <Dropzone
+            content={
+              <Group gap={5}>
+                <Text
+                  size="xl"
+                  c="#6d6d6d"
+                  inline
+                  className="flex justify-center"
+                >
+                  Drag & drop files or
+                </Text>
+                <Text size="xl" className="text-blue-400 underline">
+                  Browse
+                </Text>
+              </Group>
+            }
+          />
+          <Flex justify="flex-end" className="w-full">
+            <Button
+              variant="transparent"
+              size="md"
+              radius={10}
+              w={127}
+              children={
+                <Text fw={500} c="white">
+                  SUBMIT
+                </Text>
+              }
+              onClick={() => {
+                successReqOpen();
+                onClose();
+              }}
+              classNames={{ root: "br-gradient" }}
+            />
+          </Flex>
+        </Group>
+      </Modal>
+
+      <SuccessRequest
+        opened={successReq}
+        onClose={successReqClose}
+        buttonClose={successReqClose}
+      />
+    </>
+  );
+}

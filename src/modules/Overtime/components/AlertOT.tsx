@@ -1,9 +1,12 @@
 import { Alert } from "@shared/template/";
+import React from "react";
 
 interface AlertProps {
   opened: boolean;
   onClose: () => void;
   buttonClose: () => void;
+
+  tabs?: "List" | "Review" | "Approve";
 }
 
 export const SuccessRequest = ({ ...props }: AlertProps) => {
@@ -50,5 +53,34 @@ export const Cancelled = ({ ...props }: AlertProps) => {
       content="
           The request has been cancelled."
     />
+  );
+};
+
+export const Alerts = ({ opened, onClose, buttonClose, tabs }: AlertProps) => {
+  return (
+    <React.Fragment>
+      {tabs === "List" && (
+        <SuccessRequest
+          opened={opened}
+          onClose={onClose}
+          buttonClose={buttonClose}
+        />
+      )}
+      {tabs === "Review" && (
+        <SuccessEndorse
+          opened={opened}
+          onClose={onClose}
+          buttonClose={buttonClose}
+        />
+      )}
+      {tabs === "Approve" && (
+        <SuccessApprove
+          opened={opened}
+          onClose={onClose}
+          buttonClose={buttonClose}
+        />
+      )}
+      <Cancelled opened={false} onClose={() => {}} buttonClose={() => {}} />
+    </React.Fragment>
   );
 };

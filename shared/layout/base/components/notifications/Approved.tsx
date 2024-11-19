@@ -36,7 +36,12 @@ export const Approved = ({ filingStatus }: { filingStatus?: string }) => {
                   </Text>
                 </Flex>
 
-                <Flex direction="row" justify="space-between" align="end">
+                <Flex
+                  direction="row"
+                  justify="space-between"
+                  align="end"
+                  className="w-full"
+                >
                   <Flex direction="row" align="center" justify="start" gap={5}>
                     <IconClock size={13} stroke={1} />
                     <Text size="xs" c="dimmed">

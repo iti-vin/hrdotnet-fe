@@ -16,7 +16,7 @@ import {
   IconHourglass,
 } from "@tabler/icons-react";
 
-export const iconMap: any = {
+export const iconMap: unknown = {
   IconCalendarEvent: IconCalendarEvent,
   IconCalendarTime: IconCalendarTime,
   IconBriefcase: IconBriefcase,

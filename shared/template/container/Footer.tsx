@@ -2,10 +2,10 @@ import { Pagination, Group, Text, em } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 interface PaginationTypes {
   total: number;
-  onChange: (page: any) => void;
+  onChange: (page: number) => void;
   pageSize: number;
   recordsLength: number;
-  currentPage?: any;
+  currentPage: number;
 }
 export default function Footer({
   total,
@@ -18,11 +18,10 @@ export default function Footer({
   return (
     <Group justify={isMobile ? "center" : "space-between"} align="center">
       <Text size="sm" className="text-gray-500">
-        Showing {(currentPage - 1) * pageSize + 1} -{" "}
-        {Math.min(currentPage * pageSize, recordsLength)} of {recordsLength}{" "}
-        records
+        Showing data {Math.min(currentPage * pageSize, recordsLength)} out of{" "}
+        {recordsLength} entries found in (0.225) seconds
       </Text>
-      <Pagination onChange={onChange} total={total} />
+      <Pagination onChange={onChange} total={total} size="sm" />
     </Group>
   );
 }

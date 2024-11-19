@@ -10,12 +10,7 @@ import {
   TextInput,
 } from "@mantine/core";
 import { DateRange } from "@shared/template";
-import {
-  IconCaretDownFilled,
-  IconDots,
-  IconSearch,
-  IconX,
-} from "@tabler/icons-react";
+import { IconCaretDownFilled, IconDots, IconX } from "@tabler/icons-react";
 import { useDateRangeStore } from "@shared/hooks/useDateRange";
 import { useMediaQuery } from "@mantine/hooks";
 
@@ -36,7 +31,7 @@ export default function DrawerFilter({ opened, closed }: Props) {
       withCloseButton={false}
       overlayProps={{ backgroundOpacity: 0, blur: 0 }}
     >
-      <Stack px={10} className="w-full h-lvh mt-20" style={{ height: "100%" }}>
+      <Stack px={10} className="w-full h-lvh" style={{ height: "100%" }}>
         <Group className="w-full">
           <Flex className="w-full" direction="column" gap={10}>
             <Flex direction="row" justify="space-between">
@@ -59,19 +54,19 @@ export default function DrawerFilter({ opened, closed }: Props) {
             radius={8}
             label="Document Number"
             placeholder="Type Document Number"
-            withAsterisk
             className="w-full"
+            styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
           />
           <Divider size={0.5} color="#edeeed" className="w-full" />
           <MultiSelect
             size="sm"
             label="Overtime Date"
-            withAsterisk
             placeholder="Select Overtime Date"
             radius={8}
             data={["Vacation Leave", "Sick Leave", "Emergency Leave"]}
             rightSection={<IconCaretDownFilled />}
             className="border-none w-full"
+            styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
           />
           <Divider size={0.5} color="#edeeed" className="w-full" />
           <DateRange
@@ -85,7 +80,7 @@ export default function DrawerFilter({ opened, closed }: Props) {
           />
           <Divider size={0.5} color="#edeeed" className="w-full" />
           <Group gap={2} className="w-full">
-            <Text size="sm" fw={500}>
+            <Text size="sm" fw={500} c="#6d6d6d">
               Transaction Date
             </Text>
             <DateRange
@@ -104,20 +99,19 @@ export default function DrawerFilter({ opened, closed }: Props) {
             radius={8}
             label="Processed By"
             placeholder="Name"
-            withAsterisk
             className="w-full"
-            rightSection={<IconSearch />}
+            styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
           />
           <Divider size={0.5} color="#edeeed" className="w-full" />
           <MultiSelect
             size="sm"
             label="Status"
-            withAsterisk
             placeholder="Select Status"
             radius={8}
             data={["Filed", "Approved", "Cancelled", "Reviewed"]}
             rightSection={<IconDots />}
             className="border-none w-full mb-5"
+            styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
           />
           <Divider size={0.5} color="#edeeed" className="w-full" />
         </Group>
@@ -128,7 +122,7 @@ export default function DrawerFilter({ opened, closed }: Props) {
               size="xs"
               radius={10}
               w={100}
-              children={<Text fw={500}>Clear</Text>}
+              children={<Text fw={500}>CLEAR</Text>}
             />
             <Button
               variant="transparent"
@@ -138,7 +132,7 @@ export default function DrawerFilter({ opened, closed }: Props) {
               w={100}
               children={
                 <Text fw={500} c="white">
-                  Filter
+                  FILTER
                 </Text>
               }
             />

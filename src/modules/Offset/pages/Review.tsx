@@ -6,17 +6,18 @@
 //--- Mantine Modules
 import { Flex, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+
 //--- Tabler Icons
 import { IconFileText, IconFolderPlus } from "@tabler/icons-react";
+
 //--- Components for Offset
-import {
-  DrawerFilter,
-  Table,
-  ViewDetails,
-} from "@/modules/Offset/pages/components";
-import pdf from "@/modules/Offset/assets/file.pdf";
-//--- Template Modules
+import { DrawerFilter, Table, ViewDetails } from "@/modules/Offset/components";
+
+//--- Shared
+import { FilingStatus } from "@shared/assets/types/Global";
 import { Container, Filter, Header, StatusChip } from "@shared/template";
+
+import pdf from "@/modules/Overtime/assets/file.pdf";
 
 export default function Review() {
   const [filter, { open: filterOpen, close: filterClose }] =
@@ -35,30 +36,28 @@ export default function Review() {
       <Filter filterOpen={filterOpen} />
 
       <Table
-        statuses={["Filed"]}
+        statuses={[FilingStatus.Filed, FilingStatus.Reviewed]}
         columns={[
           { accessor: "documentNo", title: "Document No" },
+          { accessor: "dateTransaction", title: "Transaction Date" },
           { accessor: "branchCode", title: "Branch Code" },
           { accessor: "dateFiled", title: "Schedule" },
           { accessor: "code", title: "Employee Code" },
-          { accessor: "dateFiled", title: "Offset Date" },
-          { accessor: "numberOfHours", title: "Offset Hours" },
-          { accessor: "dateTransaction", title: "Transaction Date" },
           {
             accessor: "name",
-            title: "Processed By",
+            title: "Employee Name",
             textAlign: "center",
             render: (row: any) => (
               <Flex direction="column" align="center">
                 <Text fw={500} size="sm">
                   {row.name}
                 </Text>
-                <Text fw={300} size="xs">
-                  {row.name}
-                </Text>
               </Flex>
             ),
           },
+          { accessor: "dateFiled", title: "Offset Date" },
+          { accessor: "numberOfHours", title: "Offset Hours" },
+
           {
             accessor: "filingStatus",
             title: "Status",
@@ -90,6 +89,7 @@ export default function Review() {
       <DrawerFilter opened={filter} closed={filterClose} />
       {/* Modal to show offset details */}
       <ViewDetails
+        tabs="Review"
         opened={details}
         onClose={detailsClose}
         buttonClose={detailsClose}
