@@ -2,7 +2,7 @@ import 'mantine-datatable/styles.layer.css';
 import { LeaveStore } from "../../LeaveStore";
 import { Autocomplete, Button, Divider, Drawer, Modal, Select, TextInput } from "@mantine/core";
 import { Text } from "@mantine/core";
-import { IconCalendarMonth, IconCaretDown, IconMail, IconSearch, IconX } from '@tabler/icons-react';
+import { IconCalendarMonth, IconCaretDown, IconCaretDownFilled, IconMail, IconSearch, IconX } from '@tabler/icons-react';
 import { DatePicker, DatePickerInput } from '@mantine/dates';
 import { useEffect, useState } from 'react';
 import '@mantine/dates/styles.css';
@@ -27,17 +27,7 @@ export default function Filter() {
     const isMobile = useMediaQuery("(max-width: 425px)");
     return (
         <Drawer size={isMobile ? "100%" : "xs"} overlayProps={{ backgroundOpacity: 0, blur: 0 }}  opened={ACTION == 'FILTER'} onClose={() => SET_ACTION('')} radius="md" styles={{ title: { color: '#559CDA', fontSize: 22, fontWeight: 600 } }} title={'Filter By'} position='right' >
-            <div className='mt-8 flex justify-between'>
-                <Text fw={600} fz={22} c="#559CDA" >
-                    Filter By
-                </Text>
-                <IconX
-                    onClick={() => SET_ACTION('')}
-                    className="cursor-pointer"
-                    size={30}
-                    color="gray"
-                />
-            </div>
+  
             <div className='flex flex-col gap-6'>
                 <div className='flex flex-col gap-2'>
                     <Divider size="xs" color='#6D6D6D' />
@@ -95,6 +85,7 @@ export default function Filter() {
                             placeholder={leavePlaceHolder}
                             data={['Vacation Leave', 'Sick Leave', 'Emergency']}
                             styles={{ label: { color: '#6D6D6D', fontWeight: 500 } }}
+                            rightSection={<IconCaretDownFilled />}
                         />
                     </div>
                 </div>
@@ -155,9 +146,8 @@ export default function Filter() {
                     <TextInput
                         radius="md"
                         size="md"
-                        label="Name"
-                        placeholder="Name"
-                        rightSection={<IconSearch size={20} />}
+                        label="Processed By"
+                        placeholder="Processed By"
                         styles={{ label: { color: '#6D6D6D', fontWeight: 500 } }}
                     />
                 </div>)}
@@ -174,6 +164,7 @@ export default function Filter() {
                             placeholder={statusPlaceHolder}
                             data={['Filed', 'Approved', 'Cancelled', 'Reviewed']}
                             styles={{ label: { color: '#6D6D6D', fontWeight: 500 } }}
+                            rightSection={<IconCaretDownFilled />}
                         />
                     </div>
                 </div>
@@ -185,12 +176,12 @@ export default function Filter() {
                                 className="w-2/6"
                                 radius="md"
                                 size="sm"
-                            >Clear</Button>
+                            >CLEAR</Button>
                             <Button
                                 className="w-2/6 border-none  br-gradient"
                                 radius="md"
                                 size="sm"
-                            >Filter</Button>
+                            >FILTER</Button>
                         </div>
                     </div>
                 </div>
