@@ -24,7 +24,7 @@ export default function Header({
   visibleBack?: boolean;
 }) {
   return (
-    <AppShell.Header zIndex={999}>
+    <AppShell.Header>
       {visibleBack ? (
         <Flex justify="center" align="center" pl={20}>
           <NavLink to="/">

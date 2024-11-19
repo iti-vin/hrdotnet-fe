@@ -1,5 +1,5 @@
-import { ActionIcon, Text } from '@mantine/core';
-import { IconFileText, IconFilterSearch, IconCircleCheck, IconFolderPlus, IconFilePlus, IconFilter } from "@tabler/icons-react";
+import { Text } from '@mantine/core';
+import { IconCircleCheck, IconFolderPlus, IconFilePlus } from "@tabler/icons-react";
 import 'mantine-datatable/styles.layer.css';
 import { Button } from '@mantine/core';
 import { LeaveStore } from "@/modules/Leave/LeaveStore";
@@ -11,7 +11,6 @@ export default function LeaveHeader() {
 
     const { ACTIVE_TAB, SET_ACTION } = LeaveStore();
 
-    // Array of action objects with icons
     const leaveObject = [
         { tab: 'list', text: 'New Request', value: 'NewRequest', icon: <IconFilePlus style={iconStyle} size={24} /> },
         { tab: 'review', text: 'Endorse', value: 'Endorse', icon: <IconFolderPlus style={iconStyle} size={24} /> },
@@ -33,15 +32,10 @@ export default function LeaveHeader() {
     return (
         <div className=' flex flex-col' >
             <div className="flex flex-col sm:flex-row justify-between pb-4 sm:pb-2">
-                {/* Use the function to get the action text */}
                 <Text size="md" style={{ color: '#559CDA' }} className="font-semibold text-2xl p-2 text-center sm:text-start">
                     Leave
                 </Text>
                 <div className="flex justify-between items-center gap-2 sm:gap-6 self-center">
-                    {/* <ActionIcon variant="filled" size="lg" aria-label="Settings" color="gray" radius="md" onClick={() => { SET_ACTION('FILTER') }} h={36}>
-                    <IconFilter style={{ width: "70%", height: "70%" }} stroke={1.5} />
-                    </ActionIcon> */}
-
                     <Button h={36} onClick={() => { SET_ACTION(getActionValue(ACTIVE_TAB) ?? '') }} leftSection={
                         <div className="">
                             {getActionIcon(ACTIVE_TAB)}

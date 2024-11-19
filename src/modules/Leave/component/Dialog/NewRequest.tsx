@@ -1,16 +1,15 @@
 import 'mantine-datatable/styles.layer.css';
 import { LeaveStore } from "../../LeaveStore";
-import { Autocomplete, Button, Divider, Modal, Select, Textarea, TextInput } from "@mantine/core";
+import { Button, Divider, Modal, Select, Textarea, TextInput } from "@mantine/core";
 import { Text } from "@mantine/core";
-import { IconCalendarMonth, IconCaretDown, IconCircleCheck, IconCloudUpload, IconFilePlus, IconHome, IconMail } from '@tabler/icons-react';
-import { DatePicker, DatePickerInput } from '@mantine/dates';
+import { IconCalendarMonth, IconCircleCheck } from '@tabler/icons-react';
+import { DatePickerInput } from '@mantine/dates';
 import { useState } from 'react';
 import '@mantine/dates/styles.css';
 import '@mantine/core/styles.css';
 import '@mantine/carousel/styles.css';
 import { Carousel } from '@mantine/carousel';
-import { Image, useMatches } from '@mantine/core';
-import { useMediaQuery } from '@mantine/hooks';
+import { useMatches } from '@mantine/core';
 import Dropzone from '@shared/template/Dropzone'
 
 export default function Add() {
@@ -18,8 +17,6 @@ export default function Add() {
 
     const { ACTION, SET_ACTION, SET_ALERT } = LeaveStore();
     const iconStyle = { width: 'rem(100)', height: 'rem(100)', stroke: '1.5', color: '#559CDA', };
-    const matches = useMediaQuery('(min-width: 56.25em)');
-    const sm2 = useMediaQuery('(min-width: 640px)');
 
     const leaveTypes = [
         { count: 6, label: "Vacation Leave" },
@@ -49,7 +46,7 @@ export default function Add() {
     const [startDate, setStartDate] = useState<Date | null>(null);
 
     return (
-        <Modal zIndex={999999} opened={ACTION == 'NewRequest'} onClose={() => SET_ACTION('')} styles={{ title: { color: '#559CDA', fontSize: 22, fontWeight: 600 } }} title={'New Request'} centered size={modalSize} padding={30}>
+        <Modal opened={ACTION == 'NewRequest'} onClose={() => SET_ACTION('')} styles={{ title: { color: '#559CDA', fontSize: 22, fontWeight: 600 } }} title={'New Request'} centered size={modalSize} padding={30}>
             <div className='flex flex-col gap-4' style={{ color: '#6D6D6D' }}>
                 <Divider size="xs" color='#6D6D6D' />
                 <div>
@@ -99,11 +96,10 @@ export default function Add() {
                         placeholder="Select Leave Option"
                         className="w-full sm:w-1/2"
                     />
-                    <Select
+                    <TextInput
                         size="md"
                         radius="md"
                         label="Reference Number"
-                        data={['Vacation Leave', 'Sick Leave', 'Emergency Leave', 'Birthday Leave']}
                         placeholder="Input Refence Number (if necessary)"
                         className="w-full sm:w-1/2"
                     />
@@ -150,7 +146,7 @@ export default function Add() {
                     className="w-2/4 sm:w-2/5 md:w-1/6  br-gradient self-end border-none"
                     radius="md"
                     size="md"
-                >Submit</Button>
+                >SUBMIT</Button>
             </div>
         </Modal>
     );

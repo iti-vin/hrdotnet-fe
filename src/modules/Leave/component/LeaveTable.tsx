@@ -349,6 +349,17 @@ export default function LeaveTable() {
             status: "Approved",
             attachment: "EmergencyNote.pdf",
             isWithinCutOff: false
+        },
+        {
+            documentNo: 8,
+            leaveType: "Emergency Leave",
+            leaveFrom: "2024-10-10",
+            leaveTo: "2024-10-12",
+            transactionDate: "2024-10-09",
+            processedBy: "Manager F",
+            status: "Approved",
+            attachment: "EmergencyNote.pdf",
+            isWithinCutOff: false
         }
     ];
 
@@ -377,7 +388,7 @@ export default function LeaveTable() {
             idAccessor="documentNo"
             columns={(ACTIVE_TAB == 'list' ? (leaveListColumn as any) : (leaveColumn as any))}
             records={(ACTIVE_TAB == 'list' ? (leaveRecordsList as any) : ACTIVE_TAB == 'review' ? (leaveRecordsReview as any) : (leaveRecordsApprove as any))}
-            paginationText={({ from, to, totalRecords }) => `Showing data ${from} out ${to} of ${totalRecords} entries (0.225) seconds`}
+            paginationText={({ from, to, totalRecords }) => `Showing data ${to} out of ${totalRecords} entries found (0.225) seconds`}
             onRowClick={(data) => {
                 SET_SELECTED_DATA(data.record)
             }}
