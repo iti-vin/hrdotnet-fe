@@ -14,7 +14,23 @@ import {
   IconNotes,
   IconTimeline,
   IconHourglass,
+  IconUsersGroup,
+  IconSitemap,
+  IconCoins,
+  IconCash,
+  IconCashRegister,
+  IconFileChart,
+  IconReplace,
+  IconProgressDown,
+  IconClock2,
+  IconChartInfographic,
+  IconFileReport,
+  IconChartHistogram,
+  IconChartLine,
+  IconMoneybag
 } from "@tabler/icons-react";
+import { ChartColumn, HandCoins, SquareChartGantt } from "lucide-react";
+
 
 export const iconMap: unknown = {
   IconCalendarEvent: IconCalendarEvent,
@@ -32,4 +48,21 @@ export const iconMap: unknown = {
   IconNotes: IconNotes,
   IconTimeline: IconTimeline,
   IconHourglass: IconHourglass,
+  IconUsersGroup: IconUsersGroup,
+  IconSitemap: IconSitemap,
+  IconCoins: IconCoins,
+  IconCash: IconCash,
+  IconCashRegister: IconCashRegister,
+  IconFileChart: IconFileChart,
+  HandCoins: HandCoins,
+  IconReplace: IconReplace,
+  IconProgressDown: IconProgressDown,
+  IconClock2: IconClock2,
+  ChartColumn: ChartColumn,
+  IconChartInfographic: IconChartInfographic,
+  IconFileReport: IconFileReport,
+  IconChartHistogram: IconChartHistogram,
+  SquareChartGantt:SquareChartGantt,
+  IconChartLine:IconChartLine,
+  IconMoneybag:IconMoneybag
 };
