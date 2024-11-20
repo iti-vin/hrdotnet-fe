@@ -2,7 +2,7 @@ import 'mantine-datatable/styles.layer.css';
 import { LeaveStore } from "../../LeaveStore";
 import { Divider, Modal, Popover, Textarea, TextInput } from "@mantine/core";
 import { Text } from "@mantine/core";
-import { IconCopy, IconDownload, IconFilePlus, IconFileUpload, IconX } from '@tabler/icons-react';
+import { IconCopy, IconFilePlus, IconFileUpload, IconX } from '@tabler/icons-react';
 import { DatePickerInput } from '@mantine/dates';
 import { useEffect, useState } from 'react';
 import '@mantine/dates/styles.css';
@@ -100,7 +100,7 @@ export default function SelectData() {
                     />
                 </div>
             </div>
-            <div className='flex flex-col gap-8 mt-6' style={{ color: '#6D6D6D' }}>
+            <div className='flex flex-col gap-5 mt-6' style={{ color: '#6D6D6D' }}>
                 <Divider size="xs" color='#6D6D6D' />
                 <div className='flex flex-col md:flex-row gap-6'>
 
@@ -111,7 +111,7 @@ export default function SelectData() {
                             <Text >Leave Type</Text>
                             <TextInput
                                 disabled={isReadOnly}
-                                size="lg"
+                                size="md"
                                 radius="md"
                                 // data={['Vacation Leave', 'Sick Leave', 'Emergency Leave', 'Birthday Leave']}
                                 placeholder="Select Leave Type"
@@ -138,7 +138,7 @@ export default function SelectData() {
                                     <DatePickerInput
                                         disabled={isReadOnly}
                                         radius="md"
-                                        size="lg"
+                                        size="md"
                                         placeholder="Start Date"
                                         value={startDate}
                                         onChange={setStartDate}
@@ -150,7 +150,7 @@ export default function SelectData() {
                                     <DatePickerInput
                                         disabled={isReadOnly}
                                         radius="md"
-                                        size="lg"
+                                        size="md"
                                         placeholder="End Date"
                                         value={startDate}
                                         onChange={setStartDate}
@@ -163,7 +163,7 @@ export default function SelectData() {
                                 <TextInput
                                     disabled={isReadOnly}
                                     radius="md"
-                                    size="lg"
+                                    size="md"
                                     placeholder="Total Number of Days"
 
                                 />
@@ -174,9 +174,8 @@ export default function SelectData() {
                                 <TextInput
                                     disabled={isReadOnly}
                                     radius="md"
-                                    size="lg"
+                                    size="md"
                                     placeholder="00-0000-0000-0000"
-
                                 />
                             </div>
 
@@ -187,9 +186,16 @@ export default function SelectData() {
                         <Text style={{ color: '#559CDA' }} className='font-bold'>Detailed Information</Text>
                         <div className='mt-2'>
                             <Text >Status</Text>
-                            <div style={{ background: getColor() }} className='w-full text-center p-4 rounded-md text-white'>
+                            {/* <div style={{ background: getColor() }} className='w-full text-center p-4 rounded-md text-white'>
                                 <Text className=''>{SELECTED_DATA.status}</Text>
-                            </div>
+                            </div> */}
+                            <Text
+                                size="md"
+                                className="w-full flex flex-col text-center justify-center h-10 rounded-md"
+                                c="white"
+                                bg={getColor()}
+                                children={SELECTED_DATA.status}
+                            />
                         </div>
 
                         <div className='flex flex-col md:flex-row justify-between gap-4'>
