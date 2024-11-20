@@ -1,8 +1,8 @@
 import 'mantine-datatable/styles.layer.css';
 import { LeaveStore } from "../../LeaveStore";
-import { Button, Divider, Modal, Select, Textarea, TextInput } from "@mantine/core";
+import { Button, Divider, Modal, Select, Textarea, TextInput, Group, Pill, Popover } from "@mantine/core";
 import { Text } from "@mantine/core";
-import { IconCalendarMonth, IconCircleCheck } from '@tabler/icons-react';
+import { IconCalendarMonth, IconCaretDownFilled, IconCircleCheck } from '@tabler/icons-react';
 import { DatePickerInput } from '@mantine/dates';
 import { useState } from 'react';
 import '@mantine/dates/styles.css';
@@ -11,13 +11,17 @@ import '@mantine/carousel/styles.css';
 import { Carousel } from '@mantine/carousel';
 import { useMatches } from '@mantine/core';
 import Dropzone from '@shared/template/Dropzone'
+import { DatePicker } from "@mantine/dates";
+import { DateRange } from "@shared/template";
+import { useDateRangeStore } from "@shared/hooks/useDateRange";
+import { DateTimeUtils } from "@shared/utils/DateTimeUtils";
 
 export default function Add() {
 
 
     const { ACTION, SET_ACTION, SET_ALERT } = LeaveStore();
-    const iconStyle = { width: 'rem(100)', height: 'rem(100)', stroke: '1.5', color: '#559CDA', };
-
+    const iconStyle = { width: 'rem(100)', height: 'rem(100)', stroke: '1.5', };
+    const { value, setValue } = useDateRangeStore();
     const leaveTypes = [
         { count: 6, label: "Vacation Leave" },
         { count: 3, label: "Sick Leave" },
@@ -44,13 +48,14 @@ export default function Add() {
 
 
     const [startDate, setStartDate] = useState<Date | null>(null);
+    const [selectedLeaveType, setSelectedLeaveType] = useState('')
 
     return (
         <Modal opened={ACTION == 'NewRequest'} onClose={() => SET_ACTION('')} styles={{ title: { color: '#559CDA', fontSize: 22, fontWeight: 600 } }} title={'New Request'} centered size={modalSize} padding={30}>
             <div className='flex flex-col gap-4' style={{ color: '#6D6D6D' }}>
                 <Divider size="xs" color='#6D6D6D' />
                 <div>
-                    <Text>Select Available Leave Type</Text>
+                    <Text className='font-medium'>Select Available Leave Type</Text>
 
                     <Carousel
                         slideSize={{ base: '70%', xs: '50%', sm: '33.333%', md: '20%' }}
@@ -59,21 +64,23 @@ export default function Add() {
                     >
                         {leaveTypes.map((leave, index) => (
                             <Carousel.Slide key={index}>
-                                <div className='h-28 w-full  flex flex-col  text-center justify-center items-center shadow-md shadow-blue-300 rounded-lg m-1' style={{ background: '#DEECFF' }}>
+                                <div className={`unselectedLeaveType ${leave.label === selectedLeaveType ? 'selectedLeaveType' : ''}`} onClick={() => {
+                                    setSelectedLeaveType(leave.label)
+                                }}>
 
                                     {leave.label == 'Leave Without Pay' ?
                                         <>
                                             {leave.icon}
-                                            <Text color="#559cda" >
+                                            <Text  >
                                                 {leave.label}
                                             </Text>
                                         </>
                                         :
                                         <>
-                                            <Text style={{ fontSize: '2.2rem' }} color="#559cda">
+                                            <Text style={{ fontSize: '2.2rem' }} >
                                                 {leave.count}
                                             </Text>
-                                            <Text color="#559cda" >
+                                            <Text  >
                                                 {leave.label}
                                             </Text>
                                         </>
@@ -84,8 +91,18 @@ export default function Add() {
                         ))}
                     </Carousel>
 
-
                 </div>
+
+                <TextInput
+                    size="md"
+                    label="Selected Leave Type"
+                    placeholder=""
+                    className="w-full"
+                    disabled
+                    value={selectedLeaveType}
+                >
+                </TextInput>
+
                 <div className='flex flex-col sm:flex-row gap-4 justify-between sm:gap-8'>
                     <Select
                         withAsterisk
@@ -95,6 +112,7 @@ export default function Add() {
                         data={['Vacation Leave', 'Sick Leave', 'Emergency Leave', 'Birthday Leave']}
                         placeholder="Select Leave Option"
                         className="w-full sm:w-1/2"
+                        rightSection={<IconCaretDownFilled />}
                     />
                     <TextInput
                         size="md"
@@ -105,7 +123,49 @@ export default function Add() {
                     />
                 </div>
                 <div className='flex flex-col sm:flex-row justify-between sm:gap-8'>
-                    <DatePickerInput
+                    <DateRange
+                        isColumn={false}
+                        value={value}
+                        setValue={setValue}
+                        fLabel="Leave From"
+                        lLabel="Leave To"
+                        fPlaceholder="Start Date"
+                        lPlaceholder="End Date"
+                        gapValue={30}
+                        size='md'
+                    />
+
+                    {/* <Popover position="bottom" shadow="md">
+                        <Popover.Target>
+                            <TextInput
+                                value={
+                                    value[1] === null
+                                        ? ""
+                                        : DateTimeUtils.dayWithDate(`${value[1]?.toString()}`)
+                                }
+                                radius="md"
+                                size='sm'
+                                readOnly
+                                label=''
+                                placeholder=''
+                                rightSection={<IconCalendarMonth />}
+                                className="w-full"
+                                styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
+                            />
+                        </Popover.Target>
+                        <Popover.Dropdown>
+                            <DatePicker
+                                size='xl'
+                                // numberOfColumns={2}
+                                type="range"
+                                value={value}
+                                onChange={setValue}
+                            />
+                        </Popover.Dropdown>
+                    </Popover> */}
+
+
+                    {/* <DatePickerInput
                         size="md"
                         radius="md"
                         label="Duration"
@@ -125,11 +185,11 @@ export default function Add() {
                         onChange={setStartDate}
                         rightSection={<IconCalendarMonth size={20} />}
                         className="w-full sm:w-1/2"
-                    />
+                    /> */}
 
                 </div>
                 <div className='flex flex-col gap-2'>
-                    <Text >Reason <span className="text-red-400 font-semibold">*</span></Text>
+                    <Text >Reason <span className="text-red-400 font-medium">*</span></Text>
                     <Textarea
                         size="xl"
                         radius="md"

@@ -117,10 +117,7 @@ export default function LeaveTable() {
       textAlign: "center",
       render: ({ processedBy }: { processedBy: any }) => {
         return (
-          <div className="flex flex-col">
-            <Text>Name</Text>
-            <Text>{processedBy}</Text>
-          </div>
+          <Text>{processedBy}</Text>
         );
       },
     },
@@ -410,8 +407,8 @@ export default function LeaveTable() {
         ACTIVE_TAB == "list"
           ? (leaveRecordsList as any)
           : ACTIVE_TAB == "review"
-          ? (leaveRecordsReview as any)
-          : (leaveRecordsApprove as any)
+            ? (leaveRecordsReview as any)
+            : (leaveRecordsApprove as any)
       }
       paginationText={({ from, to, totalRecords }) =>
         `Showing data ${from} out ${to} of ${totalRecords} entries (0.225) seconds`
