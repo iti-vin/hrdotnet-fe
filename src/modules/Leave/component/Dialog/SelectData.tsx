@@ -108,7 +108,7 @@ export default function SelectData() {
                         <Text style={{ color: '#559CDA' }} className='font-bold'>General Information</Text>
 
                         <div>
-                            <Text className='font-semibold'>Leave Type</Text>
+                            <Text >Leave Type</Text>
                             <TextInput
                                 disabled={isReadOnly}
                                 size="lg"
@@ -119,7 +119,7 @@ export default function SelectData() {
                             />
                         </div>
                         <div>
-                            <Text className='font-semibold'>Leave Option</Text>
+                            <Text >Leave Option</Text>
                             <TextInput
                                 disabled={isReadOnly}
                                 size="lg"
@@ -134,7 +134,7 @@ export default function SelectData() {
 
                             <div className='flex flex-col md:flex-row gap-2'>
                                 <div className="w-full">
-                                    <Text className='font-semibold'>Start Date</Text>
+                                    <Text >Start Date</Text>
                                     <DatePickerInput
                                         disabled={isReadOnly}
                                         radius="md"
@@ -146,7 +146,7 @@ export default function SelectData() {
                                 </div>
 
                                 <div className="w-full">
-                                    <Text className='font-semibold'>End Date</Text>
+                                    <Text >End Date</Text>
                                     <DatePickerInput
                                         disabled={isReadOnly}
                                         radius="md"
@@ -159,7 +159,7 @@ export default function SelectData() {
                             </div>
 
                             <div className="w-full">
-                                <Text className='font-semibold'>Duration (Days)</Text>
+                                <Text >Duration (Days)</Text>
                                 <TextInput
                                     disabled={isReadOnly}
                                     radius="md"
@@ -170,7 +170,7 @@ export default function SelectData() {
                             </div>
 
                             <div className="w-full">
-                                <Text className='font-semibold'>Reference Number</Text>
+                                <Text >Reference Number</Text>
                                 <TextInput
                                     disabled={isReadOnly}
                                     radius="md"
@@ -186,7 +186,7 @@ export default function SelectData() {
                     <div className='w-full md:w-1/2 flex flex-col gap-2 border-solid border-0.5 border-sky-500 p-4 rounded-lg'>
                         <Text style={{ color: '#559CDA' }} className='font-bold'>Detailed Information</Text>
                         <div className='mt-2'>
-                            <Text className='font-semibold'>Status</Text>
+                            <Text >Status</Text>
                             <div style={{ background: getColor() }} className='w-full text-center p-4 rounded-md text-white'>
                                 <Text className=''>{SELECTED_DATA.status}</Text>
                             </div>
@@ -195,7 +195,7 @@ export default function SelectData() {
                         <div className='flex flex-col md:flex-row justify-between gap-4'>
 
                             <div className='flex flex-col w-full md:w-1/2'>
-                                <Text className='font-semibold'>Document No.</Text>
+                                <Text >Document No.</Text>
                                 <TextInput
                                     disabled={isReadOnly}
                                     radius="md"
@@ -206,7 +206,7 @@ export default function SelectData() {
 
 
                             <div className='flex flex-col w-full md:w-1/2'>
-                                <Text className='font-semibold'>Transaction Date</Text>
+                                <Text >Transaction Date</Text>
                                 <DatePickerInput
                                     disabled={isReadOnly}
                                     radius="md"
@@ -219,7 +219,7 @@ export default function SelectData() {
                         </div>
 
                         <div className='flex flex-col'>
-                            <Text className='font-semibold'>Endorsement Information</Text>
+                            <Text >Endorsement Information</Text>
                             <Textarea
                                 disabled={isReadOnly}
                                 size="lg"
@@ -229,7 +229,7 @@ export default function SelectData() {
                             />
                         </div>
                         <div className='flex flex-col'>
-                            <Text className='font-semibold'>Approval Information</Text>
+                            <Text >Approval Information</Text>
                             <Textarea
                                 disabled={isReadOnly}
                                 size="lg"
@@ -239,7 +239,7 @@ export default function SelectData() {
                             />
                         </div>
                         <div className='flex flex-col'>
-                            <Text className='font-semibold'>Cancellation Information</Text>
+                            <Text >Cancellation Information</Text>
                             <Textarea
                                 disabled={isReadOnly}
                                 size="lg"
@@ -266,7 +266,7 @@ export default function SelectData() {
 
                 <div className='flex flex-col gap-5 border-solid border-0.5 border-sky-500 p-4 rounded-lg'>
                     <Text style={{ color: '#559CDA' }} className='font-bold '>Attachment </Text>
-                    <div className='border-dashed border-0.5 border-sky-500 p-4 rounded-lg flex flex-col  items-center' style={{ color: '#6D6D6D', background: '#ced4da', opacity: '0.4' }}>
+                    <div className='border-dashed border-0.5 border-sky-500 p-4 rounded-lg flex flex-col  items-center' style={{ color: '#6D6D6D', background: '#EEEEEE', opacity: '0.5' }}>
                         {/* {SELECTED_DATA.status == 'Filed' && (
                             <>
                                 <IconCloudUpload size={55} color='#559CDA' />
@@ -305,7 +305,7 @@ export default function SelectData() {
                         <Textarea
                             styles={{ input: { height: '12.5rem' } }}
                             variant="filled"
-                            // disabled={isReadOnly}
+                            disabled={isReadOnly}
                             size="xl"
                             radius="md"
                             placeholder="Date of Change  - Employee name changed the Application date from mm/dd/yyyy to mm/dd/yyyy."
