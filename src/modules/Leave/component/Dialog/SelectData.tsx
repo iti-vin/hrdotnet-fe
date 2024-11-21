@@ -2,7 +2,7 @@ import 'mantine-datatable/styles.layer.css';
 import { LeaveStore } from "../../LeaveStore";
 import { Divider, Modal, Popover, Textarea, TextInput } from "@mantine/core";
 import { Text } from "@mantine/core";
-import { IconCopy, IconFilePlus, IconFileUpload, IconX } from '@tabler/icons-react';
+import { IconCopy, IconFilePlus, IconFileUpload, IconNotes, IconX } from '@tabler/icons-react';
 import { DatePickerInput } from '@mantine/dates';
 import { useEffect, useState } from 'react';
 import '@mantine/dates/styles.css';
@@ -104,14 +104,15 @@ export default function SelectData() {
                 <Divider size="xs" color='#6D6D6D' />
                 <div className='flex flex-col md:flex-row gap-6'>
 
-                    <div className='w-full md:w-1/2 flex flex-col gap-4  border-solid border-0.5 border-sky-500 p-4 rounded-lg'>
+                    <div className='w-full md:w-1/2 flex flex-col gap-2  border-solid border-0.5 border-sky-500 p-4 rounded-lg'>
                         <Text style={{ color: '#559CDA' }} className='font-bold'>General Information</Text>
 
                         <div>
-                            <Text >Leave Type</Text>
+                            {/* <Text >Leave Type</Text> */}
                             <TextInput
+                                label="Leave Type"
                                 disabled={isReadOnly}
-                                size="md"
+                                size="lg"
                                 radius="md"
                                 // data={['Vacation Leave', 'Sick Leave', 'Emergency Leave', 'Birthday Leave']}
                                 placeholder="Select Leave Type"
@@ -119,8 +120,9 @@ export default function SelectData() {
                             />
                         </div>
                         <div>
-                            <Text >Leave Option</Text>
+                            {/* <Text >Leave Option</Text> */}
                             <TextInput
+                                label="Leave Option"
                                 disabled={isReadOnly}
                                 size="lg"
                                 radius="md"
@@ -134,11 +136,12 @@ export default function SelectData() {
 
                             <div className='flex flex-col md:flex-row gap-2'>
                                 <div className="w-full">
-                                    <Text >Start Date</Text>
+                                    {/* <Text >Start Date</Text> */}
                                     <DatePickerInput
+                                        label="Start Date"
                                         disabled={isReadOnly}
                                         radius="md"
-                                        size="md"
+                                        size="lg"
                                         placeholder="Start Date"
                                         value={startDate}
                                         onChange={setStartDate}
@@ -146,11 +149,12 @@ export default function SelectData() {
                                 </div>
 
                                 <div className="w-full">
-                                    <Text >End Date</Text>
+                                    {/* <Text >End Date</Text> */}
                                     <DatePickerInput
+                                        label="End Date"
                                         disabled={isReadOnly}
                                         radius="md"
-                                        size="md"
+                                        size="lg"
                                         placeholder="End Date"
                                         value={startDate}
                                         onChange={setStartDate}
@@ -159,22 +163,24 @@ export default function SelectData() {
                             </div>
 
                             <div className="w-full">
-                                <Text >Duration (Days)</Text>
+                                {/* <Text >Duration (Days)</Text> */}
                                 <TextInput
+                                    label="Duration (Days)"
                                     disabled={isReadOnly}
                                     radius="md"
-                                    size="md"
+                                    size="lg"
                                     placeholder="Total Number of Days"
 
                                 />
                             </div>
 
                             <div className="w-full">
-                                <Text >Reference Number</Text>
+                                {/* <Text >Reference Number</Text> */}
                                 <TextInput
+                                    label="Reference Number"
                                     disabled={isReadOnly}
                                     radius="md"
-                                    size="md"
+                                    size="lg"
                                     placeholder="00-0000-0000-0000"
                                 />
                             </div>
@@ -184,25 +190,21 @@ export default function SelectData() {
 
                     <div className='w-full md:w-1/2 flex flex-col gap-2 border-solid border-0.5 border-sky-500 p-4 rounded-lg'>
                         <Text style={{ color: '#559CDA' }} className='font-bold'>Detailed Information</Text>
-                        <div className='mt-2'>
-                            <Text >Status</Text>
-                            {/* <div style={{ background: getColor() }} className='w-full text-center p-4 rounded-md text-white'>
+                        <div>
+                            <Text size="md" fw={500} className=" flex gap-1" c="#6d6d6d">
+                                Status
+                            </Text>
+                            <div style={{ background: getColor() }} className='w-full text-center p-3 rounded-md text-white'>
                                 <Text className=''>{SELECTED_DATA.status}</Text>
-                            </div> */}
-                            <Text
-                                size="md"
-                                className="w-full flex flex-col text-center justify-center h-10 rounded-md"
-                                c="white"
-                                bg={getColor()}
-                                children={SELECTED_DATA.status}
-                            />
+                            </div>
                         </div>
 
                         <div className='flex flex-col md:flex-row justify-between gap-4'>
 
                             <div className='flex flex-col w-full md:w-1/2'>
-                                <Text >Document No.</Text>
+                                {/* <Text >Document No.</Text> */}
                                 <TextInput
+                                    label="Document No."
                                     disabled={isReadOnly}
                                     radius="md"
                                     size="lg"
@@ -212,8 +214,9 @@ export default function SelectData() {
 
 
                             <div className='flex flex-col w-full md:w-1/2'>
-                                <Text >Transaction Date</Text>
+                                {/* <Text >Transaction Date</Text> */}
                                 <DatePickerInput
+                                    label="Transaction Date"
                                     disabled={isReadOnly}
                                     radius="md"
                                     size="lg"
@@ -225,8 +228,9 @@ export default function SelectData() {
                         </div>
 
                         <div className='flex flex-col'>
-                            <Text >Endorsement Information</Text>
+                            {/* <Text >Endorsement Information</Text> */}
                             <Textarea
+                                label="Endorsement Information"
                                 disabled={isReadOnly}
                                 size="lg"
                                 radius="md"
@@ -235,8 +239,9 @@ export default function SelectData() {
                             />
                         </div>
                         <div className='flex flex-col'>
-                            <Text >Approval Information</Text>
+                            {/* <Text >Approval Information</Text> */}
                             <Textarea
+                                label="Approval Information"
                                 disabled={isReadOnly}
                                 size="lg"
                                 radius="md"
@@ -245,8 +250,9 @@ export default function SelectData() {
                             />
                         </div>
                         <div className='flex flex-col'>
-                            <Text >Cancellation Information</Text>
+                            {/* <Text >Cancellation Information</Text> */}
                             <Textarea
+                                label="Cancellation Information"
                                 disabled={isReadOnly}
                                 size="lg"
                                 radius="md"
@@ -291,7 +297,7 @@ export default function SelectData() {
                         {/* {SELECTED_DATA.status != 'Filed' && (<div className='flex items-center'> */}
                         <div className='flex items-center' >
 
-                            <IconFilePlus />
+                            <IconNotes />
                             <Text>File: attachment.pdf Size: 20 MB </Text>
                         </div>
                         {/* </div>)} */}

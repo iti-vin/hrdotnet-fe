@@ -59,22 +59,6 @@ export default function List() {
             accessor: "name",
             title: "Processed By",
             textAlign: "center",
-            render: (row: any) => (
-              <Flex direction="column" align="center">
-                {row.filingStatus === "Filed"
-                  ? null
-                  : row.filingStatus !== "Posted" && (
-                      <>
-                        <Text fw={500} size="sm">
-                          {row.name}
-                        </Text>
-                        <Text fw={300} size="sm">
-                          Developer
-                        </Text>
-                      </>
-                    )}
-              </Flex>
-            ),
           },
           {
             accessor: "filingStatus",
