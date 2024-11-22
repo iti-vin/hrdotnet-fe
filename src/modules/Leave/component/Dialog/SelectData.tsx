@@ -7,7 +7,7 @@ import { DatePickerInput } from '@mantine/dates';
 import { useEffect, useState } from 'react';
 import '@mantine/dates/styles.css';
 import FilingBreakdown from "@/modules/Leave/component/Table/FilingBreakdown";
-import { useMatches } from '@mantine/core';
+import { useMatches, ScrollArea } from '@mantine/core';
 import SelectDataButtons from '@/modules/Leave/component/Template/SelectDataButtons'
 import { useDisclosure } from '@mantine/hooks';
 
@@ -16,7 +16,7 @@ export default function SelectData() {
     const [openedExport, { close: closeExport, open: openExport }] = useDisclosure(false);
     const [openedCopy, { close: closeCopy, open: openCopy }] = useDisclosure(false);
 
-    const { SELECTED_DATA, SET_SELECTED_DATA } = LeaveStore();
+    const { SELECTED_DATA, SET_SELECTED_DATA, ACTIVE_TAB } = LeaveStore();
     const [startDate, setStartDate] = useState<Date | null>(null);
     const statusColors = [
         { status: 'Reviewed', color: '#FF7800' },
@@ -49,6 +49,7 @@ export default function SelectData() {
             }
             // setIsReadOnly(SELECTED_DATA.status == 'Cancelled' || SELECTED_DATA.status == 'Approved' || SELECTED_DATA.status == 'Filed')
         }
+        console.log(SELECTED_DATA)
     }, [SELECTED_DATA]);
 
     const modalSize = useMatches({
@@ -59,10 +60,15 @@ export default function SelectData() {
     const [isReadOnly, setIsReadOnly] = useState(true)
 
     return (
-        <Modal opened={Object.keys(SELECTED_DATA).length !== 0} onClose={() => SET_SELECTED_DATA({})} withCloseButton={false} styles={{ title: { color: '#559CDA', fontSize: 22, fontWeight: 600 } }} radius="md" centered size={modalSize} padding={30}>
+        <Modal scrollAreaComponent={ScrollArea.Autosize} opened={Object.keys(SELECTED_DATA).length !== 0} onClose={() => SET_SELECTED_DATA({})} withCloseButton={false} styles={{ title: { color: '#559CDA', fontSize: 22, fontWeight: 600 } }} radius="md" centered size={modalSize} padding={30}>
             <div className='flex justify-between'>
                 <Text fw={600} fz={22} c="#559CDA">
-                    {'Leave Request Details'}
+                    {ACTIVE_TAB != 'list' ? (
+                        `${(SELECTED_DATA as any).employeeName}`
+                    ) : (
+                        'Leave Request Details'
+                    )
+                    }
                 </Text>
                 <div className='flex gap-2'>
 

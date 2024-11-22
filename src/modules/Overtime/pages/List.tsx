@@ -53,7 +53,7 @@ export default function List() {
           FilingStatus.Approved,
           FilingStatus.Cancelled,
           FilingStatus.Reviewed,
-          FilingStatus.Posted,
+          // FilingStatus.Posted,
         ]}
         columns={[
           { accessor: "documentNo", title: "Document No" },

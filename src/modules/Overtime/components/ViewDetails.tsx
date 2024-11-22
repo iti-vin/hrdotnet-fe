@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   IconCalendar,
   IconChevronDown,
@@ -44,7 +44,7 @@ export default function Viewdialog({
     sm: "70%",
   });
 
-  const { selectedData, setSelectedData } = useOvertimeStore();
+  const { selectedData, setSelectedData, activeTab } = useOvertimeStore();
 
   let color;
   switch (selectedData.filingStatus) {
@@ -65,14 +65,23 @@ export default function Viewdialog({
   }
   const [timeValue, setTimeValue] = React.useState("10:30 AM");
   const [isReadOnly, setIsReadOnly] = useState(true)
-  const [dialog, { open: dialogOpen, close: dialogClose }] =
-    useDisclosure(false);
-  const [reject, { open: rejectOpen, close: rejectClose }] =
-    useDisclosure(false);
+  const [dialog, { open: dialogOpen, close: dialogClose }] = useDisclosure(false);
+  const [reject, { open: rejectOpen, close: rejectClose }] = useDisclosure(false);
+  const [title, setTitle] = useState('')
+
+  useEffect(() => {
+    if (activeTab === 'list') {
+      setTitle('Overtime List')
+    }
+    else {
+      setTitle(selectedData.name)
+    }
+  }, [selectedData])
 
   return (
     <>
       <Modal
+      
         isIconsActionsRequired={true}
         radius={'md'}
         opened={opened}
@@ -86,7 +95,7 @@ export default function Viewdialog({
           setSelectedData({});
           buttonClose();
         }}
-        title=''
+        title={title}
       >
         <Flex
           direction={{ base: "column", sm: "row" }}

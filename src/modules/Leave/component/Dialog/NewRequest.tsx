@@ -9,12 +9,10 @@ import '@mantine/dates/styles.css';
 import '@mantine/core/styles.css';
 import '@mantine/carousel/styles.css';
 import { Carousel } from '@mantine/carousel';
-import { useMatches } from '@mantine/core';
 import Dropzone from '@shared/template/Dropzone'
-import { DatePicker } from "@mantine/dates";
 import { DateRange } from "@shared/template";
 import { useDateRangeStore } from "@shared/hooks/useDateRange";
-import { DateTimeUtils } from "@shared/utils/DateTimeUtils";
+import { useMatches, ScrollArea } from '@mantine/core';
 
 export default function Add() {
 
@@ -51,7 +49,7 @@ export default function Add() {
     const [selectedLeaveType, setSelectedLeaveType] = useState('')
 
     return (
-        <Modal opened={ACTION == 'NewRequest'} onClose={() => SET_ACTION('')} styles={{ title: { color: '#559CDA', fontSize: 22, fontWeight: 600 } }} title={'New Request'} centered size={modalSize} padding={30}>
+        <Modal scrollAreaComponent={ScrollArea.Autosize} opened={ACTION == 'NewRequest'} onClose={() => SET_ACTION('')} styles={{ title: { color: '#559CDA', fontSize: 22, fontWeight: 600 } }} title={'New Request'} centered size={modalSize} padding={30}>
             <div className='flex flex-col gap-4' style={{ color: '#6D6D6D' }}>
                 <Divider size="xs" color='#6D6D6D' />
                 <div>

@@ -224,8 +224,8 @@ export default function NewRequest({
                   <IconReload onMouseEnter={openReload} onMouseLeave={closeExport}
                     className="cursor-pointer rounded-md p-1"
                     style={{background:'#dfecfd'}}
-                    size={42}
-                    color="gray"
+                    size={40}
+                    color="#559CDA"
                   />
                 </Popover.Target>
                 <Popover.Dropdown style={{ pointerEvents: 'none' }}>

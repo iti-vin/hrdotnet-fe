@@ -2,6 +2,7 @@ import { Divider, Flex, Modal, Stack, Text, Popover } from "@mantine/core";
 import { IconCopy, IconFileUpload, IconX } from "@tabler/icons-react";
 import "@shared/template/index.css";
 import { useDisclosure } from '@mantine/hooks';
+import { useMatches, ScrollArea } from '@mantine/core';
 
 interface ModalProps {
   opened: boolean;
@@ -31,6 +32,7 @@ export default function ITIModal({
   const [openedCopy, { close: closeCopy, open: openCopy }] = useDisclosure(false);
   return (
     <Modal
+      scrollAreaComponent={ScrollArea.Autosize}
       padding={30}
       radius={radius}
       opened={opened}
