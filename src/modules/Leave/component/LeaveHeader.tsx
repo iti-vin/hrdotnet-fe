@@ -3,7 +3,9 @@ import { IconCircleCheck, IconFolderPlus, IconFilePlus } from "@tabler/icons-rea
 import 'mantine-datatable/styles.layer.css';
 import { Button } from '@mantine/core';
 import { LeaveStore } from "@/modules/Leave/LeaveStore";
-import Filter from './Template/Filter';
+// import Filter from './Template/Filter';
+// import Header from '@shared/layout/base/Header';
+import { Header, Filter } from "@shared/template";
 
 export default function LeaveHeader() {
 
@@ -30,22 +32,34 @@ export default function LeaveHeader() {
     };
 
     return (
+        // <div className=' flex flex-col' >
+        //     <div className="flex flex-col sm:flex-row justify-between pb-4 sm:pb-2">
+        //         <Text size="md" style={{ color: '#559CDA' }} className="font-semibold text-2xl p-2 text-center sm:text-start">
+        //             Leave
+        //         </Text>
+        //         <div className="flex justify-between items-center gap-2 sm:gap-6 self-center">
+        //             <Button h={36} onClick={() => { SET_ACTION(getActionValue(ACTIVE_TAB) ?? '') }} leftSection={
+        //                 <div className="">
+        //                     {getActionIcon(ACTIVE_TAB)}
+        //                 </div>
+        //             } variant="filled" size="md" radius="md" fw={500}>
+        //                 {getActionText(ACTIVE_TAB)}
+        //             </Button>
+        //         </div>
+        //     </div>
+        //     <Filter filterOpen={() => SET_ACTION('FILTER')} />
+        // </div>
         <div className=' flex flex-col' >
-            <div className="flex flex-col sm:flex-row justify-between pb-4 sm:pb-2">
-                <Text size="md" style={{ color: '#559CDA' }} className="font-semibold text-2xl p-2 text-center sm:text-start">
-                    Leave
-                </Text>
-                <div className="flex justify-between items-center gap-2 sm:gap-6 self-center">
-                    <Button h={36} onClick={() => { SET_ACTION(getActionValue(ACTIVE_TAB) ?? '') }} leftSection={
-                        <div className="">
-                            {getActionIcon(ACTIVE_TAB)}
-                        </div>
-                    } variant="filled" size="md" radius="md" fw={500}>
-                        {getActionText(ACTIVE_TAB)}
-                    </Button>
-                </div>
+            <div className="flex flex-col sm:flex-row justify-between pb-4  sm:pb-2">
+                <Header
+                    title="Leave"
+                    buttonLabel={getActionText(ACTIVE_TAB)}
+                    buttonIcon=  {getActionIcon(ACTIVE_TAB)}
+                    buttonClick={() => { SET_ACTION(getActionValue(ACTIVE_TAB) ?? '') }}
+                />
             </div>
-            <Filter filterOpen={() => SET_ACTION('FILTER')} />
+            <Filter filterOpen={()=>SET_ACTION('FILTER')} />
+            {/* <Filter filterOpen={() => SET_ACTION('FILTER')} /> */}
         </div>
     );
 }

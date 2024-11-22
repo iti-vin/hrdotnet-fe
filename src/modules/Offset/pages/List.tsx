@@ -61,16 +61,6 @@ export default function List() {
             accessor: "name",
             title: "Processed By",
             textAlign: "center",
-            render: (row: any) => (
-              <Flex direction="column" align="center">
-                <Text fw={500} size="sm">
-                  {row.name}
-                </Text>
-                <Text fw={300} size="xs">
-                  Quality Assurance
-                </Text>
-              </Flex>
-            ),
           },
           {
             accessor: "filingStatus",

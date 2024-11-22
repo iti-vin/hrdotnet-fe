@@ -9,3 +9,27 @@
   /* @apply w-full border-2 border-[#559cda] rounded-md py-3; */
   /* @apply w-full md:w-1/2 flex flex-col gap-4  border-solid border-0.5 border-sky-500 p-4 rounded-lg; */
 }
+
+.activeLink{
+  text-align: center;
+  width: 6rem;
+  padding-top: 0.3em;
+  padding-bottom: 0.3em;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  background-color: white;
+  border-radius: 0.5rem;
+  color: #559cda;
+  font-weight: 500;
+}
+.inactiveLink{
+  text-align: center;
+  width: 6rem;
+  padding-top: 0.3em;
+  padding-bottom: 0.3em;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  border-radius: 0.5rem;
+  color: white;
+  font-weight: 500;
+}

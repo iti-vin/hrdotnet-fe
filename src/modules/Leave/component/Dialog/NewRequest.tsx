@@ -110,7 +110,7 @@ export default function Add() {
                         data={['Vacation Leave', 'Sick Leave', 'Emergency Leave', 'Birthday Leave']}
                         placeholder="Select Leave Option"
                         className="w-full sm:w-1/2"
-                        rightSection={<IconCaretDownFilled />}
+                        rightSection={<IconCaretDownFilled size={18}/>}
                     />
                     <TextInput
                         size="md"

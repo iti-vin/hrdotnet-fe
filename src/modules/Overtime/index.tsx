@@ -22,7 +22,7 @@ export const Overtime = () => {
           <NavLink
             to={ot.path}
             key={ot.index}
-            className={({ isActive }) => (isActive ? "active" : "inactive")}
+            className={({ isActive }) => (isActive ? "activeLink" : "inactiveLink")}
           >
             {ot.label}
           </NavLink>

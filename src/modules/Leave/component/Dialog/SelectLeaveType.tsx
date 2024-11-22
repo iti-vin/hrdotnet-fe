@@ -21,19 +21,26 @@ export default function SelectLeaveType() {
     const [value, setValue] = useState<Date | null>(null);
     return (
         <>
-            <Modal opened={Object.keys(SELECTED_LEAVE_TYPE).length !== 0} onClose={() => SET_SELECTED_LEAVE_TYPE({})} styles={{ title: { color: '#559CDA', fontSize: 22, fontWeight: 600 } }} title={'Leave Type'} centered size={modalSize} padding={30}>
+            <Modal
+                opened={Object.keys(SELECTED_LEAVE_TYPE).length !== 0} onClose={() => SET_SELECTED_LEAVE_TYPE({})}
+                styles={{ title: { color: '#559CDA', fontSize: 22, fontWeight: 600 }}}
+                radius="md"
+                title={'Leave Type'}
+                centered size={modalSize}
+                padding={30}
+            >
                 <Divider size="xs" color='#6D6D6D' />
-                <div className='flex flex-col mt-5 gap-5' >
-                    <div className='flex justify-between '>
+                <div className='h-full flex flex-col mt-5 gap-5' >
+                    <div className='flex flex-col md:flex-row gap-4 md:justify-between items-center'>
                         <Select
 
                             styles={{ input: { borderRadius: 10, background: '#559CDA', color: 'white' } }}
                             // placeholder="2024"
                             defaultValue={'2024'}
                             data={['2024', '2023', '2022', '2021']}
-                            rightSection={<IconCaretDownFilled color='white'/>}
+                            rightSection={<IconCaretDownFilled size={18} color='white' />}
                         />
-                         {/* <YearPicker allowDeselect value={value} onChange={setValue} /> */}
+                        {/* <YearPicker allowDeselect value={value} onChange={setValue} /> */}
                         <div className='flex gap-2' style={{ color: '#559CDA' }}>
                             <Text>Available Leave Credit </Text>
                             <Text >1.5 </Text>

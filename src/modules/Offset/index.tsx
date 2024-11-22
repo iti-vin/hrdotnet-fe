@@ -22,7 +22,7 @@ export const Offset = () => {
           <NavLink
             to={off.path}
             key={off.index}
-            className={({ isActive }) => (isActive ? "active" : "inactive")}
+            className={({ isActive }) => (isActive ? "activeLink" : "inactiveLink")}
           >
             {off.label}
           </NavLink>

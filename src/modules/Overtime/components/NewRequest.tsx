@@ -194,7 +194,7 @@ export default function NewRequest({
                 value={searchBy}
                 onChange={(data)=>setSearchBy(data as string)}
                 data={["Date", "Schedule", "OT In", "OT Out"]}
-                rightSection={<IconCaretDownFilled />}
+                rightSection={<IconCaretDownFilled size={18}/>}
                 className="border-none w-2/6"
                 styles={{
                   input: {
@@ -285,7 +285,7 @@ export default function NewRequest({
               placeholder="Schedule 001"
               radius={8}
               data={["Next Day", "Same Day"]}
-              rightSection={<IconCaretDownFilled />}
+              rightSection={<IconCaretDownFilled size={18}/>}
               className="border-none w-full"
               styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
             />
