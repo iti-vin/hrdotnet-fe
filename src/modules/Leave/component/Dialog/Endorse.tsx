@@ -16,7 +16,7 @@ export default function Endorse() {
     });
     return (
         <>
-            <Modal zIndex={999999} opened={ACTION == 'Endorse'} onClose={() => SET_ACTION('')} styles={{ title: { color: '#559CDA', fontSize: 22, fontWeight: 600 } }} title={'Endorse Request?'} centered size={modalSize} padding={30}>
+            <Modal opened={ACTION == 'Endorse'} onClose={() => SET_ACTION('')} styles={{ title: { color: '#559CDA', fontSize: 22, fontWeight: 600 } }} title={'Endorse Request?'} centered size={modalSize} padding={30}>
                 <Divider size="xs" color='#6D6D6D' />
                 <div className='flex flex-col mt-2' style={{ color: '#6D6D6D' }}>
                     <Text>10 Sick Leave</Text>

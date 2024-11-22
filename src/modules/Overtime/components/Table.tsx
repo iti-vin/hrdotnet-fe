@@ -7,6 +7,7 @@ import { DateTimeUtils } from "@shared/utils/DateTimeUtils";
 import { FilingStatus } from "@shared/assets/types/Global";
 //--- Data Store for Overtime
 import { useOvertimeStore } from "@/modules/Overtime/store/useOT";
+import { useEffect, useState } from "react";
 
 // Data Table Overtime Props
 interface DTOTP {
@@ -16,7 +17,7 @@ interface DTOTP {
 }
 export default function Table({ statuses, columns, rowClick }: DTOTP) {
   const { items, pageSize, total, page, setSelectedData } = useOvertimeStore();
-
+  const { activeTab } = useOvertimeStore();
   const records = items
     .filter((item) =>
       statuses.includes(item.filing.filingStatus.name as FilingStatus)
@@ -47,9 +48,19 @@ export default function Table({ statuses, columns, rowClick }: DTOTP) {
       };
     });
 
+    useEffect(()=>{
+      console.log(activeTab)
+    },[activeTab])
+
+    const [selectedRecords, setSelectedRecords] = useState<any[]>([]);
+
   return (
     <>
       <DataTable
+        {...(activeTab !== "list" && {
+          selectedRecords: selectedRecords,
+          onSelectedRecordsChange: setSelectedRecords,
+        })}
         columns={columns}
         idAccessor="documentNo"
         key="documentNo"

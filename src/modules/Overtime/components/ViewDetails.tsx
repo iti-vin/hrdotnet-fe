@@ -24,7 +24,7 @@ import { useOvertimeStore } from "@/modules/Overtime/store/useOT";
 import { DateTimeUtils } from "@shared/utils/DateTimeUtils";
 import { Buttons } from "@/modules/Overtime/components/Button";
 import { useDisclosure } from "@mantine/hooks";
-import { Alerts } from "@/modules/Overtime/components/AlertOT";
+import { Alerts, Rejected } from "@/modules/Overtime/components/AlertOT";
 
 interface ModalViewProps {
   opened: boolean;
@@ -67,6 +67,8 @@ export default function Viewdialog({
   const [isReadOnly, setIsReadOnly] = useState(true)
   const [dialog, { open: dialogOpen, close: dialogClose }] =
     useDisclosure(false);
+  const [reject, { open: rejectOpen, close: rejectClose }] =
+    useDisclosure(false);
 
   return (
     <>
@@ -103,7 +105,7 @@ export default function Viewdialog({
                 placeholder={selectedData.dateFiled}
                 radius={8}
                 data={["React", "Angular", "Vue", "Svelte"]}
-                rightSection={<IconDots />}
+                rightSection={<></>}
                 className="border-none w-full"
                 disabled
               />
@@ -119,7 +121,7 @@ export default function Viewdialog({
                   placeholder="Schedule 001"
                   radius={8}
                   data={["React", "Angular", "Vue", "Svelte"]}
-                  rightSection={<IconChevronDown />}
+                  rightSection={<></>}
                   className="border-none w-full"
                   disabled
                 />
@@ -326,16 +328,23 @@ export default function Viewdialog({
           close={() => {
             setSelectedData({});
             buttonClose();
+            rejectOpen();
           }}
         />
       </Modal>
 
-      <Alerts
+      {/* <Alerts
         opened={dialog}
         onClose={dialogClose}
         buttonClose={dialogClose}
         tabs={tabs}
       />
+
+      <Rejected
+        opened={reject}
+        onClose={rejectClose}
+        buttonClose={rejectClose}
+      /> */}
     </>
   );
 }

@@ -1,5 +1,5 @@
 import { Button, Flex } from "@mantine/core";
-
+import { useOvertimeStore } from "../store/useOT"
 interface ButtonProps {
   status: "Filed" | "Reviewed" | "Approved" | "Cancelled";
   close: () => void;
@@ -8,18 +8,22 @@ interface ButtonProps {
 }
 
 const EndorseButton = ({ status, close, open }: ButtonProps) => {
+  const {  setAlert } = useOvertimeStore();
   return (
     <>
-      {status === "Filed" ? (
+      {status === "Filed" && (
         <>
           <Button
             variant="outline"
             size="md"
             radius={10}
             w={180}
-            onClick={close}
+            onClick={()=>{
+              setAlert('RequestRejected')
+              close();
+            }}
           >
-            CANCEL
+            REJECT
           </Button>
           <Button
             size="md"
@@ -28,19 +32,19 @@ const EndorseButton = ({ status, close, open }: ButtonProps) => {
             classNames={{ root: "test" }}
             className="border-none custom-gradient"
             onClick={() => {
+              setAlert('EndorsementSuccess')
               open();
             }}
           >
             ENDORSE
           </Button>
         </>
-      ) : status === "Cancelled" ? null : (
-        <CancelButton close={close} />
       )}
     </>
   );
 };
 const ApproveButton = ({ status, close, open }: ButtonProps) => {
+  const {  setAlert } = useOvertimeStore();
   return (
     <>
       {status === "Reviewed" || status === "Filed" ? (
@@ -50,9 +54,12 @@ const ApproveButton = ({ status, close, open }: ButtonProps) => {
             size="md"
             radius={10}
             w={180}
-            onClick={close}
+            onClick={() => {
+              setAlert('RequestRejected')
+              close()
+            }}
           >
-            CANCEL
+            REJECT
           </Button>
           <Button
             size="md"
@@ -61,6 +68,7 @@ const ApproveButton = ({ status, close, open }: ButtonProps) => {
             classNames={{ root: "test" }}
             className="border-none custom-gradient"
             onClick={() => {
+              setAlert('RequestApproved')
               open();
             }}
           >
@@ -68,14 +76,19 @@ const ApproveButton = ({ status, close, open }: ButtonProps) => {
           </Button>
         </>
       ) : status === "Approved" ? (
-        <RejectedButton close={close} />
+        <>
+          {/* <RejectedButton close={close} /> */}
+        </>
       ) : status === "Cancelled" ? null : (
-        <CancelButton close={close} />
+        <>
+          {/* <CancelButton close={close} /> */}
+        </>
       )}
     </>
   );
 };
 const UpdateButton = ({ status, close, open }: ButtonProps) => {
+  const {  setAlert } = useOvertimeStore();
   return (
     <>
       {status === "Filed" ? (
@@ -85,7 +98,10 @@ const UpdateButton = ({ status, close, open }: ButtonProps) => {
             size="md"
             radius={10}
             w={180}
-            onClick={close}
+            onClick={()=>{
+              setAlert('RequestCancelled')
+              close()
+            }}
           >
             CANCEL
           </Button>
@@ -96,6 +112,7 @@ const UpdateButton = ({ status, close, open }: ButtonProps) => {
             classNames={{ root: "test" }}
             className="border-none custom-gradient"
             onClick={() => {
+              setAlert('RequestUpdated')
               open();
             }}
           >
@@ -109,23 +126,19 @@ const UpdateButton = ({ status, close, open }: ButtonProps) => {
   );
 };
 const CancelButton = ({ close }: { close: () => void }) => {
+  const {  setAlert } = useOvertimeStore();
   return (
     <>
-      <Button variant="outline" size="md" radius={10} w={180} onClick={close}>
+      <Button variant="outline" size="md" radius={10} w={180} onClick={()=>{
+        close()
+        setAlert('RequestCancelled')
+        }}>
         CANCEL
       </Button>
     </>
   );
 };
-const RejectedButton = ({ close }: { close: () => void }) => {
-  return (
-    <>
-      <Button variant="outline" size="md" radius={10} w={180} onClick={close}>
-        Reject
-      </Button>
-    </>
-  );
-};
+
 
 export const Buttons = ({ status, close, tabs, open }: ButtonProps) => {
   return (

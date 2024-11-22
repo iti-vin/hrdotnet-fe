@@ -22,6 +22,8 @@ import { FilingStatus } from "@shared/assets/types/Global";
 import { Container, Filter, Header, StatusChip } from "@shared/template";
 
 import pdf from "@/modules/Overtime/assets/file.pdf";
+import { useEffect } from "react";
+import { useOvertimeStore, } from "@/modules/Overtime/store/useOT";
 
 export default function Review() {
   const [filter, { open: filterOpen, close: filterClose }] =
@@ -29,12 +31,18 @@ export default function Review() {
   const [details, { open: detailsOpen, close: detailsClose }] =
     useDisclosure(false);
 
+  const { setActiveTab, setAction } = useOvertimeStore();
+  useEffect(() => {
+    setActiveTab('review')
+  }, [])
+
   return (
     <Container>
       <Header
         title="Overtime"
         buttonLabel="Endorse"
         buttonIcon={<IconFolderPlus size={25} stroke={2} />}
+        buttonClick={() => setAction('Endorse')}
       />
 
       <Filter filterOpen={filterOpen} />

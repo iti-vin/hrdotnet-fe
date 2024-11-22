@@ -1,5 +1,5 @@
 //--- React Modules
-import React from "react";
+import React, { useState } from "react";
 //--- Mantine Modules
 import {
   ActionIcon,
@@ -12,15 +12,24 @@ import {
   Textarea,
   TextInput,
   useMatches,
+  Popover
 } from "@mantine/core";
 import { TimeInput } from "@mantine/dates";
 import { useDisclosure } from "@mantine/hooks";
 //--- Tabler Icons
-import { IconCaretDownFilled, IconClock, IconDots } from "@tabler/icons-react";
+import {
+  IconCaretDownFilled,
+  IconChevronDown,
+  IconClock,
+  IconDots,
+  IconReload,
+  IconSearch,
+} from "@tabler/icons-react";
 //-- Shared Template
 import { Modal, Dropzone } from "@shared/template/";
 import { SuccessRequest } from "./AlertOT";
 import { DataTable } from "mantine-datatable";
+import { DateTimeUtils } from "@shared/utils/DateTimeUtils";
 
 interface ModalRequest {
   opened: boolean;
@@ -40,11 +49,14 @@ export default function NewRequest({
   onClose,
   buttonClose,
 }: ModalRequest) {
+
   const size = useMatches({
     base: "100%",
     sm: "70%",
   });
 
+  const [searchBy, setSearchBy] = useState("Date");
+  const [openedReload, { close: closeExport, open: openReload }] = useDisclosure(false);
   const [successReq, { open: successReqOpen, close: successReqClose }] =
     useDisclosure(false);
 
@@ -69,9 +81,8 @@ export default function NewRequest({
     const part2 = matches[2] || "";
     const part3 = matches[3] || "";
 
-    return `${part1}${part2 ? "-" + part2 : ""}${
-      part3 ? "-" + part3 : ""
-    }`.trim();
+    return `${part1}${part2 ? "-" + part2 : ""}${part3 ? "-" + part3 : ""
+      }`.trim();
   };
 
   const data: OvertimeData[] = [
@@ -157,6 +168,7 @@ export default function NewRequest({
             radius={8}
             onClick={handleSelectClick}
             rightSection={<IconDots />}
+            // rightSection={<IconChevronDown/>}
             className="border-none w-full mb-5"
             styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
             readOnly
@@ -169,12 +181,66 @@ export default function NewRequest({
             title="Select Overtime Date"
             size="lg"
           >
-            <Flex>
-              <Text>Search By:</Text>
+            <Flex
+              direction={{ base: "column", sm: "row" }}
+              align="center"
+              gap={10}
+            >
+              <Text size="sm">Search By:</Text>
+              <Select
+                variant="outline"
+                size="md"
+                radius={8}
+                value={searchBy}
+                onChange={(data)=>setSearchBy(data as string)}
+                data={["Date", "Schedule", "OT In", "OT Out"]}
+                rightSection={<IconCaretDownFilled />}
+                className="border-none w-2/6"
+                styles={{
+                  input: {
+                    backgroundColor: "#deecff",
+                    color: "#559CDA",
+                    fontWeight: 600,
+                  },
+                }}
+              />
+              <TextInput
+                variant="outline"
+                size="md"
+                value="Search"
+                radius={8}
+                styles={{
+                  input: {
+                    backgroundColor: "#deecff",
+                    color: "#559CDA",
+                    fontWeight: 600,
+                  },
+                }}
+              // rightSection={<IconSearch color="#559cda" />}
+              />
+
+              <Popover width={200} position="bottom" withArrow shadow="md" opened={openedReload}>
+                <Popover.Target>
+                  <IconReload onMouseEnter={openReload} onMouseLeave={closeExport}
+                    className="cursor-pointer rounded-md p-1"
+                    style={{background:'#dfecfd'}}
+                    size={42}
+                    color="gray"
+                  />
+                </Popover.Target>
+                <Popover.Dropdown style={{ pointerEvents: 'none' }}>
+                  <Text size="sm">Refresh</Text>
+                </Popover.Dropdown>
+              </Popover>
+
             </Flex>
             <DataTable
               columns={[
-                { accessor: "date", title: "Date" },
+                {
+                  accessor: "date", title: "Date", render: ({ date }: { date: string }) => {
+                    return DateTimeUtils.dayWithDate(date);
+                  },
+                },
                 { accessor: "schedule", title: "Schedule" },
                 { accessor: "actualIn", title: "Actual In" },
                 { accessor: "actualOut", title: "Actual Out" },
@@ -186,11 +252,11 @@ export default function NewRequest({
               highlightOnHover={true}
               withTableBorder={true}
               className="select-none"
-              onRowClick={(data) => {
+              onRowClick={(data: any) => {
                 handleOptionSelect(data.record);
               }}
               page={1}
-              onPageChange={() => {}}
+              onPageChange={() => { }}
               totalRecords={data.length}
               recordsPerPage={5}
               paginationText={({ totalRecords }) =>
@@ -216,7 +282,6 @@ export default function NewRequest({
             <Select
               size="md"
               label="Shift"
-              withAsterisk
               placeholder="Schedule 001"
               radius={8}
               data={["Next Day", "Same Day"]}
@@ -244,18 +309,18 @@ export default function NewRequest({
             gap={20}
           >
             <TimeInput
+              disabled
               size="md"
               radius={8}
               label="Actual OT In"
-              withAsterisk
               className="w-full"
               styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
             />
             <TimeInput
+              disabled
               size="md"
               radius={8}
               label="Actual OT out"
-              withAsterisk
               className="w-full"
               styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
             />
@@ -331,7 +396,7 @@ export default function NewRequest({
                 successReqOpen();
                 onClose();
               }}
-              classNames={{ root: "br-gradient" }}
+              classNames={{ root: "br-gradient border-none" }}
             />
           </Flex>
         </Group>
