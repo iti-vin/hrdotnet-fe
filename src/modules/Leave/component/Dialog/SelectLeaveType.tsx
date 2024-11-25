@@ -1,6 +1,6 @@
 import 'mantine-datatable/styles.layer.css';
 import { LeaveStore } from "../../LeaveStore";
-import { Button, Divider, Modal } from "@mantine/core";
+import { Divider, Modal } from "@mantine/core";
 import { Text } from "@mantine/core";
 import '@mantine/dates/styles.css';
 import '@mantine/core/styles.css';
@@ -9,7 +9,6 @@ import { useMatches } from '@mantine/core';
 import { Select } from '@mantine/core';
 import LeaveType from '@/modules/Leave/component/Table/LeaveType'
 import { IconCaretDownFilled } from '@tabler/icons-react';
-import { YearPicker } from '@mantine/dates';
 import { useState } from 'react';
 export default function SelectLeaveType() {
 
@@ -35,12 +34,10 @@ export default function SelectLeaveType() {
                         <Select
 
                             styles={{ input: { borderRadius: 10, background: '#559CDA', color: 'white' } }}
-                            // placeholder="2024"
                             defaultValue={'2024'}
                             data={['2024', '2023', '2022', '2021']}
                             rightSection={<IconCaretDownFilled size={18} color='white' />}
                         />
-                        {/* <YearPicker allowDeselect value={value} onChange={setValue} /> */}
                         <div className='flex gap-2' style={{ color: '#559CDA' }}>
                             <Text>Available Leave Credit </Text>
                             <Text >1.5 </Text>

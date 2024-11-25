@@ -2,7 +2,7 @@ import 'mantine-datatable/styles.layer.css';
 import { LeaveStore } from "../../LeaveStore";
 import { Divider, Modal, Popover, Textarea, TextInput } from "@mantine/core";
 import { Text } from "@mantine/core";
-import { IconCopy, IconFilePlus, IconFileUpload, IconNotes, IconX } from '@tabler/icons-react';
+import { IconCopy, IconFileUpload, IconNotes, IconX } from '@tabler/icons-react';
 import { DatePickerInput } from '@mantine/dates';
 import { useEffect, useState } from 'react';
 import '@mantine/dates/styles.css';
@@ -120,19 +120,16 @@ export default function SelectData() {
                                 disabled={isReadOnly}
                                 size="lg"
                                 radius="md"
-                                // data={['Vacation Leave', 'Sick Leave', 'Emergency Leave', 'Birthday Leave']}
                                 placeholder="Select Leave Type"
                                 className="w-full"
                             />
                         </div>
                         <div>
-                            {/* <Text >Leave Option</Text> */}
                             <TextInput
                                 label="Leave Option"
                                 disabled={isReadOnly}
                                 size="lg"
                                 radius="md"
-                                // data={['Vacation Leave', 'Sick Leave', 'Emergency Leave', 'Birthday Leave']}
                                 placeholder="Select Leave Option"
                                 className="w-full"
                             />
@@ -142,7 +139,6 @@ export default function SelectData() {
 
                             <div className='flex flex-col md:flex-row gap-2'>
                                 <div className="w-full">
-                                    {/* <Text >Start Date</Text> */}
                                     <DatePickerInput
                                         label="Start Date"
                                         disabled={isReadOnly}
@@ -155,7 +151,6 @@ export default function SelectData() {
                                 </div>
 
                                 <div className="w-full">
-                                    {/* <Text >End Date</Text> */}
                                     <DatePickerInput
                                         label="End Date"
                                         disabled={isReadOnly}
@@ -169,7 +164,6 @@ export default function SelectData() {
                             </div>
 
                             <div className="w-full">
-                                {/* <Text >Duration (Days)</Text> */}
                                 <TextInput
                                     label="Duration (Days)"
                                     disabled={isReadOnly}
@@ -181,7 +175,6 @@ export default function SelectData() {
                             </div>
 
                             <div className="w-full">
-                                {/* <Text >Reference Number</Text> */}
                                 <TextInput
                                     label="Reference Number"
                                     disabled={isReadOnly}
@@ -208,7 +201,6 @@ export default function SelectData() {
                         <div className='flex flex-col md:flex-row justify-between gap-4'>
 
                             <div className='flex flex-col w-full md:w-1/2'>
-                                {/* <Text >Document No.</Text> */}
                                 <TextInput
                                     label="Document No."
                                     disabled={isReadOnly}
@@ -220,7 +212,6 @@ export default function SelectData() {
 
 
                             <div className='flex flex-col w-full md:w-1/2'>
-                                {/* <Text >Transaction Date</Text> */}
                                 <DatePickerInput
                                     label="Transaction Date"
                                     disabled={isReadOnly}
@@ -234,7 +225,6 @@ export default function SelectData() {
                         </div>
 
                         <div className='flex flex-col'>
-                            {/* <Text >Endorsement Information</Text> */}
                             <Textarea
                                 label="Endorsement Information"
                                 disabled={isReadOnly}
@@ -245,7 +235,6 @@ export default function SelectData() {
                             />
                         </div>
                         <div className='flex flex-col'>
-                            {/* <Text >Approval Information</Text> */}
                             <Textarea
                                 label="Approval Information"
                                 disabled={isReadOnly}
@@ -256,7 +245,6 @@ export default function SelectData() {
                             />
                         </div>
                         <div className='flex flex-col'>
-                            {/* <Text >Cancellation Information</Text> */}
                             <Textarea
                                 label="Cancellation Information"
                                 disabled={isReadOnly}
@@ -285,28 +273,10 @@ export default function SelectData() {
                 <div className='flex flex-col gap-5 border-solid border-0.5 border-sky-500 p-4 rounded-lg'>
                     <Text style={{ color: '#559CDA' }} className='font-bold '>Attachment </Text>
                     <div className='border-dashed border-0.5 border-sky-500 p-4 rounded-lg flex flex-col  items-center' style={{ color: '#6D6D6D', background: '#EEEEEE', opacity: '0.5' }}>
-                        {/* {SELECTED_DATA.status == 'Filed' && (
-                            <>
-                                <IconCloudUpload size={55} color='#559CDA' />
-                                <div className='flex flex-col items-center mt-3'>
-                                    <div className='flex'>
-                                        <IconFilePlus />
-                                        <Text>File: attachment.pdf Size: 20 MB </Text>
-                                    </div>
-                                    <Text>Replace Existing  <span style={{ color: '#559CDA', textDecoration: 'underline', cursor: 'pointer' }}>file.</span></Text>
-                                    <Text>Supported Formats: PDF, DOC</Text>
-                                    <Text>Max File: 25MB</Text>
-                                </div>
-                            </>
-                        )} */}
-
-                        {/* {SELECTED_DATA.status != 'Filed' && (<div className='flex items-center'> */}
                         <div className='flex items-center' >
-
                             <IconNotes />
                             <Text>File: attachment.pdf Size: 20 MB </Text>
                         </div>
-                        {/* </div>)} */}
                     </div>
                 </div>
 

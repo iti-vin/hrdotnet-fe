@@ -88,23 +88,6 @@ export default function ITIModal({
         <Divider size="xs" color='#6D6D6D' />
         {children}
       </div>
-      {/* <Stack className="w-full  py-4 px-4">
-        <Flex direction="row" justify="space-between">
-          <Text fw={600} fz={22} c="#559CDA">
-            {title}
-          </Text>
-          {visibleClose && (
-            <IconX
-              className="cursor-pointer"
-              onClick={buttonClose}
-              size={30}
-              color="gray"
-            />
-          )}
-        </Flex>
-        <Divider size={2} color="#c9cac9" className="w-full" />
-      </Stack>
-      <Stack px={8}>{children}</Stack> */}
     </Modal>
   );
 }

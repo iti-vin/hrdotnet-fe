@@ -133,57 +133,6 @@ export default function Add() {
                         size='md'
                     />
 
-                    {/* <Popover position="bottom" shadow="md">
-                        <Popover.Target>
-                            <TextInput
-                                value={
-                                    value[1] === null
-                                        ? ""
-                                        : DateTimeUtils.dayWithDate(`${value[1]?.toString()}`)
-                                }
-                                radius="md"
-                                size='sm'
-                                readOnly
-                                label=''
-                                placeholder=''
-                                rightSection={<IconCalendarMonth />}
-                                className="w-full"
-                                styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
-                            />
-                        </Popover.Target>
-                        <Popover.Dropdown>
-                            <DatePicker
-                                size='xl'
-                                // numberOfColumns={2}
-                                type="range"
-                                value={value}
-                                onChange={setValue}
-                            />
-                        </Popover.Dropdown>
-                    </Popover> */}
-
-
-                    {/* <DatePickerInput
-                        size="md"
-                        radius="md"
-                        label="Duration"
-                        placeholder="Start Date"
-                        value={startDate}
-                        onChange={setStartDate}
-                        rightSection={<IconCalendarMonth size={20} />}
-                        className="w-full sm:w-1/2"
-                    />
-
-                    <DatePickerInput
-                        size="md"
-                        radius="md"
-                        label=" "
-                        placeholder="End Date"
-                        value={startDate}
-                        onChange={setStartDate}
-                        rightSection={<IconCalendarMonth size={20} />}
-                        className="w-full sm:w-1/2"
-                    /> */}
 
                 </div>
                 <div className='flex flex-col gap-2'>
