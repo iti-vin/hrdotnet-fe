@@ -18,7 +18,8 @@ import useOffsetStore from "../store/useOff";
 import { Alerts } from "@/modules/Offset/components/AlertOffset";
 import { Buttons } from "@/modules/Offset/components/Button";
 import { useDisclosure } from "@mantine/hooks";
-
+import React, { useEffect, useState } from "react";
+import { DateTimeUtils } from "@shared/utils/DateTimeUtils";
 interface ModalViewProps {
   opened: boolean;
   onClose: () => void;
@@ -37,8 +38,8 @@ export default function ViewDetails({
     sm: "70%",
   });
 
-  const { selectedData, setSelectedData } = useOffsetStore();
-
+  const { selectedData, setSelectedData, activeTab } = useOffsetStore();
+  const [timeValue, setTimeValue] = React.useState("10:30 AM");
   let color;
   switch (selectedData.filingStatus) {
     case "Filed":
@@ -57,8 +58,17 @@ export default function ViewDetails({
       color = "gray";
   }
 
-  const [dialog, { open: dialogOpen, close: dialogClose }] =
-    useDisclosure(false);
+  const [dialog, { open: dialogOpen, close: dialogClose }] = useDisclosure(false);
+  const [title, setTitle] = useState('')
+
+  useEffect(() => {
+    if (activeTab === 'list') {
+      setTitle('Offset List')
+    }
+    else {
+      setTitle(selectedData.name)
+    }
+  }, [selectedData])
 
   return (
     <>
@@ -68,35 +78,35 @@ export default function ViewDetails({
           setSelectedData({});
           onClose();
         }}
+        isIconsActionsRequired
         centered
         size={size}
         buttonClose={() => {
           setSelectedData({});
           buttonClose();
         }}
-        title={selectedData.name}
+        title={title}
       >
         <Flex
           direction={{ base: "column", sm: "row" }}
-          className="w-full"
-          gap={10}
-          px={12}
+          className="w-full gap-6"
+        // gap={10}
+        // px={12}
         >
-          <Container size="lg" className="container-view h-auto">
-            <Text className="text-[#559cda] font-bold">
-              General Information
-            </Text>
+          
+          <div className='w-full md:w-1/2 flex flex-col gap-2  border-solid border-0.5 border-sky-500 p-4 rounded-lg'>
+            <Text style={{ color: '#559CDA' }} className='font-bold'>General Information</Text>
 
-            <Group gap={10}>
+            <div className="flex flex-col gap-2">
               <MultiSelect
-                size="md"
+                size="lg"
                 label="Offset Date"
-                placeholder="Select Offset Date"
+                placeholder={selectedData.dateFiled}
                 radius={8}
                 data={["React", "Angular", "Vue", "Svelte"]}
+                rightSection={<></>}
                 className="border-none w-full"
                 disabled
-                styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
               />
               <Flex
                 direction={{ base: "column", sm: "row" }}
@@ -105,219 +115,209 @@ export default function ViewDetails({
                 gap={20}
               >
                 <Select
-                  size="md"
+                  size="lg"
                   label="Shift"
-                  placeholder="Shift"
+                  placeholder="Schedule 001"
                   radius={8}
                   data={["React", "Angular", "Vue", "Svelte"]}
+                  rightSection={<></>}
                   className="border-none w-full"
                   disabled
-                  styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
                 />
                 <TextInput
-                  size="md"
+                  size="lg"
                   radius={8}
                   label="Reference No."
                   placeholder="0000-0000-0000"
                   className="w-full"
                   disabled
-                  styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
-                />
-              </Flex>
-              <Flex
-                direction={{ base: "column", sm: "row" }}
-                justify="space-between"
-                className="w-full"
-                gap={20}
-              >
-                <TimeInput
-                  size="md"
-                  radius={8}
-                  label="Actual Offset In"
-                  className="w-full"
-                  disabled
-                  styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
-                />
-                <TimeInput
-                  size="md"
-                  radius={8}
-                  label="Actual Offset out"
-                  className="w-full"
-                  disabled
-                  styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
-                />
-              </Flex>
-              <Flex
-                direction={{ base: "column", sm: "row" }}
-                justify="space-between"
-                className="w-full"
-                gap={20}
-              >
-                <TimeInput
-                  size="md"
-                  radius={8}
-                  label="Offset From"
-                  className="w-full"
-                  disabled
-                  styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
-                />
-                <TimeInput
-                  size="md"
-                  radius={8}
-                  label="Offset To"
-                  className="w-full"
-                  disabled
-                  styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
-                />
-              </Flex>
-              <DatePickerInput
-                valueFormat="YYYY MMM DD"
-                label="Duration"
-                placeholder="Pick date"
-                className="w-full"
-                size="md"
-                radius={8}
-                rightSection={<IconCalendar />}
-                disabled
-                styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
-              />
-            </Group>
-          </Container>
-
-          <Container size="lg" className="container-view">
-            <Text className="text-[#559cda] font-bold">
-              Detailed Information
-            </Text>
-
-            <Group className="w-full">
-              <Flex direction="column" className="w-full" gap={2}>
-                <Text size="md" fw={500} className=" flex gap-1" c="#6d6d6d">
-                  Status
-                </Text>
-                <Text
-                  size="md"
-                  className="w-full flex flex-col text-center justify-center h-10 rounded-md"
-                  c="white"
-                  bg={color}
-                  children={selectedData.filingStatus}
                 />
               </Flex>
 
-              <Flex
-                direction={{ base: "column", sm: "row" }}
-                className="w-full"
-                gap={20}
-              >
+              <div className='flex flex-col gap-8  sm:gap-9'>
+
+                <Flex
+                  direction={{ base: "column", sm: "row" }}
+                  justify="space-between"
+                  className="w-full"
+                  gap={20}
+                >
+                  <TimeInput
+                    size="lg"
+                    radius={8}
+                    label="Actual Offset In"
+                    className="w-full"
+                    value={timeValue}
+                    placeholder={timeValue}
+                    onChange={(value: any) => setTimeValue(value)}
+                    disabled
+                    styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
+                  />
+                  <TimeInput
+                    size="lg"
+                    radius={8}
+                    label="Actual Offset Out"
+                    value={DateTimeUtils.getIsoTimeDefaultWithUnits(
+                      selectedData.actualFrom
+                    )}
+                    placeholder={DateTimeUtils.getIsoTimeDefaultWithUnits(
+                      selectedData.actualFrom
+                    )}
+                    className="w-full"
+                    disabled
+                    styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
+                  />
+                </Flex>
+                <Flex
+                  direction={{ base: "column", sm: "row" }}
+                  justify="space-between"
+                  className="w-full"
+                  gap={20}
+                >
+                  <TimeInput
+                    size="lg"
+                    radius={8}
+                    label="Offset From"
+                    className="w-full"
+                    disabled
+                    styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
+                  />
+                  <TimeInput
+                    size="lg"
+                    radius={8}
+                    label="Offset To"
+                    className="w-full"
+                    disabled
+                    styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
+                  />
+                </Flex>
+                <DatePickerInput
+                  valueFormat="YYYY MMM DD"
+                  label="Duration"
+                  placeholder="Pick date"
+                  className="w-full"
+                  size="lg"
+                  radius={8}
+                  disabled
+                />
+              </div>
+            </div>
+
+          </div>
+          <div className='w-full md:w-1/2 flex flex-col gap-2 border-solid border-0.5 border-sky-500 p-4 rounded-lg'>
+            <Text style={{ color: '#559CDA' }} className='font-bold'>Detailed Information</Text>
+            <div>
+              <Text size="md" fw={500} className=" flex gap-1" c="#6d6d6d">
+                Status
+              </Text>
+              <div style={{ background: color }} className='w-full text-center p-3 rounded-md text-white'>
+                <Text className=''>{selectedData.filingStatus}</Text>
+              </div>
+            </div>
+
+            <div className='flex flex-col md:flex-row justify-between gap-4'>
+
+              <div className='flex flex-col w-full md:w-1/2'>
+                {/* <Text >Document No.</Text> */}
                 <TextInput
                   disabled
-                  size="md"
-                  radius={8}
                   label="Document No."
-                  placeholder="0000-0000-0000"
-                  className="w-full"
-                  styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
+                  radius="md"
+                  size="lg"
+                  placeholder="00000000"
                 />
+              </div>
+
+
+              <div className='flex flex-col w-full md:w-1/2'>
+                {/* <Text >Transaction Date</Text> */}
                 <DatePickerInput
                   disabled
-                  valueFormat="YYYY MMM DD"
                   label="Transaction Date"
+                  radius="md"
+                  size="lg"
                   placeholder="mm/dd/yyyy"
-                  className="w-full"
-                  size="md"
-                  radius={8}
-                  rightSection={<IconCalendar />}
-                  styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
                 />
-              </Flex>
+              </div>
+            </div>
 
+            <div className='flex flex-col'>
+              {/* <Text >Endorsement Information</Text> */}
               <Textarea
                 disabled
-                size="md"
-                radius="md"
                 label="Endorsement Information"
+                size="lg"
+                radius="md"
                 placeholder="Endorsed by Jane Smith on October 25, 2024 at 6:43 PM."
                 className="w-full"
-                styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
               />
+            </div>
+            <div className='flex flex-col'>
+              {/* <Text >Approval Information</Text> */}
               <Textarea
                 disabled
-                size="md"
-                radius="md"
                 label="Approval Information"
+                size="lg"
+                radius="md"
                 placeholder="Approved by Jane Smith on October 25, 2024 at 6:43 PM (Batch Approval)"
                 className="w-full"
-                styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
               />
+            </div>
+            <div className='flex flex-col'>
+              {/* <Text >Cancellation Information</Text> */}
               <Textarea
                 disabled
-                size="md"
-                radius="md"
                 label="Cancellation Information"
+                size="lg"
+                radius="md"
                 placeholder="No Information"
                 className="w-full"
-                styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
               />
-            </Group>
-          </Container>
+            </div>
+
+          </div>
+
+          
         </Flex>
 
-        <Container size="lg" className="container-view">
+  
+        <div className="border-solid border-0.5 border-sky-500 p-4 rounded-lg">
           <Textarea
             size="md"
             label="Reason"
-            placeholder="Briefly state the reason for filing overtime"
+            placeholder={selectedData.reason}
             disabled
             className="w-full"
             styles={{ input: { height: "100px" }, label: { fontSize: "16px" } }}
             radius={8}
             classNames={{ label: "text-[#559cda] font-bold" }}
           />
-        </Container>
+        </div>
 
-        <Container size="lg" className="container-view">
-          <Attachment
-            itHasValue
-            isColored
-            isBold
-            content={
-              <Flex
-                gap={5}
-                direction="row"
-                align="center"
-                justify="center"
-                className="w-full"
-                bg="#EEEEEE"
-                p={5}
-              >
-                <Flex direction="row" align="center" gap={5}>
-                  <IconNotes color="#6d6d6d" />
-                  <Text
-                    size="sm"
-                    c="#6d6d6d"
-                    fw={500}
-                    inline
-                    className="flex justify-center"
-                  >
-                    File: Attachment.pdf Size: 20 MB
-                  </Text>
-                </Flex>
-              </Flex>
-            }
-          />
-        </Container>
+        <div className='flex flex-col gap-5 border-solid border-0.5 border-sky-500 p-4 rounded-lg'>
+          <Text style={{ color: '#559CDA' }} className='font-bold '>Attachment </Text>
+          <div className='border-dashed border-0.5 border-sky-500 p-4 rounded-lg flex flex-col  items-center' style={{ color: '#6D6D6D', background: '#EEEEEE', opacity: '0.5' }}>
+            <div className='flex items-center' >
+              <IconNotes />
+              <Text>File: attachment.pdf Size: 20 MB </Text>
+            </div>
+          </div>
+        </div>
 
-        <Container size="lg" className="container-view">
+
+        <div className='flex flex-col gap-2  w-full border-solid border-0.5 border-sky-500 p-4 rounded-lg'>
+          <Text style={{ color: '#559CDA' }} className='font-bold'>Edit Log</Text>
           <Textarea
-            disabled
             size="md"
-            label="Edit Log"
-            placeholder="Briefly state the reason for filing overtime"
+            disabled
+            placeholder="Briefly state the reason for filing Offset"
             className="w-full"
-            styles={{ input: { height: "100px" } }}
+            styles={{ input: { height: "100px" }, label: { color: "#6d6d6d" } }}
             radius={8}
             classNames={{ label: "text-[#559cda] font-bold" }}
           />
-        </Container>
+        </div>
+
         <Buttons
           tabs={tabs}
           status={selectedData.filingStatus}

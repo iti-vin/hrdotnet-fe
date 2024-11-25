@@ -23,6 +23,8 @@ import { FilingStatus } from "@shared/assets/types/Global";
 import { Container, Filter, Header, StatusChip } from "@shared/template";
 
 import pdf from "@/modules/Offset/assets/file.pdf";
+import useOffsetStore from "../store/useOff";
+import { useEffect } from "react";
 
 export default function List() {
   const [addRequest, { open: requestOpen, close: requestClose }] =
@@ -31,6 +33,15 @@ export default function List() {
     useDisclosure(false);
   const [details, { open: detailsOpen, close: detailsClose }] =
     useDisclosure(false);
+
+
+  const { setActiveTab } = useOffsetStore();
+
+  useEffect(() => {
+    setActiveTab('list')
+  }, [])
+
+
   return (
     <Container>
       {/* Header consist of title container and the Button */}

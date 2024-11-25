@@ -169,7 +169,7 @@ export default function NewRequest({
             onClick={handleSelectClick}
             rightSection={<IconDots />}
             // rightSection={<IconChevronDown/>}
-            className="border-none w-full mb-5"
+            className="border-none w-full"
             styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
             readOnly
           />
@@ -273,6 +273,7 @@ export default function NewRequest({
               }}
             />
           </Modal>
+
           <Flex
             direction={{ base: "column", sm: "row" }}
             justify="space-between"
@@ -283,6 +284,7 @@ export default function NewRequest({
               size="md"
               label="Shift"
               placeholder="Schedule 001"
+              withAsterisk
               radius={8}
               data={["Next Day", "Same Day"]}
               rightSection={<IconCaretDownFilled size={18}/>}

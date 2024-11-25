@@ -18,12 +18,22 @@ import { FilingStatus } from "@shared/assets/types/Global";
 import { Container, Filter, Header, StatusChip } from "@shared/template";
 
 import pdf from "@/modules/Overtime/assets/file.pdf";
+import useOffsetStore from "../store/useOff";
+import { useEffect } from "react";
 
 export default function Approve() {
   const [filter, { open: filterOpen, close: filterClose }] =
     useDisclosure(false);
   const [details, { open: detailsOpen, close: detailsClose }] =
     useDisclosure(false);
+
+  const { setActiveTab } = useOffsetStore();
+
+  useEffect(() => {
+    setActiveTab('approve')
+  }, [])
+
+
   return (
     <Container>
       {/* Header consist of title container and the Button */}
