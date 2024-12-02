@@ -49,7 +49,6 @@ export default function SelectData() {
             }
             // setIsReadOnly(SELECTED_DATA.status == 'Cancelled' || SELECTED_DATA.status == 'Approved' || SELECTED_DATA.status == 'Filed')
         }
-        console.log(SELECTED_DATA)
     }, [SELECTED_DATA]);
 
     const modalSize = useMatches({

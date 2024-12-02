@@ -48,11 +48,7 @@ export default function Table({ statuses, columns, rowClick }: DTOTP) {
       };
     });
 
-    useEffect(()=>{
-      console.log(activeTab)
-    },[activeTab])
-
-    const [selectedRecords, setSelectedRecords] = useState<any[]>([]);
+  const [selectedRecords, setSelectedRecords] = useState<any[]>([]);
 
   return (
     <>
