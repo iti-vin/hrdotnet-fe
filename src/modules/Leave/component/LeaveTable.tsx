@@ -4,18 +4,14 @@ import { IconFileText } from "@tabler/icons-react";
 import "mantine-datatable/styles.layer.css";
 import { LeaveStore } from "@/modules/Leave/LeaveStore";
 import "../style.css";
-// import samplePDF1 from "@public/sample_pdf/sample.pdf";
-import { render } from "react-dom";
+import samplePDF1 from "@public/sample_pdf/sample.pdf";
 import { DateTimeUtils } from "@shared/utils/DateTimeUtils";
-import { Flex, Text } from "@mantine/core";
+import { Text } from "@mantine/core";
 
 export default function LeaveTable() {
   const [page, setPage] = useState(1);
   const PAGE_SIZE = 15;
   const { ACTIVE_TAB, SET_SELECTED_DATA } = LeaveStore();
-  useEffect(() => {
-    console.log(ACTIVE_TAB);
-  }, []);
 
   const leaveColumn = [
     { accessor: "documentNo", title: "Document No.", textAlign: "start" },
@@ -75,7 +71,7 @@ export default function LeaveTable() {
               style={iconStyle}
               onClick={(e) => {
                 e.stopPropagation();
-                // window.open(samplePDF1, "_blank");
+                window.open(samplePDF1, "_blank");
               }}
             />
           </div>
@@ -117,10 +113,7 @@ export default function LeaveTable() {
       textAlign: "center",
       render: ({ processedBy }: { processedBy: any }) => {
         return (
-          <div className="flex flex-col">
-            <Text>Name</Text>
-            <Text>{processedBy}</Text>
-          </div>
+          <Text>{processedBy}</Text>
         );
       },
     },
@@ -391,6 +384,17 @@ export default function LeaveTable() {
 
   const [selectedRecords, setSelectedRecords] = useState<any[]>([]);
 
+  const getRecords = (activeTab: string) => {
+    if (activeTab === "list") return leaveRecordsList as any;
+    if (activeTab === "review") return leaveRecordsReview as any;
+    return leaveRecordsApprove as any;
+  };
+
+  const getColumns = (activeTab: string) => {
+    if (activeTab === "list") return leaveListColumn as any;
+    return leaveColumn as any;
+  };
+
   return (
     <DataTable
       style={{
@@ -403,16 +407,8 @@ export default function LeaveTable() {
       onPageChange={(p) => setPage(p)}
       withTableBorder
       idAccessor="documentNo"
-      columns={
-        ACTIVE_TAB == "list" ? (leaveListColumn as any) : (leaveColumn as any)
-      }
-      records={
-        ACTIVE_TAB == "list"
-          ? (leaveRecordsList as any)
-          : ACTIVE_TAB == "review"
-          ? (leaveRecordsReview as any)
-          : (leaveRecordsApprove as any)
-      }
+      columns={getColumns(ACTIVE_TAB)}
+      records={getRecords(ACTIVE_TAB)}
       paginationText={({ from, to, totalRecords }) =>
         `Showing data ${from} out ${to} of ${totalRecords} entries (0.225) seconds`
       }

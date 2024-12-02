@@ -1,7 +1,7 @@
 import { NavLink, Outlet } from "react-router-dom";
 import { useLogoWidth } from "@shared/hooks/useWidth";
 import "./index.css";
-
+import Dialog from './components/Dialog'
 const overtimeTabs = [
   { label: "List", path: "list", index: 0 },
   { label: "Review", path: "review", index: 1 },
@@ -22,7 +22,7 @@ export const Overtime = () => {
           <NavLink
             to={ot.path}
             key={ot.index}
-            className={({ isActive }) => (isActive ? "active" : "inactive")}
+            className={({ isActive }) => (isActive ? "activeLink" : "inactiveLink")}
           >
             {ot.label}
           </NavLink>
@@ -30,6 +30,7 @@ export const Overtime = () => {
       </div>
       <div className="bg-white m-4 mt-16 -mb-16 h-screen-85 overflow-y-hidden -z-10 p-8 rounded-lg bottom-0">
         <Outlet />
+        <Dialog/>
       </div>
     </>
   );

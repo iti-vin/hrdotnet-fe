@@ -65,7 +65,7 @@ export default function LeaveType() {
     const [page, setPage] = useState(1);
 
     return (
-        <div style={{ height: '95%' }}>
+        <div  className="md:h-screen-65">
             <DataTable
                 style={{
                     color: '#6D6D6D', fontWeight: 500,

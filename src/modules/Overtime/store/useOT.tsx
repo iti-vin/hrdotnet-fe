@@ -11,8 +11,15 @@ interface OvertimeProps {
   pageSize: number;
   pageCount: number;
   total: number;
-  setSelectedData: (selected_items: any) => void;
   selectedData: any;
+  activeTab: string;
+  alert: string;
+  action: string;
+
+  setSelectedData: (selected_items: any) => void;
+  setActiveTab: (activeTab: string) => void;
+  setAlert: (alert: string) => void;
+  setAction: (action: string) => void;
 }
 
 const useOvertimeStore = create<OvertimeProps>((set) => ({
@@ -22,8 +29,14 @@ const useOvertimeStore = create<OvertimeProps>((set) => ({
   pageCount: data.pageCount,
   total: data.total,
   selectedData: {},
+  activeTab: '',
+  alert: '',
+  action: '',
 
+  setActiveTab: (activeTab) => set({ activeTab: activeTab }),
   setSelectedData: (selected_items) => set({ selectedData: selected_items }),
+  setAlert: (alert) => set({ alert: alert }),
+  setAction: (action) => set({ action: action }),
 }));
 
 interface AccessProps {

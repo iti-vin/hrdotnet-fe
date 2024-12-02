@@ -85,7 +85,7 @@ export default function Filter() {
                             placeholder={leavePlaceHolder}
                             data={['Vacation Leave', 'Sick Leave', 'Emergency']}
                             styles={{ label: { color: '#6D6D6D', fontWeight: 500 } }}
-                            rightSection={<IconCaretDownFilled />}
+                            rightSection={<IconCaretDownFilled size={18}/>}
                         />
                     </div>
                 </div>
@@ -164,7 +164,7 @@ export default function Filter() {
                             placeholder={statusPlaceHolder}
                             data={['Filed', 'Approved', 'Cancelled', 'Reviewed']}
                             styles={{ label: { color: '#6D6D6D', fontWeight: 500 } }}
-                            rightSection={<IconCaretDownFilled />}
+                            rightSection={<IconCaretDownFilled size={18}/>}
                         />
                     </div>
                 </div>

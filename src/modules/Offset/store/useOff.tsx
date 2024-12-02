@@ -7,8 +7,11 @@ interface OffsetProps {
   pageSize: number;
   pageCount: number;
   total: number;
-  setSelectedData: (selected_items: any) => void;
   selectedData: any;
+  activeTab: string;
+
+  setActiveTab: (activeTab: string) => void;
+  setSelectedData: (selected_items: any) => void;
 }
 
 const useOffsetStore = create<OffsetProps>((set) => ({
@@ -18,7 +21,9 @@ const useOffsetStore = create<OffsetProps>((set) => ({
   pageCount: data.pageCount,
   total: data.total,
   selectedData: {},
-
+  activeTab: '',
+  
+  setActiveTab: (activeTab) => set({ activeTab: activeTab }),
   setSelectedData: (selected_items) => set({ selectedData: selected_items }),
 }));
 

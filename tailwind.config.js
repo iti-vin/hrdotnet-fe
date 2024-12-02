@@ -8,6 +8,7 @@ export default {
   theme: {
     extend: {
       height: {
+        "screen-65": "69vh",
         "screen-80": "80vh",
         "screen-81": "81vh",
         "screen-82": "82vh",

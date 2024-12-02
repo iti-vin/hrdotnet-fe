@@ -34,3 +34,15 @@
     padding: 0.6rem;
     @apply cursor-pointer hover:bg-gray-50
 }
+
+.unselectedLeaveType{
+    background-color: #DEECFF;
+    color: #559cda;
+    @apply cursor-pointer h-28 w-full  flex flex-col  text-center justify-center items-center shadow-md shadow-blue-300 rounded-lg m-1
+}
+
+.selectedLeaveType{
+    background-color: #559CDA;
+    color: white;
+    @apply cursor-pointer h-28 w-full  flex flex-col  text-center justify-center items-center shadow-md shadow-blue-300 rounded-lg m-1
+}

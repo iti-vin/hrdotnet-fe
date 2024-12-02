@@ -7,6 +7,7 @@ import {
   IconInfoCircle,
   IconShieldLock,
   IconLogout,
+  IconAddressBook,
 } from "@tabler/icons-react";
 import mina from "@shared/assets/images/mina.jpg";
 import "@shared/layout/base/styles/navbar.css";
@@ -73,6 +74,16 @@ export const Profile = () => {
           }
         >
           Payslip
+        </Menu.Item>
+        <Menu.Item
+          fw={500}
+          className="poppins"
+          color="#6d6d6d"
+          leftSection={
+            <IconAddressBook style={{ width: rem(20), height: rem(20) }} />
+          }
+        >
+          Contact
         </Menu.Item>
         <Menu.Item
           fw={500}

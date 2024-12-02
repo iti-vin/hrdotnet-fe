@@ -14,6 +14,8 @@ interface DateRangeProps {
   fPlaceholder: string;
   lPlaceholder: string;
   isColumn?: boolean;
+  gapValue?: number
+  size?: string
 }
 
 export const DateRange = ({
@@ -24,12 +26,14 @@ export const DateRange = ({
   value,
   setValue,
   isColumn = false,
+  gapValue,
+  size
 }: DateRangeProps) => {
   return (
     <Flex
       direction={`${isColumn ? "column" : "row"}`}
       justify="space-between"
-      gap={20}
+      gap={(gapValue ?? 20)}
       className="w-full"
     >
       <Popover
@@ -45,6 +49,8 @@ export const DateRange = ({
                 ? ""
                 : DateTimeUtils.dayWithDate(`${value[0]?.toString()}`)
             }
+            radius="md"
+            size={size ?? 'sm'}
             readOnly
             label={fLabel}
             placeholder={fPlaceholder}
@@ -55,6 +61,7 @@ export const DateRange = ({
         </Popover.Target>
         <Popover.Dropdown className="w-full">
           <DatePicker
+            firstDayOfWeek={0}
             numberOfColumns={2}
             type="range"
             value={value}
@@ -70,6 +77,8 @@ export const DateRange = ({
                 ? ""
                 : DateTimeUtils.dayWithDate(`${value[1]?.toString()}`)
             }
+            radius="md"
+            size={size ?? 'sm'}
             readOnly
             label={lLabel}
             placeholder={lPlaceholder}

@@ -6,7 +6,7 @@
 //--- Mantine Modules
 import { Flex, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-
+import { useOvertimeStore, } from "@/modules/Overtime/store/useOT";
 //--- Tabler Icons
 import { IconFileText } from "@tabler/icons-react";
 
@@ -23,6 +23,7 @@ import { FilingStatus } from "@shared/assets/types/Global";
 import { Container, Filter, Header, StatusChip } from "@shared/template";
 
 import pdf from "@/modules/Overtime/assets/file.pdf";
+import { useEffect } from "react";
 
 export default function List() {
   const [addRequest, { open: requestOpen, close: requestClose }] =
@@ -32,6 +33,11 @@ export default function List() {
   const [details, { open: detailsOpen, close: detailsClose }] =
     useDisclosure(false);
 
+    const { setActiveTab } = useOvertimeStore();
+    useEffect(() => {
+      setActiveTab('list')
+    }, [])
+    
   return (
     <Container>
       <Header
@@ -47,7 +53,7 @@ export default function List() {
           FilingStatus.Approved,
           FilingStatus.Cancelled,
           FilingStatus.Reviewed,
-          FilingStatus.Posted,
+          // FilingStatus.Posted,
         ]}
         columns={[
           { accessor: "documentNo", title: "Document No" },
@@ -59,22 +65,6 @@ export default function List() {
             accessor: "name",
             title: "Processed By",
             textAlign: "center",
-            render: (row: any) => (
-              <Flex direction="column" align="center">
-                {row.filingStatus === "Filed"
-                  ? null
-                  : row.filingStatus !== "Posted" && (
-                      <>
-                        <Text fw={500} size="sm">
-                          {row.name}
-                        </Text>
-                        <Text fw={300} size="sm">
-                          Developer
-                        </Text>
-                      </>
-                    )}
-              </Flex>
-            ),
           },
           {
             accessor: "filingStatus",

@@ -17,10 +17,10 @@
 }
 
 button.mantine-Pagination-control[data-active="true"] {
-  @apply bg-[#559CDA];
+  @apply bg-[#559CDA] text-white;
 }
 button.mantine-Pagination-control {
-  @apply bg-[#F5F5F5] border-[#EEEEEE];
+  @apply bg-[#F5F5F5] border-[#EEEEEE] text-[#6D6D6D];
 }
 
 div.mantine-Indicator-indicator[data-with-label="true"] {

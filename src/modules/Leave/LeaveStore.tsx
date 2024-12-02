@@ -5,12 +5,14 @@ interface LeaveState {
   ACTION: string;
   ALERT: string;
   SELECTED_DATA: any;
+  SELECTED_DATAS: any;
   SELECTED_LEAVE_TYPE: any;
   
   SET_ACTION: (action: string) => void;
   SET_ACTIVE_TAB: (active_tab: string) => void;
   SET_ALERT: (alert: string) => void;
-  SET_SELECTED_DATA: (active_tab: any) => void;
+  SET_SELECTED_DATA: (selected_data: any) => void;
+  SET_SELECTED_DATAS: (selected_datas: any) => void;
   SET_SELECTED_LEAVE_TYPE: (selected_leave_type: any) => void;
 }
 
@@ -19,12 +21,14 @@ const LeaveStore = create<LeaveState>((set) => ({
   ACTION: '',
   ALERT: '',
   SELECTED_DATA: {},
+  SELECTED_DATAS: [],
   SELECTED_LEAVE_TYPE: {},
 
   SET_ACTION: (action) => set({ ACTION: action }),
   SET_ACTIVE_TAB: (active_tab) => set({ ACTIVE_TAB: active_tab }),
   SET_ALERT: (alert) => set({ ALERT: alert }),
   SET_SELECTED_DATA: (selected_data) => set({ SELECTED_DATA: selected_data }),
+  SET_SELECTED_DATAS: (selected_datas) => set({ SELECTED_DATAS: selected_datas }),
   SET_SELECTED_LEAVE_TYPE: (selected_leave_type) => set({ SELECTED_LEAVE_TYPE: selected_leave_type }),
 }));
 

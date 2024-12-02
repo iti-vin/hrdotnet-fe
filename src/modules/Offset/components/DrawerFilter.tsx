@@ -64,7 +64,7 @@ export default function DrawerFilter({ opened, closed }: Props) {
             placeholder="Select Overtime Date"
             radius={8}
             data={["Vacation Leave", "Sick Leave", "Emergency Leave"]}
-            rightSection={<IconCaretDownFilled />}
+            rightSection={<IconCaretDownFilled size={18}/>}
             className="border-none w-full"
             styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
           />

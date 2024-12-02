@@ -7,6 +7,7 @@ interface AlertProps {
   buttonClose: () => void;
 
   tabs?: "List" | "Review" | "Approve";
+
 }
 
 export const SuccessRequest = ({ ...props }: AlertProps) => {
@@ -56,15 +57,29 @@ export const Cancelled = ({ ...props }: AlertProps) => {
   );
 };
 
-export const Alerts = ({ opened, onClose, buttonClose, tabs }: AlertProps) => {
+
+export const Rejected = ({ ...props }: AlertProps) => {
+  return (
+    <Alert
+      {...props}
+      title="Request Rejected"
+      content="
+          The request has been rejected."
+    />
+  );
+};
+
+export const Alerts = ({ opened, onClose, buttonClose, tabs }: AlertProps ) => {
   return (
     <React.Fragment>
       {tabs === "List" && (
+       <>
         <SuccessRequest
           opened={opened}
           onClose={onClose}
           buttonClose={buttonClose}
         />
+       </>
       )}
       {tabs === "Review" && (
         <SuccessEndorse
