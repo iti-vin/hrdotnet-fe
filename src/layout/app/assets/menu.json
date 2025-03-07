@@ -1,13 +1,13 @@
 {
   "menu": [
     { "label": "CHANGE OF SCHEDULE", "path": "/change-schedule", "id": 1, "icon": "IconCalendarEvent" },
-    { "label": "CTO", "path": "/cto", "id": 2, "icon": "IconCalendarTime" },
+    { "label": "CTO", "path": "/compensatory-timeoff", "id": 2, "icon": "IconCalendarTime" },
     { "label": "LEAVE", "path": "/leave", "id": 3, "icon": "IconBriefcase" },
     { "label": "MISSED LOG", "path": "/missed-log", "id": 4, "icon": "IconClockX" },
     { "label": "OFFICIAL BUSINESS", "path": "/official-business", "id": 5, "icon": "IconBuildings" },
     { "label": "OFFSET", "path": "/offset", "id": 6, "icon": "IconAlarm" },
     { "label": "OVERTIME", "path": "/overtime", "id": 7, "icon": "IconClockPlay" },
-    { "label": "LOAN", "path": "/loan", "id": 8, "icon": "IconCalculator" }
+    { "label": "LOAN", "path": "/loan-ledger", "id": 8, "icon": "IconCalculator" }
   ],
   "main": [
     { "label": "DASHBOARD", "path": "/", "id": 1, "icon": "IconLayoutDashboard" },

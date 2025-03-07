@@ -8,22 +8,15 @@ const offsetTabs = [
   { label: "Approve", path: "approve", index: 2 },
 ];
 
-export const Offset = () => {
+export default function Offset() {
   const { isLogowordVisible } = useLogoWidth();
   return (
     <>
       <title>Offset</title>
       <div
-        className={`flex bg-[#559CDA] gap-5 py-2 fixed top-15 left-0 right-0 z-10 sm:justify-start  justify-center ${
-          isLogowordVisible ? "sm:pl-0 md:pl-5 lg:pl-265" : "pl-23"
-        }`}
-      >
+        className={`flex bg-[#559CDA] gap-5 py-2 fixed top-15 left-0 right-0 z-10 sm:justify-start  justify-center ${isLogowordVisible ? "sm:pl-0 md:pl-5 lg:pl-265" : "pl-23"}`}>
         {offsetTabs.map((off) => (
-          <NavLink
-            to={off.path}
-            key={off.index}
-            className={({ isActive }) => (isActive ? "activeLink" : "inactiveLink")}
-          >
+          <NavLink to={off.path} key={off.index} className={({ isActive }) => (isActive ? "activeLink" : "inactiveLink")}>
             {off.label}
           </NavLink>
         ))}
@@ -33,4 +26,4 @@ export const Offset = () => {
       </div>
     </>
   );
-};
+}

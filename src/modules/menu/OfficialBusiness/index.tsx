@@ -1,3 +1,3 @@
-export default function index() {
+export default function OfficialBusiness() {
   return <div>index</div>;
 }

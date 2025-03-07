@@ -9,7 +9,7 @@ import { Avatar, Flex, Indicator, Menu, Text, rem } from "@mantine/core";
 import { IconUserCircle, IconReceipt, IconInfoCircle, IconShieldLock, IconLogout, IconAddressBook } from "@tabler/icons-react";
 
 //--- Sample-Image
-import mina from "@public/images/mina.jpg";
+import mina from "@shared/assets/images/mina.jpg";
 
 export default function Profile() {
   return (

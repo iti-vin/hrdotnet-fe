@@ -13,8 +13,8 @@ import { Search } from "lucide-react";
 import { useLogoWidth } from "@shared/hooks/useWidth";
 
 //--- Public Images
-import logoword from "@public/images/logoword.webp";
-import logoicon from "@public/images/icon.webp";
+import logoword from "@shared/assets/images/logoword.webp";
+import logoicon from "@shared/assets/images/icon.webp";
 //--- Sidebar Components
 import TooltipIcon from "./sidebar/TooltipIcon";
 //--- Assets
@@ -30,7 +30,7 @@ export default function Sidebar({ toggle }: SidebarProps) {
   return (
     <AppShell.Navbar>
       {/* Icon and Logo Section */}
-      <AppShell.Section px="md" display="flex" className="flex-row justify-between items-center">
+      <AppShell.Section px="md" pt={10} display="flex" className="flex-row justify-between items-center">
         <Image src={logoword} hiddenFrom="sm" className="logo" onClick={toggle} />
         <Transition transition="scale" exitDuration={3} enterDelay={5} mounted={true}>
           {(styles) => {

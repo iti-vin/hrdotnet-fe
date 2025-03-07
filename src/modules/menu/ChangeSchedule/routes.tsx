@@ -4,14 +4,15 @@
  */
 
 //--- React Modules
+import { lazy } from "react";
 import { Navigate, RouteObject } from "react-router-dom";
 
-import COS from "../";
+const COS = lazy(() => import("./"));
 //--- COS Panel
-import Request from "../components/pages/Request";
-import Reviewal from "../components/pages/Reviewal";
-import Approval from "../components/pages/Approval";
-import Filings from "../components/pages/Filings";
+import Request from "./components/pages/Request";
+import Reviewal from "./components/pages/Reviewal";
+import Approval from "./components/pages/Approval";
+import Filings from "./components/pages/Filings";
 
 const cosRoutes: RouteObject = {
   path: "change-schedule",
