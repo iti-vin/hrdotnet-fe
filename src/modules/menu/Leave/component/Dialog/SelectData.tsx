@@ -1,0 +1,230 @@
+import "mantine-datatable/styles.layer.css";
+import { LeaveStore } from "../../LeaveStore";
+import { Divider, Modal, Popover, Textarea, TextInput } from "@mantine/core";
+import { Text } from "@mantine/core";
+import { IconCopy, IconFileUpload, IconNotes, IconX } from "@tabler/icons-react";
+import { DatePickerInput } from "@mantine/dates";
+import { useEffect, useState } from "react";
+import "@mantine/dates/styles.css";
+import FilingBreakdown from "@/modules/menu/Leave/component/Table/FilingBreakdown";
+import { useMatches, ScrollArea } from "@mantine/core";
+import SelectDataButtons from "@/modules/menu/Leave/component/Template/SelectDataButtons";
+import { useDisclosure } from "@mantine/hooks";
+
+export default function SelectData() {
+  const [openedExport, { close: closeExport, open: openExport }] = useDisclosure(false);
+  const [openedCopy, { close: closeCopy, open: openCopy }] = useDisclosure(false);
+
+  const { SELECTED_DATA, SET_SELECTED_DATA, ACTIVE_TAB } = LeaveStore();
+  const [startDate, setStartDate] = useState<Date | null>(null);
+  const statusColors = [
+    { status: "Reviewed", color: "#FF7800" },
+    { status: "Approved", color: "#1E8449" },
+    { status: "Cancelled", color: "#FF4B34" },
+    { status: "Filed", color: "#9B51E0" },
+  ];
+
+  const getColor = () => {
+    const color = statusColors.find((item) => item.status === SELECTED_DATA.status);
+    return color?.color;
+  };
+
+  const [isMultipleDayLeave, setIsMultipleDayLeave] = useState(false);
+
+  useEffect(() => {
+    if (SELECTED_DATA != "") {
+      if (SELECTED_DATA.leaveFrom && SELECTED_DATA.leaveTo) {
+        const leaveFromDate = new Date(SELECTED_DATA.leaveFrom);
+        const leaveToDate = new Date(SELECTED_DATA.leaveTo);
+
+        // Strip the time component for date-only comparison
+        leaveFromDate.setHours(0, 0, 0, 0);
+        leaveToDate.setHours(0, 0, 0, 0);
+
+        // Compare dates to check if leave spans multiple days
+        setIsMultipleDayLeave(leaveFromDate.getTime() !== leaveToDate.getTime());
+      } else {
+        console.log("Either leaveFrom or leaveTo is missing.");
+      }
+      // setIsReadOnly(SELECTED_DATA.status == 'Cancelled' || SELECTED_DATA.status == 'Approved' || SELECTED_DATA.status == 'Filed')
+    }
+  }, [SELECTED_DATA]);
+
+  const modalSize = useMatches({
+    base: "100%",
+    lg: "70%",
+  });
+
+  const [isReadOnly, setIsReadOnly] = useState(true);
+
+  return (
+    <Modal
+      scrollAreaComponent={ScrollArea.Autosize}
+      opened={Object.keys(SELECTED_DATA).length !== 0}
+      onClose={() => SET_SELECTED_DATA({})}
+      withCloseButton={false}
+      styles={{ title: { color: "#559CDA", fontSize: 22, fontWeight: 600 } }}
+      radius="md"
+      centered
+      size={modalSize}
+      padding={30}>
+      <div className="flex justify-between">
+        <Text fw={600} fz={22} c="#559CDA">
+          {ACTIVE_TAB != "list" ? `${(SELECTED_DATA as any).employeeName}` : "Leave Request Details"}
+        </Text>
+        <div className="flex gap-2">
+          <Popover width={200} position="bottom" withArrow shadow="md" opened={openedCopy}>
+            <Popover.Target>
+              <IconCopy onMouseEnter={openCopy} onMouseLeave={closeCopy} className="cursor-pointer" size={30} color="gray" />
+            </Popover.Target>
+            <Popover.Dropdown style={{ pointerEvents: "none" }}>
+              <Text size="sm">Copy</Text>
+            </Popover.Dropdown>
+          </Popover>
+
+          <Popover width={200} position="bottom" withArrow shadow="md" opened={openedExport}>
+            <Popover.Target>
+              <IconFileUpload onMouseEnter={openExport} onMouseLeave={closeExport} className="cursor-pointer" size={30} color="gray" />
+            </Popover.Target>
+            <Popover.Dropdown style={{ pointerEvents: "none" }}>
+              <Text size="sm">Export</Text>
+            </Popover.Dropdown>
+          </Popover>
+
+          <IconX className="cursor-pointer" onClick={() => SET_SELECTED_DATA({})} size={30} color="gray" />
+        </div>
+      </div>
+      <div className="flex flex-col gap-5 mt-6" style={{ color: "#6D6D6D" }}>
+        <Divider size="xs" color="#6D6D6D" />
+        <div className="flex flex-col md:flex-row gap-6">
+          <div className="w-full md:w-1/2 flex flex-col gap-2  border-solid border-0.5 border-sky-500 p-4 rounded-lg">
+            <Text style={{ color: "#559CDA" }} className="font-bold">
+              General Information
+            </Text>
+
+            <div>
+              {/* <Text >Leave Type</Text> */}
+              <TextInput label="Leave Type" disabled={isReadOnly} size="lg" radius="md" placeholder="Select Leave Type" className="w-full" />
+            </div>
+            <div>
+              <TextInput label="Leave Option" disabled={isReadOnly} size="lg" radius="md" placeholder="Select Leave Option" className="w-full" />
+            </div>
+
+            <div className="flex flex-col gap-8  sm:gap-8">
+              <div className="flex flex-col md:flex-row gap-2">
+                <div className="w-full">
+                  <DatePickerInput label="Start Date" disabled={isReadOnly} radius="md" size="lg" placeholder="Start Date" value={startDate} onChange={setStartDate} />
+                </div>
+
+                <div className="w-full">
+                  <DatePickerInput label="End Date" disabled={isReadOnly} radius="md" size="lg" placeholder="End Date" value={startDate} onChange={setStartDate} />
+                </div>
+              </div>
+
+              <div className="w-full">
+                <TextInput label="Duration (Days)" disabled={isReadOnly} radius="md" size="lg" placeholder="Total Number of Days" />
+              </div>
+
+              <div className="w-full">
+                <TextInput label="Reference Number" disabled={isReadOnly} radius="md" size="lg" placeholder="00-0000-0000-0000" />
+              </div>
+            </div>
+          </div>
+
+          <div className="w-full md:w-1/2 flex flex-col gap-2 border-solid border-0.5 border-sky-500 p-4 rounded-lg">
+            <Text style={{ color: "#559CDA" }} className="font-bold">
+              Detailed Information
+            </Text>
+            <div>
+              <Text size="md" fw={500} className=" flex gap-1" c="#6d6d6d">
+                Status
+              </Text>
+              <div style={{ background: getColor() }} className="w-full text-center p-3 rounded-md text-white">
+                <Text className="">{SELECTED_DATA.status}</Text>
+              </div>
+            </div>
+
+            <div className="flex flex-col md:flex-row justify-between gap-4">
+              <div className="flex flex-col w-full md:w-1/2">
+                <TextInput label="Document No." disabled={isReadOnly} radius="md" size="lg" placeholder="00000000" />
+              </div>
+
+              <div className="flex flex-col w-full md:w-1/2">
+                <DatePickerInput label="Transaction Date" disabled={isReadOnly} radius="md" size="lg" placeholder="mm/dd/yyyy" value={startDate} onChange={setStartDate} />
+              </div>
+            </div>
+
+            <div className="flex flex-col">
+              <Textarea
+                label="Endorsement Information"
+                disabled={isReadOnly}
+                size="lg"
+                radius="md"
+                placeholder="Endorsed by Jane Smith on October 25, 2024 at 6:43 PM."
+                className="w-full"
+              />
+            </div>
+            <div className="flex flex-col">
+              <Textarea
+                label="Approval Information"
+                disabled={isReadOnly}
+                size="lg"
+                radius="md"
+                placeholder="Approved by Jane Smith on October 25, 2024 at 6:43 PM (Batch Approval)"
+                className="w-full"
+              />
+            </div>
+            <div className="flex flex-col">
+              <Textarea label="Cancellation Information" disabled={isReadOnly} size="lg" radius="md" placeholder="No Information" className="w-full" />
+            </div>
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-2 border-solid border-0.5 border-sky-500 p-4 rounded-lg">
+          <Text style={{ color: "#559CDA" }} className="font-bold">
+            Reason{" "}
+          </Text>
+          <Textarea disabled={isReadOnly} size="xl" radius="md" placeholder="Briefly state the reasons for filing leave." />
+        </div>
+
+        <div className="flex flex-col gap-5 border-solid border-0.5 border-sky-500 p-4 rounded-lg">
+          <Text style={{ color: "#559CDA" }} className="font-bold ">
+            Attachment{" "}
+          </Text>
+          <div className="border-dashed border-0.5 border-sky-500 p-4 rounded-lg flex flex-col  items-center" style={{ color: "#6D6D6D", background: "#EEEEEE", opacity: "0.5" }}>
+            <div className="flex items-center">
+              <IconNotes />
+              <Text>File: attachment.pdf Size: 20 MB </Text>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex flex-col md:flex-row  gap-4">
+          {SELECTED_DATA.status != "Filed" && isMultipleDayLeave && (
+            <div className="flex flex-col w-full md:w-2/3 gap-2 border-solid border-0.5 border-sky-500 p-4 rounded-lg">
+              <Text style={{ color: "#559CDA" }} className="font-bold">
+                Filing Breakdown
+              </Text>
+              <FilingBreakdown />
+            </div>
+          )}
+
+          <div className="flex flex-col gap-2  w-full border-solid border-0.5 border-sky-500 p-4 rounded-lg">
+            <Text style={{ color: "#559CDA" }} className="font-bold">
+              Edit Log
+            </Text>
+            <Textarea
+              styles={{ input: { height: "12.5rem" } }}
+              variant="filled"
+              disabled={isReadOnly}
+              size="xl"
+              radius="md"
+              placeholder="Date of Change  - Employee name changed the Application date from mm/dd/yyyy to mm/dd/yyyy."
+            />
+          </div>
+        </div>
+        <SelectDataButtons />
+      </div>
+    </Modal>
+  );
+}

@@ -1,0 +1,9 @@
+.panel-container {
+  @apply w-full flex bg-[#559CDA] gap-1 py-2 fixed left-0 right-0 top-[15] z-10 justify-start;
+}
+.active {
+  @apply py-1.5 px-5 text-center bg-white rounded-lg text-[#559CDA] font-bold text-sm;
+}
+.inactive {
+  @apply py-1.5 px-5 text-center text-white font-medium text-sm;
+}

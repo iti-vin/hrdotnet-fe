@@ -1,0 +1,305 @@
+{
+  "items": [
+    {
+      "id": 7,
+      "code": "0810060017",
+      "name": "Jonathan Magcaiyo Noarin",
+      "companyId": 1,
+      "branchId": 160,
+      "departmentId": 0,
+      "filing": {
+        "id": 246,
+        "guid": "eb0b491d-a36a-4aad-9912-18b170394056",
+        "documentNo": "ML12310140075",
+        "timeInOut": "16:34:00",
+        "dateFiled": "2023-10-06T00:00:00",
+        "dateTransaction": "2023-10-14T00:00:00",
+        "reason": "(THIS DOCUMENT IS CANCELLED): change METHOD",
+        "filingStatus": {
+          "id": 3,
+          "name": "Filed"
+        },
+        "logType": {
+          "id": 2,
+          "name": "Time Out"
+        },
+        "fileAttachment": "[]"
+      },
+      "dateTransaction": "2023-10-14T00:00:00"
+    },
+    {
+      "id": 7,
+      "code": "0810060017",
+      "name": "Jonathan Magcaiyo Noarin",
+      "companyId": 1,
+      "branchId": 160,
+      "departmentId": 0,
+      "filing": {
+        "id": 247,
+        "guid": "106294ba-0852-4888-b498-b490c4896321",
+        "documentNo": "ML12310140076",
+        "timeInOut": "12:01:00",
+        "dateFiled": "2023-10-11T00:00:00",
+        "dateTransaction": "2023-10-14T00:00:00",
+        "reason": "halfday\n(THIS DOCUMENT IS BATCH APPROVED BY BALALLO, NELSON SOLIVEN 10/16/2023 08:11 am)",
+        "filingStatus": {
+          "id": 11,
+          "name": "Approved"
+        },
+        "logType": {
+          "id": 2,
+          "name": "Time Out"
+        },
+        "fileAttachment": "[]"
+      },
+      "dateTransaction": "2023-10-14T00:00:00"
+    },
+    {
+      "id": 7,
+      "code": "0810060017",
+      "name": "Jonathan Magcaiyo Noarin",
+      "companyId": 1,
+      "branchId": 160,
+      "departmentId": 0,
+      "filing": {
+        "id": 360,
+        "guid": "36e5d174-0bd5-4522-8005-fddcd39899b4",
+        "documentNo": "ML12311150127",
+        "timeInOut": "17:00:00",
+        "dateFiled": "2023-11-09T00:00:00",
+        "dateTransaction": "2023-11-15T00:00:00",
+        "reason": "mis log\n(THIS DOCUMENT IS BATCH APPROVED BY BALALLO, NELSON SOLIVEN 11/16/2023 12:31 pm)",
+        "filingStatus": {
+          "id": 11,
+          "name": "Approved"
+        },
+        "logType": {
+          "id": 2,
+          "name": "Time Out"
+        },
+        "fileAttachment": "[]"
+      },
+      "dateTransaction": "2023-11-15T00:00:00"
+    },
+    {
+      "id": 7,
+      "code": "0810060017",
+      "name": "Jonathan Magcaiyo Noarin",
+      "companyId": 1,
+      "branchId": 160,
+      "departmentId": 0,
+      "filing": {
+        "id": 454,
+        "guid": "e897d268-6476-45d0-b8f6-264dd556420c",
+        "documentNo": "ML12312110153",
+        "timeInOut": "07:00:00",
+        "dateFiled": "2023-12-07T00:00:00",
+        "dateTransaction": "2023-12-11T00:00:00",
+        "reason": "mislog",
+        "filingStatus": {
+          "id": 1,
+          "name": "Posted"
+        },
+        "logType": {
+          "id": 1,
+          "name": "Time In"
+        },
+        "fileAttachment": "[]"
+      },
+      "dateTransaction": "2023-12-11T00:00:00"
+    },
+    {
+      "id": 7,
+      "code": "0810060017",
+      "name": "Jonathan Magcaiyo Noarin",
+      "companyId": 1,
+      "branchId": 160,
+      "departmentId": 0,
+      "filing": {
+        "id": 3071,
+        "guid": "02a47dc7-fed3-446e-b915-e22bab9762b0",
+        "documentNo": "ML12404010403",
+        "timeInOut": "07:20:00",
+        "dateFiled": "2024-03-27T00:00:00",
+        "dateTransaction": "2024-04-01T00:00:00",
+        "reason": "Mis log\n(THIS DOCUMENT IS APPROVED BY BALALLO, NELSON SOLIVEN 04/01/2024 02:47 pm)",
+        "filingStatus": {
+          "id": 2,
+          "name": "Filed"
+        },
+        "logType": {
+          "id": 1,
+          "name": "Time In"
+        },
+        "fileAttachment": "[]"
+      },
+      "dateTransaction": "2024-04-01T00:00:00"
+    },
+    {
+      "id": 7,
+      "code": "0810060017",
+      "name": "Jonathan Magcaiyo Noarin",
+      "companyId": 1,
+      "branchId": 160,
+      "departmentId": 0,
+      "filing": {
+        "id": 4280,
+        "guid": "5747d008-67e6-4ae2-bdaf-b4a71d3ac037",
+        "documentNo": "ML12404160515",
+        "timeInOut": "16:50:00",
+        "dateFiled": "2024-04-09T00:00:00",
+        "dateTransaction": "2024-04-16T00:00:00",
+        "reason": "Tech miroy instruction\n(THIS DOCUMENT IS BATCH APPROVED BY BALALLO, NELSON SOLIVEN 04/16/2024 05:37 pm)",
+        "filingStatus": {
+          "id": 2,
+          "name": "Filed"
+        },
+        "logType": {
+          "id": 2,
+          "name": "Time Out"
+        },
+        "fileAttachment": "[]"
+      },
+      "dateTransaction": "2024-04-16T00:00:00"
+    },
+    {
+      "id": 7,
+      "code": "0810060017",
+      "name": "Jonathan Magcaiyo Noarin",
+      "companyId": 1,
+      "branchId": 160,
+      "departmentId": 0,
+      "filing": {
+        "id": 8366,
+        "guid": "067277e8-fba2-45df-8bbc-085f20e9747a",
+        "documentNo": "ML12406141177",
+        "timeInOut": "17:00:00",
+        "dateFiled": "2024-06-01T00:00:00",
+        "dateTransaction": "2024-06-14T00:00:00",
+        "reason": "mis log(THIS DOCUMENT IS CANCELLED): mis file",
+        "filingStatus": {
+          "id": 3,
+          "name": "Reviewed"
+        },
+        "logType": {
+          "id": 2,
+          "name": "Time Out"
+        },
+        "fileAttachment": "[]"
+      },
+      "dateTransaction": "2024-06-14T00:00:00"
+    },
+    {
+      "id": 7,
+      "code": "0810060017",
+      "name": "Jonathan Magcaiyo Noarin",
+      "companyId": 1,
+      "branchId": 160,
+      "departmentId": 0,
+      "filing": {
+        "id": 8784,
+        "guid": "93317103-d350-465c-a0d0-4e8f77ee5ef0",
+        "documentNo": "ML12407011454",
+        "timeInOut": "17:09:00",
+        "dateFiled": "2024-06-20T00:00:00",
+        "dateTransaction": "2024-07-01T00:00:00",
+        "reason": "Time of out\n(THIS DOCUMENT IS APPROVED BY BALALLO, NELSON SOLIVEN 07/01/2024 11:48 am)",
+        "filingStatus": {
+          "id": 2,
+          "name": "Reviewed"
+        },
+        "logType": {
+          "id": 2,
+          "name": "Time Out"
+        },
+        "fileAttachment": "[]"
+      },
+      "dateTransaction": "2024-07-01T00:00:00"
+    },
+    {
+      "id": 7,
+      "code": "0810060017",
+      "name": "Jonathan Magcaiyo Noarin",
+      "companyId": 1,
+      "branchId": 160,
+      "departmentId": 0,
+      "filing": {
+        "id": 9278,
+        "guid": "22e32ada-3fd0-43ea-a1dc-3a6d3b9f673c",
+        "documentNo": "ML12407311792",
+        "timeInOut": "16:35:00",
+        "dateFiled": "2024-07-24T00:00:00",
+        "dateTransaction": "2024-07-31T00:00:00",
+        "reason": "mislog\n(THIS DOCUMENT IS BATCH APPROVED BY BALALLO, NELSON SOLIVEN 07/31/2024 07:48 pm)",
+        "filingStatus": {
+          "id": 2,
+          "name": "Cancelled"
+        },
+        "logType": {
+          "id": 2,
+          "name": "Time Out"
+        },
+        "fileAttachment": "[]"
+      },
+      "dateTransaction": "2024-07-31T00:00:00"
+    },
+    {
+      "id": 7,
+      "code": "0810060017",
+      "name": "Jonathan Magcaiyo Noarin",
+      "companyId": 1,
+      "branchId": 160,
+      "departmentId": 0,
+      "filing": {
+        "id": 9345,
+        "guid": "0f68f976-6c00-4d06-8d73-1417571ffbfe",
+        "documentNo": "ML12408011841",
+        "timeInOut": "16:40:00",
+        "dateFiled": "2024-07-30T00:00:00",
+        "dateTransaction": "2024-08-01T00:00:00",
+        "reason": "Mislog no out\n(THIS DOCUMENT IS BATCH APPROVED BY BALALLO, NELSON SOLIVEN 08/01/2024 09:29 am)",
+        "filingStatus": {
+          "id": 2,
+          "name": "Cancelled"
+        },
+        "logType": {
+          "id": 2,
+          "name": "Time Out"
+        },
+        "fileAttachment": "[]"
+      },
+      "dateTransaction": "2024-08-01T00:00:00"
+    },
+    {
+      "id": 7,
+      "code": "0810060017",
+      "name": "Jonathan Magcaiyo Noarin",
+      "companyId": 1,
+      "branchId": 160,
+      "departmentId": 0,
+      "filing": {
+        "id": 13049,
+        "guid": "c4b9e7a1-89dc-4999-948a-8695d5be2529",
+        "documentNo": "ML12409162265",
+        "timeInOut": "07:38:00",
+        "dateFiled": "2024-09-14T00:00:00",
+        "dateTransaction": "2024-09-16T00:00:00",
+        "reason": "mislog\n(THIS DOCUMENT IS BATCH APPROVED BY BALALLO, NELSON SOLIVEN 09/16/2024 02:54 pm)",
+        "filingStatus": {
+          "id": 2,
+          "name": "Approved"
+        },
+        "logType": {
+          "id": 1,
+          "name": "Time In"
+        },
+        "fileAttachment": "[]"
+      },
+      "dateTransaction": "2024-09-16T00:00:00"
+    }
+  ],
+  "page": 1,
+  "pageSize": 30,
+  "pageCount": 1,
+  "total": 11
+}
