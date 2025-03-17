@@ -1,0 +1,12 @@
+.mantine-Table-thead.mantine-datatable-header {
+  border-bottom: 2px solid #6d6d6d;
+}
+.mantine-Table-th {
+  color: #6d6d6d80;
+  font-weight: 600;
+}
+
+.mantine-Table-td {
+  color: #000000bf;
+  font-weight: 500;
+}

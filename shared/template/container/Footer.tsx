@@ -6,22 +6,18 @@ interface PaginationTypes {
   pageSize: number;
   recordsLength: number;
   currentPage: number;
+  value?: number;
+  time?: string;
 }
-export default function Footer({
-  total,
-  onChange,
-  pageSize,
-  recordsLength,
-  currentPage,
-}: PaginationTypes) {
+export default function Footer({ onChange, total, pageSize, recordsLength, value, currentPage, time }: PaginationTypes) {
   const isMobile = useMediaQuery(`(max-width: ${em(750)})`);
+
   return (
     <Group justify={isMobile ? "center" : "space-between"} align="center">
       <Text size="sm" className="text-gray-500">
-        Showing data {Math.min(currentPage * pageSize, recordsLength)} out of{" "}
-        {recordsLength} entries found in (0.225) seconds
+        Showing data {Math.min(currentPage * pageSize, recordsLength)} out of {recordsLength} entries found in {time} seconds
       </Text>
-      <Pagination onChange={onChange} total={total} size="sm" />
+      <Pagination onChange={onChange} total={total} size="sm" value={value} />
     </Group>
   );
 }
