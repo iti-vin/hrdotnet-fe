@@ -20,9 +20,9 @@
   ],
   "TIMEKEEPING": [
     { "label": "EMPLOYEE TIME RECORD", "path": "/employee-list", "id": 1, "icon": "IconFileReport" },
-    { "label": "LEAVE ADJUSTMENTS", "path": "/employee-movement", "id": 3, "icon": "IconReplace" },
-    { "label": "PROCESS TIMEKEEPING", "path": "/process-timekeeping", "id": 2, "icon": "IconProgressDown" },
-    { "label": "WORK SCHEDULE", "path": "/work-schedule", "id": 3, "icon": "IconClock2" }
+    { "label": "LEAVE ADJUSTMENTS", "path": "/employee-movement", "id": 2, "icon": "IconReplace" },
+    { "label": "PROCESS TIMEKEEPING", "path": "/process-timekeeping", "id": 3, "icon": "IconProgressDown" },
+    { "label": "WORK SCHEDULE", "path": "/work-schedule", "id": 4, "icon": "IconClock2" }
   ],
   "PAYROLL": [
     { "label": "LOAN APPLICATION", "path": "/loan-application", "id": 1, "icon": "IconCoins" },

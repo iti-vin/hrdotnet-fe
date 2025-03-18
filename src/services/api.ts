@@ -11,13 +11,15 @@ const getRefreshTokenFromCookie = () => {
   return null;
 };
 
-const axiosInstance = axios.create({
-  baseURL: `${import.meta.env.VITE_API_BASE_URL}api/`,
+const API_BASE_URL = "http://localhost:4321";
+
+const apiClient = axios.create({
+  baseURL: API_BASE_URL,
 });
 
-axiosInstance.interceptors.request.use(
+apiClient.interceptors.request.use(
   (config) => {
-    const token = sessionStorage.getItem("accessTokenFlash");
+    const token = sessionStorage.getItem("accessToken");
     if (token) {
       config.headers["Authorization"] = `Bearer ${token}`;
     }
@@ -28,7 +30,7 @@ axiosInstance.interceptors.request.use(
   }
 );
 
-axiosInstance.interceptors.response.use(
+apiClient.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
@@ -37,9 +39,9 @@ axiosInstance.interceptors.response.use(
       try {
         const refreshToken = getRefreshTokenFromCookie();
         if (refreshToken) {
-          sessionStorage.setItem("accessTokenFlash", refreshToken);
+          sessionStorage.setItem("accessToken", refreshToken);
           originalRequest.headers["Authorization"] = refreshToken;
-          return axiosInstance(originalRequest);
+          return apiClient(originalRequest);
         }
       } catch (err) {
         console.error("Failed to refresh token", err);
@@ -50,4 +52,4 @@ axiosInstance.interceptors.response.use(
   }
 );
 
-export default axiosInstance;
+export default apiClient;
