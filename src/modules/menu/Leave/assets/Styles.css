@@ -1,0 +1,24 @@
+.mantine-Table-thead.mantine-datatable-header {
+  border-bottom: 2px solid #6d6d6d;
+}
+.mantine-Table-th {
+  color: #6d6d6d80;
+  font-weight: 600;
+}
+
+.mantine-Table-td {
+  color: #000000bf;
+  font-weight: 500;
+}
+
+.unselectedLeaveType {
+  background-color: #deecff;
+  color: #559cda;
+  @apply cursor-pointer h-28 w-full  flex  text-center justify-center items-center shadow-md shadow-blue-300 rounded-lg m-1 gap-6;
+}
+
+.selectedLeaveType {
+  background-color: #559cda;
+  color: white;
+  @apply cursor-pointer h-28 w-full  flex   text-center justify-center items-center shadow-md shadow-blue-300 rounded-lg m-1 gap-6;
+}

@@ -1000,6 +1000,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tanstack/query-devtools@npm:5.67.2":
+  version: 5.67.2
+  resolution: "@tanstack/query-devtools@npm:5.67.2"
+  checksum: 10c0/85172bb7cbca204e62507ffb72add4ff8f204b034ea0c6bb82cc44a00756ab196bd8a688b5e857911274aa5e7c467cdda6a393ebce6ba36ce8d471d5b52060fb
+  languageName: node
+  linkType: hard
+
+"@tanstack/react-query-devtools@npm:^5.68.0":
+  version: 5.68.0
+  resolution: "@tanstack/react-query-devtools@npm:5.68.0"
+  dependencies:
+    "@tanstack/query-devtools": "npm:5.67.2"
+  peerDependencies:
+    "@tanstack/react-query": ^5.68.0
+    react: ^18 || ^19
+  checksum: 10c0/794b9d16bd0c6d48970e85593c85549cbefb16916c7245845a851b959b9548a342255563d132bbf8550e86dca794275209cc1b6d92a964b9be6bcf9fb975496d
+  languageName: node
+  linkType: hard
+
 "@tanstack/react-query@npm:^5.68.0":
   version: 5.68.0
   resolution: "@tanstack/react-query@npm:5.68.0"
@@ -2296,6 +2315,7 @@ __metadata:
     "@mantine/hooks": "npm:^7.17.1"
     "@tabler/icons-react": "npm:3.21.0"
     "@tanstack/react-query": "npm:^5.68.0"
+    "@tanstack/react-query-devtools": "npm:^5.68.0"
     "@types/node": "npm:^22.8.7"
     "@types/react": "npm:^18.3.3"
     "@types/react-dom": "npm:^18.3.0"

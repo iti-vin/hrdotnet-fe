@@ -10,7 +10,9 @@ import { RouterProvider } from "react-router-dom";
 //--- Mantine Modules
 import { MantineProvider } from "@mantine/core";
 
+//--- Tanstack Modules
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 //--- Global Style
 import "@mantine/core/styles.css";
@@ -26,6 +28,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     <MantineProvider>
       <QueryClientProvider client={queryClient}>
         <RouterProvider router={router} />
+        <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </MantineProvider>
   </StrictMode>
