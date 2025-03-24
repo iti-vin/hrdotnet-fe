@@ -1,29 +1,61 @@
-import { NavLink, Outlet } from "react-router-dom";
-import LeaveDialog from "@/modules/menu/Leave/component/LeaveDialog";
-import "./style.css";
+/**
+ * @version    HRDotNet(v.2.0.0)
+ * @author     Hersvin Fred De La Cruz Labastida
+ */
 
-export const Leave = () => {
-  const leavePanel = [
-    { id: 1, name: "request", title: "My Request" },
-    { id: 2, name: "ledger", title: "My Ledger" },
-    { id: 3, name: "reviewal", title: "For Review" },
-    { id: 4, name: "approval", title: "For Approval" },
-    { id: 5, name: "filings", title: "Employee Filings" },
-  ];
+//--- React Module
+import React, { useEffect } from "react";
+import { NavLink, Outlet } from "react-router-dom";
+//--- Mantine Modules
+import { Stack } from "@mantine/core";
+
+//--- Layouts
+import PanelNav from "@/layout/main/panel";
+
+//--- Leave Modules
+import "./assets/Styles.css";
+
+//--- Leave Context
+import { LeaveProvider, useLeave } from "./context";
+import useLeaveStore from "./store/LeaveStore";
+
+function LeaveContent() {
+  const { activeTab, setActiveTab, leaveTabs, onFetchLeaveParameter, onFetchLeaveOption } = useLeave();
+  const { setStoredFilters, setStoredPage, setDataFilter } = useLeaveStore();
+
+  useEffect(() => {
+    onFetchLeaveParameter();
+    onFetchLeaveOption();
+  }, []);
+
+  useEffect(() => {
+    setStoredFilters({});
+    setStoredPage({});
+    setDataFilter({ DocumentNo: null, LeaveType: null, DateField: null, DateFrom: null, DateTo: null, LeaveParameter: null });
+  }, [activeTab]);
+
   return (
-    <div className="">
+    <React.Fragment>
       <title>Leave</title>
-      <div className="w-full flex bg-[#559CDA] top-20 gap-5 px-4 py-2">
-        {leavePanel.map((item) => (
-          <NavLink key={item.id} to={item.name} className={({ isActive }) => (isActive ? "activeLink" : "inactiveLink")}>
-            {item.title}
+      <PanelNav>
+        {leaveTabs.map((item) => (
+          <NavLink key={item.index} to={item.path} className={({ isActive }) => (isActive ? "active" : "inactive")} onClick={() => setActiveTab(item.index)}>
+            {item.label}
           </NavLink>
         ))}
-      </div>
-      <div>
+      </PanelNav>
+      {/* Consist of All Modals */}
+      <Stack className="bg-white m-4 mt-16 -mb-16 h-screen-85 overflow-y-hidden -z-10 p-8 rounded-lg bottom-0 select-none">
         <Outlet />
-        <LeaveDialog />
-      </div>
-    </div>
+      </Stack>
+    </React.Fragment>
   );
-};
+}
+
+export default function Leave() {
+  return (
+    <LeaveProvider>
+      <LeaveContent />
+    </LeaveProvider>
+  );
+}

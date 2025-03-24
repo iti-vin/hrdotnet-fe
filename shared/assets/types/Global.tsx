@@ -7,7 +7,7 @@ export enum FilingStatus {
 }
 
 export enum Tabs {
-  List = "Lust",
+  List = "List",
   Review = "Review",
   Approve = "Approve",
 }
@@ -49,3 +49,26 @@ export interface Tab {
   path: string;
   label: string;
 }
+
+export interface Response {
+  page: number;
+  pageSize: number;
+  pageCount: number;
+  total: number;
+}
+
+export interface ResponseItem {
+  id: number;
+  code: string;
+  name: string;
+  companyId: number;
+  branchId: number;
+  departmentId: number;
+  dateTransaction: string;
+}
+
+export type RowData = {
+  event: React.MouseEvent;
+  record: any;
+  index: number;
+};

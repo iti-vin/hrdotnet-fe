@@ -4,10 +4,8 @@
  */
 
 //--- React Modules
-import { lazy } from "react";
 import { Navigate, RouteObject } from "react-router-dom";
-
-const COS = lazy(() => import("./"));
+import COS from "./";
 //--- COS Panel
 import Request from "./components/pages/Request";
 import Reviewal from "./components/pages/Reviewal";
