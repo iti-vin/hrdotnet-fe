@@ -67,8 +67,9 @@ export interface ResponseItem {
   dateTransaction: string;
 }
 
-export type RowData = {
-  event: React.MouseEvent;
-  record: any;
-  index: number;
-};
+export enum PanelNavList {
+  Request = "REQUEST",
+  Reviewal = "REVIEWAL",
+  Approval = "APPROVAL",
+  Filings = "FILINGS",
+}

@@ -113,7 +113,7 @@ export default function Approval() {
           },
         ]}
       />
-      {data && <Footer total={Math.ceil(data.total / data.pageSize)} pageSize={data.pageSize} recordsLength={data.total} time={time} />}
+      {data && <Footer total={Math.ceil(data.total / data.pageSize)} pageSize={data.pageSize} currentPage={data.page} recordsLength={data.total} time={time} />}
 
       <Modals
         panel="APPROVAL"

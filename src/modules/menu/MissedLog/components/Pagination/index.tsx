@@ -1,19 +1,26 @@
-import { Pagination, Group, Text, em, Flex } from "@mantine/core";
+/**
+ * @version    HRDotNet(v.2.0.0)
+ * @author     Hersvin Fred De La Cruz Labastida
+ */
+
+//--- Mantine Modules
+import { em, Flex, Group, Pagination, Text } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
-import { useLeave } from "../../context";
-import useLeaveStore from "../../store/LeaveStore";
-interface PaginationTypes {
+import { useMissedLogContext } from "../../context";
+import { useMissedLogStore } from "../../store/main";
+
+interface MissedLogPaginationI {
   total: number;
   pageSize: number;
   recordsLength: number;
-  time?: string;
+  time: string;
   currentPage: number;
 }
-export default function index({ total, pageSize, recordsLength, time, currentPage }: PaginationTypes) {
-  const isMobile = useMediaQuery(`(max-width: ${em(750)})`);
-  const { onHandleChangePage, onHandlePageSize } = useLeave();
-  const { page } = useLeaveStore();
 
+export default function index({ total, pageSize, recordsLength, time, currentPage }: MissedLogPaginationI) {
+  const isMobile = useMediaQuery(`(max-width: ${em(750)})`);
+  const { onHandleChangePage, onHandlePageSize } = useMissedLogContext();
+  const { page } = useMissedLogStore();
   return (
     <Group justify={isMobile ? "center" : "space-between"} align="center">
       <Flex>

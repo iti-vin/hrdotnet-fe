@@ -90,7 +90,7 @@ export default function Request() {
           },
         ]}
       />
-      {data && <Footer total={Math.ceil(data.total / data.pageSize)} pageSize={data.pageSize} recordsLength={data.total} time={""} />}
+      {data && <Footer total={Math.ceil(data.total / data.pageSize)} pageSize={data.pageSize} currentPage={data.page} recordsLength={data.total} time={""} />}
 
       <Modals panel="REQUEST" />
     </Container>

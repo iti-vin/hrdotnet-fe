@@ -5,7 +5,7 @@
 
 //--- Node Modules
 import { useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { IconFileText } from "@tabler/icons-react";
 
 //--- Shared Modules
@@ -27,22 +27,42 @@ import { MissedLogResponse } from "../models/response";
 
 import { MissedLogServices } from "../services";
 import { Button } from "@mantine/core";
+import { queryClient } from "@/services/client";
+import { ApproveEndorseMissedLog } from "../assets/Values";
 
 export default function index() {
-  const { loading, setLoading, time, setTime, storedPage, storedFilters } = useMissedLogStore();
-  const panel = "FILINGS";
+  const { viewItems } = useMissedLogStore();
+  const { loading, setLoading, time, setTime, setOpenAlert, setError, storedPage, storedFilters } = useMissedLogStore();
+  const panel = "APPROVAL";
 
+  // displaying datatable for aporovals off missed logs
   const { data, isLoading, refetch } = useQuery<MissedLogResponse>({
-    queryKey: ["filings_missedlog", storedPage, storedFilters],
+    queryKey: ["approval_missedlog", storedFilters, storedPage],
     queryFn: async () => {
       const startTime = performance.now();
-      const result = await MissedLogServices.getAllForFilingsML({ ...storedPage, ...storedFilters });
+      const result = await MissedLogServices.getAllForApprovalML({ ...storedPage, ...storedFilters });
       const endTime = performance.now();
       const executionTime = (endTime - startTime) / 1000;
       setTime(executionTime.toFixed(3).toString());
       return result;
     },
     staleTime: 1000 * 60 * 5,
+  });
+
+  // missed log request single approve
+  const { mutate: singleApprove } = useMutation({
+    mutationFn: async (id: number) => {
+      const formData = ApproveEndorseMissedLog(viewItems);
+      return MissedLogServices.singleApproveMissedLog(id, formData);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["reviewal_missedlog"] });
+      queryClient.invalidateQueries({ queryKey: ["approval_missedlog"] });
+      setOpenAlert("SuccessApprove");
+    },
+    onError: (error: any) => {
+      setError(error.response.data.title ? error.response.data.title : "Internal Server Error");
+    },
   });
 
   useEffect(() => {
@@ -102,7 +122,7 @@ export default function index() {
       <Modals
         panel={panel}
         approve={
-          <Button className="border-none custom-gradient rounded-md" onClick={() => {}}>
+          <Button className="border-none custom-gradient rounded-md" onClick={() => singleApprove(viewItems.filing.id)}>
             APPROVE
           </Button>
         }
