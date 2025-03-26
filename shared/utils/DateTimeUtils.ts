@@ -18,7 +18,7 @@ export const DateTimeUtils = {
   getCurrDateDefaultAddDay: () => dayjs().add(1, "day").format("YYYYMMDD"),
   getCurrDateDefaultLessDay: () => dayjs().subtract(1, "day").format("YYYYMMDD"),
 
-  getCurrTimeDefault: () => dayjs().format("HH:mm:ss"),
+  getCurrTimeDefault: (date: string) => dayjs(date).format("HH:mm:ss"),
   getCurrTimeWithSecondsUnits: () => dayjs().format("hh:mm:ss A"),
   getCurrWordMonth: () => dayjs().format("MMMM"),
   getCurrWordYear: () => dayjs().format("YYYY"),
@@ -33,6 +33,7 @@ export const DateTimeUtils = {
   getIsoTimeDefaultWithUnits: (date: string) => dayjs(date).format("hh:mm A"),
   getIsoDateWithBackSlash: (date: string) => dayjs(date).format("MM/DD/YYYY"),
   getIsoDateFull: (date: string) => dayjs(date).format("YYYYMMDD"),
+  getIsoDateToIso: (date: string) => dayjs(date).format("YYYY-MM-DDT00:00:00"),
   getIsoDateWord: (date: string) => dayjs(date).format("MMM DD, YYYY"),
 
   dateToDate: (date: string) => dayjs(date).toDate(),

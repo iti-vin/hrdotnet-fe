@@ -5,7 +5,7 @@
 
 //--- Node Modules
 import { useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { IconFileText } from "@tabler/icons-react";
 
 //--- Shared Modules
@@ -27,22 +27,41 @@ import { MissedLogResponse } from "../models/response";
 
 import { MissedLogServices } from "../services";
 import { Button } from "@mantine/core";
+import { queryClient } from "@/services/client";
+import { ApproveEndorseMissedLog } from "../assets/Values";
 
 export default function index() {
-  const { loading, setLoading, time, setTime, storedPage, storedFilters } = useMissedLogStore();
-  const panel = "FILINGS";
+  const { loading, setLoading, time, setTime, viewItems, setOpenAlert, setError, storedPage, storedFilters } = useMissedLogStore();
+  const panel = "REVIEWAL";
 
+  // displaying datatable for reviewals off missed logs
   const { data, isLoading, refetch } = useQuery<MissedLogResponse>({
-    queryKey: ["filings_missedlog", storedPage, storedFilters],
+    queryKey: ["reviewal_missedlog", storedFilters, storedPage],
     queryFn: async () => {
       const startTime = performance.now();
-      const result = await MissedLogServices.getAllForFilingsML({ ...storedPage, ...storedFilters });
+      const result = await MissedLogServices.getAllForReviewalML({ ...storedPage, ...storedFilters });
       const endTime = performance.now();
       const executionTime = (endTime - startTime) / 1000;
       setTime(executionTime.toFixed(3).toString());
       return result;
     },
     staleTime: 1000 * 60 * 5,
+  });
+
+  // missed log request single review
+  const { mutate: singleEndorse } = useMutation({
+    mutationFn: async (id: number) => {
+      const formData = ApproveEndorseMissedLog(viewItems);
+      return MissedLogServices.singleEndorseMissedLog(id, formData);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["reviewal_missedlog"] });
+      queryClient.invalidateQueries({ queryKey: ["approval_missedlog"] });
+      setOpenAlert("SuccessApprove");
+    },
+    onError: (error: any) => {
+      setError(error.response.data.title ? error.response.data.title : "Internal Server Error");
+    },
   });
 
   useEffect(() => {
@@ -101,9 +120,9 @@ export default function index() {
       {data && <Footer total={Math.ceil(data.total / data.pageSize)} pageSize={data.pageSize} recordsLength={data.total} currentPage={data.page} time={time} />}
       <Modals
         panel={panel}
-        approve={
-          <Button className="border-none custom-gradient rounded-md" onClick={() => {}}>
-            APPROVE
+        endorse={
+          <Button className="border-none custom-gradient rounded-md" onClick={() => singleEndorse(viewItems.filing.id)}>
+            ENDORSE
           </Button>
         }
       />

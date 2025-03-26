@@ -1,19 +1,31 @@
 /**
  * @version    HRDotNet(v.2.0.0)
  * @author     Hersvin Fred De La Cruz Labastida
- * @file       Missed Log Data Types
  */
-
-export interface SelectedData {
-  branchCode: string;
-  code: string;
-  dateFiled: string;
-  dateTransaction: string;
+export interface BatchMissedLogI {
+  filings: [BatchFilingsI];
+  validator: BatchValidatorsI;
+}
+export interface BatchFilingsI {
+  id: number;
+  companyId: number;
+  employeeId: number;
   documentNo: string;
-  filingStatus: string;
-  logTime: string;
-  logType: string;
+  statusCode: number;
+  errors: [BatchErrorI];
+}
+
+export interface BatchValidatorsI {
+  id: number;
+  code: string;
   name: string;
-  reason: string;
-  sched: string;
+  companyId: number;
+  branchId: number;
+  departmentId: number;
+}
+
+export interface BatchErrorI {
+  code: string;
+  errorType: number;
+  message: string;
 }

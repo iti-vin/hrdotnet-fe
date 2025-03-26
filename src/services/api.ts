@@ -17,6 +17,8 @@ const apiClient = axios.create({
   baseURL: API_BASE_URL,
 });
 
+apiClient.defaults.headers.post["Content-Type"] = "application/json";
+
 apiClient.interceptors.request.use(
   (config) => {
     const token = sessionStorage.getItem("accessToken");

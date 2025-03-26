@@ -8,12 +8,12 @@ import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { IconFileText } from "@tabler/icons-react";
 
-//--- Shared Modules
 import { statusColors } from "@shared/assets/types/Global";
 import { DateTimeUtils } from "@shared/utils/DateTimeUtils";
 
 //--- Layout
 import Container from "@/layout/main/container";
+
 //--- Missed Log Container Contents
 import Header from "../components/Header";
 import Filter from "../components/Filter/Container";
@@ -21,22 +21,21 @@ import Table from "../components/Table";
 import Footer from "../components/Pagination";
 import Modals from "../components/Modal";
 
-import { useMissedLogStore } from "../store/main";
-
 import { MissedLogResponse } from "../models/response";
 
 import { MissedLogServices } from "../services";
-import { Button } from "@mantine/core";
+
+import { useMissedLogStore } from "../store/main";
 
 export default function index() {
   const { loading, setLoading, time, setTime, storedPage, storedFilters } = useMissedLogStore();
-  const panel = "FILINGS";
+  const panel = "REQUEST";
 
   const { data, isLoading, refetch } = useQuery<MissedLogResponse>({
-    queryKey: ["filings_missedlog", storedPage, storedFilters],
+    queryKey: ["request_missedlog", storedFilters, storedPage],
     queryFn: async () => {
       const startTime = performance.now();
-      const result = await MissedLogServices.getAllForFilingsML({ ...storedPage, ...storedFilters });
+      const result = await MissedLogServices.getAllMyMissedLog({ ...storedPage, ...storedFilters });
       const endTime = performance.now();
       const executionTime = (endTime - startTime) / 1000;
       setTime(executionTime.toFixed(3).toString());
@@ -59,9 +58,6 @@ export default function index() {
         isLoading={isLoading}
         columns={[
           { accessor: "filing.documentNo", title: "Document No." },
-          { accessor: "branchId", title: "Branch Code" },
-          { accessor: "code", title: "Employee Code" },
-          { accessor: "name", title: "Employee Name" },
           { accessor: "filing.dateFiled", textAlign: "center", title: "Missed Log Date", render: (row: any) => DateTimeUtils.getIsoDateWord(row.filing.dateFiled) },
           { accessor: "filing.logType.name", title: "Log Type" },
           { accessor: "filing.timeInOut", title: "Log Time" },
@@ -71,6 +67,7 @@ export default function index() {
             title: "Transaction Date",
             render: (row: any) => DateTimeUtils.getIsoDateWord(row.filing.dateTransaction),
           },
+          { accessor: "name", title: "Processed By" },
           {
             accessor: "filing.filingStatus.name",
             title: "Status",
@@ -99,14 +96,7 @@ export default function index() {
       />
 
       {data && <Footer total={Math.ceil(data.total / data.pageSize)} pageSize={data.pageSize} recordsLength={data.total} currentPage={data.page} time={time} />}
-      <Modals
-        panel={panel}
-        approve={
-          <Button className="border-none custom-gradient rounded-md" onClick={() => {}}>
-            APPROVE
-          </Button>
-        }
-      />
+      <Modals panel={panel} />
     </Container>
   );
 }

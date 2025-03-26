@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { Notification } from "@mantine/core";
-import { IconX, IconCheck } from "@tabler/icons-react";
+import { IconX, IconExclamationCircleFilled, IconCircleCheckFilled } from "@tabler/icons-react";
 
 interface ToastProps {
   opened: boolean;
-  type: "success" | "error";
+  type: "success" | "error" | "warning";
   message: string;
   onClose?: () => void;
 }
@@ -19,9 +19,13 @@ export default function Toast({ opened, type, message, onClose }: ToastProps) {
 
   if (!opened) return null;
 
+  const icon = type === "success" ? <IconCircleCheckFilled size={20} /> : type === "error" ? <IconX size={20} /> : <IconExclamationCircleFilled size={20} />;
+
+  const color = type === "success" ? "green" : type === "error" ? "red" : "blue";
+
   return (
     <div style={{ position: "fixed", bottom: 20, right: 20, zIndex: 1000 }}>
-      <Notification icon={type === "success" ? <IconCheck size={20} /> : <IconX size={20} />} color={type === "success" ? "teal" : "red"} onClose={onClose}>
+      <Notification icon={icon} color={color} onClose={onClose}>
         {message}
       </Notification>
     </div>
