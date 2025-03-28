@@ -72,7 +72,6 @@ export default function index({ isNotUser = false }: DrawerFilterProps) {
   const submitFilter = (values: typeof filterForm.values) => {
     const formattedValues = {
       ...values,
-      DateFiled: activeTab === "transaction" ? "dateTransaction" : null,
       DateFrom: twoDate[0] === null ? null : DateTimeUtils.getIsoDateFull(String(twoDate[0])),
       DateTo: twoDate[1] === null ? null : DateTimeUtils.getIsoDateFull(String(twoDate[1])),
       DocStatusIds: formStatus.length > 0 ? formStatus : null,
@@ -190,6 +189,9 @@ export default function index({ isNotUser = false }: DrawerFilterProps) {
                       dateProps: twoDate,
                       setDateProps: (newValue: [Date | null, Date | null]) => {
                         setTwoDate(newValue);
+                        filterForm.setValues({
+                          DateField: "dateTransaction",
+                        });
                       },
                     })}
                   </Group>
@@ -219,7 +221,13 @@ export default function index({ isNotUser = false }: DrawerFilterProps) {
                 <Fragment>
                   {/* Processed By */}
                   <Divider size={2} h={10} color="#edeeed" className="w-full" />
-                  <MultiSelect label="Processed By" placeholder="Select Name" radius="md" classNames={{ input: "poppins" }} data={[]} />
+                  <MultiSelect
+                    label="Processed By"
+                    placeholder="Select Name"
+                    radius="md"
+                    classNames={{ input: "poppins" }}
+                    data={[]}
+                  />
                   <Divider size={2} h={10} color="#edeeed" className="w-full" />
                   {/* Status */}
                   <MultiSelect

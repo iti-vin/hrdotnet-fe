@@ -21,13 +21,9 @@ import { queryClient } from "@/services/client";
 import { ValidationErrorResponse } from "../../../assets/Types";
 import { SingleDataOfficialBusiness } from "../../../assets/Values";
 import { OfficialBusinessServices } from "../../../services/api";
+import { ModalProps } from "@shared/assets/types/Modal";
 
-interface ModalRequest {
-  opened: boolean;
-  onClose: () => void;
-  buttonClose: () => void;
-}
-export default function EditRequest({ opened, onClose, buttonClose }: ModalRequest) {
+export default function EditRequest({ opened, onClose, buttonClose }: ModalProps) {
   const { viewItems, locations, branches, setOpenDialog, setOpenAlert, setLoading, setError } = useOfficialBusinessStore();
   const size = useMatches({ base: "100%", sm: "70%" });
   const { ref: refTimeIn, pickerControl: pickerControlTimeIn } = useTimePicker();

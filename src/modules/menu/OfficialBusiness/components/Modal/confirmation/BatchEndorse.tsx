@@ -5,22 +5,23 @@
 
 //--- Mantine Modules
 import { useMediaQuery } from "@mantine/hooks";
-import { Button, Divider, Modal, Stack, Text } from "@mantine/core";
-import { useOfficialBusinessStore } from "../../../store";
 import { useMutation } from "@tanstack/react-query";
-import { BatchDataOfficialBusiness } from "../../../assets/Values";
+import { Button, Divider, Modal, Stack, Text } from "@mantine/core";
+
 import { queryClient } from "@/services/client";
+import { ModalProps } from "@shared/assets/types/Modal";
+import { countFilingsByError } from "@shared/utils/Errors";
+
+import { useOfficialBusinessStore } from "../../../store";
+import { BatchDataOfficialBusiness } from "../../../assets/Values";
 import { OfficialBusinessServices } from "../../../services/api";
 
-interface BatchInterface {
-  opened: boolean;
-  onClose: () => void;
-  buttonClose: () => void;
-}
-
-export default function BatchEndorse({ opened, onClose, buttonClose }: BatchInterface) {
+export default function BatchEndorse({ opened, onClose, buttonClose }: ModalProps) {
   const small = useMediaQuery("(max-width: 40em)");
-  const { selectedRecords, setError, setWarning, setSuccess, setOpenAlert, setSelectedRecords, setOpenConfirmation } = useOfficialBusinessStore();
+
+  const { selectedRecords, setError, setWarning, setSuccess, setOpenAlert, setSelectedRecords, setOpenConfirmation } =
+    useOfficialBusinessStore();
+
   const { mutate: batchEndorseOB } = useMutation({
     mutationFn: async () => {
       const formData = BatchDataOfficialBusiness(selectedRecords);
@@ -30,23 +31,20 @@ export default function BatchEndorse({ opened, onClose, buttonClose }: BatchInte
       queryClient.invalidateQueries({ queryKey: ["reviewal_officialbusiness"] });
       setOpenConfirmation("");
       setSelectedRecords([]);
-      const successfulFilings = data.filings.filter((filing: { errors: string | any[] }) => filing.errors.length === 0).length;
-      const failedFilings = data.filings.filter((filing: { errors: string | any[] }) => filing.errors.length > 0).length;
+      const successfulFilings = data.filings && countFilingsByError(data.filings, false);
+      const failedFilings = data.filings && countFilingsByError(data.filings, true);
       setOpenConfirmation("");
       setSelectedRecords([]);
-      const added = () => {
-        let text: string;
-        if (failedFilings != 0) {
-          text = `and ${failedFilings} filings doesn't`;
-        } else text = "";
 
-        return text;
-      };
-      if (successfulFilings >= 1) {
-        setOpenAlert("SuccessEndorse");
-        setSuccess(`${successfulFilings}   filings has been endorsed!  ${added()}`);
+      if (successfulFilings > 0 && failedFilings === 0) {
+        setSuccess(`${successfulFilings} filings have been endorsed!`);
+      } else if (successfulFilings === 0 && failedFilings > 0) {
+        setWarning(`${failedFilings} filings failed to endorse!`);
+      } else if (successfulFilings > 0 && failedFilings > 0) {
+        setSuccess(`${successfulFilings} filings have been endorsed!`);
+        setWarning(`${failedFilings} filings failed to endorse`);
       }
-      setWarning(`${failedFilings}   filings failed to endorse!`);
+      setOpenAlert("BatchEndorse");
     },
     onError: (error: any) => {
       setError(error.response.data.title ? error.response.data.title : "Internal Server Error");
@@ -54,7 +52,15 @@ export default function BatchEndorse({ opened, onClose, buttonClose }: BatchInte
   });
 
   return (
-    <Modal opened={opened} size="lg" centered padding={small ? 20 : 30} radius={10} withCloseButton={false} onClose={onClose} styles={{ body: { overflow: "hidden" } }}>
+    <Modal
+      opened={opened}
+      size="lg"
+      centered
+      padding={small ? 20 : 30}
+      radius={10}
+      withCloseButton={false}
+      onClose={onClose}
+      styles={{ body: { overflow: "hidden" } }}>
       <div className="flex justify-between">
         <Text fw={600} fz={small ? 15 : 22} c={"#559CDA"}>
           Endorse Request

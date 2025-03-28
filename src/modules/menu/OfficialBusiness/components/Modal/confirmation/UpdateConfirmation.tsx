@@ -5,13 +5,9 @@
 
 import Alert from "@/layout/main/alert";
 import { useOfficialBusinessStore } from "../../../store";
+import { ModalProps } from "@shared/assets/types/Modal";
 
-interface CancelConfirmationInterface {
-  opened: boolean;
-  onClose: () => void;
-}
-
-export default function index({ opened, onClose }: CancelConfirmationInterface) {
+export default function index({ opened, onClose }: ModalProps) {
   const { setOpenConfirmation, setOpenAlert } = useOfficialBusinessStore();
 
   const onHandleUpdate = () => {

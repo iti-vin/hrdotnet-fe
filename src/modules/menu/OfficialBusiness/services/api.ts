@@ -6,50 +6,24 @@
 import apiService from "@/services/http";
 import { MaintenanceBranch, MaintenanceLocation, OfficialBusinessResponse } from "../models/response";
 import { APPROVAL_URL, MAIN_URL, REVIEWAL_URL } from "./url";
+import { filtersToParamsQuery } from "@shared/utils/Params";
 
 export const OfficialBusinessServices = {
   getAllMyOB: async (filters?: Record<string, any>): Promise<OfficialBusinessResponse> => {
-    const params = new URLSearchParams();
-
-    // Convert arrays to separate query params
-    Object.entries(filters!).forEach(([key, value]) => {
-      if (Array.isArray(value)) {
-        value.forEach((v) => params.append(key, v.toString()));
-      } else {
-        params.append(key, value.toString());
-      }
-    });
-    const response = await apiService.get<OfficialBusinessResponse>(`${MAIN_URL}`, { params });
+    const params = filtersToParamsQuery(filters);
+    const response = await apiService.get<OfficialBusinessResponse>(MAIN_URL, { params });
     return response;
   },
 
   getAllForApprovalOB: async (filters?: Record<string, any>): Promise<OfficialBusinessResponse> => {
-    const params = new URLSearchParams();
-
-    // Convert arrays to separate query params
-    Object.entries(filters!).forEach(([key, value]) => {
-      if (Array.isArray(value)) {
-        value.forEach((v) => params.append(key, v.toString()));
-      } else {
-        params.append(key, value.toString());
-      }
-    });
-    const response = await apiService.get<OfficialBusinessResponse>(`${APPROVAL_URL}`, { params });
+    const params = filtersToParamsQuery(filters);
+    const response = await apiService.get<OfficialBusinessResponse>(APPROVAL_URL, { params });
     return response;
   },
 
   getAllForReviewalOB: async (filters?: Record<string, any>): Promise<OfficialBusinessResponse> => {
-    const params = new URLSearchParams();
-
-    // Convert arrays to separate query params
-    Object.entries(filters!).forEach(([key, value]) => {
-      if (Array.isArray(value)) {
-        value.forEach((v) => params.append(key, v.toString()));
-      } else {
-        params.append(key, value.toString());
-      }
-    });
-    const response = await apiService.get<OfficialBusinessResponse>(`${REVIEWAL_URL}`, { params });
+    const params = filtersToParamsQuery(filters);
+    const response = await apiService.get<OfficialBusinessResponse>(REVIEWAL_URL, { params });
     return response;
   },
 

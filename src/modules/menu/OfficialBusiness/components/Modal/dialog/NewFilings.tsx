@@ -3,22 +3,19 @@
  * @author     Hersvin Fred De La Cruz Labastida
  */
 
-//--- React Modules
+//--- Node Modules
 import { Fragment } from "react";
-//--- Mantine Modules
 import { Button, useMatches, Stack, ScrollArea, Select, Flex, Textarea, TextInput } from "@mantine/core";
-//--- Tabler Icons
-//-- Shared Template
-import Dropzone from "@shared/template/Dropzone";
-import Modal from "@/layout/main/dialog/Modal";
 import { DatePickerInput, TimeInput } from "@mantine/dates";
 
-interface ModalRequest {
-  opened: boolean;
-  onClose: () => void;
-  buttonClose: () => void;
-}
-export default function NewFilings({ opened, onClose, buttonClose }: ModalRequest) {
+//--- Layouts
+import Modal from "@/layout/main/dialog/Modal";
+
+//-- Shared Template
+import Dropzone from "@shared/template/Dropzone";
+import { ModalProps } from "@shared/assets/types/Modal";
+
+export default function NewFilings({ opened, onClose, buttonClose }: ModalProps) {
   const size = useMatches({ base: "100%", sm: "70%" });
 
   return (

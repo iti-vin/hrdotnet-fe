@@ -25,7 +25,7 @@ import useLeaveStore from "../../../store/LeaveStore";
 import { cloneElement, useState } from "react";
 import { useForm } from "@mantine/form";
 import { DateTimeUtils } from "@shared/utils/DateTimeUtils";
-import { calculateDuration } from "@shared/hooks/useDateHooks";
+import { calculateTwoDate } from "@shared/hooks/useCount";
 import { CreateData } from "../../../models/request";
 import { useMutation } from "@tanstack/react-query";
 import { LeaveServices } from "../../../services/main";
@@ -181,7 +181,7 @@ export default function NewRequest() {
                   setDateFiled(newValue);
                 }}
               />
-              <TextInput radius="md" size="md" label="Duration" disabled className="w-1/2" value={String(calculateDuration(dateFiled))} />
+              <TextInput radius="md" size="md" label="Duration" disabled className="w-1/2" value={String(calculateTwoDate(dateFiled))} />
             </div>
 
             <div className="flex flex-col gap-2">

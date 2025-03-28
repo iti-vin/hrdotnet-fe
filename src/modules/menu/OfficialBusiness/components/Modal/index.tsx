@@ -1,22 +1,19 @@
+/**
+ * @version    HRDotNet(v.2.0.0)
+ * @author     Hersvin Fred De La Cruz Labastida
+ */
+
 import { Fragment } from "react";
 
-import ViewDetails from "./dialog/ViewDetails";
-import NewRequest from "./dialog/NewRequest";
-import NewFilings from "./dialog/NewFilings";
-
-import BatchApprove from "./confirmation/BatchApprove";
-import BatchEndorse from "./confirmation/BatchEndorse";
-import BatchCancel from "./confirmation/BatchCancel";
-import CancelConfirmation from "./confirmation/CancelConfirmation";
-import UpdateConfirmation from "./confirmation/UpdateConfirmation";
-
-import Cancel from "./alert/Cancel";
-import Success from "./alert/Success";
-
+// Shared
 import Toast from "@/layout/main/alert/toast";
 
+// Modals
+import { ViewDetails, EditRequest, NewFilings, NewRequest } from "./dialog";
+import { BatchApprove, BatchCancel, BatchEndorse, CancelConfirmation, UpdateConfirmation } from "./confirmation";
+import { Batch, Cancel, Success } from "./alert";
+
 import { useOfficialBusinessStore } from "../../store";
-import EditRequest from "./dialog/EditRequest";
 
 interface ModalProps {
   panel?: "FILINGS" | "REQUEST" | "REVIEWAL" | "APPROVAL";
@@ -25,8 +22,7 @@ interface ModalProps {
 }
 
 export default function index({ panel, approve, endorse }: ModalProps) {
-  const { openDialog, setOpenDialog, openAlert, setOpenAlert, openConfirmation, setOpenConfirmation, error, setError, warning, setWarning, success, setSuccess } =
-    useOfficialBusinessStore();
+  const { openDialog, setOpenDialog, openAlert, setOpenAlert, openConfirmation, setOpenConfirmation, error, setError, warning, success } = useOfficialBusinessStore();
   return (
     <Fragment>
       {/* Dialogs */}
@@ -55,11 +51,14 @@ export default function index({ panel, approve, endorse }: ModalProps) {
       <Success opened={openAlert === "SuccessSubmit"} onClose={() => setOpenAlert("")} title="Request Submitted" message="Your Application has been successfully submitted!" />
       <Success opened={openAlert === "SuccessApprove"} onClose={() => setOpenAlert("")} title="Request Approved" message="Your Application has been successfully approved!" />
       <Success opened={openAlert === "SuccessEndorse"} onClose={() => setOpenAlert("")} title="Request Endorse" message="Your Application has been successfully endorsed!" />
+      <Batch opened={openAlert === "BatchApprove"} onClose={() => setOpenAlert("")} headerTitle="Approve" failedFilings={`${warning}`} successFilings={`${success}`} />
+      <Batch opened={openAlert === "BatchEndorse"} onClose={() => setOpenAlert("")} headerTitle="Endorse" failedFilings={`${warning}`} successFilings={`${success}`} />
+      <Batch opened={openAlert === "BatchCancel"} onClose={() => setOpenAlert("")} headerTitle="Cancel" failedFilings={`${warning}`} successFilings={`${success}`} />
 
       {/* Toast */}
       <Toast opened={error != ""} type="error" message={error} onClose={() => setError("")} />
-      <Toast opened={warning != ""} type="warning" message={warning} onClose={() => setWarning("")} />
-      <Toast opened={success != ""} type="success" message={success} onClose={() => setSuccess("")} />
+      {/* <Toast opened={warning != ""} type="warning" message={warning} onClose={() => setWarning("")} />
+      <Toast opened={success != ""} type="success" message={success} onClose={() => setSuccess("")} /> */}
     </Fragment>
   );
 }

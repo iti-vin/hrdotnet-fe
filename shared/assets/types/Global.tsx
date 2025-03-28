@@ -73,3 +73,5 @@ export enum PanelNavList {
   Approval = "APPROVAL",
   Filings = "FILINGS",
 }
+
+export type Panel = "FILINGS" | "REQUEST" | "REVIEWAL" | "APPROVAL";
