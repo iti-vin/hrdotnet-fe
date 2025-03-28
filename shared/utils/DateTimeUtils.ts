@@ -35,6 +35,7 @@ export const DateTimeUtils = {
   getIsoDateFull: (date: string) => dayjs(date).format("YYYYMMDD"),
   getIsoDateToIso: (date: string) => dayjs(date).format("YYYY-MM-DDT00:00:00"),
   getIsoDateWord: (date: string) => dayjs(date).format("MMM DD, YYYY"),
+  getIsoDateFullWord: (date: string) => dayjs(date).format("MMMM DD, YYYY"),
 
   dateToDate: (date: string) => dayjs(date).toDate(),
   dateWordToDefault: (date: string) => dayjs(date, "MMMM DD, YYYY").format("YYYYMMDD"),

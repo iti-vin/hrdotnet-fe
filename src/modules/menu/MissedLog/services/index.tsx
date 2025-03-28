@@ -9,22 +9,62 @@ import { APPROVAL_URL, MAIN_URL, REVIEWAL_URL } from "./url";
 import apiService from "@/services/http";
 
 export const MissedLogServices = {
-  getAllMyMissedLog: async (params?: Record<string, any>): Promise<MissedLogResponse> => {
+  getAllMyMissedLog: async (filters?: Record<string, any>): Promise<MissedLogResponse> => {
+    const params = new URLSearchParams();
+
+    // Convert arrays to separate query params
+    Object.entries(filters!).forEach(([key, value]) => {
+      if (Array.isArray(value)) {
+        value.forEach((v) => params.append(key, v.toString()));
+      } else {
+        params.append(key, value.toString());
+      }
+    });
     const response = await apiService.get<MissedLogResponse>(`${MAIN_URL}`, { params });
     return response;
   },
 
-  getAllForApprovalML: async (params?: Record<string, any>): Promise<MissedLogResponse> => {
+  getAllForApprovalML: async (filters?: Record<string, any>): Promise<MissedLogResponse> => {
+    const params = new URLSearchParams();
+
+    // Convert arrays to separate query params
+    Object.entries(filters!).forEach(([key, value]) => {
+      if (Array.isArray(value)) {
+        value.forEach((v) => params.append(key, v.toString()));
+      } else {
+        params.append(key, value.toString());
+      }
+    });
     const response = await apiService.get<MissedLogResponse>(`${APPROVAL_URL}`, { params });
     return response;
   },
 
-  getAllForReviewalML: async (params?: Record<string, any>): Promise<MissedLogResponse> => {
+  getAllForReviewalML: async (filters?: Record<string, any>): Promise<MissedLogResponse> => {
+    const params = new URLSearchParams();
+
+    // Convert arrays to separate query params
+    Object.entries(filters!).forEach(([key, value]) => {
+      if (Array.isArray(value)) {
+        value.forEach((v) => params.append(key, v.toString()));
+      } else {
+        params.append(key, value.toString());
+      }
+    });
     const response = await apiService.get<MissedLogResponse>(`${REVIEWAL_URL}`, { params });
     return response;
   },
 
-  getAllForFilingsML: async (params?: Record<string, any>): Promise<MissedLogResponse> => {
+  getAllForFilingsML: async (filters?: Record<string, any>): Promise<MissedLogResponse> => {
+    const params = new URLSearchParams();
+
+    // Convert arrays to separate query params
+    Object.entries(filters!).forEach(([key, value]) => {
+      if (Array.isArray(value)) {
+        value.forEach((v) => params.append(key, v.toString()));
+      } else {
+        params.append(key, value.toString());
+      }
+    });
     const response = await apiService.get<MissedLogResponse>(`${APPROVAL_URL}`, { params });
     return response;
   },
