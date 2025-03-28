@@ -15,7 +15,7 @@ interface DateRangeInterface {
 
 const RndrDateRange = ({ fp, sp, fl, sl, dateProps, setDateProps, direction = "column" }: DateRangeInterface) => {
   return (
-    <Flex direction={direction} justify="space-between" className="w-full">
+    <Flex direction={{ base: direction, md: direction }} justify="space-between" className="w-full" gap={{ base: 5, md: 10 }}>
       <Popover position="bottom" shadow="md" trapFocus={true} returnFocus={true}>
         <Popover.Target>
           <TextInput
@@ -49,7 +49,7 @@ const RndrDateRange = ({ fp, sp, fl, sl, dateProps, setDateProps, direction = "c
           />
         </Popover.Target>
         <Popover.Dropdown>
-          <DatePicker numberOfColumns={2} type="range" value={dateProps} onChange={setDateProps} />
+          <DatePicker numberOfColumns={2} type="range" value={dateProps} onChange={setDateProps} dir="column" />
         </Popover.Dropdown>
       </Popover>
     </Flex>

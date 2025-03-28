@@ -3,44 +3,36 @@
  * @author     Hersvin Fred De La Cruz Labastida
  */
 
-//--- Node Modules
-import { useEffect } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { IconFileText } from "@tabler/icons-react";
 
-//--- Shared Modules
 import { statusColors } from "@shared/assets/types/Global";
 import { DateTimeUtils } from "@shared/utils/DateTimeUtils";
 
-//--- Layout
 import Container from "@/layout/main/container";
-//--- Missed Log Container Contents
+
 import Header from "../components/Header";
-import Filter from "../components/Filter/Container";
+import Pagination from "../components/Pagination";
 import Table from "../components/Table";
-import Footer from "../components/Pagination";
+import Filter from "../components/Filter/Container";
 import Modals from "../components/Modal";
 
-import { useMissedLogStore } from "../store/main";
-
-import { MissedLogResponse } from "../models/response";
-
-import { MissedLogServices } from "../services";
+import { OfficialBusinessResponse } from "../models/response";
+import { OfficialBusinessServices } from "../services/api";
 import { Button } from "@mantine/core";
+import { useOfficialBusinessStore } from "../store";
+import { SingleDataOfficialBusiness } from "../assets/Values";
 import { queryClient } from "@/services/client";
-import { ApproveEndorseMissedLog } from "../assets/Values";
 
-export default function index() {
-  const { viewItems } = useMissedLogStore();
-  const { loading, setLoading, time, setTime, setOpenAlert, setError, storedPage, storedFilters } = useMissedLogStore();
-  const panel = "APPROVAL";
+export default function Reviewal() {
+  const { viewItems, setOpenDialog, setOpenAlert, setError, storedFilters, storedPage, setTime, time } = useOfficialBusinessStore();
+  const panel = "REVIEWAL";
 
-  // displaying datatable for aporovals off missed logs
-  const { data, isLoading, refetch } = useQuery<MissedLogResponse>({
-    queryKey: ["approval_missedlog", storedFilters, storedPage],
+  const { data, isLoading } = useQuery<OfficialBusinessResponse>({
+    queryKey: ["reviewal_officialbusiness", { ...storedFilters }, { ...storedPage }],
     queryFn: async () => {
       const startTime = performance.now();
-      const result = await MissedLogServices.getAllForApprovalML({ ...storedPage, ...storedFilters });
+      const result = await OfficialBusinessServices.getAllForReviewalOB({ ...storedFilters, ...storedPage });
       const endTime = performance.now();
       const executionTime = (endTime - startTime) / 1000;
       setTime(executionTime.toFixed(3).toString());
@@ -49,48 +41,48 @@ export default function index() {
     staleTime: 1000 * 60 * 5,
   });
 
-  // missed log request single approve
-  const { mutate: singleApprove } = useMutation({
+  const { mutate: singleEndorse } = useMutation({
     mutationFn: async (id: number) => {
-      const formData = ApproveEndorseMissedLog(viewItems);
-      return MissedLogServices.singleApproveMissedLog(id, formData);
+      const formData = SingleDataOfficialBusiness(viewItems);
+      return OfficialBusinessServices.singleEndorseOB(id, formData);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["reviewal_missedlog"] });
-      queryClient.invalidateQueries({ queryKey: ["approval_missedlog"] });
-      setOpenAlert("SuccessApprove");
+      setOpenDialog("");
+      queryClient.invalidateQueries({ queryKey: ["reviewal_officialbusiness"] });
+      setOpenAlert("SuccessEndorse");
     },
     onError: (error: any) => {
       setError(error.response.data.title ? error.response.data.title : "Internal Server Error");
     },
   });
 
-  useEffect(() => {
-    setLoading(isLoading);
-    refetch();
-  }, [loading]);
-
   return (
     <Container>
       <Header panel={panel} />
       <Filter panel={panel} />
+
       <Table
-        records={data && data.items}
         isLoading={isLoading}
+        records={data && data.items}
         columns={[
-          { accessor: "filing.documentNo", title: "Document No." },
+          { accessor: "filing.documentNo", title: "Document No" },
           { accessor: "branchId", title: "Branch Code" },
           { accessor: "code", title: "Employee Code" },
           { accessor: "name", title: "Employee Name" },
-          { accessor: "filing.dateFiled", textAlign: "center", title: "Missed Log Date", render: (row: any) => DateTimeUtils.getIsoDateWord(row.filing.dateFiled) },
-          { accessor: "filing.logType.name", title: "Log Type" },
-          { accessor: "filing.timeInOut", title: "Log Time" },
+          { accessor: "filing.dateRange.dateFrom", title: "OB From", render: (row: any) => DateTimeUtils.getIsoDateWord(row.filing.dateRange.dateFrom) },
+          { accessor: "filing.dateRange.dateTo", title: "OB To", render: (row: any) => DateTimeUtils.getIsoDateWord(row.filing.dateRange.dateTo) },
           {
-            accessor: "filing.dateTransaction",
+            accessor: "timerange",
+            title: "OB Time",
             textAlign: "center",
-            title: "Transaction Date",
-            render: (row: any) => DateTimeUtils.getIsoDateWord(row.filing.dateTransaction),
+            render: (row: any) => (
+              <div>
+                {DateTimeUtils.timeSecondsToUnits(row.filing.timeRange.timeIn)}-{DateTimeUtils.timeSecondsToUnits(row.filing.timeRange.timeOut)}
+              </div>
+            ),
           },
+          { accessor: "filing.location.locationBranch", title: "Location" },
+          { accessor: "filing.dateTransaction", title: "Transaction Date", render: (row: any) => DateTimeUtils.getIsoDateWord(row.filing.dateTransaction) },
           {
             accessor: "filing.filingStatus.name",
             title: "Status",
@@ -106,7 +98,7 @@ export default function index() {
             },
           },
           {
-            accessor: "",
+            accessor: "attachment",
             title: "Attachment",
             textAlign: "center",
             render: () => (
@@ -119,12 +111,13 @@ export default function index() {
         panel={panel}
       />
 
-      {data && <Footer total={Math.ceil(data.total / data.pageSize)} pageSize={data.pageSize} recordsLength={data.total} currentPage={data.page} time={time} />}
+      {data && <Pagination total={Math.ceil(data.total / data.pageSize)} pageSize={data.pageSize} recordsLength={data.total} currentPage={data.page} time={time} />}
+
       <Modals
         panel={panel}
-        approve={
-          <Button className="border-none custom-gradient rounded-md" onClick={() => singleApprove(viewItems.filing.id)}>
-            APPROVE
+        endorse={
+          <Button className="border-none custom-gradient rounded-md" onClick={() => singleEndorse(viewItems.filing.id)}>
+            ENDORSE
           </Button>
         }
       />

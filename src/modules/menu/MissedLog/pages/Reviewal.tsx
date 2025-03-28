@@ -94,6 +94,7 @@ export default function index() {
             accessor: "filing.filingStatus.name",
             title: "Status",
             textAlign: "center",
+            width: "150px",
             render: (row: any) => {
               const statusInfo = statusColors.find((item) => item.status === row.filing.filingStatus.name) || { status: "Unknown", color: "gray" };
               return (

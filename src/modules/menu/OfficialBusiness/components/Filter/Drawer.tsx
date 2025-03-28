@@ -5,7 +5,6 @@
 
 //--- Node Modules
 import { useForm } from "@mantine/form";
-import { TimeInput } from "@mantine/dates";
 import { Fragment, useState } from "react";
 import { IconTransfer, IconX } from "@tabler/icons-react";
 import { Button, Divider, Drawer, Flex, Group, MultiSelect, Select, Tabs, Text, TextInput } from "@mantine/core";
@@ -14,9 +13,9 @@ import RndrDateRange from "@shared/template/base/DateRange";
 import { useGlobalStore } from "@shared/store";
 
 //--- Missed Log
-import { useMissedLogStore } from "../../store/main";
-import { useMissedLogContext } from "../../context";
 import { DateTimeUtils } from "@shared/utils/DateTimeUtils";
+import { useOfficialBusinessStore } from "../../store";
+import { useOfficialBusinessContext } from "../../context";
 // import { useMissedLogContext } from "../../context";
 
 interface DrawerFilterProps {
@@ -28,7 +27,7 @@ interface FilterFormInterface {
   DateField: string | null;
   DateFrom: string | null;
   DateTo: string | null;
-  LogTypeId: any;
+  Location: number | null;
   DocStatusIds: null;
   //--- Added
   BranchCode: null;
@@ -37,14 +36,20 @@ interface FilterFormInterface {
 }
 
 export default function index({ isNotUser = false }: DrawerFilterProps) {
+  const { openDrawer, setOpenDrawer, locations } = useOfficialBusinessStore();
   const { twoDate, setTwoDate } = useGlobalStore();
-  const { showDrawer, setShowDrawer } = useMissedLogStore();
-  const { onHandleSubmitFilter, onHandleClearFilter } = useMissedLogContext();
+  const { onHandleSubmitFilter, onHandleClearFilter } = useOfficialBusinessContext();
 
   const [activeTab, setActiveTab] = useState<"missedlog" | "transaction">("missedlog");
   const toggleTab = () => {
     setActiveTab((prev) => (prev === "missedlog" ? "transaction" : "missedlog"));
     setTwoDate([null, null]);
+  };
+
+  const [formStatus, setFormStatus] = useState<number[]>([]);
+
+  const handleChange = (values: string[]) => {
+    setFormStatus(values.map(Number));
   };
 
   const filterForm = useForm<FilterFormInterface>({
@@ -54,7 +59,7 @@ export default function index({ isNotUser = false }: DrawerFilterProps) {
       DateField: null,
       DateFrom: null,
       DateTo: null,
-      LogTypeId: null,
+      Location: null,
       DocStatusIds: null,
 
       //--- Added
@@ -63,16 +68,6 @@ export default function index({ isNotUser = false }: DrawerFilterProps) {
       EmployeeName: null,
     },
   });
-
-  const clearFilter = () => {
-    onHandleClearFilter();
-  };
-
-  const [formStatus, setFormStatus] = useState<number[]>([]);
-
-  const handleChange = (values: string[]) => {
-    setFormStatus(values.map(Number));
-  };
 
   const submitFilter = (values: typeof filterForm.values) => {
     const formattedValues = {
@@ -84,13 +79,19 @@ export default function index({ isNotUser = false }: DrawerFilterProps) {
     };
     const cleanedValues = Object.fromEntries(Object.entries(formattedValues).filter(([_, value]) => value !== null));
     onHandleSubmitFilter(cleanedValues);
-    setShowDrawer(false);
+    setOpenDrawer(false);
+  };
+
+  const clearFilter = () => {
+    setFormStatus([]);
+    setTwoDate([null, null]);
+    onHandleClearFilter();
   };
 
   return (
     <Drawer
-      opened={showDrawer}
-      onClose={() => setShowDrawer(false)}
+      opened={openDrawer}
+      onClose={() => setOpenDrawer(false)}
       position="right"
       withCloseButton={false}
       size="xs"
@@ -104,7 +105,7 @@ export default function index({ isNotUser = false }: DrawerFilterProps) {
                 <Text fw={700} fz={22} c="#559CDA">
                   Filter By
                 </Text>
-                <IconX className="cursor-pointer" onClick={() => setShowDrawer(false)} size={30} color="gray" />
+                <IconX className="cursor-pointer" onClick={() => setOpenDrawer(false)} size={30} color="gray" />
               </Flex>
             </Flex>
             <Divider size={2} color="#edeeed" className="w-full" />
@@ -159,7 +160,7 @@ export default function index({ isNotUser = false }: DrawerFilterProps) {
                 <Tabs.Panel value="missedlog">
                   <Group>
                     <Flex className="w-full flex flex-row justify-between">
-                      <Text>Missed Log Date</Text>
+                      <Text>OB Range</Text>
                       <IconTransfer onClick={toggleTab} className="cursor-pointer" />
                     </Flex>
                     {RndrDateRange({
@@ -197,34 +198,27 @@ export default function index({ isNotUser = false }: DrawerFilterProps) {
               <Divider size={2} h={10} color="#edeeed" className="w-full" />
               {/* Log Type */}
               <Select
+                label="Location"
+                className="w-full"
+                styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
+                data={locations.map((item) => ({ value: item.id.toString(), label: item.name }))}
                 size="md"
-                label="Log Type"
-                placeholder="Time In"
                 radius={8}
                 withAsterisk
-                data={[
-                  { value: "1", label: "Time In" },
-                  { value: "2", label: "Time Out" },
-                ]}
                 onChange={(selectedValue) => {
-                  const selectedOption = [
-                    { value: "1", label: "Time In" },
-                    { value: "2", label: "Time Out" },
-                  ].find((option) => option.value === selectedValue);
-                  filterForm.setValues({
-                    LogTypeId: selectedOption?.value === null ? null : selectedOption?.value!,
-                  });
+                  const selectedItem = locations.find((item) => item.id.toString() === selectedValue);
+                  if (selectedItem) {
+                    // filterForm.setValues({
+                    //   Location: selectedItem.id,
+                    // });
+                  }
                 }}
               />
-              <Divider size={2} h={10} color="#edeeed" className="w-full" />
-
-              {/* Log Time */}
-              <TimeInput label="Log Time" placeholder="Select Log Time" />
-              <Divider size={2} h={10} color="#edeeed" className="w-full" />
 
               {!isNotUser && (
                 <Fragment>
                   {/* Processed By */}
+                  <Divider size={2} h={10} color="#edeeed" className="w-full" />
                   <MultiSelect label="Processed By" placeholder="Select Name" radius="md" classNames={{ input: "poppins" }} data={[]} />
                   <Divider size={2} h={10} color="#edeeed" className="w-full" />
                   {/* Status */}
@@ -248,10 +242,10 @@ export default function index({ isNotUser = false }: DrawerFilterProps) {
             </Flex>
           </div>
           <Flex className="w-full flex flex-row justify-end gap-3">
-            <Button variant="outline" radius="md" w={100} onClick={() => setShowDrawer(false)}>
+            <Button variant="outline" radius="md" w={100} onClick={clearFilter}>
               CLEAR
             </Button>
-            <Button className="border-none br-gradient" radius="md" type="submit" w={100} onClick={clearFilter}>
+            <Button className="border-none br-gradient" radius="md" type="submit" w={100} onClick={undefined}>
               FILTER
             </Button>
           </Flex>

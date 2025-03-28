@@ -45,7 +45,7 @@ export default function NewRequest({ opened, onClose, buttonClose }: ModalReques
     },
   });
 
-  const { mutate: updateMissedLog } = useMutation({
+  const { mutate: editMissedLog } = useMutation({
     mutationFn: async (values: typeof newForm.values) => {
       const formattedValues = { ...values, DateFiled: dateFiled, TimeInOut: values.TimeInOut + ":00" };
       return MissedLogServices.createMissedLogRequest(formattedValues);
@@ -60,14 +60,14 @@ export default function NewRequest({ opened, onClose, buttonClose }: ModalReques
     },
   });
 
-  const handleUpdate = (values: typeof newForm.values) => {
-    updateMissedLog(values);
+  const handleSubmit = (values: typeof newForm.values) => {
+    editMissedLog(values);
   };
 
   return (
     <Fragment>
       <Modal opened={opened} onClose={onClose} centered size={size} buttonClose={buttonClose} title="New Request">
-        <form onSubmit={newForm.onSubmit(handleUpdate)}>
+        <form onSubmit={newForm.onSubmit(handleSubmit)}>
           <Stack className="w-full h-full">
             <ScrollArea px={20} className="flex flex-col gap-5 mt-3 w-full text-[#6d6d6d] relative" h={650} styles={{ scrollbar: { display: "none" } }}>
               <Flex direction={{ base: "column", sm: "row" }} justify="space-between" className="w-full" gap={20}>

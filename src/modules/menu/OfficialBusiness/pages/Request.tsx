@@ -3,39 +3,32 @@
  * @author     Hersvin Fred De La Cruz Labastida
  */
 
-//--- Node Modules
-import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { IconFileText } from "@tabler/icons-react";
 
 import { statusColors } from "@shared/assets/types/Global";
 import { DateTimeUtils } from "@shared/utils/DateTimeUtils";
 
-//--- Layout
 import Container from "@/layout/main/container";
 
-//--- Missed Log Container Contents
 import Header from "../components/Header";
-import Filter from "../components/Filter/Container";
+import Pagination from "../components/Pagination";
 import Table from "../components/Table";
-import Footer from "../components/Pagination";
+import Filter from "../components/Filter/Container";
 import Modals from "../components/Modal";
 
-import { MissedLogResponse } from "../models/response";
+import { OfficialBusinessResponse } from "../models/response";
+import { OfficialBusinessServices } from "../services/api";
+import { useOfficialBusinessStore } from "../store";
+import { useEffect } from "react";
 
-import { MissedLogServices } from "../services";
-
-import { useMissedLogStore } from "../store/main";
-
-export default function index() {
-  const { loading, setLoading, time, setTime, storedPage, storedFilters } = useMissedLogStore();
-  const panel = "REQUEST";
-
-  const { data, isLoading, refetch } = useQuery<MissedLogResponse>({
-    queryKey: ["request_missedlog", storedFilters, storedPage],
+export default function Request() {
+  const { storedFilters, storedPage, setLoading, loading, setTime, time } = useOfficialBusinessStore();
+  const { data, isLoading, refetch } = useQuery<OfficialBusinessResponse>({
+    queryKey: ["request_officialbusiness", { ...storedFilters }, { ...storedPage }],
     queryFn: async () => {
       const startTime = performance.now();
-      const result = await MissedLogServices.getAllMyMissedLog({ ...storedPage, ...storedFilters });
+      const result = await OfficialBusinessServices.getAllMyOB({ ...storedFilters, ...storedPage });
       const endTime = performance.now();
       const executionTime = (endTime - startTime) / 1000;
       setTime(executionTime.toFixed(3).toString());
@@ -44,6 +37,7 @@ export default function index() {
     staleTime: 1000 * 60 * 5,
   });
 
+  const panel = "REQUEST";
   useEffect(() => {
     setLoading(isLoading);
     refetch();
@@ -53,20 +47,26 @@ export default function index() {
     <Container>
       <Header panel={panel} />
       <Filter panel={panel} />
+
       <Table
-        records={data && data.items}
         isLoading={isLoading}
+        records={data && data.items}
         columns={[
-          { accessor: "filing.documentNo", title: "Document No." },
-          { accessor: "filing.dateFiled", textAlign: "center", title: "Missed Log Date", render: (row: any) => DateTimeUtils.getIsoDateWord(row.filing.dateFiled) },
-          { accessor: "filing.logType.name", title: "Log Type" },
-          { accessor: "filing.timeInOut", title: "Log Time" },
+          { accessor: "filing.documentNo", title: "Document No" },
+          { accessor: "filing.dateRange.dateFrom", title: "OB From", render: (row: any) => DateTimeUtils.getIsoDateWord(row.filing.dateRange.dateFrom) },
+          { accessor: "filing.dateRange.dateTo", title: "OB To", render: (row: any) => DateTimeUtils.getIsoDateWord(row.filing.dateRange.dateTo) },
           {
-            accessor: "filing.dateTransaction",
+            accessor: "timerange",
+            title: "OB Time",
             textAlign: "center",
-            title: "Transaction Date",
-            render: (row: any) => DateTimeUtils.getIsoDateWord(row.filing.dateTransaction),
+            render: (row: any) => (
+              <div>
+                {DateTimeUtils.timeSecondsToUnits(row.filing.timeRange.timeIn)}-{DateTimeUtils.timeSecondsToUnits(row.filing.timeRange.timeOut)}
+              </div>
+            ),
           },
+          { accessor: "filing.location.locationBranch", title: "Location" },
+          { accessor: "filing.dateTransaction", title: "Transaction Date", render: (row: any) => DateTimeUtils.getIsoDateWord(row.filing.dateTransaction) },
           { accessor: "name", title: "Processed By" },
           {
             accessor: "filing.filingStatus.name",
@@ -83,7 +83,7 @@ export default function index() {
             },
           },
           {
-            accessor: "",
+            accessor: "attachment",
             title: "Attachment",
             textAlign: "center",
             render: () => (
@@ -96,7 +96,8 @@ export default function index() {
         panel={panel}
       />
 
-      {data && <Footer total={Math.ceil(data.total / data.pageSize)} pageSize={data.pageSize} recordsLength={data.total} currentPage={data.page} time={time} />}
+      {data && <Pagination total={Math.ceil(data.total / data.pageSize)} pageSize={data.pageSize} recordsLength={data.total} currentPage={data.page} time={time} />}
+
       <Modals panel={panel} />
     </Container>
   );
