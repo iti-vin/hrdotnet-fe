@@ -4,7 +4,7 @@
  */
 
 //--- React Modules
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 
 import Root from "@/layout/app/";
 import AuthLayout from "@/layout/auth";
@@ -19,10 +19,40 @@ import obRoutes from "@/modules/menu/OfficialBusiness/routes";
 import overtimeRoutes from "@/modules/menu/Overtime/routes";
 import offsetRoutes from "@/modules/menu/Offset/routes";
 import loanLedgerRoutes from "@/modules/menu/LoanLedger/routes";
-import { Dropzone } from "@shared/template";
+import { Authentication, ProtectedModule } from "@/layout/app/ProtectedRoute";
 
 export const router = createBrowserRouter([
-  { element: <Root />, children: [cosRoutes, ctoRoutes, leaveRoutes, mlRoutes, obRoutes, overtimeRoutes, offsetRoutes, loanLedgerRoutes] },
-  { path: "auth", element: <AuthLayout />, children: [{ path: "login", element: <Login /> }] },
-  { path: "hey", element: <Dropzone /> },
+  {
+    element: <Root />,
+    children: [
+      {
+        element: <ProtectedModule />,
+        children: [
+          cosRoutes,
+          ctoRoutes,
+          leaveRoutes,
+          mlRoutes,
+          obRoutes,
+          overtimeRoutes,
+          offsetRoutes,
+          loanLedgerRoutes,
+        ],
+      },
+    ],
+  },
+  {
+    path: "auth",
+    element: <AuthLayout />,
+    children: [
+      {
+        path: "login",
+        element: <Authentication />,
+        children: [{ index: true, element: <Login /> }],
+      },
+    ],
+  },
+  {
+    path: "*",
+    element: <Navigate to="/auth/login" replace />,
+  },
 ]);

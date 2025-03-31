@@ -19,13 +19,13 @@ import Modals from "../components/Modal";
 
 import { OfficialBusinessResponse } from "../models/response";
 import { OfficialBusinessServices } from "../services/api";
-import { Button } from "@mantine/core";
 import { useOfficialBusinessStore } from "../store";
 import { SingleDataOfficialBusiness } from "../assets/Values";
 import { queryClient } from "@/services/client";
 
 export default function Reviewal() {
-  const { viewItems, setOpenDialog, setOpenAlert, setError, storedFilters, storedPage, setTime, time } = useOfficialBusinessStore();
+  const { viewItems, setOpenDialog, setOpenAlert, setError, storedFilters, storedPage, setTime, time } =
+    useOfficialBusinessStore();
   const panel = "REVIEWAL";
 
   const { data, isLoading } = useQuery<OfficialBusinessResponse>({
@@ -69,27 +69,43 @@ export default function Reviewal() {
           { accessor: "branchId", title: "Branch Code" },
           { accessor: "code", title: "Employee Code" },
           { accessor: "name", title: "Employee Name" },
-          { accessor: "filing.dateRange.dateFrom", title: "OB From", render: (row: any) => DateTimeUtils.getIsoDateWord(row.filing.dateRange.dateFrom) },
-          { accessor: "filing.dateRange.dateTo", title: "OB To", render: (row: any) => DateTimeUtils.getIsoDateWord(row.filing.dateRange.dateTo) },
+          {
+            accessor: "filing.dateRange.dateFrom",
+            title: "OB From",
+            render: (row: any) => DateTimeUtils.getIsoDateWord(row.filing.dateRange.dateFrom),
+          },
+          {
+            accessor: "filing.dateRange.dateTo",
+            title: "OB To",
+            render: (row: any) => DateTimeUtils.getIsoDateWord(row.filing.dateRange.dateTo),
+          },
           {
             accessor: "timerange",
             title: "OB Time",
             textAlign: "center",
             render: (row: any) => (
               <div>
-                {DateTimeUtils.timeSecondsToUnits(row.filing.timeRange.timeIn)}-{DateTimeUtils.timeSecondsToUnits(row.filing.timeRange.timeOut)}
+                {DateTimeUtils.timeSecondsToUnits(row.filing.timeRange.timeIn)}-
+                {DateTimeUtils.timeSecondsToUnits(row.filing.timeRange.timeOut)}
               </div>
             ),
           },
           { accessor: "filing.location.locationBranch", title: "Location" },
-          { accessor: "filing.dateTransaction", title: "Transaction Date", render: (row: any) => DateTimeUtils.getIsoDateWord(row.filing.dateTransaction) },
+          {
+            accessor: "filing.dateTransaction",
+            title: "Transaction Date",
+            render: (row: any) => DateTimeUtils.getIsoDateWord(row.filing.dateTransaction),
+          },
           {
             accessor: "filing.filingStatus.name",
             title: "Status",
             textAlign: "center",
             width: "150px",
             render: (row: any) => {
-              const statusInfo = statusColors.find((item) => item.status === row.filing.filingStatus.name) || { status: "Unknown", color: "gray" };
+              const statusInfo = statusColors.find((item) => item.status === row.filing.filingStatus.name) || {
+                status: "Unknown",
+                color: "gray",
+              };
               return (
                 <div className="rounded-xl text-center p-1" style={{ background: statusInfo.color, color: "white" }}>
                   {row.filing.filingStatus.name}
@@ -111,16 +127,17 @@ export default function Reviewal() {
         panel={panel}
       />
 
-      {data && <Pagination total={Math.ceil(data.total / data.pageSize)} pageSize={data.pageSize} recordsLength={data.total} currentPage={data.page} time={time} />}
+      {data && (
+        <Pagination
+          total={Math.ceil(data.total / data.pageSize)}
+          pageSize={data.pageSize}
+          recordsLength={data.total}
+          currentPage={data.page}
+          time={time}
+        />
+      )}
 
-      <Modals
-        panel={panel}
-        endorse={
-          <Button className="border-none custom-gradient rounded-md" onClick={() => singleEndorse(viewItems.filing.id)}>
-            ENDORSE
-          </Button>
-        }
-      />
+      <Modals panel={panel} onHandleSingleEndorse={() => singleEndorse(viewItems.filing.id)} />
     </Container>
   );
 }

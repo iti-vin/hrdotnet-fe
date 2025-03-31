@@ -11,7 +11,6 @@ import { Stack } from "@mantine/core";
 
 //--- Shared Components
 import PanelNav from "@/layout/main/panel";
-import "./assets/Styles.css";
 //--- Change Schedule Context
 import { CosProvider, useChangeOfSchedule } from "./context";
 

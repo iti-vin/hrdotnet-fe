@@ -14,9 +14,10 @@ import { Fragment } from "react";
 import DrawerFilter from "./Drawer";
 import { useOfficialBusinessStore } from "../../store";
 import { useOfficialBusinessContext } from "../../context";
+import { Panel } from "@shared/assets/types/Global";
 
 interface MissedLogFilterI {
-  panel?: "FILINGS" | "REQUEST" | "REVIEWAL" | "APPROVAL" | "LEDGER";
+  panel?: Panel;
 }
 
 export default function index({ panel }: MissedLogFilterI) {
@@ -35,12 +36,14 @@ export default function index({ panel }: MissedLogFilterI) {
       return null;
     }
 
-    const selected = statusPill.filter((pill) => Array.isArray(storedFilters.DocStatusIds) && storedFilters.DocStatusIds.includes(pill.value));
+    const selected = statusPill.filter(
+      (pill) => Array.isArray(storedFilters.DocStatusIds) && storedFilters.DocStatusIds.includes(pill.value)
+    );
 
     return (
       <Pill.Group>
         {selected.map((item) => (
-          <Pill key={item.value} onRemove={() => {}} withRemoveButton>
+          <Pill key={item.value} onRemove={() => {}}>
             {item.label}
           </Pill>
         ))}
@@ -62,7 +65,7 @@ export default function index({ panel }: MissedLogFilterI) {
             {storedFilters.DocumentNo && (
               <Flex direction="row" align="center" gap={7} mx={8} visibleFrom="md">
                 <Text>Doc No:</Text>
-                <Pill withRemoveButton>{storedFilters.DocumentNo}</Pill>
+                <Pill>{storedFilters.DocumentNo}</Pill>
                 <Text size="xl" c="#eeeeee">
                   |
                 </Text>
@@ -71,7 +74,7 @@ export default function index({ panel }: MissedLogFilterI) {
             {storedFilters.DateFrom && storedFilters.DateTo && (
               <Flex direction="row" align="center" gap={7} mx={8} visibleFrom="md">
                 <Text>Date Transaction:</Text>
-                <Pill withRemoveButton>
+                <Pill>
                   {storedFilters.DateFrom}- {storedFilters.DateTo}
                 </Pill>
                 <Text size="xl" c="#eeeeee">
@@ -82,7 +85,7 @@ export default function index({ panel }: MissedLogFilterI) {
             {storedFilters.Location && (
               <Flex direction="row" align="center" gap={7} mx={8} visibleFrom="md">
                 <Text>Location:</Text>
-                <Pill withRemoveButton>{storedFilters.Location}</Pill>
+                <Pill>{storedFilters.Location}</Pill>
                 <Text size="xl" c="#eeeeee">
                   |
                 </Text>
@@ -98,11 +101,21 @@ export default function index({ panel }: MissedLogFilterI) {
         </Flex>
 
         <Flex pr={10} py={8} gap={5}>
-          <ActionIcon variant="transparent" color="gray" size="md" aria-label="Settings" onClick={() => setOpenDrawer(true)}>
+          <ActionIcon
+            variant="transparent"
+            color="gray"
+            size="md"
+            aria-label="Settings"
+            onClick={() => setOpenDrawer(true)}>
             <IconCirclePlus style={{ width: "100%", height: "100%" }} stroke={1.5} color="#6d6d6d" />
           </ActionIcon>
           <ActionIcon variant="transparent" color="gray" size="md" aria-label="Settings">
-            <IconTrash style={{ width: "100%", height: "100%" }} stroke={1.5} color="#6d6d6d" onClick={onHandleClearFilter} />
+            <IconTrash
+              style={{ width: "100%", height: "100%" }}
+              stroke={1.5}
+              color="#6d6d6d"
+              onClick={onHandleClearFilter}
+            />
           </ActionIcon>
         </Flex>
       </Flex>

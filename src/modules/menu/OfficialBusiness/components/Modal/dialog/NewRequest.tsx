@@ -3,33 +3,33 @@
  * @author     Hersvin Fred De La Cruz Labastida
  */
 
-//--- React Modules
+//--- Node Modules
 import { Fragment, useEffect } from "react";
-//--- Mantine Modules
 import { Button, useMatches, Stack, ScrollArea, Select, Flex, Textarea } from "@mantine/core";
-//--- Tabler Icons
-//-- Shared Template
-import Dropzone from "@shared/template/Dropzone";
-import Modal from "@/layout/main/dialog/Modal";
 import { TimeInput } from "@mantine/dates";
-import { useOfficialBusinessStore } from "../../../store";
-import { useOfficialBusinessContext } from "../../../context";
 import { useForm } from "@mantine/form";
 import { useMutation } from "@tanstack/react-query";
-import { OfficialBusinessServices } from "../../../services/api";
+
+//--- Layouts
+import Modal from "@/layout/main/dialog/Modal";
+//--- Service
+import { queryClient } from "@/services/client";
+
+//-- Shared Template
+import Dropzone from "@shared/template/Dropzone";
 import RndrDateRange from "@shared/template/base/DateRange";
 import { useGlobalStore } from "@shared/store";
 import { useTimePicker } from "@shared/hooks/useTimePicker";
 import { DateTimeUtils } from "@shared/utils/DateTimeUtils";
-import { ValidationErrorResponse } from "../../../assets/Types";
-import { queryClient } from "@/services/client";
+import { ModalProps } from "@shared/assets/types/Modal";
 
-interface ModalRequest {
-  opened: boolean;
-  onClose: () => void;
-  buttonClose: () => void;
-}
-export default function NewRequest({ opened, onClose, buttonClose }: ModalRequest) {
+//--- Official Business Module
+import { useOfficialBusinessStore } from "../../../store";
+import { useOfficialBusinessContext } from "../../../context";
+import { OfficialBusinessServices } from "../../../services/api";
+import { ValidationErrorResponse } from "../../../assets/Types";
+
+export default function NewRequest({ opened, onClose, buttonClose }: ModalProps) {
   const { locations, branches, loading, setLoading, branchId, setBranchId, setError, setOpenAlert, setOpenDialog } = useOfficialBusinessStore();
   const { onFetchMaintenanceBranch } = useOfficialBusinessContext();
   const { twoDate, setTwoDate } = useGlobalStore();

@@ -3,6 +3,7 @@
  * @author     Hersvin Fred De La Cruz Labastida
  */
 
+import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { IconFileText } from "@tabler/icons-react";
 
@@ -11,16 +12,11 @@ import { DateTimeUtils } from "@shared/utils/DateTimeUtils";
 
 import Container from "@/layout/main/container";
 
-import Header from "../components/Header";
-import Pagination from "../components/Pagination";
-import Table from "../components/Table";
-import Filter from "../components/Filter/Container";
-import Modals from "../components/Modal";
+import { Header, Filter, Modals, Pagination, Table } from "../components";
 
 import { OfficialBusinessResponse } from "../models/response";
 import { OfficialBusinessServices } from "../services/api";
 import { useOfficialBusinessStore } from "../store";
-import { useEffect } from "react";
 
 export default function Request() {
   const { storedFilters, storedPage, setLoading, loading, setTime, time } = useOfficialBusinessStore();
@@ -53,20 +49,33 @@ export default function Request() {
         records={data && data.items}
         columns={[
           { accessor: "filing.documentNo", title: "Document No" },
-          { accessor: "filing.dateRange.dateFrom", title: "OB From", render: (row: any) => DateTimeUtils.getIsoDateWord(row.filing.dateRange.dateFrom) },
-          { accessor: "filing.dateRange.dateTo", title: "OB To", render: (row: any) => DateTimeUtils.getIsoDateWord(row.filing.dateRange.dateTo) },
+          {
+            accessor: "filing.dateRange.dateFrom",
+            title: "OB From",
+            render: (row: any) => DateTimeUtils.getIsoDateWord(row.filing.dateRange.dateFrom),
+          },
+          {
+            accessor: "filing.dateRange.dateTo",
+            title: "OB To",
+            render: (row: any) => DateTimeUtils.getIsoDateWord(row.filing.dateRange.dateTo),
+          },
           {
             accessor: "timerange",
             title: "OB Time",
             textAlign: "center",
             render: (row: any) => (
               <div>
-                {DateTimeUtils.timeSecondsToUnits(row.filing.timeRange.timeIn)}-{DateTimeUtils.timeSecondsToUnits(row.filing.timeRange.timeOut)}
+                {DateTimeUtils.timeSecondsToUnits(row.filing.timeRange.timeIn)}-
+                {DateTimeUtils.timeSecondsToUnits(row.filing.timeRange.timeOut)}
               </div>
             ),
           },
           { accessor: "filing.location.locationBranch", title: "Location" },
-          { accessor: "filing.dateTransaction", title: "Transaction Date", render: (row: any) => DateTimeUtils.getIsoDateWord(row.filing.dateTransaction) },
+          {
+            accessor: "filing.dateTransaction",
+            title: "Transaction Date",
+            render: (row: any) => DateTimeUtils.getIsoDateWord(row.filing.dateTransaction),
+          },
           { accessor: "name", title: "Processed By" },
           {
             accessor: "filing.filingStatus.name",
@@ -74,7 +83,10 @@ export default function Request() {
             textAlign: "center",
             width: "150px",
             render: (row: any) => {
-              const statusInfo = statusColors.find((item) => item.status === row.filing.filingStatus.name) || { status: "Unknown", color: "gray" };
+              const statusInfo = statusColors.find((item) => item.status === row.filing.filingStatus.name) || {
+                status: "Unknown",
+                color: "gray",
+              };
               return (
                 <div className="rounded-xl text-center p-1" style={{ background: statusInfo.color, color: "white" }}>
                   {row.filing.filingStatus.name}
@@ -96,7 +108,15 @@ export default function Request() {
         panel={panel}
       />
 
-      {data && <Pagination total={Math.ceil(data.total / data.pageSize)} pageSize={data.pageSize} recordsLength={data.total} currentPage={data.page} time={time} />}
+      {data && (
+        <Pagination
+          total={Math.ceil(data.total / data.pageSize)}
+          pageSize={data.pageSize}
+          recordsLength={data.total}
+          currentPage={data.page}
+          time={time}
+        />
+      )}
 
       <Modals panel={panel} />
     </Container>

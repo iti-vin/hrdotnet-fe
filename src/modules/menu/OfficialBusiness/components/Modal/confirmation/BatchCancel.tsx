@@ -5,12 +5,15 @@
 
 //--- Mantine Modules
 import { useMediaQuery } from "@mantine/hooks";
-import { Button, Divider, Modal, Stack, Text } from "@mantine/core";
-import { useOfficialBusinessStore } from "../../../store";
 import { useMutation } from "@tanstack/react-query";
+import { Button, Divider, Modal, Stack, Text } from "@mantine/core";
+
+import { queryClient } from "@/services/client";
+import { countFilingsByError } from "@shared/utils/Errors";
+
+import { useOfficialBusinessStore } from "../../../store";
 import { BatchDataOfficialBusiness } from "../../../assets/Values";
 import { OfficialBusinessServices } from "../../../services/api";
-import { queryClient } from "@/services/client";
 
 interface BatchInterface {
   opened: boolean;
@@ -20,7 +23,8 @@ interface BatchInterface {
 
 export default function BatchCancel({ opened, onClose, buttonClose }: BatchInterface) {
   const small = useMediaQuery("(max-width: 40em)");
-  const { selectedRecords, setError, setWarning, setSuccess, setOpenAlert, setSelectedRecords, setOpenConfirmation } = useOfficialBusinessStore();
+  const { selectedRecords, setError, setWarning, setSuccess, setOpenAlert, setSelectedRecords, setOpenConfirmation } =
+    useOfficialBusinessStore();
   const { mutate: batchCancelOB } = useMutation({
     mutationFn: async () => {
       const formData = BatchDataOfficialBusiness(selectedRecords);
@@ -32,23 +36,20 @@ export default function BatchCancel({ opened, onClose, buttonClose }: BatchInter
       queryClient.invalidateQueries({ queryKey: ["approval_officialbusiness"] });
       setOpenConfirmation("");
       setSelectedRecords([]);
-      const successfulFilings = data.filings.filter((filing: { errors: string | any[] }) => filing.errors.length === 0).length;
-      const failedFilings = data.filings.filter((filing: { errors: string | any[] }) => filing.errors.length > 0).length;
+      const successfulFilings = countFilingsByError({ filings: data.filings, success: true });
+      const failedFilings = countFilingsByError({ filings: data.filings, success: false });
       setOpenConfirmation("");
       setSelectedRecords([]);
-      const added = () => {
-        let text: string;
-        if (failedFilings != 0) {
-          text = `and ${failedFilings} filings doesn't`;
-        } else text = "";
 
-        return text;
-      };
-      if (successfulFilings >= 1) {
-        setOpenAlert("CancelAlert");
-        setSuccess(`${successfulFilings}   filings has been canceled!  ${added()}`);
+      if (successfulFilings > 0 && failedFilings === 0) {
+        setSuccess(`${successfulFilings} filings have been cancelled!`);
+      } else if (successfulFilings === 0 && failedFilings > 0) {
+        setWarning(`${failedFilings} filings failed to cancel!`);
+      } else if (successfulFilings > 0 && failedFilings > 0) {
+        setSuccess(`${successfulFilings} filings have been cancelled!`);
+        setWarning(`${failedFilings} filings failed to cancel!`);
       }
-      setWarning(`${failedFilings}   filings failed to cancel!`);
+      setOpenAlert("BatchCancel");
     },
     onError: (error: any) => {
       setError(error.response.data.title ? error.response.data.title : "Internal Server Error");
@@ -56,7 +57,15 @@ export default function BatchCancel({ opened, onClose, buttonClose }: BatchInter
   });
 
   return (
-    <Modal opened={opened} size="lg" centered padding={small ? 20 : 30} radius={10} withCloseButton={false} onClose={onClose} styles={{ body: { overflow: "hidden" } }}>
+    <Modal
+      opened={opened}
+      size="lg"
+      centered
+      padding={small ? 20 : 30}
+      radius={10}
+      withCloseButton={false}
+      onClose={onClose}
+      styles={{ body: { overflow: "hidden" } }}>
       <div className="flex justify-between">
         <Text fw={600} fz={small ? 15 : 22} c={"#559CDA"}>
           Cancel Request

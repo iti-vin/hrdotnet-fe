@@ -4,13 +4,12 @@
  */
 
 import Alert from "@/layout/main/alert";
+import { ModalProps } from "@shared/assets/types/Modal";
 import { useEffect } from "react";
 
-interface SuccessProps {
+interface SuccessProps extends ModalProps {
   message?: string;
   title?: string;
-  opened: boolean;
-  onClose?(): void;
 }
 
 export default function Success({ message = "Sample", opened, onClose, title }: SuccessProps) {
