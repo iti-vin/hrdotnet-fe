@@ -34,8 +34,8 @@ export default function BatchApprove({ opened, onClose, buttonClose }: BatchInte
       queryClient.invalidateQueries({ queryKey: ["approval_officialbusiness"] });
       setOpenConfirmation("");
       setSelectedRecords([]);
-      const successfulFilings = data.filings && countFilingsByError(data.filings, false);
-      const failedFilings = data.filings && countFilingsByError(data.filings, true);
+      const successfulFilings = countFilingsByError({ filings: data.filings, success: true });
+      const failedFilings = countFilingsByError({ filings: data.filings, success: false });
       setOpenConfirmation("");
       setSelectedRecords([]);
 

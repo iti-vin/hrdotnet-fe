@@ -4,27 +4,33 @@
  */
 
 //--- Node Modules
-import React from "react";
-import { Button, Flex, ScrollArea, Stack, Text, Textarea, TextInput } from "@mantine/core";
+import { Flex, ScrollArea, Stack, Text, Textarea, TextInput } from "@mantine/core";
 import { IconNotes } from "@tabler/icons-react";
 //--- Layouts
 import Modal from "@/layout/main/dialog/Modal";
 //--- Shared
-import { FilingStatus, Panel, PanelNavList, statusColors } from "@shared/assets/types/Global";
+import { Panel, statusColors } from "@shared/assets/types/Global";
 import { DateTimeUtils } from "@shared/utils/DateTimeUtils";
 import { calculateTwoDate } from "@shared/hooks/useCount";
+import { ModalProps } from "@shared/assets/types/Modal";
+import ESSButton from "@shared/components/Buttons";
 
 import { useOfficialBusinessStore } from "../../../store";
 
-import { ModalProps } from "@shared/assets/types/Modal";
-
 interface ViewDetailsProps extends ModalProps {
   panel?: Panel;
-  endorse?: React.ReactNode;
-  approve?: React.ReactNode;
+  onHandleSingleEndorse?: () => void;
+  onHandleSingleApprove?: () => void;
 }
 
-export default function ViewDetails({ opened, onClose, buttonClose, endorse, approve, panel }: ViewDetailsProps) {
+export default function ViewDetails({
+  opened,
+  onClose,
+  buttonClose,
+  onHandleSingleEndorse,
+  onHandleSingleApprove,
+  panel,
+}: ViewDetailsProps) {
   const { viewItems, setOpenDialog, setOpenConfirmation } = useOfficialBusinessStore();
   const statusInfo = statusColors.find((item) => item.status === viewItems.filing.filingStatus.name) || {
     status: "Unknown",
@@ -36,75 +42,20 @@ export default function ViewDetails({ opened, onClose, buttonClose, endorse, app
     setOpenConfirmation("SingleCancel");
   };
 
-  const rndrBtnContent = () => {
-    if (panel === PanelNavList.Request) {
-      let button: React.ReactNode;
-      if (viewItems.filing.filingStatus.name === FilingStatus.Filed) {
-        button = (
-          <>
-            <Button variant="outline" className="rounded-md" onClick={onHandleSingleCancel}>
-              Cancel Request
-            </Button>
-            <Button className="border-none custom-gradient rounded-md" onClick={() => setOpenDialog("EditRequest")}>
-              Edit Request
-            </Button>
-          </>
-        );
-      } else if (viewItems.filing.filingStatus.name === FilingStatus.Reviewed) {
-        return (
-          <Button variant="outline" className="rounded-md" onClick={onHandleSingleCancel}>
-            Cancel Request
-          </Button>
-        );
-      } else if (
-        viewItems.filing.filingStatus.name === FilingStatus.Approved ||
-        viewItems.filing.filingStatus.name === FilingStatus.Cancelled
-      ) {
-        return null;
-      }
-      return button;
-    } else if (panel === PanelNavList.Reviewal) {
-      let button: React.ReactNode;
-      if (viewItems.filing.filingStatus.name === FilingStatus.Filed) {
-        button = (
-          <>
-            <Button variant="outline" className="rounded-md" onClick={onHandleSingleCancel}>
-              CANCEL
-            </Button>
-            {endorse}
-          </>
-        );
-      } else {
-        button = (
-          <Button variant="outline" className="rounded-md" onClick={onHandleSingleCancel}>
-            CANCEL
-          </Button>
-        );
-      }
-      return button;
-    } else if (panel === PanelNavList.Approval || PanelNavList.Filings) {
-      let button: React.ReactNode;
-      if (viewItems.filing.filingStatus.name === FilingStatus.Filed || FilingStatus.Reviewed) {
-        button = (
-          <>
-            <Button variant="outline" className="rounded-md" onClick={onHandleSingleCancel}>
-              CANCEL
-            </Button>
-            {approve}
-          </>
-        );
-      } else {
-        button = (
-          <Button variant="outline" className="rounded-md" onClick={onHandleSingleCancel}>
-            CANCEL
-          </Button>
-        );
-      }
-      return button;
-    } else {
-      return null;
-    }
+  const onHandleEditRequest = () => {
+    setOpenDialog("EditRequest");
   };
+
+  const rndrBtnContent = () => (
+    <ESSButton
+      panel={panel!}
+      filingStatus={viewItems.filing.filingStatus.name}
+      onHandleSingleCancel={onHandleSingleCancel}
+      onHandleEditRequest={onHandleEditRequest}
+      onHandleSingleEndorse={onHandleSingleEndorse}
+      onHandleSingleApprove={onHandleSingleApprove}
+    />
+  );
 
   return (
     <Modal title="View Details" size="70%" opened={opened} onClose={onClose} buttonClose={buttonClose}>
