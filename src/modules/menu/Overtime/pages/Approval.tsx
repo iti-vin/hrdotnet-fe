@@ -3,90 +3,134 @@
  * @author     Hersvin Fred De La Cruz Labastida
  */
 
-//--- Mantine Modules
-import { useDisclosure } from "@mantine/hooks";
-import { Flex, Text } from "@mantine/core";
+import Container from "@/layout/main/container";
 
-//--- Tabler Icons
-import { IconCircleCheck, IconFileText } from "@tabler/icons-react";
+import { Header, Filter, Table, Pagination, Modals } from "../components";
 
-//--- Components(Overtime)
-import { ViewDetails, DrawerFilter, Table } from "@/modules/menu/Overtime/components/";
-
-//--- Shared
-import { FilingStatus } from "@shared/assets/types/Global";
-import { Container, Filter, Header, StatusChip } from "@shared/template";
-
-import pdf from "@/modules/menu/Overtime/assets/file.pdf";
-import { useOvertimeStore } from "@/modules/menu/Overtime/store/useOT";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { OvertimeResponse } from "../models/response";
+import { OvertimeServices } from "../services/api";
 import { useEffect } from "react";
+import { useOvertimeStore } from "../store";
+import { statusColors } from "@shared/assets/types/Global";
+import { IconFileText } from "@tabler/icons-react";
+import { DateTimeUtils } from "@shared/utils/DateTimeUtils";
+import { SingleDataOvertime } from "../assets/Values";
+import { queryClient } from "@/services/client";
 
-export default function Approval() {
-  const [filter, { open: filterOpen, close: filterClose }] = useDisclosure(false);
-  const [details, { open: detailsOpen, close: detailsClose }] = useDisclosure(false);
+export default function Approvals() {
+  const panel = "APPROVAL";
+  const {
+    loading,
+    setLoading,
+    time,
+    setTime,
+    viewItems,
+    singleItem,
+    setError,
+    setOpenDialog,
+    setOpenAlert,
+    storedFilters,
+    storedPage,
+  } = useOvertimeStore();
 
-  const { setActiveTab, setAction } = useOvertimeStore();
+  const { data, isLoading, refetch } = useQuery<OvertimeResponse>({
+    queryKey: ["approval_overtime", { ...storedFilters }, { ...storedPage }],
+    queryFn: async () => {
+      const startTime = performance.now();
+      const result = await OvertimeServices.getAllForApprovalOT({ ...storedFilters, ...storedPage });
+      const endTime = performance.now();
+      const executionTime = (endTime - startTime) / 1000;
+      setTime(executionTime.toFixed(3).toString());
+      return result;
+    },
+    staleTime: 1000 * 60 * 5,
+  });
+
+  const { mutate: singleApprove } = useMutation({
+    mutationFn: async (id: number) => {
+      const formData = SingleDataOvertime(singleItem);
+      console.log(formData);
+      return OvertimeServices.singleApproveOT(id, formData);
+    },
+    onSuccess: () => {
+      setOpenDialog("");
+      queryClient.invalidateQueries({ queryKey: ["approval_overtime"] });
+      setOpenAlert("SuccessApprove");
+    },
+    onError: (error: any) => {
+      setError(error.response.data.title ? error.response.data.title : "Internal Server Error");
+    },
+  });
+
   useEffect(() => {
-    setActiveTab("approve");
-  }, []);
+    setLoading(isLoading);
+    refetch();
+  }, [loading]);
 
   return (
     <Container>
-      <Header title="Overtime" buttonLabel="Approve" buttonIcon={<IconCircleCheck size={25} stroke={2} />} buttonClick={() => setAction("Approve")} />
-
-      <Filter filterOpen={filterOpen} />
+      <Header panel={panel} />
+      <Filter panel={panel} />
 
       <Table
-        statuses={[FilingStatus.Reviewed, FilingStatus.Filed, FilingStatus.Approved, FilingStatus.Cancelled]}
+        records={data && data.items}
+        isLoading={isLoading}
         columns={[
-          { accessor: "documentNo", title: "Document No" },
-          { accessor: "dateTransaction", title: "Transaction Date" },
-          { accessor: "sched", title: "Schedule" },
-          { accessor: "branchCode", title: "Branch Code" },
-          {
-            accessor: "name",
-            title: "Employee Name",
-            textAlign: "center",
-            render: (row: any) => (
-              <Flex direction="column" align="center">
-                <Text fw={500} size="sm">
-                  {row.name}
-                </Text>
-              </Flex>
-            ),
-          },
+          { accessor: "filing.documentNo", title: "Document No" },
+          { accessor: "branchId", title: "Branch Code" },
           { accessor: "code", title: "Employee Code" },
-          { accessor: "dateFiled", title: "OT Date" },
-          { accessor: "numberOfHours", title: "OT Hours" },
+          { accessor: "name", title: "Employee Name" },
+          { accessor: "filing.shiftSchedule.name", title: "Schedule" },
+          { accessor: "filing.shiftSchedule.date", title: "Overtime Date" },
+          { accessor: "filing.shiftSchedule.timeIn", title: "Overtime Hours" },
           {
-            accessor: "filingStatus",
+            accessor: "filing.dateTransaction",
+            title: "Transaction Date",
+            render: (row: any) => DateTimeUtils.getIsoDateWord(row.filing.dateTransaction),
+          },
+          {
+            accessor: "filing.filingStatus.name",
             title: "Status",
             textAlign: "center",
-            render: (row: any) => <StatusChip label={row.filingStatus} />,
+            width: "150px",
+            render: (row: any) => {
+              const statusInfo = statusColors.find((item) => item.status === row.filing.filingStatus.name) || {
+                status: "Unknown",
+                color: "gray",
+              };
+              return (
+                <div className="rounded-xl text-center p-1" style={{ background: statusInfo.color, color: "white" }}>
+                  {row.filing.filingStatus.name}
+                </div>
+              );
+            },
           },
           {
-            accessor: "Attachment",
+            accessor: "attachment",
             title: "Attachment",
+            textAlign: "center",
             render: () => (
-              <div className="flex  justify-center">
-                <IconFileText
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    window.open(pdf, "_blank");
-                  }}
-                  color="rgba(109, 109, 109, 0.6)"
-                />
+              <div className="flex justify-center hover:scale-105">
+                <IconFileText onClick={(e) => e.stopPropagation()} color="rgba(109, 109, 109, 0.6)" />
               </div>
             ),
-            textAlign: "center",
           },
         ]}
-        rowClick={detailsOpen}
+        panel={panel}
       />
 
-      <DrawerFilter opened={filter} closed={filterClose} />
+      {data && (
+        <Pagination
+          total={Math.ceil(data.total / data.pageSize)}
+          pageSize={data.pageSize}
+          recordsLength={data.total}
+          currentPage={data.page}
+          time={time}
+        />
+      )}
 
-      <ViewDetails tabs="Approve" opened={details} onClose={detailsClose} buttonClose={detailsClose} />
+      <Modals panel={panel} onHandleSingleApprove={() => singleApprove(viewItems.filing.id)} />
     </Container>
   );
 }

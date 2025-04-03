@@ -17,14 +17,14 @@ import { IconFileText } from "@tabler/icons-react";
 import { DateTimeUtils } from "@shared/utils/DateTimeUtils";
 
 export default function Filings() {
-  const panel = "REQUEST";
+  const panel = "FILINGS";
   const { loading, setLoading, time, setTime, storedFilters, storedPage } = useOvertimeStore();
 
   const { data, isLoading, refetch } = useQuery<OvertimeResponse>({
-    queryKey: ["request_overtime", { ...storedFilters }, { ...storedPage }],
+    queryKey: ["filings_overtime", { ...storedFilters }, { ...storedPage }],
     queryFn: async () => {
       const startTime = performance.now();
-      const result = await OvertimeServices.getAllMyOT({ ...storedFilters, ...storedPage });
+      const result = await OvertimeServices.getAllFilingsOT({ ...storedFilters, ...storedPage });
       const endTime = performance.now();
       const executionTime = (endTime - startTime) / 1000;
       setTime(executionTime.toFixed(3).toString());
@@ -37,7 +37,6 @@ export default function Filings() {
     setLoading(isLoading);
     refetch();
   }, [loading]);
-
   return (
     <Container>
       <Header panel={panel} />
@@ -48,6 +47,9 @@ export default function Filings() {
         isLoading={isLoading}
         columns={[
           { accessor: "filing.documentNo", title: "Document No" },
+          { accessor: "branchId", title: "Branch Code" },
+          { accessor: "code", title: "Employee Code" },
+          { accessor: "name", title: "Employee Name" },
           { accessor: "filing.shiftSchedule.name", title: "Schedule" },
           { accessor: "filing.shiftSchedule.date", title: "Overtime Date" },
           { accessor: "filing.shiftSchedule.timeIn", title: "Overtime Hours" },
@@ -56,7 +58,6 @@ export default function Filings() {
             title: "Transaction Date",
             render: (row: any) => DateTimeUtils.getIsoDateWord(row.filing.dateTransaction),
           },
-          { accessor: "name", title: "Processed By" },
           {
             accessor: "filing.filingStatus.name",
             title: "Status",

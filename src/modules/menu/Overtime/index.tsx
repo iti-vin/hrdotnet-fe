@@ -1,34 +1,53 @@
-import { NavLink, Outlet } from "react-router-dom";
-import { useLogoWidth } from "@shared/hooks/useWidth";
-import "./index.css";
-import Dialog from "./components/Dialog";
-import React from "react";
+/**
+ * @version    HRDotNet(v.2.0.0)
+ * @author     Hersvin Fred De La Cruz Labastida
+ */
+
+import { Fragment, useEffect } from "react";
 import { Stack } from "@mantine/core";
+import { NavLink, Outlet } from "react-router-dom";
 
-const overtimeTabs = [
-  { index: 0, path: "request", label: "My Request" },
-  { index: 1, path: "reviewal", label: "For Review" },
-  { index: 2, path: "approval", label: "For Approval" },
-  { index: 3, path: "filings", label: "Employee Filings" },
-];
+import PanelNav from "@/layout/main/panel";
 
-export const Overtime = () => {
-  const { isLogowordVisible } = useLogoWidth();
+import { OvertimeProvider, useOvertimeContext } from "./context";
+import { useOvertimeStore } from "./store";
+import "./index.css";
+
+const OvertimeContent = () => {
+  const { overtimeTabs } = useOvertimeContext();
+  const { activeTab, setActiveTab, setStoredFilters, setStoredPage, setSelectedRecords } = useOvertimeStore();
+
+  useEffect(() => {
+    setSelectedRecords([]);
+    setStoredFilters([]);
+    setStoredPage([]);
+  }, [activeTab]);
 
   return (
-    <React.Fragment>
+    <Fragment>
       <title>Overtime</title>
-      <div className={`panel-container ${isLogowordVisible ? "sm:pl-0 md:pl-5 lg:pl-265" : "pl-23"}`}>
+      <PanelNav>
         {overtimeTabs.map((item) => (
-          <NavLink to={item.path} key={item.index} className={({ isActive }) => (isActive ? "active" : "inactive")}>
+          <NavLink
+            to={item.path}
+            key={item.index}
+            className={({ isActive }) => (isActive ? "active" : "inactive")}
+            onClick={() => setActiveTab(item.index)}>
             {item.label}
           </NavLink>
         ))}
-      </div>
-      <Stack className="bg-white m-4 mt-16 -mb-16 h-screen-85 overflow-y-hidden -z-10 p-8 rounded-lg bottom-0">
+      </PanelNav>
+      <Stack className="bg-white m-4 mt-16 -mb-16 h-screen-85 overflow-y-hidden -z-10 p-8 rounded-lg bottom-0 select-none">
         <Outlet />
-        <Dialog />
       </Stack>
-    </React.Fragment>
+    </Fragment>
   );
 };
+
+export default function Overtime() {
+  return (
+    <OvertimeProvider>
+      <OvertimeContent />
+    </OvertimeProvider>
+  );
+}

@@ -1,21 +1,5 @@
-import ViewDetails from "./ViewDetails";
-import NewRequest from "./NewRequest";
-import Table from "./Table";
-import DrawerFilter from "./DrawerFilter";
-import {
-  SuccessRequest,
-  SuccessApprove,
-  SuccessEndorse,
-  Cancelled,
-} from "./AlertOT";
-
-export {
-  ViewDetails,
-  NewRequest,
-  Table,
-  DrawerFilter,
-  SuccessRequest,
-  SuccessApprove,
-  SuccessEndorse,
-  Cancelled,
-};
+export { default as Header } from "./Header";
+export { default as Pagination } from "./Pagination";
+export { default as Table } from "./Table";
+export { default as Filter } from "./Filter/Container";
+export { default as Modals } from "./Modal/index";

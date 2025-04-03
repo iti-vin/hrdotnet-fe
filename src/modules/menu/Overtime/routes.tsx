@@ -3,14 +3,16 @@
  * @author     Hersvin Fred De La Cruz Labastida
  */
 
-import { Navigate } from "react-router-dom";
+//--- React Modules
+import { Navigate, RouteObject } from "react-router-dom";
 
-import { Overtime } from ".";
+import Overtime from "./";
 import Request from "./pages/Request";
 import Reviewal from "./pages/Reviewal";
 import Approval from "./pages/Approval";
+import Filings from "./pages/Filings";
 
-const overtimeRoutes = {
+const overtimeRoutes: RouteObject = {
   path: "overtime",
   element: <Overtime />,
   children: [
@@ -18,7 +20,7 @@ const overtimeRoutes = {
     { path: "request", element: <Request /> },
     { path: "reviewal", element: <Reviewal /> },
     { path: "approval", element: <Approval /> },
-    { path: "filings", element: <></> },
+    { path: "filings", element: <Filings /> },
   ],
 };
 
