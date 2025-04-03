@@ -40,6 +40,10 @@ tbody .mantine-Table-tr.mantine-datatable-row .mantine-Table-td {
   font-size: 13px;
 }
 
+tbody .mantine-Table-tr.mantine-datatable-row:hover {
+  background-color: #e7f0f8;
+}
+
 .mantine-Checkbox-input {
   border: 2px solid #9f9f9f;
 }

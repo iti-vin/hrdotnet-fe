@@ -1,7 +1,6 @@
 import { NavLink, Outlet } from "react-router-dom";
 import { useLogoWidth } from "@shared/hooks/useWidth";
 import "./index.css";
-import Dialog from "./components/Dialog";
 import React from "react";
 import { Stack } from "@mantine/core";
 
@@ -27,7 +26,6 @@ export const Overtime = () => {
       </div>
       <Stack className="bg-white m-4 mt-16 -mb-16 h-screen-85 overflow-y-hidden -z-10 p-8 rounded-lg bottom-0">
         <Outlet />
-        <Dialog />
       </Stack>
     </React.Fragment>
   );
