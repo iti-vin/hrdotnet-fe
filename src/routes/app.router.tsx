@@ -19,7 +19,9 @@ import obRoutes from "@/modules/menu/OfficialBusiness/routes";
 import overtimeRoutes from "@/modules/menu/Overtime/routes";
 import offsetRoutes from "@/modules/menu/Offset/routes";
 import loanLedgerRoutes from "@/modules/menu/LoanLedger/routes";
+
 import { Authentication, ProtectedModule } from "@/layout/app/ProtectedRoute";
+import userRoutes from "@/modules/user/routes";
 
 export const router = createBrowserRouter([
   {
@@ -28,6 +30,7 @@ export const router = createBrowserRouter([
       {
         element: <ProtectedModule />,
         children: [
+          // Menu Modules
           cosRoutes,
           ctoRoutes,
           leaveRoutes,
@@ -36,6 +39,8 @@ export const router = createBrowserRouter([
           overtimeRoutes,
           offsetRoutes,
           loanLedgerRoutes,
+          // User Module
+          userRoutes,
         ],
       },
     ],
