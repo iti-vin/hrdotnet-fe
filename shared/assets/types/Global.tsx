@@ -75,3 +75,13 @@ export enum PanelNavList {
 }
 
 export type Panel = "FILINGS" | "REQUEST" | "REVIEWAL" | "APPROVAL";
+
+export interface Batch {
+  filings: BatchFilings[];
+}
+interface BatchFilings {
+  recordId: number;
+  employeeId: number;
+  companyId: number;
+  documentNo: string;
+}
