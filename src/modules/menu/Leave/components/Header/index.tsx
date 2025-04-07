@@ -4,7 +4,7 @@
  */
 
 import Header from "@/layout/main/container/header";
-import { IconFileDiff } from "@tabler/icons-react";
+import { IconCirclePlus, IconFileDiff } from "@tabler/icons-react";
 import useLeaveStore from "../../store/LeaveStore";
 
 interface LeaveHeaderProps {
@@ -39,6 +39,7 @@ export default function index({ panel }: LeaveHeaderProps) {
       return {
         label: "New Filings",
         onClick: () => setOpenDialog("NewFilings"),
+        icon: <IconCirclePlus size={25} stroke={2} />,
       };
     } else return undefined;
   };
@@ -71,5 +72,11 @@ export default function index({ panel }: LeaveHeaderProps) {
     } else return undefined;
   };
 
-  return <Header title="Leave" normalBtn={panel !== "REVIEWAL" ? rndrNormalBtn() : undefined} popoverBtn={panel !== "REQUEST" ? rndrPopoverBtn() : undefined} />;
+  return (
+    <Header
+      title="Leave"
+      normalBtn={panel !== "REVIEWAL" ? rndrNormalBtn() : undefined}
+      popoverBtn={panel !== "REQUEST" ? rndrPopoverBtn() : undefined}
+    />
+  );
 }
