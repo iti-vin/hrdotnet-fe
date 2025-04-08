@@ -4,7 +4,7 @@
  */
 
 //--- React Modules
-import React from "react";
+import React, { useEffect } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 //--- Mantine Modules
 import { Stack } from "@mantine/core";
@@ -12,10 +12,19 @@ import { Stack } from "@mantine/core";
 //--- Shared Components
 import PanelNav from "@/layout/main/panel";
 //--- Change Schedule Context
-import { CosProvider, useChangeOfSchedule } from "./context";
+import { CosProvider, useChangeOfScheduleContext } from "./context";
+import { useChangeOfScheduleStore } from "./store";
 
 function COSContent() {
-  const { cosTabs, setActiveTab } = useChangeOfSchedule();
+  const { cosTabs, fetchScheduleItems } = useChangeOfScheduleContext();
+  const { activeTab, setActiveTab, setStoredFilters, setStoredPage, setSelectedRecords } = useChangeOfScheduleStore();
+
+  useEffect(() => {
+    fetchScheduleItems();
+    setSelectedRecords([]);
+    setStoredFilters([]);
+    setStoredPage([]);
+  }, [activeTab]);
 
   return (
     <React.Fragment>

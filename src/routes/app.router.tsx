@@ -23,6 +23,9 @@ import loanLedgerRoutes from "@/modules/menu/LoanLedger/routes";
 import { Authentication, ProtectedModule } from "@/layout/app/ProtectedRoute";
 import userRoutes from "@/modules/user/routes";
 
+// Main
+import Calendar from "../modules/main/Calendar/";
+
 export const router = createBrowserRouter([
   {
     element: <Root />,
@@ -30,6 +33,8 @@ export const router = createBrowserRouter([
       {
         element: <ProtectedModule />,
         children: [
+          // Main Module
+          { path: "calendar", element: <Calendar /> },
           // Menu Modules
           cosRoutes,
           ctoRoutes,

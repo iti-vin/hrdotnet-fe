@@ -4,14 +4,10 @@
  */
 
 import Alert from "@/layout/main/alert";
+import { ModalProps } from "@shared/assets/types/Modal";
 import { useEffect } from "react";
 
-interface SuccessProps {
-  opened: boolean;
-  onClose?(): void;
-}
-
-export default function Cancelled({ opened, onClose }: SuccessProps) {
+export default function Cancel({ opened, onClose }: ModalProps) {
   useEffect(() => {
     if (opened) {
       const timer = setTimeout(onClose!, 3000);
