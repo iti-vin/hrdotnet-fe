@@ -1,0 +1,46 @@
+.container {
+  @apply bg-white h-full mx-4 p-8 mt-16 rounded-lg select-none overflow-hidden;
+}
+.headContainer {
+  @apply w-full items-center h-[30%] md:h-[10%] flex flex-col gap-10 md:items-start md:justify-between md:gap-20 md:flex-row;
+}
+.nameContainer {
+  @apply flex flex-row w-auto gap-2 items-center md:flex-col;
+}
+.name {
+  @apply text-[#559cda] font-semibold text-2xl w-auto;
+}
+
+.employeeContainer {
+  @apply w-full flex flex-col md:flex-row md:gap-14 md:w-4/5 lg:w-3/4 xl:w-1/2;
+}
+
+.employeeInfoContent {
+  @apply flex flex-col gap-1 text-[12px] w-full md:text-[13px];
+}
+
+.employeeInfo {
+  @apply font-semibold gap-2 justify-between md:justify-start;
+}
+
+.employeeInfoValue {
+  @apply font-semibold text-[12px] text-[#559cda] md:text-[13px];
+}
+
+/* components */
+.header {
+  @apply w-full justify-between text-[#6d6d6d];
+}
+.content {
+  @apply w-full justify-stretch gap-4 flex flex-col md:gap-10 lg:gap-16 xl:gap-32 md:flex-row;
+}
+
+.contentContainer {
+  @apply flex flex-col gap-4;
+}
+.textContainer {
+  @apply font-semibold gap-2 text-sm text-[#6d6d6d] flex flex-col xl:flex-row;
+}
+.infoValue {
+  @apply font-semibold text-[#559cda];
+}
