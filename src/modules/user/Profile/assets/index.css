@@ -1,0 +1,11 @@
+.btn-personal.mantine-Tabs-tab[role="tab"] {
+  @apply text-[#6d6d6d];
+}
+
+.btn-personal.mantine-Tabs-tab[role="tab"]:hover {
+  @apply text-[#559cda] bg-transparent;
+}
+
+.btn-personal.mantine-Tabs-tab[tabindex="0"] {
+  @apply text-[#559cda];
+}
