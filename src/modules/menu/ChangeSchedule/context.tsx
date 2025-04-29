@@ -4,21 +4,21 @@
  */
 
 //--- React Modules
-import { useState, useEffect, useContext, PropsWithChildren, createContext } from "react";
+import { useContext, PropsWithChildren, createContext } from "react";
 //--- Shared Modules
 import { Tab } from "@shared/assets/types/Global";
-import { DateTimeUtils } from "@shared/utils/DateTimeUtils";
 //--- Store
-import useCOS from "./store";
+import { useChangeOfScheduleStore } from "./store";
+import { CosServices } from "./services/api";
 
 interface CosContextType {
-  activeTab: number;
-  setActiveTab(index: number): void;
   cosTabs: Tab[];
 
+  onHandleSubmitFilter(filter?: any): void;
   onHandleClearFilter(): void;
-  onHandleSubmitFilter(): void;
   onHandleChangePage(page?: number): void;
+  onHandlePageSize(size?: any): void;
+  fetchScheduleItems(): void;
 }
 
 const cosTabs: Tab[] = [
@@ -29,68 +29,60 @@ const cosTabs: Tab[] = [
 ];
 
 const COSContext = createContext<CosContextType>({
-  activeTab: 0,
-  setActiveTab: () => {},
   cosTabs: [],
 
-  onHandleClearFilter: () => {},
   onHandleSubmitFilter: () => {},
+  onHandleClearFilter: () => {},
   onHandleChangePage: () => {},
+  onHandlePageSize: () => {},
+  fetchScheduleItems: () => {},
 });
 
 export const CosProvider: React.FC<PropsWithChildren> = ({ children }) => {
-  const [activeTab, setActiveTab] = useState<number>(0);
-  const { setFilter, status, setStatus, documentNo, setDocumentNo, dateFiled, setDateFiled, dateTransaction, setDateTransaction, requested, setRequested, setLoading, setPage } =
-    useCOS();
-
-  useEffect(() => {
+  const { setPage, storedPage, setLoading, setStoredPage, setStoredFilters, setScheduleItems } =
+    useChangeOfScheduleStore();
+  const onHandleSubmitFilter = (filterParams: Record<string, any>) => {
     setLoading(true);
-    setFilter("");
-    setDateFiled([null, null]);
-    setDateTransaction([null, null]);
-    setDocumentNo("");
-    setRequested("");
-    setStatus([]);
-    setPage(1);
-  }, [activeTab]);
-
-  const onHandleClearFilter = () => {
-    setFilter("");
-    setLoading(true);
-    setDateFiled([null, null]);
-    setDateTransaction([null, null]);
-    setDocumentNo("");
-    setRequested("");
-    setStatus([]);
-    setPage(1);
+    setStoredFilters({ ...filterParams });
   };
 
-  const onHandleSubmitFilter = () => {
-    const document = documentNo && `DocumentNo=${documentNo}`;
-    const request = requested && `Requested=${requested}`;
-    const statusArray = status.map((id) => `DocStatusIds=${id}`).join("&");
-    const date_transaction =
-      dateTransaction[0] != null &&
-      dateTransaction[1] != null &&
-      `DateField=dateTransaction&DateFrom=${DateTimeUtils.getIsoDateFull(String(dateTransaction[0]))}&DateTo=${DateTimeUtils.getIsoDateFull(String(dateTransaction[1]))}`;
-    const date_filed =
-      dateFiled[0] != null && dateFiled[1] != null && `DateFrom=${DateTimeUtils.getIsoDateFull(String(dateFiled[0]))}&DateTo=${DateTimeUtils.getIsoDateFull(String(dateFiled[1]))}`;
-    console.log(date_filed);
-    const filterString = [document, request, statusArray, date_transaction].filter(Boolean).join("&");
-    setFilter(filterString ? `${filterString}&` : "");
-    setPage(1);
+  const onHandleClearFilter = () => {
+    setStoredFilters({});
     setLoading(true);
   };
 
   const onHandleChangePage = (newPage: number) => {
     setLoading(true);
     setPage(newPage);
+    setStoredPage({ ...storedPage, Page: newPage });
   };
 
-  return <COSContext.Provider value={{ activeTab, setActiveTab, cosTabs, onHandleClearFilter, onHandleSubmitFilter, onHandleChangePage }}>{children}</COSContext.Provider>;
+  const onHandlePageSize = (pageParams: Record<string, any>) => {
+    setLoading(true);
+    setStoredPage({ ...storedPage, ...pageParams });
+  };
+
+  const fetchScheduleItems = async () => {
+    const data = await CosServices.getSchedules();
+    setScheduleItems(data);
+  };
+
+  return (
+    <COSContext.Provider
+      value={{
+        cosTabs,
+        onHandleChangePage,
+        onHandlePageSize,
+        onHandleSubmitFilter,
+        onHandleClearFilter,
+        fetchScheduleItems,
+      }}>
+      {children}
+    </COSContext.Provider>
+  );
 };
 
-export const useChangeOfSchedule = (): CosContextType => {
+export const useChangeOfScheduleContext = (): CosContextType => {
   const context = useContext(COSContext);
   if (!context) {
     throw new Error("useChangeOfSchedule must be use inside of the COSProvider");

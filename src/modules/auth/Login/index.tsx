@@ -68,7 +68,9 @@ export default function index() {
       </div>
       <div className=" w-full sm:w-1/2">
         <div className="h-full w-full flex flex-col">
-          <form onSubmit={loginForm.onSubmit(handleSubmit)} className="flex flex-col gap-4 sm:h-[55%] sm:w-[55%] m-auto p-4 sm:p-0">
+          <form
+            onSubmit={loginForm.onSubmit(handleSubmit)}
+            className="flex flex-col gap-4 sm:h-[55%] sm:w-[55%] m-auto p-4 sm:p-0">
             <p className=" text-center font-semibold poppins text-4xl text-[#559CDA]">Admin Log-in</p>
             <Flex className="gap-1">
               <Text className="text-[#6d6d6d] text-sm">Forgot Password ?</Text>
@@ -113,8 +115,13 @@ export default function index() {
               />
               {serverError && <Text c="red">{serverError}</Text>}
             </div>
-            <Button type="submit" size="lg" className="br-gradient border-none bg-blue-300 mt-7 shadow-sm shadow-orange-200" disabled={loginMutation.isPending}>
-              <Text className="poppins text-white ">Login Now</Text>
+            <Button
+              type="submit"
+              size="lg"
+              className="br-gradient border-none bg-blue-300 mt-7 shadow-sm shadow-orange-200"
+              disabled={loginMutation.isPending}
+              loading={loginMutation.isPending}>
+              <Text className="poppins text-white ">Login</Text>
             </Button>
           </form>
         </div>

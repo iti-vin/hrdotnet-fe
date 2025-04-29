@@ -10,7 +10,7 @@
     { "label": "LOAN", "path": "/loan-ledger", "id": 8, "icon": "IconCalculator" }
   ],
   "main": [
-    { "label": "DASHBOARD", "path": "/", "id": 1, "icon": "IconLayoutDashboard" },
+    { "label": "DASHBOARD", "path": "/dashboard", "id": 1, "icon": "IconLayoutDashboard" },
     { "label": "CALENDAR", "path": "/calendar", "id": 2, "icon": "IconCalendarMonth" }
   ],
   "201  FILES": [

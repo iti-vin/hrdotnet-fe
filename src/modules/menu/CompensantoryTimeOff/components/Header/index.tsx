@@ -4,7 +4,7 @@
  */
 
 //--- Tabler Icons Modules
-import { IconFileDiff } from "@tabler/icons-react";
+import { IconCirclePlus, IconFileDiff } from "@tabler/icons-react";
 //--- Shared Modules
 import { Panel, PanelNavList } from "@shared/assets/types/Global";
 //--- Container Layout
@@ -29,6 +29,7 @@ export default function index({ panel }: MissedLogHeaderI) {
       return {
         label: "New Filings",
         onClick: () => setOpenDialog("NewFilings"),
+        icon: <IconCirclePlus size={25} stroke={2} />,
       };
     } else return undefined;
   };
