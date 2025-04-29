@@ -24,6 +24,7 @@ import { Authentication, ProtectedModule } from "@/layout/app/ProtectedRoute";
 import userRoutes from "@/modules/user/routes";
 
 import calendarRoutes from "@/modules/main/Calendar/routes";
+import Dashboard from "@/modules/main/Dashboard";
 
 export const router = createBrowserRouter([
   {
@@ -34,6 +35,7 @@ export const router = createBrowserRouter([
         children: [
           // Main
           calendarRoutes,
+          { path: "dashboard", element: <Dashboard /> },
           // Menu Modules
           cosRoutes,
           ctoRoutes,
