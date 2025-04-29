@@ -3,78 +3,104 @@
  * @author     Hersvin Fred De La Cruz Labastida
  */
 
-//---
 import { create } from "zustand";
-//--- Model Response
 import { CosItems } from "../models/response";
-//--- Types
-import { COSStates, Schedules } from "../assets/Types";
-//---
 import { Items, SchedulesValues } from "../assets/Values";
+import { Schedules } from "../assets/Types";
 
-const useCOS = create<COSStates>((set) => ({
-  //Loading
-  loading: true,
-  setLoading: (loading: boolean) => set({ loading: loading }),
+interface CosInterface {
+  // Modals
+  openDialog: string;
+  setOpenDialog(dialog: string): void;
+  openAlert: string;
+  setOpenAlert(dialog: string): void;
+  openConfirmation: string;
+  setOpenConfirmation(dialog: string): void;
 
-  error: "Failed to Fetch Data",
-  setError: (error: string) => set({ error: error }),
+  openDrawer: boolean;
+  setOpenDrawer(drawer: boolean): void;
+
+  // Data
+  viewItems: CosItems;
+  setViewItems(items: CosItems): void;
+  singleItem: CosItems;
+  setSingleItem(items: CosItems): void;
+  selectedRecords: CosItems[];
+  setSelectedRecords(rec: CosItems[]): void;
+
+  // States
+  activeTab: number;
+  setActiveTab(tab: number): void;
+  loading: boolean;
+  setLoading(load: boolean): void;
+  time: string;
+  setTime(time: string): void;
+  error: string;
+  setError(err: string): void;
+  warning: string;
+  setWarning(war: string): void;
+  success: string;
+  setSuccess(suc: string): void;
+  page: number;
+  setPage(page: number): void;
+
+  //--- Params
+  storedFilters: Record<string, any>;
+  setStoredFilters(filters: Record<string, any>): void;
+  storedPage: Record<string, any>;
+  setStoredPage(page: Record<string, any>): void;
+
+  scheduleItems: Schedules;
+  setScheduleItems(items: Schedules): void;
+
+  schedList: { id: number; name: string; isRestDay: boolean }[];
+  setSchedList: (items: { id: number; name: string; isRestDay: boolean }[]) => void;
+}
+
+export const useChangeOfScheduleStore = create<CosInterface>((set) => ({
+  // Modals
+  openDialog: "",
+  setOpenDialog: (dialog: string) => set({ openDialog: dialog }),
+  openAlert: "",
+  setOpenAlert: (dialog: string) => set({ openAlert: dialog }),
+  openConfirmation: "",
+  setOpenConfirmation: (dialog: string) => set({ openConfirmation: dialog }),
+
+  openDrawer: false,
+  setOpenDrawer: (drawer: boolean) => set({ openDrawer: drawer }),
+
+  // Data
+  viewItems: Items,
+  setViewItems: (items: CosItems) => set({ viewItems: items }),
+  singleItem: Items,
+  setSingleItem: (items: CosItems) => set({ singleItem: items }),
+  selectedRecords: [],
+  setSelectedRecords: (rec: CosItems[]) => set({ selectedRecords: rec }),
+
+  // States
+  activeTab: 0,
+  setActiveTab: (tab: number) => set({ activeTab: tab }),
+  loading: false,
+  setLoading: (load: boolean) => set({ loading: load }),
+  time: "",
+  setTime: (time: string) => set({ time: time }),
+  error: "",
+  setError: (err: string) => set({ error: err }),
+  warning: "",
+  setWarning: (war: string) => set({ warning: war }),
+  success: "",
+  setSuccess: (suc: string) => set({ success: suc }),
   page: 1,
   setPage: (page: number) => set({ page: page }),
 
-  // Modals
-  onViewDetails: false,
-  setOnViewDetails: (view: boolean) => set({ onViewDetails: view }),
-  onNewFiling: false,
-  setOnNewFiling: (filing: boolean) => set({ onNewFiling: filing }),
+  //--- Params
+  storedFilters: {},
+  setStoredFilters: (filter: Record<string, any>) => set({ storedFilters: filter }),
+  storedPage: [],
+  setStoredPage: (page: Record<string, any>) => set({ storedPage: page }),
 
-  // Details
-  viewItems: Items,
-  setViewItems: (items: CosItems) => set({ viewItems: items }),
-  // Schedules Items
   scheduleItems: SchedulesValues,
   setScheduleItems: (items: Schedules) => set({ scheduleItems: items }),
-  // Schedules List
   schedList: [],
   setSchedList: (items: { id: number; name: string; isRestDay: boolean }[]) => set({ schedList: items }),
-
-  // Alert Handle
-  cancelAlert: false,
-  setCancelAlert: (cancel: boolean) => set({ cancelAlert: cancel }),
-  endorseAlert: false,
-  setEndorseAlert: (endorse: boolean) => set({ endorseAlert: endorse }),
-  approveAlert: false,
-  setApproveAlert: (approve: boolean) => set({ approveAlert: approve }),
-
-  errorAlert: false,
-  setErrorAlert: (error: boolean) => set({ errorAlert: error }),
-
-  // Drawer Filter
-  drawerFilter: false,
-  setDrawerFilter: (filter: boolean) => set({ drawerFilter: filter }),
-  filter: "",
-  setFilter: (filter: string) => set({ filter: filter }),
-
-  // Filters
-  documentNo: "",
-  setDocumentNo: (docu: string) => set({ documentNo: docu }),
-  dateTransaction: [null, null],
-  setDateTransaction: (value: [Date | null, Date | null]) => set({ dateTransaction: value }),
-  requested: "",
-  setRequested: (req: string) => set({ requested: req }),
-  dateFiled: [null, null],
-  setDateFiled: (value: [Date | null, Date | null]) => set({ dateFiled: value }),
-  status: [],
-  setStatus: (status: number[]) => set({ status: status }),
-
-  processedBy: "",
-  setProcessedBy: (proc: string) => set({ processedBy: proc }),
-  branchCode: 0,
-  setBranchCode: (branch: number) => set({ branchCode: branch }),
-  employeeCode: 0,
-  setEmployeeCode: (employee: number) => set({ employeeCode: employee }),
-  employeeName: "",
-  setEmployeeName: (name: string) => set({ employeeName: name }),
 }));
-
-export default useCOS;

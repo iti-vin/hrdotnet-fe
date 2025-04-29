@@ -1,5 +1,5 @@
 import { Button, Flex, Popover, Stack, Text } from "@mantine/core";
-import { IconCircleCheck, IconCirclePlus, IconCircleX } from "@tabler/icons-react";
+import { IconCircleCheck, IconFilePlus, IconForbid2 } from "@tabler/icons-react";
 import React from "react";
 
 interface HeaderProps {
@@ -27,25 +27,24 @@ export default function Header({ ...props }: HeaderProps) {
 
   const handleClose = () => setOpened(false);
 
-  const { buttonClick, title = "Title Header", buttonLabel2, normalBtn, popoverBtn } = props;
+  const { title = "Title Header", normalBtn, popoverBtn } = props;
   return (
-    <Flex direction={{ base: "column", sm: "row" }} justify={{ base: "center", sm: "space-between" }} align={{ base: "center", sm: "space-between" }} className="w-full">
+    <Flex
+      direction={{ base: "column", sm: "row" }}
+      justify={{ base: "center", sm: "space-between" }}
+      align={{ base: "center", sm: "space-between" }}
+      className="w-full">
       <Text className="text-xl font-semibold text-[#559CDA]" fz={22}>
         {title}
       </Text>
       <Flex justify="center" gap={13}>
-        {buttonLabel2 && (
-          <Button className="flex justify-between" radius="md" onClick={buttonClick} color="#559CDA" leftSection={<IconCirclePlus size={25} stroke={2} />} h={36}>
-            {buttonLabel2}
-          </Button>
-        )}
         {normalBtn && (
           <Button
             className="flex justify-between"
             radius="md"
             onClick={normalBtn.onClick}
             color="#559CDA"
-            leftSection={normalBtn.icon ? normalBtn.icon : <IconCirclePlus size={25} stroke={2} />}
+            leftSection={normalBtn.icon ? normalBtn.icon : <IconFilePlus size={25} stroke={2} />}
             h={36}>
             {normalBtn.label}
           </Button>
@@ -53,7 +52,13 @@ export default function Header({ ...props }: HeaderProps) {
         {popoverBtn && (
           <Popover width={200} trapFocus position="bottom" withArrow shadow="md" opened={opened} onChange={setOpened}>
             <Popover.Target>
-              <Button className="flex justify-between" radius="md" color="#559CDA" leftSection={popoverBtn.icon} h={36} onClick={() => setOpened((o) => !o)}>
+              <Button
+                className="flex justify-between"
+                radius="md"
+                color="#559CDA"
+                leftSection={popoverBtn.icon}
+                h={36}
+                onClick={() => setOpened((o) => !o)}>
                 {popoverBtn.label}
               </Button>
             </Popover.Target>
@@ -79,7 +84,7 @@ export default function Header({ ...props }: HeaderProps) {
                     handleClose();
                   }}
                   color="#559CDA"
-                  leftSection={<IconCircleX size={25} stroke={2} />}
+                  leftSection={<IconForbid2 size={25} stroke={2} />}
                   h={36}>
                   CANCEL
                 </Button>

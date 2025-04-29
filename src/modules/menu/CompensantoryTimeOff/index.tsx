@@ -17,19 +17,21 @@ function CTOContent() {
   return (
     <Fragment>
       <title>Compensatory Time-Off</title>
-      <PanelNav>
-        {ctoTabs.map((item) => (
-          <NavLink
-            to={item.path}
-            key={item.index}
-            className={({ isActive }) => (isActive ? "active" : "inactive")}
-            onClick={() => console.log(item.index)}>
-            {item.label}
-          </NavLink>
-        ))}
-      </PanelNav>
-      <Stack className="bg-white m-4 mt-16 -mb-16 h-screen-85 overflow-y-hidden -z-10 p-8 rounded-lg bottom-0 select-none">
-        <Outlet />
+      <Stack className="h-full">
+        <PanelNav>
+          {ctoTabs.map((item) => (
+            <NavLink
+              to={item.path}
+              key={item.index}
+              className={({ isActive }) => (isActive ? "active" : "inactive")}
+              onClick={() => console.log(item.index)}>
+              {item.label}
+            </NavLink>
+          ))}
+        </PanelNav>
+        <Stack className="h-full bg-white mx-4 mt-16 p-8 rounded-lg select-none">
+          <Outlet />
+        </Stack>
       </Stack>
     </Fragment>
   );

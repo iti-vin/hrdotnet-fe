@@ -6,36 +6,20 @@
 //--- Tabler Icons Modules
 import { IconCirclePlus, IconFileDiff } from "@tabler/icons-react";
 //--- Shared Modules
-import { PanelNavList } from "@shared/assets/types/Global";
+import { Panel, PanelNavList } from "@shared/assets/types/Global";
 //--- Container Layout
 import Header from "@/layout/main/container/header";
-import { useOfficialBusinessStore } from "../../store";
+import { HeaderButtonProps } from "@shared/assets/types/Component";
+import { useChangeOfScheduleStore } from "../../store";
 
 interface MissedLogHeaderI {
-  panel: "FILINGS" | "REQUEST" | "REVIEWAL" | "APPROVAL" | "LEDGER";
-}
-
-interface ButtonsProps {
-  normalBtn: {
-    label: string;
-    icon?: React.ReactNode;
-    onClick: () => void;
-  };
-
-  popoverBtn: {
-    label: string;
-    icon: React.ReactNode;
-    innerLabel?: string;
-    fOnClick: () => void;
-    sOnClick: () => void;
-  };
+  panel: Panel;
 }
 
 export default function index({ panel }: MissedLogHeaderI) {
-  const { setOpenDialog, setOpenConfirmation, selectedRecords } = useOfficialBusinessStore();
-
+  const { selectedRecords, setOpenDialog, setOpenConfirmation } = useChangeOfScheduleStore();
   // Single Usage Button On Header
-  const rndrNormalBtn = (): ButtonsProps["normalBtn"] | undefined => {
+  const rndrNormalBtn = (): HeaderButtonProps["normalBtn"] | undefined => {
     if (panel === PanelNavList.Request) {
       return {
         label: "New Request",
@@ -51,7 +35,7 @@ export default function index({ panel }: MissedLogHeaderI) {
   };
 
   // Popover Option Button on Header
-  const rndrPopOverBtn = (): ButtonsProps["popoverBtn"] | undefined => {
+  const rndrPopOverBtn = (): HeaderButtonProps["popoverBtn"] | undefined => {
     if (panel === PanelNavList.Reviewal) {
       return {
         label: "Batch Process",
@@ -81,7 +65,7 @@ export default function index({ panel }: MissedLogHeaderI) {
 
   return (
     <Header
-      title="Missed Log"
+      title="Change Schedule"
       normalBtn={panel !== PanelNavList.Reviewal ? rndrNormalBtn() : undefined}
       popoverBtn={panel !== PanelNavList.Request ? rndrPopOverBtn() : undefined}
     />

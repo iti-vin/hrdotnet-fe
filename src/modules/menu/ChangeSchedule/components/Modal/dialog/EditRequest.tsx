@@ -3,8 +3,6 @@
  * @author     Hersvin Fred De La Cruz Labastida
  */
 
-//--- React Modules
-import { useState, useEffect } from "react";
 //--- Mantine Modules
 import { useForm } from "@mantine/form";
 import { useMediaQuery } from "@mantine/hooks";
@@ -16,20 +14,26 @@ import { DateTimeUtils } from "@shared/utils/DateTimeUtils";
 
 //--- COS Modules
 //--- Store
-import useCOS from "../../store";
-import useRequestCosStore from "../../store/request";
 //--- Models
-import { UpdateData, UpdateInitialData } from "../../models/request";
+import { ModalProps } from "@shared/assets/types/Modal";
+import { useChangeOfScheduleStore } from "../../../store";
+import { useMutation } from "@tanstack/react-query";
+import { CosServices } from "../../../services/api";
+import { queryClient } from "@/services/client";
+import { ValidationErrorResponse } from "@shared/assets/types/Error";
+import { SingleData } from "../../../models/request";
+import { useEffect } from "react";
 //--- Services
-import CosServices from "../../services/main";
 
-export default function EditRequest() {
+export default function EditRequest({ opened, onClose, buttonClose }: ModalProps) {
   // Media Screen for Smaller Size Width
   const small = useMediaQuery("(max-width: 770px)");
+  const { viewItems, setLoading, setOpenDialog, setOpenAlert, setError, scheduleItems, setSchedList, schedList } =
+    useChangeOfScheduleStore();
 
-  // States
-  const { viewItems, setScheduleItems, setSchedList, schedList, scheduleItems, setLoading } = useCOS();
-  const { onEditRequest, setOnEditRequest, setUpdateAlert } = useRequestCosStore();
+  useEffect(() => {
+    setSchedList(scheduleItems.items.map((item) => ({ id: item.id, name: item.name, isRestDay: item.isRestDay })));
+  }, [scheduleItems]);
 
   // Edit Form for Request
   const editForm = useForm({
@@ -48,59 +52,50 @@ export default function EditRequest() {
     },
   });
 
-  const handleUpdate = async (values: typeof editForm.values) => {
-    const formattedValues = {
-      // spreading the values of form
-      ...values,
-      // values of initial data from view items
-      ...UpdateInitialData(viewItems),
-      // formatting the date filed and getting updated values
-      DateFiled: {
-        ...values.DateFiled,
-        DateFrom: values.DateFiled.DateFrom ? DateTimeUtils.dateTZToWithTZAddDay(new Date(values.DateFiled.DateFrom).toISOString()) : viewItems.filing.dateFiled.dateFrom,
-        DateTo: values.DateFiled.DateTo ? DateTimeUtils.dateTZToWithTZAddDay(new Date(values.DateFiled.DateTo).toISOString()) : viewItems.filing.dateFiled.dateTo,
-      },
-      FileAttachment: values.FileAttachment ? values.FileAttachment : values.FileAttachment,
-      Requested: {
-        Id: values.Requested.Id ? values.Requested.Id : viewItems.filing.requested.id,
-        Name: values.Requested.Name ? values.Requested.Name : viewItems.filing.requested.name,
-        IsRestDay: values.Requested.IsRestDay ? values.Requested.IsRestDay : viewItems.filing.requested.isRestDay,
-      },
-      Reason: values.Reason ? values.Reason : viewItems.filing.reason,
-    };
-    // complete form data with initial and updated
-    const formData = UpdateData(formattedValues);
-    try {
-      const data = await CosServices.updateCosRequest(formData, viewItems.filing.id);
-      console.log(data);
-      setOnEditRequest(false);
+  const { mutate: updateOfficialBusiness } = useMutation({
+    mutationFn: async (values: typeof editForm.values) => {
+      const editedForm = {
+        ...values,
+        ...SingleData(viewItems),
+        DateFiled: {
+          ...values.DateFiled,
+          DateFrom: values.DateFiled.DateFrom
+            ? DateTimeUtils.dateTZToWithTZAddDay(new Date(values.DateFiled.DateFrom).toISOString())
+            : viewItems.filing.dateFiled.dateFrom,
+          DateTo: values.DateFiled.DateTo
+            ? DateTimeUtils.dateTZToWithTZAddDay(new Date(values.DateFiled.DateTo).toISOString())
+            : viewItems.filing.dateFiled.dateTo,
+        },
+        FileAttachment: values.FileAttachment ? values.FileAttachment : values.FileAttachment,
+        Requested: {
+          Id: values.Requested.Id ? values.Requested.Id : viewItems.filing.requested.id,
+          Name: values.Requested.Name ? values.Requested.Name : viewItems.filing.requested.name,
+          IsRestDay: values.Requested.IsRestDay ? values.Requested.IsRestDay : viewItems.filing.requested.isRestDay,
+        },
+      };
       setLoading(true);
-      setUpdateAlert(true);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      console.log("Done");
-    }
-    console.log(formData);
+      return CosServices.updateCOSRequest(viewItems.filing.id, editedForm);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["request_cos"] });
+      setOpenDialog("");
+      setLoading(false);
+      setOpenAlert("SuccessUpdate");
+    },
+    onError: (error: { response: { data: ValidationErrorResponse } }) => {
+      setLoading(false);
+      const errorData = error.response.data;
+      const errorMessages = Object.values(errorData.errors).flat().join(", ");
+      setError(errorMessages || "Internal Server Error");
+    },
+  });
+
+  const handleUpdate = (values: typeof editForm.values) => {
+    updateOfficialBusiness(values);
   };
 
-  const [onLoad, setOnLoad] = useState<boolean>(true);
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const data = await CosServices.getSchedules();
-        setOnLoad(false);
-        setScheduleItems(data);
-      } catch (error) {
-        console.error(error);
-      }
-    })();
-    setSchedList(scheduleItems.items.map((item) => ({ id: item.id, name: item.name, isRestDay: item.isRestDay })));
-  }, [onLoad]);
-
   return (
-    <Modal title="Edit Request" size="80%" opened={onEditRequest} onClose={() => setOnEditRequest(false)} buttonClose={() => setOnEditRequest(false)}>
+    <Modal title="Edit Request" size="80%" opened={opened} onClose={onClose} buttonClose={buttonClose}>
       <form onSubmit={editForm.onSubmit(handleUpdate)}>
         <Flex className="flex flex-col gap-3">
           <Flex className="flex flex-col md:flex-row gap-3 md:gap-5">
@@ -169,7 +164,12 @@ export default function EditRequest() {
               {...editForm.getInputProps("ReferenceNo")}
             />
           </Flex>
-          <Checkbox label="Rest Day" radius="xs" {...editForm.getInputProps("Requested.IsRestDay", { type: "checkbox" })} className="select-none cursor-pointer" />
+          <Checkbox
+            label="Rest Day"
+            radius="xs"
+            {...editForm.getInputProps("Requested.IsRestDay", { type: "checkbox" })}
+            className="select-none cursor-pointer"
+          />
           <Textarea
             size={small ? "xs" : "lg"}
             radius={8}
@@ -183,7 +183,7 @@ export default function EditRequest() {
           <Dropzone />
         </Flex>
         <Stack className="pt-5 flex flex-row justify-end">
-          <Button type="submit" size="md" className="w-44 border-none custom-gradient rounded-md" onClick={() => console.log(viewItems.filing.id)}>
+          <Button type="submit" size="md" className="w-44 border-none custom-gradient rounded-md">
             UPDATE
           </Button>
         </Stack>
