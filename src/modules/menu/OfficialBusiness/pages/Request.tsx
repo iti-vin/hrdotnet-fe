@@ -48,7 +48,7 @@ export default function Request() {
         isLoading={isLoading}
         records={data && data.items}
         columns={[
-          { accessor: "filing.documentNo", title: "Document No" },
+          { accessor: "filing.documentNo", title: "Document No", sortable: true },
           {
             accessor: "filing.dateRange.dateFrom",
             title: "OB From",
@@ -70,7 +70,7 @@ export default function Request() {
               </div>
             ),
           },
-          { accessor: "filing.location.locationBranch", title: "Location" },
+          { accessor: "filing.location.locationBranch", title: "Location", sortable: true },
           {
             accessor: "filing.dateTransaction",
             title: "Transaction Date",
@@ -93,6 +93,7 @@ export default function Request() {
                 </div>
               );
             },
+            sortable: true,
           },
           {
             accessor: "attachment",

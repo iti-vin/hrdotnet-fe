@@ -20,7 +20,7 @@ interface DrawerFilterI {
   panel?: Panel;
 }
 
-export default function index({ panel }: DrawerFilterI) {
+export default function ContainerFilter({ panel }: DrawerFilterI) {
   const { setOpenDrawer, storedFilters } = useOffsetStore();
   const { onHandleClearFilter } = useOffsetContext();
 
@@ -65,7 +65,9 @@ export default function index({ panel }: DrawerFilterI) {
             {storedFilters.DocumentNo && (
               <Flex direction="row" align="center" gap={7} mx={8} visibleFrom="md">
                 <Text>Doc No:</Text>
-                <Pill>{storedFilters.DocumentNo}</Pill>
+                <Pill classNames={{ root: "bg-[#d9d9d9]", label: "text-[#6D6D6D] font-semibold" }} withRemoveButton>
+                  {storedFilters.DocumentNo}
+                </Pill>
                 <Text size="xl" c="#eeeeee">
                   |
                 </Text>
@@ -74,7 +76,7 @@ export default function index({ panel }: DrawerFilterI) {
             {storedFilters.DateFrom && storedFilters.DateTo && (
               <Flex direction="row" align="center" gap={7} mx={8} visibleFrom="md">
                 <Text>Date Transaction:</Text>
-                <Pill>
+                <Pill classNames={{ root: "bg-[#d9d9d9]", label: "text-[#6D6D6D] font-semibold" }} withRemoveButton>
                   {storedFilters.DateFrom}- {storedFilters.DateTo}
                 </Pill>
                 <Text size="xl" c="#eeeeee">

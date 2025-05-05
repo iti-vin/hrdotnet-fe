@@ -64,10 +64,10 @@ export default function Approval() {
         isLoading={isLoading}
         records={data && data.items}
         columns={[
-          { accessor: "filing.documentNo", title: "Document No" },
-          { accessor: "branchId", title: "Branch Code" },
-          { accessor: "code", title: "Employee Code" },
-          { accessor: "name", title: "Employee Name" },
+          { accessor: "filing.documentNo", title: "Document No", sortable: true },
+          { accessor: "branchId", title: "Branch Code", sortable: true },
+          { accessor: "code", title: "Employee Code", sortable: true },
+          { accessor: "name", title: "Employee Name", sortable: true },
           {
             accessor: "filing.dateRange.dateFrom",
             title: "OB From",
@@ -89,7 +89,7 @@ export default function Approval() {
               </div>
             ),
           },
-          { accessor: "filing.location.locationBranch", title: "Location" },
+          { accessor: "filing.location.locationBranch", title: "Location", sortable: true },
           {
             accessor: "filing.dateTransaction",
             title: "Transaction Date",
@@ -111,6 +111,7 @@ export default function Approval() {
                 </div>
               );
             },
+            sortable: true,
           },
           {
             accessor: "attachment",

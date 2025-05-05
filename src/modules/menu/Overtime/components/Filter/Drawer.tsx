@@ -33,7 +33,7 @@ interface FilterFormInterface {
   EmployeeName: null;
 }
 
-export default function index({ isNotUser = false }: DrawerFilterProps) {
+export default function DrawerFilter({ isNotUser = false }: DrawerFilterProps) {
   const { twoDate, setTwoDate } = useGlobalStore();
   const { openDrawer, setOpenDrawer } = useOvertimeStore();
   const { onHandleSubmitFilter, onHandleClearFilter } = useOvertimeContext();
@@ -114,6 +114,7 @@ export default function index({ isNotUser = false }: DrawerFilterProps) {
                 classNames={{ input: "poppins" }}
                 key={filterForm.key("DocumentNo")}
                 {...filterForm.getInputProps("DocumentNo")}
+                styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
               />
               <Divider size={2} h={10} color="#edeeed" className="w-full" />
 
@@ -127,6 +128,7 @@ export default function index({ isNotUser = false }: DrawerFilterProps) {
                     classNames={{ input: "poppins" }}
                     key={filterForm.key("BranchCode")}
                     {...filterForm.getInputProps("BranchCode")}
+                    styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
                   />
                   <Divider size={2} h={10} color="#edeeed" className="w-full" />
 
@@ -137,6 +139,7 @@ export default function index({ isNotUser = false }: DrawerFilterProps) {
                     classNames={{ input: "poppins" }}
                     key={filterForm.key("EmployeeCode")}
                     {...filterForm.getInputProps("EmployeeCode")}
+                    styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
                   />
                   <Divider size={2} h={10} color="#edeeed" className="w-full" />
 
@@ -147,12 +150,19 @@ export default function index({ isNotUser = false }: DrawerFilterProps) {
                     classNames={{ input: "poppins" }}
                     key={filterForm.key("EmployeeName")}
                     {...filterForm.getInputProps("EmployeeName")}
+                    styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
                   />
                   <Divider size={2} h={10} color="#edeeed" className="w-full" />
                 </Fragment>
               )}
 
-              <MultiSelect label="Schedule" radius="md" classNames={{ input: "poppins" }} data={[]} />
+              <MultiSelect
+                label="Schedule"
+                radius="md"
+                classNames={{ input: "poppins" }}
+                data={[]}
+                styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
+              />
               <Divider size={2} h={10} color="#edeeed" className="w-full" />
 
               {/* Date Range */}
@@ -160,7 +170,9 @@ export default function index({ isNotUser = false }: DrawerFilterProps) {
                 <Tabs.Panel value="missedlog">
                   <Group>
                     <Flex className="w-full flex flex-row justify-between">
-                      <Text>Overtime Date</Text>
+                      <Text c="#6d6d6d" fz={15}>
+                        Overtime Date
+                      </Text>
                       <IconTransfer onClick={toggleTab} className="cursor-pointer" />
                     </Flex>
                     {RndrDateRange({
@@ -179,7 +191,9 @@ export default function index({ isNotUser = false }: DrawerFilterProps) {
                 <Tabs.Panel value="transaction">
                   <Group>
                     <Flex className="w-full flex flex-row justify-between">
-                      <Text>Transaction Date</Text>
+                      <Text c="#6d6d6d" fz={15}>
+                        Transaction Date
+                      </Text>
                       <IconTransfer onClick={toggleTab} className="cursor-pointer" />
                     </Flex>
                     {RndrDateRange({
@@ -209,6 +223,7 @@ export default function index({ isNotUser = false }: DrawerFilterProps) {
                     radius="md"
                     classNames={{ input: "poppins" }}
                     data={[]}
+                    styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
                   />
                   <Divider size={2} h={10} color="#edeeed" className="w-full" />
                   {/* Status */}
@@ -225,6 +240,7 @@ export default function index({ isNotUser = false }: DrawerFilterProps) {
                     ]}
                     value={formStatus.map(String)}
                     onChange={handleChange}
+                    styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
                   />
                 </Fragment>
               )}

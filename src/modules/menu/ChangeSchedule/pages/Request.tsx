@@ -15,13 +15,14 @@ import { CosServices } from "../services/api";
 import { useEffect } from "react";
 import { DateTimeUtils } from "@shared/utils/DateTimeUtils";
 import { statusColors } from "@shared/assets/types/Global";
+import { cosQueryKeys } from "../assets/query";
 
 export default function Request() {
   const panel = "REQUEST";
   const { loading, setLoading, time, setTime, storedFilters, storedPage } = useChangeOfScheduleStore();
 
   const { data, isLoading, refetch } = useQuery<ChangeSchedule>({
-    queryKey: ["request_cos", { ...storedFilters }, { ...storedPage }],
+    queryKey: cosQueryKeys.request({ ...storedFilters }, { ...storedPage }),
     queryFn: async () => {
       const startTime = performance.now();
       const result = await CosServices.getAllMyCOS({ ...storedFilters, ...storedPage });

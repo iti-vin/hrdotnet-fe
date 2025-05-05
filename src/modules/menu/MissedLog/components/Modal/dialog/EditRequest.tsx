@@ -6,7 +6,18 @@
 //--- React Modules
 import React from "react";
 //--- Mantine Modules
-import { ActionIcon, Button, Flex, rem, Textarea, TextInput, useMatches, Select, Stack, ScrollArea } from "@mantine/core";
+import {
+  ActionIcon,
+  Button,
+  Flex,
+  rem,
+  Textarea,
+  TextInput,
+  useMatches,
+  Select,
+  Stack,
+  ScrollArea,
+} from "@mantine/core";
 import { DatePickerInput, TimeInput } from "@mantine/dates";
 //--- Tabler Icons
 import { IconCalendar, IconCaretDownFilled, IconClock } from "@tabler/icons-react";
@@ -20,6 +31,7 @@ import { DateTimeUtils } from "@shared/utils/DateTimeUtils";
 import { useMutation } from "@tanstack/react-query";
 import { MissedLogServices } from "../../../services";
 import { queryClient } from "@/services/client";
+import { useMediaQuery } from "@mantine/hooks";
 
 interface ModalRequest {
   opened: boolean;
@@ -34,6 +46,7 @@ export default function EditRequest({ opened, onClose, buttonClose }: ModalReque
     sm: "70%",
   });
 
+  const small = useMediaQuery("(max-width: 40em)");
   const ref = React.useRef<HTMLInputElement>(null);
 
   const editForm = useForm({
@@ -51,7 +64,9 @@ export default function EditRequest({ opened, onClose, buttonClose }: ModalReque
     mutationFn: async (values: typeof editForm.values) => {
       const formattedValues = {
         ...UpdateMissedLog(viewItems),
-        DateFiled: values.DateFiled ? DateTimeUtils.getIsoDateToIso(String(values.DateFiled)) : viewItems.filing.dateFiled,
+        DateFiled: values.DateFiled
+          ? DateTimeUtils.getIsoDateToIso(String(values.DateFiled))
+          : viewItems.filing.dateFiled,
         LogTypeId: values.LogTypeId ? values.LogTypeId : viewItems.filing.logType.id,
         LogTypeName: values.LogTypeName ? values.LogTypeName : viewItems.filing.logType.name,
         TimeInOut: values.TimeInOut ? values.TimeInOut : viewItems.filing.timeInOut,
@@ -85,7 +100,11 @@ export default function EditRequest({ opened, onClose, buttonClose }: ModalReque
       <Modal opened={opened} onClose={onClose} centered size={size} buttonClose={buttonClose} title="Edit Request">
         <form onSubmit={editForm.onSubmit(handleUpdate)}>
           <Stack className="w-full h-full">
-            <ScrollArea px={20} className="flex flex-col gap-5 mt-3 w-full text-[#6d6d6d] relative" h={650} styles={{ scrollbar: { display: "none" } }}>
+            <ScrollArea
+              px={small ? 20 : 30}
+              className="flex flex-col gap-5 mt-3 w-full text-[#6d6d6d] relative"
+              h={650}
+              styles={{ scrollbar: { display: "none" } }}>
               <Flex direction={{ base: "column", sm: "row" }} justify="space-between" className="w-full" gap={20}>
                 <DatePickerInput
                   size="md"
@@ -171,8 +190,12 @@ export default function EditRequest({ opened, onClose, buttonClose }: ModalReque
               <Dropzone />
             </ScrollArea>
           </Stack>
-          <Stack className="flex flex-col justify-end mt-3">
-            <Button type="submit" className="w-2/4 sm:w-2/5 md:w-1/6  br-gradient self-end border-none" radius="md" size="md">
+          <Stack className="flex flex-col justify-end mt-3" px={small ? 20 : 30}>
+            <Button
+              type="submit"
+              className="w-2/4 sm:w-2/5 md:w-1/6  br-gradient self-end border-none"
+              radius="md"
+              size="md">
               SUBMIT
             </Button>
           </Stack>

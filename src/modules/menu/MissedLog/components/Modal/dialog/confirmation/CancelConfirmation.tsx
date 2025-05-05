@@ -15,7 +15,7 @@ interface CancelConfirmationInterface {
   onClose: () => void;
 }
 
-export default function index({ opened, onClose }: CancelConfirmationInterface) {
+export default function CancelConfirmation({ opened, onClose }: CancelConfirmationInterface) {
   const { viewItems, setOpenConfirmation, setOpenAlert, setError } = useMissedLogStore();
   const { mutate: singleCancel } = useMutation({
     mutationFn: async (id: number) => {
@@ -38,7 +38,7 @@ export default function index({ opened, onClose }: CancelConfirmationInterface) 
     <Alert
       opened={opened}
       onClose={onClose}
-      headerTitle="Cancel Request"
+      headerTitle="CANCEL REQUEST"
       size="lg"
       icon="Warning"
       title="Are you sure you want to cancel this Missed Log request?"

@@ -23,7 +23,10 @@ export default function index() {
             {dataFilter.DocumentNo && (
               <Flex direction="row" align="center" gap={7} mx={8} visibleFrom="md">
                 <Text>Doc No:</Text>
-                <Pill withRemoveButton>{dataFilter.DocumentNo}</Pill>
+
+                <Pill classNames={{ root: "bg-[#d9d9d9]", label: "text-[#6D6D6D] font-semibold" }} withRemoveButton>
+                  {dataFilter.DocumentNo}
+                </Pill>
                 <Text size="xl" c="#eeeeee">
                   |
                 </Text>
@@ -33,7 +36,10 @@ export default function index() {
             {dataFilter.LeaveParameter && (
               <Flex direction="row" align="center" gap={7} mx={8} visibleFrom="md">
                 <Text>Leave Type:</Text>
-                <Pill withRemoveButton>{dataFilter.LeaveParameter}</Pill>
+
+                <Pill classNames={{ root: "bg-[#d9d9d9]", label: "text-[#6D6D6D] font-semibold" }} withRemoveButton>
+                  {dataFilter.LeaveParameter}
+                </Pill>
                 <Text size="xl" c="#eeeeee">
                   |
                 </Text>
@@ -43,7 +49,8 @@ export default function index() {
             {dataFilter.DateFrom && dataFilter.DateTo && (
               <Flex direction="row" align="center" gap={7} mx={8} visibleFrom="md">
                 <Text>Date Transaction:</Text>
-                <Pill withRemoveButton>
+
+                <Pill classNames={{ root: "bg-[#d9d9d9]", label: "text-[#6D6D6D] font-semibold" }} withRemoveButton>
                   {dataFilter.DateFrom}- {dataFilter.DateTo}
                 </Pill>
                 <Text size="xl" c="#eeeeee">
@@ -55,11 +62,21 @@ export default function index() {
         </Flex>
 
         <Flex pr={10} py={8} gap={5}>
-          <ActionIcon variant="transparent" color="gray" size="md" aria-label="Settings" onClick={() => setOpenDialog("DrawerFilter")}>
+          <ActionIcon
+            variant="transparent"
+            color="gray"
+            size="md"
+            aria-label="Settings"
+            onClick={() => setOpenDialog("DrawerFilter")}>
             <IconCirclePlus style={{ width: "100%", height: "100%" }} stroke={1.5} color="#6d6d6d" />
           </ActionIcon>
           <ActionIcon variant="transparent" color="gray" size="md" aria-label="Settings">
-            <IconTrash style={{ width: "100%", height: "100%" }} stroke={1.5} color="#6d6d6d" onClick={onHandleClearFilter} />
+            <IconTrash
+              style={{ width: "100%", height: "100%" }}
+              stroke={1.5}
+              color="#6d6d6d"
+              onClick={onHandleClearFilter}
+            />
           </ActionIcon>
         </Flex>
       </Flex>

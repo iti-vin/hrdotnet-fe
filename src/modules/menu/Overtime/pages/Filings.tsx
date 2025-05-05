@@ -46,11 +46,11 @@ export default function Filings() {
         records={data && data.items}
         isLoading={isLoading}
         columns={[
-          { accessor: "filing.documentNo", title: "Document No" },
-          { accessor: "branchId", title: "Branch Code" },
-          { accessor: "code", title: "Employee Code" },
-          { accessor: "name", title: "Employee Name" },
-          { accessor: "filing.shiftSchedule.name", title: "Schedule" },
+          { accessor: "filing.documentNo", title: "Document No", sortable: true },
+          { accessor: "branchId", title: "Branch Code", sortable: true },
+          { accessor: "code", title: "Employee Code", sortable: true },
+          { accessor: "name", title: "Employee Name", sortable: true },
+          { accessor: "filing.shiftSchedule.name", title: "Schedule", sortable: true },
           { accessor: "filing.shiftSchedule.date", title: "Overtime Date" },
           { accessor: "filing.shiftSchedule.timeIn", title: "Overtime Hours" },
           {
@@ -74,6 +74,7 @@ export default function Filings() {
                 </div>
               );
             },
+            sortable: true,
           },
           {
             accessor: "attachment",

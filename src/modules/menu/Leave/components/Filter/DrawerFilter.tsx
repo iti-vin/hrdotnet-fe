@@ -6,7 +6,19 @@
 import { useState } from "react";
 //--- Mantine Modules
 import { DatePicker } from "@mantine/dates";
-import { Button, Divider, Drawer, Flex, Group, MultiSelect, Popover, Select, Tabs, Text, TextInput } from "@mantine/core";
+import {
+  Button,
+  Divider,
+  Drawer,
+  Flex,
+  Group,
+  MultiSelect,
+  Popover,
+  Select,
+  Tabs,
+  Text,
+  TextInput,
+} from "@mantine/core";
 //--- Icons
 import { IconCalendarMonth, IconTransfer, IconX } from "@tabler/icons-react";
 
@@ -29,7 +41,8 @@ interface DrawerFilterProps {
 }
 
 export default function DrawerFilter({ isNotUser = false }: DrawerFilterProps) {
-  const { status, setStatus, twoDate, setTwoDate, openDialog, setOpenDialog, leaveType, setLoading, setDataFilter } = useLeaveStore();
+  const { status, setStatus, twoDate, setTwoDate, openDialog, setOpenDialog, leaveType, setLoading, setDataFilter } =
+    useLeaveStore();
   const { onHandleSubmitFilter, onHandleClearFilter } = useLeave();
   const RndrDateRange = ({ fp, sp, fl, sl, dateProps, setDateProps }: DateRangeProps) => {
     return (
@@ -159,6 +172,7 @@ export default function DrawerFilter({ isNotUser = false }: DrawerFilterProps) {
                 classNames={{ input: "poppins" }}
                 key={filterForm.key("DocumentNo")}
                 {...filterForm.getInputProps("DocumentNo")}
+                styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
               />
               <Divider size={2} h={10} color="#edeeed" className="w-full" />
               <Select
@@ -174,6 +188,7 @@ export default function DrawerFilter({ isNotUser = false }: DrawerFilterProps) {
                     }));
                   }
                 }}
+                styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
                 clearable
               />
               <Divider size={2} h={10} color="#edeeed" className="w-full" />
@@ -190,6 +205,7 @@ export default function DrawerFilter({ isNotUser = false }: DrawerFilterProps) {
                     // onChange={(e) => {
                     //   setDocumentNo(e.target.value);
                     // }}
+                    styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
                   />
                   <Divider size={2} h={10} color="#edeeed" className="w-full" />
 
@@ -203,6 +219,7 @@ export default function DrawerFilter({ isNotUser = false }: DrawerFilterProps) {
                     // onChange={(e) => {
                     //   setDocumentNo(e.target.value);
                     // }}
+                    styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
                   />
                   <Divider size={2} h={10} color="#edeeed" className="w-full" />
 
@@ -216,6 +233,7 @@ export default function DrawerFilter({ isNotUser = false }: DrawerFilterProps) {
                     // onChange={(e) => {
                     //   setDocumentNo(e.target.value);
                     // }}
+                    styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
                   />
                   <Divider size={2} h={10} color="#edeeed" className="w-full" />
                 </>
@@ -224,7 +242,9 @@ export default function DrawerFilter({ isNotUser = false }: DrawerFilterProps) {
                 <Tabs.Panel value="leave">
                   <Group mt="md">
                     <Flex className="w-full flex flex-row justify-between">
-                      <Text>Leave Range</Text>
+                      <Text c="#6d6d6d" fz={15}>
+                        Leave Range
+                      </Text>
                       <IconTransfer onClick={toggleTab} className="cursor-pointer" />
                     </Flex>
                     {RndrDateRange({
@@ -243,7 +263,9 @@ export default function DrawerFilter({ isNotUser = false }: DrawerFilterProps) {
                 <Tabs.Panel value="transaction">
                   <Group mt="md">
                     <Flex className="w-full flex flex-row justify-between">
-                      <Text>Transaction Date</Text>
+                      <Text c="#6d6d6d" fz={15}>
+                        Transaction Date
+                      </Text>
                       <IconTransfer onClick={toggleTab} className="cursor-pointer" />
                     </Flex>
                     {RndrDateRange({
@@ -270,6 +292,7 @@ export default function DrawerFilter({ isNotUser = false }: DrawerFilterProps) {
                 // onChange={(e) => {
                 //   setDocumentNo(e.target.value);
                 // }}
+                styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
               />
 
               {!isNotUser && (
@@ -289,6 +312,7 @@ export default function DrawerFilter({ isNotUser = false }: DrawerFilterProps) {
                     onChange={(values) => {
                       setStatus(values.map(Number));
                     }}
+                    styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
                   />
                 </>
               )}

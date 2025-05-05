@@ -21,12 +21,14 @@ import { CalendarApi, EventInput } from "@fullcalendar/core";
 import renderEventContent from "../components/Event";
 import { useCalendarStore } from "../store";
 import dayjs from "dayjs";
+import { useMediaQuery } from "@mantine/hooks";
 
 interface TeamCalendarI extends ModalProps {
   name?: string;
 }
 
 export default function TeamCalendar({ opened, onClose, buttonClose, name }: TeamCalendarI) {
+  const small = useMediaQuery("(max-width: 40em)");
   const { fetchCalendar } = useCalendarContext();
   const { calendarEvents, setType, setDate } = useCalendarStore();
   const calendarRef = useRef<FullCalendar>(null);
@@ -67,6 +69,7 @@ export default function TeamCalendar({ opened, onClose, buttonClose, name }: Tea
       <ScrollArea
         className="flex flex-col gap-5 mt-3 w-full text-[#6d6d6d] relative"
         h={650}
+        px={small ? 20 : 30}
         styles={{ scrollbar: { display: "none" } }}>
         <Stack className="mb-4 w-full h-[650px] rounded-lg select-none">
           <FullCalendar

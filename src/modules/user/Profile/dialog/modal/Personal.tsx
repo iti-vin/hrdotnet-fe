@@ -11,6 +11,7 @@ import { Fragment } from "react";
 
 export default function UpdatePersonal({ opened, onClose, buttonClose }: ModalProps) {
   const size = useMatches({ base: "100%", sm: "70%" });
+
   return (
     <Fragment>
       <Modal
@@ -23,7 +24,7 @@ export default function UpdatePersonal({ opened, onClose, buttonClose }: ModalPr
         <form onSubmit={undefined}>
           <Stack className="w-full h-full">
             <ScrollArea
-              className="flex flex-col mt-3 w-full text-[#6d6d6d] relative  px-10"
+              className="flex flex-col mt-3 w-full text-[#6d6d6d] relative px-10"
               h={650}
               styles={{ scrollbar: { display: "block" } }}>
               <Flex className="w-full gap-4 lg:gap-5 flex flex-col lg:flex-row">
@@ -55,7 +56,7 @@ export default function UpdatePersonal({ opened, onClose, buttonClose }: ModalPr
                     placeholder="Select Gender"
                     label="Gender"
                     radius={8}
-                    data={["Next Day", "Same Day"]}
+                    data={["Male", "Female", "Non-Binary"]}
                     classNames={{ input: "poppins" }}
                     rightSection={<IconCaretDownFilled size={18} onClick={() => {}} />}
                     className="border-none w-full"
@@ -66,7 +67,7 @@ export default function UpdatePersonal({ opened, onClose, buttonClose }: ModalPr
                     placeholder="Select Status"
                     label="Civil Status"
                     radius={8}
-                    data={["Next Day", "Same Day"]}
+                    data={["Single", "Married", "Divorced", "Separated", "Widowed"]}
                     classNames={{ input: "poppins" }}
                     rightSection={<IconCaretDownFilled size={18} onClick={() => {}} />}
                     className="border-none w-full"

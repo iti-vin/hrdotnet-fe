@@ -13,7 +13,7 @@ import { OfficialBusinessServices } from "../../../services/api";
 import { SingleDataOfficialBusiness } from "../../../assets/Values";
 import { ModalProps } from "@shared/assets/types/Modal";
 
-export default function index({ opened, onClose }: ModalProps) {
+export default function CancelConfirmation({ opened, onClose }: ModalProps) {
   const { viewItems, setOpenConfirmation, setOpenAlert, setError } = useOfficialBusinessStore();
 
   const { mutate: singleCancel } = useMutation({
@@ -38,7 +38,7 @@ export default function index({ opened, onClose }: ModalProps) {
     <Alert
       opened={opened}
       onClose={onClose}
-      headerTitle="Cancel Request"
+      headerTitle="CANCEL REQUEST"
       size="lg"
       icon="Warning"
       title="Are you sure you want to cancel this Official Business request?"

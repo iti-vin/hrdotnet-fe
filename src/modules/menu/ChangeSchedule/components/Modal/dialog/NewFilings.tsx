@@ -6,22 +6,38 @@
 //--- Mantine Modules
 import { useMediaQuery } from "@mantine/hooks";
 import { DatePickerInput } from "@mantine/dates";
-import { Button, Checkbox, Flex, Group, ScrollArea, Select, Stack, Textarea, TextInput } from "@mantine/core";
+import {
+  Button,
+  Checkbox,
+  Flex,
+  Group,
+  Popover,
+  ScrollArea,
+  Select,
+  Stack,
+  Text,
+  Textarea,
+  TextInput,
+} from "@mantine/core";
 //--- Shared Modules
-import { Dropzone, Modal } from "@shared/template";
+import { Dropzone } from "@shared/template";
+import Modal from "@/layout/main/dialog/Modal";
 //--- Icons
-import { IconDots } from "@tabler/icons-react";
+import { IconCaretDownFilled, IconDots, IconReload } from "@tabler/icons-react";
 import { ModalProps } from "@shared/assets/types/Modal";
+import { useState } from "react";
+import { DataTable } from "mantine-datatable";
 
 export default function NewFilings({ opened, onClose, buttonClose }: ModalProps) {
-  const small = useMediaQuery("(max-width: 770px)");
+  const small = useMediaQuery("(max-width: 40em)");
+  const [openModal, setOpenModal] = useState<boolean>(false);
 
   return (
     <Modal title="New Filings" size="80%" opened={opened} onClose={onClose} buttonClose={buttonClose}>
       <form onSubmit={() => {}} className="relative">
         <Stack className="w-full h-full">
           <ScrollArea
-            px={20}
+            px={small ? 20 : 30}
             className="flex flex-col mt-3 w-full text-[#6d6d6d] relative"
             h={650}
             styles={{ scrollbar: { display: "none" } }}>
@@ -32,10 +48,100 @@ export default function NewFilings({ opened, onClose, buttonClose }: ModalProps)
                 label="Employee Name"
                 className="w-full"
                 placeholder="Select Employee"
-                rightSection={<IconDots />}
+                rightSection={<IconDots onClick={() => setOpenModal(true)} />}
+                onClick={() => setOpenModal(true)}
                 required
               />
+              <Modal
+                opened={openModal}
+                onClose={() => setOpenModal(false)}
+                buttonClose={() => setOpenModal(false)}
+                title="Employee List"
+                size="lg">
+                <Flex direction={{ base: "column", sm: "row" }} align="center" gap={10} px={small ? 20 : 30}>
+                  <Text size="sm">Search By:</Text>
+                  <Select
+                    variant="outline"
+                    size="md"
+                    radius={8}
+                    data={["Date", "Schedule", "OT In", "OT Out"]}
+                    rightSection={<IconCaretDownFilled color="#559CDA" size={18} />}
+                    className="border-none w-2/6"
+                    styles={{
+                      input: {
+                        backgroundColor: "#deecff",
+                        color: "#559CDA",
+                        fontWeight: 600,
+                        fontFamily: "Poppins",
+                      },
+                    }}
+                  />
+                  <TextInput
+                    variant="outline"
+                    size="md"
+                    defaultValue="Search"
+                    onChange={() => {}}
+                    radius={8}
+                    styles={{
+                      input: {
+                        backgroundColor: "#deecff",
+                        color: "#559CDA",
+                        fontWeight: 600,
+                        fontFamily: "Poppins",
+                      },
+                    }}
+                  />
 
+                  <Popover width={200} position="bottom" withArrow shadow="md">
+                    <Popover.Target>
+                      <IconReload
+                        className="cursor-pointer rounded-md p-1"
+                        style={{ background: "#dfecfd" }}
+                        size={40}
+                        color="#559CDA"
+                      />
+                    </Popover.Target>
+                    <Popover.Dropdown style={{ pointerEvents: "none" }}>
+                      <Text size="sm">Refresh</Text>
+                    </Popover.Dropdown>
+                  </Popover>
+                </Flex>
+                <DataTable
+                  classNames={{ root: "px-10" }}
+                  columns={[
+                    { accessor: "code", title: "Code" },
+                    { accessor: "name", title: "Name" },
+                    { accessor: "department", title: "Department" },
+                    { accessor: "position", title: "Position Level" },
+                    { accessor: "section", title: "Section" },
+                    { accessor: "division", title: "Division" },
+                  ]}
+                  idAccessor="date"
+                  key="date"
+                  records={[]}
+                  striped={true}
+                  highlightOnHover={true}
+                  withTableBorder={true}
+                  className="select-none"
+                  // onRowClick={(data: any) => {
+                  //   handleOptionSelect(data.record);
+                  // }}
+                  page={1}
+                  onPageChange={() => {}}
+                  totalRecords={10}
+                  recordsPerPage={5}
+                  // paginationText={({ totalRecords }) => `${totalRecords} items found in (0.225) seconds`}
+                  styles={{
+                    header: {
+                      color: "rgba(109, 109, 109, 0.6)",
+                      fontWeight: 500,
+                    },
+                    root: {
+                      color: "rgba(0, 0, 0, 0.6)",
+                    },
+                  }}
+                />
+              </Modal>
               <Flex className="flex flex-col w-full md:flex-row gap-3 md:gap-5">
                 <DatePickerInput
                   size={small ? "xs" : "md"}
@@ -72,7 +178,6 @@ export default function NewFilings({ opened, onClose, buttonClose }: ModalProps)
                   label="Reference No."
                   placeholder="0000-0000-0000"
                   className="w-full"
-                  required
                 />
               </Flex>
               <Checkbox label="Rest Day" radius="xs" className="select-none w-full items-start cursor-pointer" />
@@ -88,7 +193,7 @@ export default function NewFilings({ opened, onClose, buttonClose }: ModalProps)
             </Group>
           </ScrollArea>
         </Stack>
-        <Stack className="pt-5 flex flex-row justify-end">
+        <Stack className="pt-5 flex flex-row justify-end" px={small ? 20 : 30}>
           <Button type="submit" size="md" className="w-44 border-none custom-gradient rounded-md" onClick={() => {}}>
             SUBMIT
           </Button>

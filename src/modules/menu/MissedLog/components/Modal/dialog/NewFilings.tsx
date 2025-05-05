@@ -6,13 +6,25 @@
 //--- React Modules
 import React from "react";
 //--- Mantine Modules
-import { ActionIcon, Button, Flex, rem, Textarea, TextInput, useMatches, Select, Stack, ScrollArea } from "@mantine/core";
+import {
+  ActionIcon,
+  Button,
+  Flex,
+  rem,
+  Textarea,
+  TextInput,
+  useMatches,
+  Select,
+  Stack,
+  ScrollArea,
+} from "@mantine/core";
 import { DatePickerInput, TimeInput } from "@mantine/dates";
 //--- Tabler Icons
 import { IconCalendar, IconCaretDownFilled, IconClock } from "@tabler/icons-react";
 //-- Shared Template
 import Dropzone from "@shared/template/Dropzone";
 import Modal from "@/layout/main/dialog/Modal";
+import { useMediaQuery } from "@mantine/hooks";
 
 interface ModalRequest {
   opened: boolean;
@@ -28,6 +40,7 @@ interface OvertimeData {
 }
 
 export default function NewFilings({ opened, onClose, buttonClose }: ModalRequest) {
+  const small = useMediaQuery("(max-width: 40em)");
   const size = useMatches({
     base: "100%",
     sm: "70%",
@@ -69,7 +82,11 @@ export default function NewFilings({ opened, onClose, buttonClose }: ModalReques
       <Modal opened={opened} onClose={onClose} centered size={size} buttonClose={buttonClose} title="New Filing">
         <form onSubmit={() => console.log(value)}>
           <Stack className="w-full h-full">
-            <ScrollArea px={20} className="flex flex-col gap-5 mt-3 w-full text-[#6d6d6d] relative" h={650} styles={{ scrollbar: { display: "none" } }}>
+            <ScrollArea
+              px={small ? 20 : 30}
+              className="flex flex-col gap-5 mt-3 w-full text-[#6d6d6d] relative"
+              h={650}
+              styles={{ scrollbar: { display: "none" } }}>
               <Select
                 size="md"
                 label="Employee Name"
@@ -145,7 +162,11 @@ export default function NewFilings({ opened, onClose, buttonClose }: ModalReques
             </ScrollArea>
           </Stack>
           <Stack className="flex flex-col justify-end mt-3">
-            <Button type="submit" className="w-2/4 sm:w-2/5 md:w-1/6  br-gradient self-end border-none" radius="md" size="md">
+            <Button
+              type="submit"
+              className="w-2/4 sm:w-2/5 md:w-1/6  br-gradient self-end border-none"
+              radius="md"
+              size="md">
               SUBMIT
             </Button>
           </Stack>

@@ -28,12 +28,15 @@ import { useOfficialBusinessStore } from "../../../store";
 import { useOfficialBusinessContext } from "../../../context";
 import { OfficialBusinessServices } from "../../../services/api";
 import { ValidationErrorResponse } from "../../../assets/Types";
+import { useMediaQuery } from "@mantine/hooks";
 
 export default function NewRequest({ opened, onClose, buttonClose }: ModalProps) {
-  const { locations, branches, loading, setLoading, branchId, setBranchId, setError, setOpenAlert, setOpenDialog } = useOfficialBusinessStore();
+  const { locations, branches, setLoading, branchId, setBranchId, setError, setOpenAlert, setOpenDialog } =
+    useOfficialBusinessStore();
   const { onFetchMaintenanceBranch } = useOfficialBusinessContext();
   const { twoDate, setTwoDate } = useGlobalStore();
   const size = useMatches({ base: "100%", sm: "70%" });
+  const small = useMediaQuery("(max-width: 40em)");
 
   const { ref: refTimeIn, pickerControl: pickerControlTimeIn } = useTimePicker();
   const { ref: refTimeOut, pickerControl: pickerControlTimeOut } = useTimePicker();
@@ -95,10 +98,22 @@ export default function NewRequest({ opened, onClose, buttonClose }: ModalProps)
       <Modal opened={opened} onClose={onClose} centered size={size} buttonClose={buttonClose} title="New Request">
         <form onSubmit={newForm.onSubmit(handleCreate)}>
           <Stack className="w-full h-full">
-            <ScrollArea px={20} className="flex flex-col mt-3 w-full text-[#6d6d6d] relative" h={650} styles={{ scrollbar: { display: "none" } }}>
+            <ScrollArea
+              px={small ? 20 : 30}
+              className="flex flex-col mt-3 w-full text-[#6d6d6d] relative"
+              h={650}
+              styles={{ scrollbar: { display: "none" } }}>
               <Flex gap={5} direction="column">
                 <Flex gap={{ base: 5, md: 10 }} direction={{ base: "column", md: "row" }}>
-                  <RndrDateRange dateProps={twoDate} fl="From Date" sl="To Date" fp="From" sp="To" direction="row" setDateProps={(newValue) => setTwoDate(newValue)} />
+                  <RndrDateRange
+                    dateProps={twoDate}
+                    fl="From Date"
+                    sl="To Date"
+                    fp="From"
+                    sp="To"
+                    direction="row"
+                    setDateProps={(newValue) => setTwoDate(newValue)}
+                  />
                 </Flex>
                 <Flex gap={{ base: 5, md: 10 }} direction={{ base: "column", md: "row" }}>
                   <TimeInput
@@ -166,13 +181,23 @@ export default function NewRequest({ opened, onClose, buttonClose }: ModalProps)
                   />
                 </Flex>
 
-                <Textarea label="Reason" withAsterisk rows={4} key={newForm.key("Reason")} {...newForm.getInputProps("Reason")} />
+                <Textarea
+                  label="Reason"
+                  withAsterisk
+                  rows={4}
+                  key={newForm.key("Reason")}
+                  {...newForm.getInputProps("Reason")}
+                />
                 <Dropzone />
               </Flex>
             </ScrollArea>
           </Stack>
-          <Stack className="flex flex-col justify-end mt-3">
-            <Button type="submit" className="w-2/4 sm:w-2/5 md:w-1/6  br-gradient self-end border-none" radius="md" size="md" loading={loading}>
+          <Stack className="flex flex-col justify-end mt-3" px={small ? 20 : 30}>
+            <Button
+              type="submit"
+              className="w-2/4 sm:w-2/5 md:w-1/6  br-gradient self-end border-none"
+              radius="md"
+              size="md">
               SUBMIT
             </Button>
           </Stack>

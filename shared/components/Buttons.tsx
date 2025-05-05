@@ -35,17 +35,17 @@ const ESSButton: React.FC<ButtonBuilderProps> = ({
           return (
             <>
               <Button variant="outline" className="rounded-md" onClick={onHandleSingleCancel}>
-                Cancel Request
+                CANCEL REQUEST
               </Button>
               <Button className="border-none custom-gradient rounded-md" onClick={onHandleEditRequest}>
-                Edit Request
+                EDIT REQUEST
               </Button>
             </>
           );
         case FilingStatus.Reviewed:
           return (
             <Button variant="outline" className="rounded-md" onClick={onHandleSingleCancel}>
-              Cancel Request
+              CANCEL REQUEST
             </Button>
           );
         case FilingStatus.Approved:

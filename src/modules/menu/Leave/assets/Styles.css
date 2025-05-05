@@ -1,11 +1,11 @@
-.unselectedLeaveType {
-  background-color: #deecff;
-  color: #559cda;
-  @apply cursor-pointer h-28 w-full  flex  text-center justify-center items-center shadow-md shadow-blue-300 rounded-lg m-1 gap-6;
+.container-carousel {
+  @apply w-full h-auto rounded-md py-4;
 }
 
-.selectedLeaveType {
-  background-color: #559cda;
-  color: white;
-  @apply cursor-pointer h-28 w-full  flex   text-center justify-center items-center shadow-md shadow-blue-300 rounded-lg m-1 gap-6;
+.unselected {
+  @apply bg-[#deecff] items-center container-carousel;
+}
+
+.selected {
+  @apply bg-[#559cda] items-center container-carousel;
 }

@@ -6,16 +6,16 @@
 //--- Mantine Modules
 import { useMediaQuery } from "@mantine/hooks";
 import { DatePickerInput } from "@mantine/dates";
-import { Checkbox, Flex, ScrollArea, Stack, Text, Textarea, TextInput } from "@mantine/core";
+import { Button, Checkbox, Flex, ScrollArea, Stack, Text, Textarea, TextInput } from "@mantine/core";
 
 //--- Shared Modules
-import { Modal } from "@shared/template";
+import Modal from "@/layout/main/dialog/Modal";
 import { Panel, statusColors } from "@shared/assets/types/Global";
 import { ModalProps } from "@shared/assets/types/Modal";
 import ESSButton from "@shared/components/Buttons";
 import { useChangeOfScheduleStore } from "../../../store";
 import { CosServices } from "../../../services/api";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { CosItems } from "../../../models/response";
 
 //--- Store
@@ -34,8 +34,25 @@ export default function ViewDetails({
   panel,
 }: ViewDetailsProps) {
   const small = useMediaQuery("(max-width: 770px)");
-  const { viewItems, setOpenDialog, setOpenConfirmation, setSingleItem } = useChangeOfScheduleStore();
 
+  const { viewItems, setOpenDialog, setOpenConfirmation, setSingleItem } = useChangeOfScheduleStore();
+  const handleCopy = () => {
+    const dateFrom = document.getElementById("date_from")?.innerText.trim() || "";
+    const dateTo = document.getElementById("date_to")?.innerText.trim() || "";
+    const reason = (document.getElementById("reason") as HTMLTextAreaElement)?.value.trim() || "";
+    const referenceNo = document.getElementById("reference_no")?.innerText.trim() || "";
+
+    const textToCopy = JSON.stringify({ dateFrom, dateTo, reason, referenceNo });
+    navigator.clipboard
+      .writeText(textToCopy)
+      .then(() => {
+        alert("Text copied to clipboard!");
+      })
+      .catch((err) => {
+        console.error("Failed to copy: ", err);
+        alert("Failed to copy text!");
+      });
+  };
   const onHandleSingleCancel = () => {
     setOpenDialog("");
     setOpenConfirmation("SingleCancel");
@@ -93,18 +110,33 @@ export default function ViewDetails({
     }
   }, [viewItems.filing.id]);
 
+  const printRef = useRef<HTMLDivElement>(null);
+
+  const handlePrint = () => {
+    if (!printRef.current) return;
+
+    // const printContent = printRef.current.innerHTML;
+    // const originalContent = document.body.innerHTML;
+
+    // document.body.innerHTML = printContent;
+    window.print();
+  };
+
   return (
     <Modal
       opened={opened}
       onClose={onClose}
       buttonClose={buttonClose}
       size="80%"
-      title="Change Schedule Request Details">
+      title="Change Schedule Request Details"
+      copyBtn={handleCopy}
+      exportBtn={handlePrint}>
       <ScrollArea
         className="flex flex-col gap-5 mt-3 w-full text-[#6d6d6d] relative"
         h={650}
+        px={small ? 20 : 30}
         styles={{ scrollbar: { display: "none" } }}>
-        <Flex className="flex-col gap-2">
+        <Flex ref={printRef} className="print-container flex-col gap-2">
           <Flex className="flex-col w-full p-0 md:flex-row gap-2">
             <div className="w-full md:w-1/2 flex flex-col gap-2  border-solid border-0.5 border-sky-500 p-4 rounded-lg">
               <Text style={{ color: "#559CDA" }} className="text-xs md:text-lg font-bold text-center md:text-start">
@@ -118,6 +150,7 @@ export default function ViewDetails({
                   placeholder={viewItems.filing.dateFiled.dateFrom}
                   className="w-full"
                   radius={8}
+                  id="date_from"
                   disabled
                 />
                 <DatePickerInput
@@ -127,6 +160,7 @@ export default function ViewDetails({
                   placeholder={viewItems.filing.dateFiled.dateFrom}
                   className="w-full"
                   radius={8}
+                  id="date_to"
                   disabled
                 />
                 <TextInput
@@ -212,13 +246,15 @@ export default function ViewDetails({
               radius={8}
               required
               label="Reason"
+              value={viewItems.filing.reason}
               placeholder={viewItems.filing.reason}
               className="w-full"
               classNames={{ label: " text-[#559CDA] font-bold", input: "bg-[#EEEEEE]" }}
               disabled
+              id="reason"
             />
           </Stack>
-          <Stack className="border-solid border-0.5 border-sky-500 p-4 rounded-lg w-full">
+          <Stack className="no-print border-solid border-0.5 border-sky-500 p-4 rounded-lg w-full">
             <Text style={{ color: "#559CDA" }} className="text-xs md:text-lg font-bold">
               Attachment
             </Text>
@@ -226,7 +262,7 @@ export default function ViewDetails({
               File: attachment.pdf Size: 20mb
             </div>
           </Stack>
-          <Stack className="border-solid border-0.5 border-sky-500 p-4 rounded-lg w-full">
+          <Stack className="no-print border-solid border-0.5 border-sky-500 p-4 rounded-lg w-full">
             <Textarea
               size={small ? "xs" : "lg"}
               radius={8}
@@ -239,7 +275,9 @@ export default function ViewDetails({
           </Stack>
         </Flex>
       </ScrollArea>
-      <Stack className="pt-5 flex flex-row justify-end">{rndrBtnContent()}</Stack>
+      <Stack className="pt-5 flex flex-row justify-end" px={small ? 20 : 30}>
+        {rndrBtnContent()}
+      </Stack>
     </Modal>
   );
 }

@@ -209,7 +209,6 @@ export default function NewFilings({ opened, onClose, buttonClose }: ModalProps)
                     radius={8}
                     label="Reference No."
                     placeholder="0000-0000-0000"
-                    withAsterisk
                     className="w-full"
                     // defaultValue={value}
                     // onChange={handleChange}

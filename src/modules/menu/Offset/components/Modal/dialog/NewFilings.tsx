@@ -200,7 +200,6 @@ export default function NewFilings({ opened, onClose, buttonClose }: ModalProps)
                     radius={8}
                     label="Reference No."
                     placeholder="0000-0000-0000"
-                    withAsterisk
                     className="w-full"
                     max={14}
                     styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}

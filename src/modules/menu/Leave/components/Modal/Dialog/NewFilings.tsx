@@ -1,60 +1,151 @@
 import "mantine-datatable/styles.layer.css";
-import { Button, Select, Textarea, TextInput, Tooltip } from "@mantine/core";
+import { Button, Flex, Popover, Select, Stack, Textarea, TextInput, Tooltip, useMatches } from "@mantine/core";
 import { Text } from "@mantine/core";
-import { IconBriefcase, IconCake, IconCaretDownFilled, IconCircleCheck, IconFaceMask, IconGrave2, IconMoodKid, IconUrgent, IconVenus } from "@tabler/icons-react";
+import { IconCaretDownFilled, IconDots, IconReload } from "@tabler/icons-react";
 import "@mantine/dates/styles.css";
 import "@mantine/core/styles.css";
 import "@mantine/carousel/styles.css";
 import { Carousel } from "@mantine/carousel";
 import Dropzone from "@shared/template/Dropzone";
-import { useMatches, ScrollArea } from "@mantine/core";
+import { ScrollArea } from "@mantine/core";
 import Modal from "@/layout/main/dialog/Modal";
 import DateRangePicker from "@shared/template/DateRange";
 import useLeaveStore from "../../../store/LeaveStore";
 import { cloneElement, useState } from "react";
+import { DataTable } from "mantine-datatable";
+import { LeaveTypes } from "./assets/leave-types";
+import { useMediaQuery } from "@mantine/hooks";
 
 export default function NewFilings() {
   const { openDialog, setOpenDialog } = useLeaveStore();
-  const slidesNum = useMatches({
-    base: 1,
-    xs: 2,
-    sm: 3,
-    md: 5,
-  });
-  const iconStyle = { width: "rem(100)", height: "rem(100)", stroke: "1.5" };
-
-  const leaveTypes = [
-    { count: 6, label: "Vacation Leave", icon: <IconBriefcase size={75} style={iconStyle} className="mb-2" /> },
-    { count: 3, label: "Sick Leave", icon: <IconFaceMask size={75} style={iconStyle} className="mb-2" /> },
-    { count: 2, label: "Emergency Leave", icon: <IconUrgent size={75} style={iconStyle} className="mb-2" /> },
-    { count: 1, label: "Birthday Leave", icon: <IconCake size={75} style={iconStyle} className="mb-2" /> },
-    { count: 6, label: "Leave Without Pay", icon: <IconCircleCheck style={iconStyle} size={75} className="mb-2" /> },
-    { count: 16, label: "Bereavement Leave", icon: <IconGrave2 size={75} style={iconStyle} className="mb-2" /> },
-    { count: 7, label: "Maternity Leave", icon: <IconMoodKid size={75} style={iconStyle} className="mb-2" /> },
-    { count: 1, label: "SSS Allocation Leave", icon: <p style={{ fontSize: "2.6rem", color: "#559cda", fontWeight: "600", width: "4rem", textAlign: "center" }}>SSS</p> },
-    { count: 6, label: "Magna Carta", icon: <IconVenus size={75} style={iconStyle} className="mb-2" /> },
-  ];
-
+  const small = useMediaQuery("(max-width: 40em)");
+  const slidesNum = useMatches({ base: 1, xs: 2, sm: 3, md: 5 });
   const [selectedLeaveType, setSelectedLeaveType] = useState<string>("");
-  // const { leaveType, leaveOption } = useLeaveStore();
-
+  const [openModal, setOpenModal] = useState<boolean>(false);
   return (
-    <Modal title="New Filings" size="80%" opened={"NewFilings" === openDialog} onClose={() => setOpenDialog("")} buttonClose={() => setOpenDialog("")}>
-      <ScrollArea className="flex flex-col gap-5 mt-3 w-full text-[#6d6d6d] relative" h={650} styles={{ scrollbar: { display: "none" } }}>
-        <div className="flex flex-col gap-4 overflow-hidden" style={{ color: "#6D6D6D" }}>
-          <Select size="md" label="Employee Name" placeholder="" className="w-full" />
-          <div>
+    <Modal
+      title="New Filings"
+      size="80%"
+      opened={"NewFilings" === openDialog}
+      onClose={() => setOpenDialog("")}
+      buttonClose={() => setOpenDialog("")}>
+      <ScrollArea
+        className="flex flex-col gap-5 mt-3 w-full text-[#6d6d6d]"
+        h={650}
+        px={small ? 20 : 30}
+        styles={{ scrollbar: { display: "none" } }}>
+        <Stack className="flex flex-col gap-4 overflow-hidden" style={{ color: "#6D6D6D", maxWidth: "100%" }}>
+          <Select
+            size={small ? "xs" : "md"}
+            radius={8}
+            label="Employee Name"
+            className="w-full"
+            placeholder="Select Employee"
+            rightSection={<IconDots onClick={() => setOpenModal(true)} />}
+            onClick={() => setOpenModal(true)}
+            required
+          />
+          <Modal
+            opened={openModal}
+            onClose={() => setOpenModal(false)}
+            buttonClose={() => setOpenModal(false)}
+            title="Employee List"
+            size="lg">
+            <Flex direction={{ base: "column", sm: "row" }} align="center" gap={10} px={small ? 20 : 30}>
+              <Text size="sm">Search By:</Text>
+              <Select
+                variant="outline"
+                size="md"
+                radius={8}
+                data={["Date", "Schedule", "OT In", "OT Out"]}
+                rightSection={<IconCaretDownFilled color="#559CDA" size={18} />}
+                className="border-none w-2/6"
+                styles={{
+                  input: {
+                    backgroundColor: "#deecff",
+                    color: "#559CDA",
+                    fontWeight: 600,
+                    fontFamily: "Poppins",
+                  },
+                }}
+              />
+              <TextInput
+                variant="outline"
+                size="md"
+                defaultValue="Search"
+                onChange={() => {}}
+                radius={8}
+                styles={{
+                  input: {
+                    backgroundColor: "#deecff",
+                    color: "#559CDA",
+                    fontWeight: 600,
+                    fontFamily: "Poppins",
+                  },
+                }}
+              />
+
+              <Popover width={200} position="bottom" withArrow shadow="md">
+                <Popover.Target>
+                  <IconReload
+                    className="cursor-pointer rounded-md p-1"
+                    style={{ background: "#dfecfd" }}
+                    size={40}
+                    color="#559CDA"
+                  />
+                </Popover.Target>
+                <Popover.Dropdown style={{ pointerEvents: "none" }}>
+                  <Text size="sm">Refresh</Text>
+                </Popover.Dropdown>
+              </Popover>
+            </Flex>
+            <DataTable
+              classNames={{ root: "px-10" }}
+              columns={[
+                { accessor: "code", title: "Code" },
+                { accessor: "name", title: "Name" },
+                { accessor: "department", title: "Department" },
+                { accessor: "position", title: "Position Level" },
+                { accessor: "section", title: "Section" },
+                { accessor: "division", title: "Division" },
+              ]}
+              idAccessor="date"
+              key="date"
+              records={[]}
+              striped={true}
+              highlightOnHover={true}
+              withTableBorder={true}
+              className="select-none"
+              // onRowClick={(data: any) => {
+              //   handleOptionSelect(data.record);
+              // }}
+              page={1}
+              onPageChange={() => {}}
+              totalRecords={10}
+              recordsPerPage={5}
+              // paginationText={({ totalRecords }) => `${totalRecords} items found in (0.225) seconds`}
+              styles={{
+                header: {
+                  color: "rgba(109, 109, 109, 0.6)",
+                  fontWeight: 500,
+                },
+                root: {
+                  color: "rgba(0, 0, 0, 0.6)",
+                },
+              }}
+            />
+          </Modal>
+          <Stack className="w-full h-auto p-0">
             <Text className="font-medium">Select Available Leave Type</Text>
-            <Carousel slideSize={{ base: "70%", xs: "50%", sm: "33.333%", md: "20%" }} slideGap={{ base: "sm", lg: "xl" }} slidesToScroll={slidesNum}>
-              {leaveTypes.map((leave, index) => (
-                <Tooltip key={index} label={leave.label} style={{ background: "gray", color: "white" }} className="shadow-xl">
-                  <Carousel.Slide>
-                    <div
-                      className={`unselectedLeaveType ${leave.label === selectedLeaveType ? "selectedLeaveType " : ""}`}
-                      onClick={() => {
-                        setSelectedLeaveType(leave.label);
-                      }}>
-                      <>
+            <Carousel
+              slideSize={{ base: "70%", xs: "50%", sm: "33.333%", md: "20%" }}
+              slideGap="lg"
+              slidesToScroll={slidesNum}>
+              {LeaveTypes.map((leave, index) => (
+                <Tooltip key={index} label={leave.label}>
+                  <Carousel.Slide onClick={() => setSelectedLeaveType(leave.label)}>
+                    <Stack className={`${leave.label === selectedLeaveType ? "selected" : "unselected"}`}>
+                      <Flex className="w-1/2 flex flex-row px-2 justify-between items-center">
                         {cloneElement(leave.icon, {
                           style: {
                             ...leave.icon.props.style,
@@ -63,14 +154,18 @@ export default function NewFilings() {
                           size: 75,
                           color: leave.label === selectedLeaveType ? "white" : "#559cda",
                         })}
-                        <Text style={{ fontSize: "2.2rem" }}>{leave.count}</Text>
-                      </>
-                    </div>
+                        <Text
+                          style={{ fontSize: "2.2rem" }}
+                          c={leave.label === selectedLeaveType ? "white" : "#559cda"}>
+                          {leave.count}
+                        </Text>
+                      </Flex>
+                    </Stack>
                   </Carousel.Slide>
                 </Tooltip>
               ))}
             </Carousel>
-          </div>
+          </Stack>
 
           <TextInput size="md" label="Leave Type" placeholder="" className="w-full"></TextInput>
 
@@ -85,11 +180,21 @@ export default function NewFilings() {
               className="w-full sm:w-1/2"
               rightSection={<IconCaretDownFilled size={18} />}
             />
-            <TextInput size="md" radius="md" label="Reference Number" placeholder="Input Refence Number (if necessary)" className="w-full sm:w-1/2" />
+            <TextInput
+              size="md"
+              radius="md"
+              label="Reference Number"
+              placeholder="Input Refence Number (if necessary)"
+              className="w-full sm:w-1/2"
+            />
           </div>
 
           <div className="flex flex-col sm:flex-row justify-between items-end sm:gap-8">
-            <DateRangePicker fl="Leave Dates" dateProps={[new Date(), new Date()]} setDateProps={(newValue: [Date, Date]) => console.log(newValue)} />
+            <DateRangePicker
+              fl="Leave Dates"
+              dateProps={[new Date(), new Date()]}
+              setDateProps={(newValue: [Date, Date]) => console.log(newValue)}
+            />
             <TextInput radius="md" size="md" label="Duration" value="8 Days" disabled className="w-1/2" />
           </div>
 
@@ -107,7 +212,7 @@ export default function NewFilings() {
           <Button className="w-2/4 sm:w-2/5 md:w-1/6  br-gradient self-end border-none" radius="md" size="md">
             SUBMIT
           </Button>
-        </div>
+        </Stack>
       </ScrollArea>
     </Modal>
   );
