@@ -1,0 +1,17 @@
+[
+  { "name": "Aug 1", "uv": 5.2, "pv": 2.8 },
+  { "name": "Aug 2", "uv": 3.5, "pv": 4.5 },
+  { "name": "Aug 3", "uv": 6.0, "pv": 2.0 },
+  { "name": "Aug 4", "uv": 2.5, "pv": 5.5 },
+  { "name": "Aug 5", "uv": 4.0, "pv": 4.0 },
+  { "name": "Aug 6", "uv": 3.8, "pv": 4.2 },
+  { "name": "Aug 7", "uv": 2.0, "pv": 6.0 },
+  { "name": "Aug 8", "uv": 5.0, "pv": 3.0 },
+  { "name": "Aug 9", "uv": 4.8, "pv": 3.2 },
+  { "name": "Aug 10", "uv": 1.8, "pv": 6.2 },
+  { "name": "Aug 11", "uv": 3.2, "pv": 4.8 },
+  { "name": "Aug 12", "uv": 6.5, "pv": 1.5 },
+  { "name": "Aug 13", "uv": 4.4, "pv": 3.6 },
+  { "name": "Aug 14", "uv": 2.7, "pv": 5.3 },
+  { "name": "Aug 15", "uv": 5.9, "pv": 2.1 }
+]

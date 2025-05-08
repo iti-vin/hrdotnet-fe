@@ -1,0 +1,7 @@
+.header-dashboard tr th div {
+  @apply text-[#559cda] font-semibold text-sm;
+}
+
+.header-dashboard {
+  @apply border-[#559cda] border-b-2;
+}

@@ -1,0 +1,5 @@
+[
+  { "name": "Sick Leave", "value": 7.5 },
+  { "name": "Vacation Leave", "value": 10.0 },
+  { "name": "CTO", "value": 5.0 }
+]

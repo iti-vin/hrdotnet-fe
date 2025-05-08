@@ -1,0 +1,72 @@
+[
+  {
+    "id": 6,
+    "application_type": "Compensatory Timeoff",
+    "application_date": "2025-05-11",
+    "transaction_date": "2025-05-12",
+    "status": "Filed"
+  },
+  {
+    "id": 7,
+    "application_type": "Overtime",
+    "application_date": "2025-05-13",
+    "transaction_date": "2025-05-14",
+    "status": "Reviewed"
+  },
+  {
+    "id": 8,
+    "application_type": "Offset",
+    "application_date": "2025-05-15",
+    "transaction_date": "2025-05-16",
+    "status": "Filed"
+  },
+  {
+    "id": 9,
+    "application_type": "Leave",
+    "application_date": "2025-05-17",
+    "transaction_date": "2025-05-18",
+    "status": "Filed"
+  },
+  {
+    "id": 10,
+    "application_type": "Sick Leave",
+    "application_date": "2025-05-19",
+    "transaction_date": "2025-05-20",
+    "status": "Filed"
+  },
+  {
+    "id": 11,
+    "application_type": "Vacation Leave",
+    "application_date": "2025-05-21",
+    "transaction_date": "2025-05-22",
+    "status": "Reviewed"
+  },
+  {
+    "id": 12,
+    "application_type": "Compensatory Timeoff",
+    "application_date": "2025-05-23",
+    "transaction_date": "2025-05-24",
+    "status": "Reviewed"
+  },
+  {
+    "id": 13,
+    "application_type": "Offset",
+    "application_date": "2025-05-25",
+    "transaction_date": "2025-05-26",
+    "status": "Filed"
+  },
+  {
+    "id": 14,
+    "application_type": "Overtime",
+    "application_date": "2025-05-27",
+    "transaction_date": "2025-05-28",
+    "status": "Filed"
+  },
+  {
+    "id": 15,
+    "application_type": "Leave",
+    "application_date": "2025-05-29",
+    "transaction_date": "2025-05-30",
+    "status": "Filed"
+  }
+]
