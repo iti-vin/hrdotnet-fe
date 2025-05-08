@@ -17,6 +17,7 @@ import { OffsetItems } from "../../../models/response";
 import { useEffect } from "react";
 import { DateTimeUtils } from "@shared/utils/DateTimeUtils";
 import ESSButton from "@shared/components/Buttons";
+import { useMediaQuery } from "@mantine/hooks";
 
 //--- Shared
 interface ViewDetailsProps extends ModalProps {
@@ -33,6 +34,7 @@ export default function ViewDetails({
   onHandleSingleApprove,
   panel,
 }: ViewDetailsProps) {
+  const small = useMediaQuery("(max-width: 40em)");
   const { viewItems, setSingleItem, setOpenDialog, setOpenConfirmation } = useOffsetStore();
 
   const onHandleSingleCancel = () => {
@@ -95,16 +97,17 @@ export default function ViewDetails({
       <ScrollArea
         className="flex flex-col gap-5 mt-3 w-full text-[#6d6d6d] relative"
         h={650}
+        px={small ? 20 : 30}
         styles={{ scrollbar: { display: "none" } }}>
         <div className="flex flex-col gap-5" style={{ color: "#6D6D6D" }}>
           <div className="flex flex-col md:flex-row gap-6">
             <div className="w-full md:w-1/2 flex flex-col gap-2  border-solid border-0.5 border-sky-500 p-4 rounded-lg">
-              <Text style={{ color: "#559CDA" }} className="font-bold">
+              <Text style={{ color: "#559CDA" }} className="text-xs md:text-lg font-bold text-center md:text-start">
                 General Information
               </Text>
               <Stack className="flex flex-col gap-2">
                 <TextInput
-                  size="lg"
+                  size={small ? "xs" : "md"}
                   label="Offset Date"
                   defaultValue={DateTimeUtils.getIsoDateWord(viewItems.filing.dateFiled)}
                   onChange={() => {}}
@@ -115,7 +118,7 @@ export default function ViewDetails({
                 />
                 <Flex direction={{ base: "column", sm: "row" }} justify="space-between" className="w-full" gap={20}>
                   <Select
-                    size="lg"
+                    size={small ? "xs" : "md"}
                     label="Shift"
                     placeholder="Schedule 001"
                     radius={8}
@@ -125,7 +128,7 @@ export default function ViewDetails({
                     disabled
                   />
                   <TextInput
-                    size="lg"
+                    size={small ? "xs" : "md"}
                     radius={8}
                     label="Reference No."
                     placeholder="0000-0000-0000"
@@ -136,7 +139,7 @@ export default function ViewDetails({
 
                 <Flex direction={{ base: "column", sm: "row" }} justify="space-between" className="w-full" gap={20}>
                   <TimeInput
-                    size="lg"
+                    size={small ? "xs" : "md"}
                     radius={8}
                     label="Actual OT In"
                     defaultValue={DateTimeUtils.getCurrTimeDefault(viewItems.filing.actual.dateFrom)}
@@ -146,7 +149,7 @@ export default function ViewDetails({
                     styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
                   />
                   <TimeInput
-                    size="lg"
+                    size={small ? "xs" : "md"}
                     radius={8}
                     label="Actual OT Out"
                     defaultValue={DateTimeUtils.getCurrTimeDefault(viewItems.filing.actual.dateTo)}
@@ -158,7 +161,7 @@ export default function ViewDetails({
                 </Flex>
                 <Flex direction={{ base: "column", sm: "row" }} justify="space-between" className="w-full" gap={20}>
                   <TimeInput
-                    size="lg"
+                    size={small ? "xs" : "md"}
                     radius={8}
                     label="OT From"
                     defaultValue={DateTimeUtils.getCurrTimeDefault(viewItems.filing.requested.dateFrom)}
@@ -168,7 +171,7 @@ export default function ViewDetails({
                     styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
                   />
                   <TimeInput
-                    size="lg"
+                    size={small ? "xs" : "md"}
                     radius={8}
                     label="OT To"
                     defaultValue={DateTimeUtils.getCurrTimeDefault(viewItems.filing.requested.dateTo)}
@@ -182,7 +185,7 @@ export default function ViewDetails({
                   label="Duration"
                   placeholder="Pick date"
                   className="w-full"
-                  size="lg"
+                  size={small ? "xs" : "md"}
                   onChange={() => {}}
                   radius={8}
                   disabled
@@ -191,7 +194,7 @@ export default function ViewDetails({
             </div>
 
             <div className="w-full md:w-1/2 flex flex-col gap-2 border-solid border-0.5 border-sky-500 p-4 rounded-lg">
-              <Text style={{ color: "#559CDA" }} className="font-bold">
+              <Text style={{ color: "#559CDA" }} className="text-xs md:text-lg font-bold text-center md:text-start">
                 Detailed Information
               </Text>
               <div>
@@ -208,7 +211,7 @@ export default function ViewDetails({
                   label="Document No."
                   className="w-full"
                   radius="md"
-                  size="lg"
+                  size={small ? "xs" : "md"}
                   placeholder="00000000"
                   disabled
                   defaultValue={viewItems.filing.documentNo}
@@ -219,7 +222,7 @@ export default function ViewDetails({
                   label="Transaction Date"
                   className="w-full"
                   radius="md"
-                  size="lg"
+                  size={small ? "xs" : "md"}
                   placeholder="none"
                   disabled
                   defaultValue={DateTimeUtils.getIsoDateFullWord(viewItems.dateTransaction)}
@@ -230,7 +233,7 @@ export default function ViewDetails({
               <div className="flex flex-col">
                 <Textarea
                   label="Endorsement Information"
-                  size="lg"
+                  size={small ? "xs" : "md"}
                   radius="md"
                   placeholder="Endorsed by Jane Smith on October 25, 2024 at 6:43 PM."
                   className="w-full"
@@ -240,7 +243,7 @@ export default function ViewDetails({
               <div className="flex flex-col">
                 <Textarea
                   label="Approval Information"
-                  size="lg"
+                  size={small ? "xs" : "md"}
                   radius="md"
                   placeholder="Approved by Jane Smith on October 25, 2024 at 6:43 PM (Batch Approval)"
                   className="w-full"
@@ -250,7 +253,7 @@ export default function ViewDetails({
               <div className="flex flex-col">
                 <Textarea
                   label="Cancellation Information"
-                  size="lg"
+                  size={small ? "xs" : "md"}
                   radius="md"
                   placeholder="No Information"
                   className="w-full"
@@ -261,7 +264,7 @@ export default function ViewDetails({
           </div>
 
           <div className="flex flex-col gap-2 border-solid border-0.5 border-sky-500 p-4 rounded-lg">
-            <Text style={{ color: "#559CDA" }} className="font-bold">
+            <Text style={{ color: "#559CDA" }} className="text-xs md:text-lg font-bold text-center md:text-start">
               Reason{" "}
             </Text>
             <Textarea
@@ -291,14 +294,15 @@ export default function ViewDetails({
           <div className="flex flex-col md:flex-row  gap-4">
             {/* {SELECTED_DATA.status != "Filed" && isMultipleDayLeave && (
                 <div className="flex flex-col w-full md:w-2/3 gap-2 border-solid border-0.5 border-sky-500 p-4 rounded-lg">
-                  <Text style={{ color: "#559CDA" }} className="font-bold">
+                  
+              <Text style={{ color: "#559CDA" }} className="text-xs md:text-lg font-bold text-center md:text-start">
                     Filing Breakdown
                   </Text>
                   <FilingBreakdown />
                 </div>
               )} */}
             <div className="flex flex-col gap-2  w-full border-solid border-0.5 border-sky-500 p-4 rounded-lg">
-              <Text style={{ color: "#559CDA" }} className="font-bold">
+              <Text style={{ color: "#559CDA" }} className="text-xs md:text-lg font-bold text-center md:text-start">
                 Edit Log
               </Text>
               <Textarea
@@ -314,7 +318,9 @@ export default function ViewDetails({
         </div>
       </ScrollArea>
 
-      <Stack className="pt-5 flex flex-row justify-end">{rndrBtnContent()}</Stack>
+      <Stack className="pt-5 flex flex-row justify-end" px={small ? 20 : 30}>
+        {rndrBtnContent()}
+      </Stack>
     </Modal>
   );
 }

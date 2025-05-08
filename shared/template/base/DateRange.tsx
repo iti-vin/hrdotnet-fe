@@ -2,6 +2,7 @@ import { Flex, Popover, TextInput } from "@mantine/core";
 import { DatePicker } from "@mantine/dates";
 import { DateTimeUtils } from "@shared/utils/DateTimeUtils";
 import { IconCalendarMonth } from "@tabler/icons-react";
+import { useEffect, useState } from "react";
 
 interface DateRangeInterface {
   fp: string;
@@ -14,9 +15,23 @@ interface DateRangeInterface {
 }
 
 const RndrDateRange = ({ fp, sp, fl, sl, dateProps, setDateProps, direction = "column" }: DateRangeInterface) => {
+  const [open1, setOpen1] = useState<boolean>(false);
+  const [open2, setOpen2] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (dateProps[0] && dateProps[1] != null) {
+      setOpen1(false);
+      setOpen2(false);
+    }
+  }, [dateProps]);
+
   return (
-    <Flex direction={{ base: direction, md: direction }} justify="space-between" className="w-full" gap={{ base: 5, md: 10 }}>
-      <Popover position="bottom" shadow="md" trapFocus={true} returnFocus={true}>
+    <Flex
+      direction={{ base: direction, md: direction }}
+      justify="space-between"
+      className="w-full"
+      gap={{ base: 5, md: 10 }}>
+      <Popover position="bottom" shadow="md" opened={open1} onChange={setOpen1}>
         <Popover.Target>
           <TextInput
             value={dateProps[0] === null ? "" : DateTimeUtils.dayWithDate(`${dateProps[0]?.toString()}`)}
@@ -25,16 +40,17 @@ const RndrDateRange = ({ fp, sp, fl, sl, dateProps, setDateProps, direction = "c
             readOnly
             label={fl}
             placeholder={fp}
-            className="w-full cursor-default"
-            rightSection={<IconCalendarMonth />}
+            className="w-full cursor-pointer"
+            rightSection={<IconCalendarMonth onClick={() => setOpen1((o) => !o)} />}
             styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
+            onClick={() => setOpen1((o) => !o)}
           />
         </Popover.Target>
         <Popover.Dropdown className="w-full">
           <DatePicker firstDayOfWeek={0} numberOfColumns={2} type="range" value={dateProps} onChange={setDateProps} />
         </Popover.Dropdown>
       </Popover>
-      <Popover position="bottom" shadow="md">
+      <Popover position="bottom" shadow="md" opened={open2} onChange={setOpen2}>
         <Popover.Target>
           <TextInput
             value={dateProps[1] === null ? "" : DateTimeUtils.dayWithDate(`${dateProps[1]?.toString()}`)}
@@ -43,9 +59,10 @@ const RndrDateRange = ({ fp, sp, fl, sl, dateProps, setDateProps, direction = "c
             readOnly
             label={sl}
             placeholder={sp}
-            rightSection={<IconCalendarMonth />}
+            rightSection={<IconCalendarMonth onClick={() => setOpen2((o) => !o)} className="cursor-pointer" />}
             className="w-full"
             styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
+            onClick={() => setOpen2((o) => !o)}
           />
         </Popover.Target>
         <Popover.Dropdown>

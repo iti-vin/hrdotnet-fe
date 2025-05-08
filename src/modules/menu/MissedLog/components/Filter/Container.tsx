@@ -18,7 +18,7 @@ interface MissedLogFilterI {
   panel?: "FILINGS" | "REQUEST" | "REVIEWAL" | "APPROVAL" | "LEDGER";
 }
 
-export default function index({ panel }: MissedLogFilterI) {
+export default function ContainerFilter({ panel }: MissedLogFilterI) {
   const { setShowDrawer, storedFilters, setStoredFilters } = useMissedLogStore();
 
   const selectedStatus = () => {
@@ -33,7 +33,9 @@ export default function index({ panel }: MissedLogFilterI) {
       return null;
     }
 
-    const selected = statusPill.filter((pill) => Array.isArray(storedFilters.DocStatusIds) && storedFilters.DocStatusIds.includes(pill.value));
+    const selected = statusPill.filter(
+      (pill) => Array.isArray(storedFilters.DocStatusIds) && storedFilters.DocStatusIds.includes(pill.value)
+    );
 
     return (
       <Pill.Group>
@@ -59,7 +61,10 @@ export default function index({ panel }: MissedLogFilterI) {
             {storedFilters.DocumentNo && (
               <Flex direction="row" align="center" gap={7} mx={8} visibleFrom="md">
                 <Text>Doc No:</Text>
-                <Pill withRemoveButton>{storedFilters.DocumentNo}</Pill>
+
+                <Pill classNames={{ root: "bg-[#d9d9d9]", label: "text-[#6D6D6D] font-semibold" }} withRemoveButton>
+                  {storedFilters.DocumentNo}
+                </Pill>
                 <Text size="xl" c="#eeeeee">
                   |
                 </Text>
@@ -69,7 +74,8 @@ export default function index({ panel }: MissedLogFilterI) {
             {storedFilters.DateFrom && storedFilters.DateTo && (
               <Flex direction="row" align="center" gap={7} mx={8} visibleFrom="md">
                 <Text>Date Transaction:</Text>
-                <Pill withRemoveButton>
+
+                <Pill classNames={{ root: "bg-[#d9d9d9]", label: "text-[#6D6D6D] font-semibold" }} withRemoveButton>
                   {storedFilters.DateFrom}- {storedFilters.DateTo}
                 </Pill>
                 <Text size="xl" c="#eeeeee">
@@ -88,11 +94,21 @@ export default function index({ panel }: MissedLogFilterI) {
         </Flex>
 
         <Flex pr={10} py={8} gap={5}>
-          <ActionIcon variant="transparent" color="gray" size="md" aria-label="Settings" onClick={() => setShowDrawer(true)}>
+          <ActionIcon
+            variant="transparent"
+            color="gray"
+            size="md"
+            aria-label="Settings"
+            onClick={() => setShowDrawer(true)}>
             <IconCirclePlus style={{ width: "100%", height: "100%" }} stroke={1.5} color="#6d6d6d" />
           </ActionIcon>
           <ActionIcon variant="transparent" color="gray" size="md" aria-label="Settings">
-            <IconTrash style={{ width: "100%", height: "100%" }} stroke={1.5} color="#6d6d6d" onClick={() => setStoredFilters({})} />
+            <IconTrash
+              style={{ width: "100%", height: "100%" }}
+              stroke={1.5}
+              color="#6d6d6d"
+              onClick={() => setStoredFilters({})}
+            />
           </ActionIcon>
         </Flex>
       </Flex>

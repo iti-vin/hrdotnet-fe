@@ -9,7 +9,8 @@ import { useMediaQuery } from "@mantine/hooks";
 import { DatePickerInput } from "@mantine/dates";
 import { Button, Checkbox, Flex, Select, Stack, Textarea, TextInput } from "@mantine/core";
 //-- Shared Modules
-import { Dropzone, Modal } from "@shared/template";
+import { Dropzone } from "@shared/template";
+import Modal from "@/layout/main/dialog/Modal";
 import { DateTimeUtils } from "@shared/utils/DateTimeUtils";
 
 //--- COS Modules
@@ -27,7 +28,7 @@ import { useEffect } from "react";
 
 export default function EditRequest({ opened, onClose, buttonClose }: ModalProps) {
   // Media Screen for Smaller Size Width
-  const small = useMediaQuery("(max-width: 770px)");
+  const small = useMediaQuery("(max-width: 40em)");
   const { viewItems, setLoading, setOpenDialog, setOpenAlert, setError, scheduleItems, setSchedList, schedList } =
     useChangeOfScheduleStore();
 
@@ -97,7 +98,7 @@ export default function EditRequest({ opened, onClose, buttonClose }: ModalProps
   return (
     <Modal title="Edit Request" size="80%" opened={opened} onClose={onClose} buttonClose={buttonClose}>
       <form onSubmit={editForm.onSubmit(handleUpdate)}>
-        <Flex className="flex flex-col gap-3">
+        <Flex className="flex flex-col gap-3" px={small ? 20 : 30}>
           <Flex className="flex flex-col md:flex-row gap-3 md:gap-5">
             <DatePickerInput
               size={small ? "xs" : "md"}
@@ -182,7 +183,7 @@ export default function EditRequest({ opened, onClose, buttonClose }: ModalProps
           />
           <Dropzone />
         </Flex>
-        <Stack className="pt-5 flex flex-row justify-end">
+        <Stack className="pt-5 flex flex-row justify-end" px={small ? 20 : 30}>
           <Button type="submit" size="md" className="w-44 border-none custom-gradient rounded-md">
             UPDATE
           </Button>

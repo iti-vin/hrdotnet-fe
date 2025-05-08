@@ -13,8 +13,10 @@ import { statusColors } from "@shared/assets/types/Global";
 import { ModalProps } from "@shared/assets/types/Modal";
 import { memo } from "react";
 import GeneralInfo from "../components/GeneralInfo";
+import { useMediaQuery } from "@mantine/hooks";
 
 export default function RequestDetails({ opened, onClose, buttonClose }: ModalProps) {
+  const small = useMediaQuery("(max-width: 40em)");
   const statusInfo = statusColors.find((item) => item.status === "") || {
     status: "Unknown",
     color: "gray",
@@ -57,6 +59,7 @@ export default function RequestDetails({ opened, onClose, buttonClose }: ModalPr
       <ScrollArea
         className="flex flex-col gap-5 mt-3 w-full text-[#6d6d6d] relative"
         h={650}
+        px={small ? 20 : 30}
         styles={{ scrollbar: { display: "none" } }}>
         <div className="flex flex-col gap-5" style={{ color: "#6D6D6D" }}>
           <div className="flex flex-col md:flex-row gap-6">

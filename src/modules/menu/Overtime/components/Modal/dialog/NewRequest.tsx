@@ -29,10 +29,11 @@ import { useForm } from "@mantine/form";
 import { useMutation } from "@tanstack/react-query";
 import { OvertimeServices } from "../../../services/api";
 import { ValidationErrorResponse } from "../../../assets/types";
+import { useMediaQuery } from "@mantine/hooks";
 
 export default function NewRequest({ opened, onClose, buttonClose }: ModalProps) {
   const size = useMatches({ base: "100%", sm: "70%" });
-
+  const small = useMediaQuery("(max-width: 40em)");
   const newForm = useForm({
     mode: "uncontrolled",
     initialValues: {
@@ -93,7 +94,7 @@ export default function NewRequest({ opened, onClose, buttonClose }: ModalProps)
         <form onSubmit={newForm.onSubmit(handleCreate)}>
           <Stack className="w-full h-full">
             <ScrollArea
-              px={20}
+              px={small ? 20 : 30}
               className="flex flex-col mt-3 w-full text-[#6d6d6d] relative"
               h={650}
               styles={{ scrollbar: { display: "none" } }}>
@@ -221,7 +222,6 @@ export default function NewRequest({ opened, onClose, buttonClose }: ModalProps)
                     radius={8}
                     label="Reference No."
                     placeholder="0000-0000-0000"
-                    withAsterisk
                     className="w-full"
                     max={14}
                     styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
@@ -288,7 +288,7 @@ export default function NewRequest({ opened, onClose, buttonClose }: ModalProps)
               </Group>
             </ScrollArea>
           </Stack>
-          <Stack className="flex flex-col justify-end mt-3">
+          <Stack className="flex flex-col justify-end mt-3" px={small ? 20 : 30}>
             <Button
               type="submit"
               className="w-2/4 sm:w-2/5 md:w-1/6  br-gradient self-end border-none"

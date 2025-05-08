@@ -19,6 +19,8 @@ interface CosContextType {
   onHandleChangePage(page?: number): void;
   onHandlePageSize(size?: any): void;
   fetchScheduleItems(): void;
+  handleCopy(): void;
+  handlePaste(): void;
 }
 
 const cosTabs: Tab[] = [
@@ -36,6 +38,8 @@ const COSContext = createContext<CosContextType>({
   onHandleChangePage: () => {},
   onHandlePageSize: () => {},
   fetchScheduleItems: () => {},
+  handleCopy: () => {},
+  handlePaste: () => {},
 });
 
 export const CosProvider: React.FC<PropsWithChildren> = ({ children }) => {
@@ -44,6 +48,53 @@ export const CosProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const onHandleSubmitFilter = (filterParams: Record<string, any>) => {
     setLoading(true);
     setStoredFilters({ ...filterParams });
+  };
+
+  const handleCopy = () => {
+    const dateFrom = document.getElementById("date_from")?.innerText.trim() || "";
+    const dateTo = document.getElementById("date_to")?.innerText.trim() || "";
+    const reason = document.getElementById("reason")?.innerText.trim() || "";
+    const referenceNo = document.getElementById("reference_no")?.innerText.trim() || "";
+
+    const textToCopy = JSON.stringify({ dateFrom, dateTo, reason, referenceNo });
+
+    navigator.clipboard
+      .writeText(textToCopy)
+      .then(() => {
+        alert("Text copied to clipboard!");
+      })
+      .catch((err) => {
+        console.error("Failed to copy: ", err);
+        alert("Failed to copy text!");
+      });
+  };
+
+  const handlePaste = () => {
+    navigator.clipboard
+      .readText()
+      .then((clipboardText) => {
+        try {
+          const json = JSON.parse(clipboardText);
+          const dateFrom = document.getElementById("date_from") as HTMLInputElement;
+          const dateTo = document.getElementById("date_to") as HTMLInputElement;
+          const reason = document.getElementById("reason") as HTMLInputElement;
+          const referenceNo = document.getElementById("reference_no") as HTMLInputElement;
+
+          if (json) {
+            dateFrom.value = json.title || "";
+            dateTo.value = json.body || "";
+            reason.value = json.body || "";
+            referenceNo.value = json.body || "";
+          } else {
+            // alert("Input elements not found!");
+          }
+        } catch (err) {
+          console.error("Invalid JSON in clipboard:", err);
+        }
+      })
+      .catch((err) => {
+        console.error("Failed to read clipboard: ", err);
+      });
   };
 
   const onHandleClearFilter = () => {
@@ -76,6 +127,8 @@ export const CosProvider: React.FC<PropsWithChildren> = ({ children }) => {
         onHandleSubmitFilter,
         onHandleClearFilter,
         fetchScheduleItems,
+        handleCopy,
+        handlePaste,
       }}>
       {children}
     </COSContext.Provider>

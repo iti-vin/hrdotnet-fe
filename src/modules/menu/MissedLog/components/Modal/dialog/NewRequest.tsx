@@ -6,7 +6,18 @@
 //--- React Modules
 import React, { Fragment } from "react";
 //--- Mantine Modules
-import { ActionIcon, Button, Flex, rem, Textarea, TextInput, useMatches, Select, Stack, ScrollArea } from "@mantine/core";
+import {
+  ActionIcon,
+  Button,
+  Flex,
+  rem,
+  Textarea,
+  TextInput,
+  useMatches,
+  Select,
+  Stack,
+  ScrollArea,
+} from "@mantine/core";
 import { DatePickerInput, TimeInput } from "@mantine/dates";
 //--- Tabler Icons
 import { IconCalendar, IconCaretDownFilled, IconClock } from "@tabler/icons-react";
@@ -18,6 +29,7 @@ import { useMutation } from "@tanstack/react-query";
 import { MissedLogServices } from "../../../services";
 import { queryClient } from "@/services/client";
 import { useMissedLogStore } from "../../../store/main";
+import { useMediaQuery } from "@mantine/hooks";
 
 interface ModalRequest {
   opened: boolean;
@@ -27,6 +39,7 @@ interface ModalRequest {
 export default function NewRequest({ opened, onClose, buttonClose }: ModalRequest) {
   const { setOpenAlert, setOpenDialog, setError, dateFiled, setDateFiled } = useMissedLogStore();
   const size = useMatches({ base: "100%", sm: "70%" });
+  const small = useMediaQuery("(max-width: 40em)");
   const ref = React.useRef<HTMLInputElement>(null);
   const pickerControl = (
     <ActionIcon variant="subtle" color="gray" onClick={() => ref.current?.showPicker()}>
@@ -69,7 +82,11 @@ export default function NewRequest({ opened, onClose, buttonClose }: ModalReques
       <Modal opened={opened} onClose={onClose} centered size={size} buttonClose={buttonClose} title="New Request">
         <form onSubmit={newForm.onSubmit(handleSubmit)}>
           <Stack className="w-full h-full">
-            <ScrollArea px={20} className="flex flex-col gap-5 mt-3 w-full text-[#6d6d6d] relative" h={650} styles={{ scrollbar: { display: "none" } }}>
+            <ScrollArea
+              px={small ? 20 : 30}
+              className="flex flex-col gap-5 mt-3 w-full text-[#6d6d6d] relative"
+              h={650}
+              styles={{ scrollbar: { display: "none" } }}>
               <Flex direction={{ base: "column", sm: "row" }} justify="space-between" className="w-full" gap={20}>
                 <DatePickerInput
                   size="md"
@@ -154,8 +171,12 @@ export default function NewRequest({ opened, onClose, buttonClose }: ModalReques
               <Dropzone />
             </ScrollArea>
           </Stack>
-          <Stack className="flex flex-col justify-end mt-3">
-            <Button type="submit" className="w-2/4 sm:w-2/5 md:w-1/6  br-gradient self-end border-none" radius="md" size="md">
+          <Stack className="flex flex-col justify-end mt-3" px={small ? 20 : 30}>
+            <Button
+              type="submit"
+              className="w-2/4 sm:w-2/5 md:w-1/6  br-gradient self-end border-none"
+              radius="md"
+              size="md">
               SUBMIT
             </Button>
           </Stack>

@@ -20,7 +20,8 @@ interface BatchInterface {
 
 export default function BatchCancel({ opened, onClose, buttonClose }: BatchInterface) {
   const small = useMediaQuery("(max-width: 40em)");
-  const { selectedRecords, setError, setWarning, setSuccess, setOpenAlert, setSelectedRecords, setOpenConfirmation } = useMissedLogStore();
+  const { selectedRecords, setError, setWarning, setSuccess, setOpenAlert, setSelectedRecords, setOpenConfirmation } =
+    useMissedLogStore();
 
   const { mutate: batchCancelMissedLog } = useMutation({
     mutationFn: async () => {
@@ -32,8 +33,12 @@ export default function BatchCancel({ opened, onClose, buttonClose }: BatchInter
       queryClient.invalidateQueries({ queryKey: ["approval_missedlog"] });
       setOpenConfirmation("");
       setSelectedRecords([]);
-      const successfulFilings = data.filings.filter((filing: { errors: string | any[] }) => filing.errors.length === 0).length;
-      const failedFilings = data.filings.filter((filing: { errors: string | any[] }) => filing.errors.length > 0).length;
+      const successfulFilings = data.filings.filter(
+        (filing: { errors: string | any[] }) => filing.errors.length === 0
+      ).length;
+      const failedFilings = data.filings.filter(
+        (filing: { errors: string | any[] }) => filing.errors.length > 0
+      ).length;
       setOpenConfirmation("");
       setSelectedRecords([]);
       const added = () => {
@@ -56,10 +61,18 @@ export default function BatchCancel({ opened, onClose, buttonClose }: BatchInter
   });
 
   return (
-    <Modal opened={opened} size="lg" centered padding={small ? 20 : 30} radius={10} withCloseButton={false} onClose={onClose} styles={{ body: { overflow: "hidden" } }}>
+    <Modal
+      opened={opened}
+      size="lg"
+      centered
+      padding={small ? 20 : 30}
+      radius={10}
+      withCloseButton={false}
+      onClose={onClose}
+      styles={{ body: { overflow: "hidden" } }}>
       <div className="flex justify-between">
         <Text fw={600} fz={small ? 15 : 22} c={"#559CDA"}>
-          Cancel Request
+          CANCEL REQUEST
         </Text>
       </div>
       <Divider size="xs" color="#6D6D6D" mt={10} />

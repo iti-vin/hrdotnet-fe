@@ -35,7 +35,7 @@ export default function BatchCancel({ opened, onClose, buttonClose }: BatchInter
       styles={{ body: { overflow: "hidden" } }}>
       <div className="flex justify-between">
         <Text fw={600} fz={small ? 15 : 22} c={"#559CDA"}>
-          Cancel Request
+          CANCEL REQUEST
         </Text>
       </div>
       <Divider size="xs" color="#6D6D6D" mt={10} />

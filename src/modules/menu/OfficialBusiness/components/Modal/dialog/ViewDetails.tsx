@@ -16,6 +16,7 @@ import { ModalProps } from "@shared/assets/types/Modal";
 import ESSButton from "@shared/components/Buttons";
 
 import { useOfficialBusinessStore } from "../../../store";
+import { useMediaQuery } from "@mantine/hooks";
 
 interface ViewDetailsProps extends ModalProps {
   panel?: Panel;
@@ -31,6 +32,7 @@ export default function ViewDetails({
   onHandleSingleApprove,
   panel,
 }: ViewDetailsProps) {
+  const small = useMediaQuery("(max-width: 40em)");
   const { viewItems, setOpenDialog, setOpenConfirmation } = useOfficialBusinessStore();
   const statusInfo = statusColors.find((item) => item.status === viewItems.filing.filingStatus.name) || {
     status: "Unknown",
@@ -62,11 +64,12 @@ export default function ViewDetails({
       <ScrollArea
         className="flex flex-col gap-5 mt-3 w-full text-[#6d6d6d] relative"
         h={650}
+        px={small ? 20 : 30}
         styles={{ scrollbar: { display: "none" } }}>
         <div className="flex flex-col gap-5" style={{ color: "#6D6D6D" }}>
           <div className="flex flex-col md:flex-row gap-6">
             <div className="w-full md:w-1/2 flex flex-col gap-2  border-solid border-0.5 border-sky-500 p-4 rounded-lg">
-              <Text style={{ color: "#559CDA" }} className="font-bold">
+              <Text style={{ color: "#559CDA" }} className="text-xs md:text-lg font-bold text-center md:text-start">
                 General Information
               </Text>
               <Flex direction="column" gap={5}>
@@ -75,7 +78,7 @@ export default function ViewDetails({
                     label="From Date"
                     className="w-full"
                     radius="md"
-                    size="lg"
+                    size={small ? "xs" : "md"}
                     placeholder="none"
                     disabled
                     value={DateTimeUtils.getIsoDateFullWord(viewItems.filing.dateRange.dateFrom)}
@@ -84,7 +87,7 @@ export default function ViewDetails({
                     label="To Date"
                     className="w-full"
                     radius="md"
-                    size="lg"
+                    size={small ? "xs" : "md"}
                     placeholder="none"
                     disabled
                     value={DateTimeUtils.getIsoDateFullWord(viewItems.filing.dateRange.dateTo)}
@@ -94,7 +97,7 @@ export default function ViewDetails({
                 <TextInput
                   label="Duration (Days)"
                   radius="md"
-                  size="lg"
+                  size={small ? "xs" : "md"}
                   placeholder="Total Number of Days"
                   disabled
                   value={calculateTwoDate([
@@ -107,7 +110,7 @@ export default function ViewDetails({
                     label="OB Time In"
                     className="w-full"
                     radius="md"
-                    size="lg"
+                    size={small ? "xs" : "md"}
                     placeholder="none"
                     disabled
                     value={viewItems.filing.timeRange.timeIn}
@@ -116,7 +119,7 @@ export default function ViewDetails({
                     label="OB Time Out"
                     className="w-full"
                     radius="md"
-                    size="lg"
+                    size={small ? "xs" : "md"}
                     placeholder="none"
                     disabled
                     value={viewItems.filing.timeRange.timeOut}
@@ -127,7 +130,7 @@ export default function ViewDetails({
                     label="Location"
                     className="w-full"
                     radius="md"
-                    size="lg"
+                    size={small ? "xs" : "md"}
                     placeholder="none"
                     disabled
                     value={viewItems.filing.location.name}
@@ -136,18 +139,18 @@ export default function ViewDetails({
                     label="Branch"
                     className="w-full"
                     radius="md"
-                    size="lg"
+                    size={small ? "xs" : "md"}
                     placeholder="none"
                     disabled
                     value={viewItems.filing.location.locationBranch}
                   />
                 </Flex>
-                <TextInput label="Reference No." radius="md" size="lg" placeholder="none" disabled />
+                <TextInput label="Reference No." radius="md" size={small ? "xs" : "md"} placeholder="none" disabled />
               </Flex>
             </div>
 
             <div className="w-full md:w-1/2 flex flex-col gap-2 border-solid border-0.5 border-sky-500 p-4 rounded-lg">
-              <Text style={{ color: "#559CDA" }} className="font-bold">
+              <Text style={{ color: "#559CDA" }} className="text-xs md:text-lg font-bold text-center md:text-start">
                 Detailed Information
               </Text>
               <div>
@@ -164,7 +167,7 @@ export default function ViewDetails({
                   label="Document No."
                   className="w-full"
                   radius="md"
-                  size="lg"
+                  size={small ? "xs" : "md"}
                   placeholder="00000000"
                   disabled
                   value={viewItems.filing.documentNo}
@@ -174,7 +177,7 @@ export default function ViewDetails({
                   label="Transaction Date"
                   className="w-full"
                   radius="md"
-                  size="lg"
+                  size={small ? "xs" : "md"}
                   placeholder="none"
                   disabled
                   value={DateTimeUtils.getIsoDateFullWord(viewItems.filing.dateTransaction)}
@@ -184,7 +187,7 @@ export default function ViewDetails({
               <div className="flex flex-col">
                 <Textarea
                   label="Endorsement Information"
-                  size="lg"
+                  size={small ? "xs" : "md"}
                   radius="md"
                   placeholder="Endorsed by Jane Smith on October 25, 2024 at 6:43 PM."
                   className="w-full"
@@ -194,7 +197,7 @@ export default function ViewDetails({
               <div className="flex flex-col">
                 <Textarea
                   label="Approval Information"
-                  size="lg"
+                  size={small ? "xs" : "md"}
                   radius="md"
                   placeholder="Approved by Jane Smith on October 25, 2024 at 6:43 PM (Batch Approval)"
                   className="w-full"
@@ -204,7 +207,7 @@ export default function ViewDetails({
               <div className="flex flex-col">
                 <Textarea
                   label="Cancellation Information"
-                  size="lg"
+                  size={small ? "xs" : "md"}
                   radius="md"
                   placeholder="No Information"
                   className="w-full"
@@ -215,7 +218,7 @@ export default function ViewDetails({
           </div>
 
           <div className="flex flex-col gap-2 border-solid border-0.5 border-sky-500 p-4 rounded-lg">
-            <Text style={{ color: "#559CDA" }} className="font-bold">
+            <Text style={{ color: "#559CDA" }} className="text-xs md:text-lg font-bold text-center md:text-start">
               Reason{" "}
             </Text>
             <Textarea
@@ -244,14 +247,15 @@ export default function ViewDetails({
           <div className="flex flex-col md:flex-row  gap-4">
             {/* {SELECTED_DATA.status != "Filed" && isMultipleDayLeave && (
                 <div className="flex flex-col w-full md:w-2/3 gap-2 border-solid border-0.5 border-sky-500 p-4 rounded-lg">
-                  <Text style={{ color: "#559CDA" }} className="font-bold">
+                  
+              <Text style={{ color: "#559CDA" }} className="text-xs md:text-lg font-bold text-center md:text-start">
                     Filing Breakdown
                   </Text>
                   <FilingBreakdown />
                 </div>
               )} */}
             <div className="flex flex-col gap-2  w-full border-solid border-0.5 border-sky-500 p-4 rounded-lg">
-              <Text style={{ color: "#559CDA" }} className="font-bold">
+              <Text style={{ color: "#559CDA" }} className="text-xs md:text-lg font-bold text-center md:text-start">
                 Edit Log
               </Text>
               <Textarea
@@ -267,7 +271,9 @@ export default function ViewDetails({
         </div>
       </ScrollArea>
 
-      <Stack className="pt-5 flex flex-row justify-end">{rndrBtnContent()}</Stack>
+      <Stack className="pt-5 flex flex-row justify-end" px={small ? 20 : 30}>
+        {rndrBtnContent()}
+      </Stack>
     </Modal>
   );
 }

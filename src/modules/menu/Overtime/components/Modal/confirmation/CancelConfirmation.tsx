@@ -13,7 +13,7 @@ import { useOvertimeStore } from "../../../store";
 import { OvertimeServices } from "../../../services/api";
 import { SingleDataOvertime } from "../../../assets/Values";
 
-export default function index({ opened, onClose }: ModalProps) {
+export default function CancelConfirmation({ opened, onClose }: ModalProps) {
   const { singleItem, setOpenConfirmation, setOpenAlert, setError } = useOvertimeStore();
 
   const { mutate: singleCancel } = useMutation({
@@ -38,7 +38,7 @@ export default function index({ opened, onClose }: ModalProps) {
     <Alert
       opened={opened}
       onClose={onClose}
-      headerTitle="Cancel Request"
+      headerTitle="CANCEL REQUEST"
       size="lg"
       icon="Warning"
       title="Are you sure you want to cancel this Overtime request?"

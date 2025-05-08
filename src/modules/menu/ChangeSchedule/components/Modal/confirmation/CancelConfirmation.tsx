@@ -11,8 +11,9 @@ import { useMutation } from "@tanstack/react-query";
 import { CosServices } from "../../../services/api";
 import { queryClient } from "@/services/client";
 import { SingleData } from "../../../models/request";
+import { cosQueryKeys } from "../../../assets/query";
 
-export default function index({ opened, onClose }: ModalProps) {
+export default function CancelConfirmation({ opened, onClose }: ModalProps) {
   const { singleItem, setOpenConfirmation, setOpenAlert, setError } = useChangeOfScheduleStore();
 
   const { mutate: singleCancel } = useMutation({
@@ -21,10 +22,7 @@ export default function index({ opened, onClose }: ModalProps) {
       return CosServices.singleCancelCOS(id, formData);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["request_cos"] });
-      queryClient.invalidateQueries({ queryKey: ["reviewal_cos"] });
-      queryClient.invalidateQueries({ queryKey: ["approval_cos"] });
-      queryClient.invalidateQueries({ queryKey: ["filings_cos"] });
+      queryClient.invalidateQueries({ queryKey: cosQueryKeys.base });
       setOpenConfirmation("");
       setOpenAlert("CancelAlert");
     },
@@ -37,7 +35,7 @@ export default function index({ opened, onClose }: ModalProps) {
     <Alert
       opened={opened}
       onClose={onClose}
-      headerTitle="Cancel Request"
+      headerTitle="CANCEL REQUEST"
       size="lg"
       icon="Warning"
       title="Are you sure you want to cancel this Change of Schedule request?"

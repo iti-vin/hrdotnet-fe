@@ -10,8 +10,9 @@ import { useMediaQuery } from "@mantine/hooks";
 import { DatePickerInput } from "@mantine/dates";
 import { Button, Checkbox, Flex, Group, ScrollArea, Select, Stack, Textarea, TextInput } from "@mantine/core";
 //--- Shared Modules
-import { Dropzone, Modal } from "@shared/template";
+import { Dropzone } from "@shared/template";
 import { ModalProps } from "@shared/assets/types/Modal";
+import Modal from "@/layout/main/dialog/Modal";
 import { useMutation } from "@tanstack/react-query";
 import { CosServices } from "../../../services/api";
 import { queryClient } from "@/services/client";
@@ -25,10 +26,9 @@ import { useEffect } from "react";
 //--- Store
 
 export default function NewRequest({ opened, onClose, buttonClose }: ModalProps) {
-  const small = useMediaQuery("(max-width: 770px)");
+  const small = useMediaQuery("(max-width: 40em)");
   const { setLoading, setOpenDialog, setOpenAlert, setError, scheduleItems, schedList, setSchedList } =
     useChangeOfScheduleStore();
-
   useEffect(() => {
     setSchedList(scheduleItems.items.map((item) => ({ id: item.id, name: item.name, isRestDay: item.isRestDay })));
   }, [scheduleItems]);
@@ -38,7 +38,7 @@ export default function NewRequest({ opened, onClose, buttonClose }: ModalProps)
     mode: "uncontrolled",
     initialValues: {
       DateFiled: {
-        DateFrom: new Date(),
+        DateFrom: new Date() || null,
         DateTo: new Date(),
       },
       Requested: {
@@ -53,8 +53,6 @@ export default function NewRequest({ opened, onClose, buttonClose }: ModalProps)
     validate: {
       Reason: (value) =>
         value.length >= 5 && value.length <= 250 ? null : "Reason must be minimum of 8 and maximum of 250  characters",
-      ReferenceNo: (value) =>
-        /^\d{4}-\d{4}-\d{4}$/.test(value) ? null : "Reference No. must be in 0000-0000-0000 format",
     },
   });
 
@@ -92,13 +90,49 @@ export default function NewRequest({ opened, onClose, buttonClose }: ModalProps)
   const handleCreate = (values: typeof newForm.values) => {
     createCosRequest(values);
   };
+  const handlePaste = () => {
+    navigator.clipboard
+      .readText()
+      .then((clipboardText) => {
+        try {
+          const json = JSON.parse(clipboardText);
+
+          const dateFrom = json.dateFrom
+            ? new Date(DateTimeUtils.dateTZToWithTZAddDay(new Date(json.dateFrom).toISOString()))
+            : null;
+          const dateTo = json.dateTo ? new Date(json.dateTo) : null;
+
+          newForm.setValues({
+            DateFiled: {
+              DateFrom: json.dateFrom!,
+              DateTo: dateTo!,
+            },
+            Reason: json.reason,
+            ReferenceNo: json.referenceNo || "",
+          });
+          console.log(dateFrom);
+          alert("Text paste!");
+        } catch (err) {
+          console.error("Invalid JSON in clipboard:", err);
+        }
+      })
+      .catch((err) => {
+        console.error("Failed to read clipboard: ", err);
+      });
+  };
 
   return (
-    <Modal title="New Request" size="80%" opened={opened} onClose={onClose} buttonClose={buttonClose}>
+    <Modal
+      title="New Request"
+      size="70%"
+      opened={opened}
+      onClose={onClose}
+      buttonClose={buttonClose}
+      pasteBtn={handlePaste}>
       <form onSubmit={newForm.onSubmit(handleCreate)} className="relative">
         <Stack className="w-full h-full">
           <ScrollArea
-            px={20}
+            px={small ? 20 : 30}
             className="flex flex-col mt-3 w-full text-[#6d6d6d] relative"
             h={650}
             styles={{ scrollbar: { display: "none" } }}>
@@ -153,18 +187,6 @@ export default function NewRequest({ opened, onClose, buttonClose }: ModalProps)
                   label="Reference No."
                   placeholder="0000-0000-0000"
                   className="w-full"
-                  required
-                  pattern="\d{4}-\d{4}-\d{4}"
-                  title="Format: 0000-0000-0000"
-                  {...newForm.getInputProps("ReferenceNo")}
-                  onChange={(event) => {
-                    const rawValue = event.target.value.replace(/\D/g, "");
-                    let formattedValue = rawValue
-                      .slice(0, 12)
-                      .replace(/(\d{4})(\d{4})?(\d{4})?/, (_, p1, p2, p3) => [p1, p2, p3].filter(Boolean).join("-"));
-
-                    newForm.setFieldValue("ReferenceNo", formattedValue);
-                  }}
                 />
               </Flex>
               <Checkbox
@@ -188,7 +210,7 @@ export default function NewRequest({ opened, onClose, buttonClose }: ModalProps)
             </Group>
           </ScrollArea>
         </Stack>
-        <Stack className="pt-5 flex flex-row justify-end">
+        <Stack className="pt-5 flex flex-row justify-end" px={small ? 20 : 30}>
           <Button type="submit" size="md" className="w-44 border-none custom-gradient rounded-md" onClick={() => {}}>
             SUBMIT
           </Button>

@@ -29,14 +29,14 @@ thead .mantine-Table-tr {
 }
 
 thead .mantine-Table-tr .mantine-Table-th {
-  color: #b2b2b2;
+  color: #6d6d6d99;
   font-weight: 600;
   font-size: 15px;
 }
 
 tbody .mantine-Table-tr.mantine-datatable-row .mantine-Table-td {
-  color: #8c8c8c;
-  font-weight: 600;
+  color: #00000099;
+  font-weight: 500;
   font-size: 13px;
 }
 
@@ -63,4 +63,67 @@ body {
 
 .mantine-AppShell-navbar {
   @apply h-screen;
+}
+
+/* Select */
+.mantine-Select-input,
+/* DatePicker */
+.mantine-DatePickerInput-input,
+/* Textarea */
+.mantine-Textarea-input,
+/* Text */
+.mantine-TextInput-input,
+/* Date */
+.mantine-DateInput-input,
+/* Time */
+.mantine-TimeInput-input {
+  @apply text-[#6d6d6d];
+}
+
+.mantine-Input-wrapper[data-disabled="true"] {
+  @apply border-[1px] border-[#A8A8A8] rounded-lg;
+}
+
+/* printing pdf container */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  .print-container,
+  .print-container * {
+    visibility: visible;
+  }
+
+  .mantine-ScrollArea-root,
+  .mantine-ScrollArea-viewport {
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  .print-container {
+    visibility: visible;
+    position: relative;
+    width: 100%;
+    padding: 50px;
+    border-radius: 10px;
+    background-color: white;
+  }
+
+  .print-page {
+    page-break-after: always;
+    break-after: page;
+  }
+
+  .print-page:last-child {
+    page-break-after: auto;
+  }
+  .no-print {
+    display: none !important;
+  }
+
+  @page {
+    size: portrait;
+    margin: 1cm;
+  }
 }

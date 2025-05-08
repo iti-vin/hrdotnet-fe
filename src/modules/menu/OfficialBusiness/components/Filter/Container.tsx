@@ -20,7 +20,7 @@ interface MissedLogFilterI {
   panel?: Panel;
 }
 
-export default function index({ panel }: MissedLogFilterI) {
+export default function ContainerFilter({ panel }: MissedLogFilterI) {
   const { setOpenDrawer, storedFilters } = useOfficialBusinessStore();
   const { onHandleClearFilter } = useOfficialBusinessContext();
 
@@ -65,7 +65,10 @@ export default function index({ panel }: MissedLogFilterI) {
             {storedFilters.DocumentNo && (
               <Flex direction="row" align="center" gap={7} mx={8} visibleFrom="md">
                 <Text>Doc No:</Text>
-                <Pill>{storedFilters.DocumentNo}</Pill>
+
+                <Pill classNames={{ root: "bg-[#d9d9d9]", label: "text-[#6D6D6D] font-semibold" }} withRemoveButton>
+                  {storedFilters.DocumentNo}
+                </Pill>
                 <Text size="xl" c="#eeeeee">
                   |
                 </Text>
@@ -74,7 +77,8 @@ export default function index({ panel }: MissedLogFilterI) {
             {storedFilters.DateFrom && storedFilters.DateTo && (
               <Flex direction="row" align="center" gap={7} mx={8} visibleFrom="md">
                 <Text>Date Transaction:</Text>
-                <Pill>
+
+                <Pill classNames={{ root: "bg-[#d9d9d9]", label: "text-[#6D6D6D] font-semibold" }} withRemoveButton>
                   {storedFilters.DateFrom}- {storedFilters.DateTo}
                 </Pill>
                 <Text size="xl" c="#eeeeee">
@@ -85,7 +89,10 @@ export default function index({ panel }: MissedLogFilterI) {
             {storedFilters.Location && (
               <Flex direction="row" align="center" gap={7} mx={8} visibleFrom="md">
                 <Text>Location:</Text>
-                <Pill>{storedFilters.Location}</Pill>
+
+                <Pill classNames={{ root: "bg-[#d9d9d9]", label: "text-[#6D6D6D] font-semibold" }} withRemoveButton>
+                  {storedFilters.Location}
+                </Pill>
                 <Text size="xl" c="#eeeeee">
                   |
                 </Text>

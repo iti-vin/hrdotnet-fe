@@ -14,8 +14,10 @@ interface ModalProps {
   radius?: string | number;
   isIconsActionsRequired?: boolean;
   downloadBtn?(): void;
+  exportBtn?: React.ReactNode;
 }
-export default function index({ ...props }: ModalProps) {
+
+export default function CustomModal({ ...props }: ModalProps) {
   const {
     opened,
     onClose,
@@ -27,9 +29,11 @@ export default function index({ ...props }: ModalProps) {
     radius,
     isIconsActionsRequired = true,
     downloadBtn,
+    exportBtn,
   } = props;
   const [openedExport, { close: closeExport, open: openExport }] = useDisclosure(false);
   const small = useMediaQuery("(max-width: 40em)");
+  const smallSizing = small ? 20 : 30;
   return (
     <Modal
       radius={radius || 10}
@@ -40,7 +44,7 @@ export default function index({ ...props }: ModalProps) {
       withCloseButton={false}
       className="p-0"
       styles={{ body: { overflow: "hidden", padding: 0 } }}>
-      <Stack className="gap-0 px-10 pt-10">
+      <Stack className="gap-0" px={smallSizing} pt={smallSizing}>
         <div className="flex justify-between">
           <Text fw={600} fz={small ? 15 : 22} c="#559CDA">
             {title}
@@ -54,7 +58,7 @@ export default function index({ ...props }: ModalProps) {
                     onMouseEnter={openExport}
                     onMouseLeave={closeExport}
                     className="cursor-pointer"
-                    size={30}
+                    size={smallSizing}
                     color="gray"
                   />
                 </Popover.Target>
@@ -63,13 +67,16 @@ export default function index({ ...props }: ModalProps) {
                 </Popover.Dropdown>
               </Popover>
             )}
-            <IconX className="cursor-pointer" onClick={buttonClose} size={30} color="gray" />
+            {exportBtn}
+            <IconX className="cursor-pointer" onClick={buttonClose} size={smallSizing} color="gray" />
           </div>
         </div>
         <Divider size="xs" color="#6D6D6D" mt={10} />
       </Stack>
 
-      <Stack className="flex flex-col gap-5 mt-3 w-full text-[#6d6d6d] pb-10">{children}</Stack>
+      <Stack className="flex flex-col gap-5 mt-3 w-full text-[#6d6d6d]" pb={smallSizing}>
+        {children}
+      </Stack>
     </Modal>
   );
 }

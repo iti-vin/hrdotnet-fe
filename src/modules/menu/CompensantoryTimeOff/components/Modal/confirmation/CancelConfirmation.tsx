@@ -7,12 +7,12 @@ import Alert from "@/layout/main/alert";
 
 import { ModalProps } from "@shared/assets/types/Modal";
 
-export default function index({ opened, onClose }: ModalProps) {
+export default function CancelConfirmation({ opened, onClose }: ModalProps) {
   return (
     <Alert
       opened={opened}
       onClose={onClose}
-      headerTitle="Cancel Request"
+      headerTitle="CANCEL REQUEST"
       size="lg"
       icon="Warning"
       title="Are you sure you want to cancel this Overtime request?"

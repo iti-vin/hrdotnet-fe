@@ -14,7 +14,7 @@ import { useOffsetStore } from "../../../store";
 import { ValidationErrorResponse } from "@shared/assets/types/Error";
 import { SingleDataOffset } from "../../../assets/Values";
 
-export default function index({ opened, onClose }: ModalProps) {
+export default function CancelConfirmation({ opened, onClose }: ModalProps) {
   const { singleItem, setOpenConfirmation, setOpenAlert, setError } = useOffsetStore();
 
   const { mutate: singleCancel } = useMutation({
@@ -42,7 +42,7 @@ export default function index({ opened, onClose }: ModalProps) {
     <Alert
       opened={opened}
       onClose={onClose}
-      headerTitle="Cancel Request"
+      headerTitle="CANCEL REQUEST"
       size="lg"
       icon="Warning"
       title="Are you sure you want to cancel this Overtime request?"

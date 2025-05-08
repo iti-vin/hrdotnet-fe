@@ -47,8 +47,8 @@ export default function Filings() {
         records={data && data.items}
         isLoading={isLoading}
         columns={[
-          { accessor: "filing.documentNo", title: "Document No" },
-          { accessor: "filing.shiftSchedule.name", title: "Schedule" },
+          { accessor: "filing.documentNo", title: "Document No", sortable: true },
+          { accessor: "filing.shiftSchedule.name", title: "Schedule", sortable: true },
           { accessor: "filing.shiftSchedule.date", title: "Overtime Date" },
           { accessor: "filing.shiftSchedule.timeIn", title: "Overtime Hours" },
           {
@@ -56,7 +56,7 @@ export default function Filings() {
             title: "Transaction Date",
             render: (row: any) => DateTimeUtils.getIsoDateWord(row.filing.dateTransaction),
           },
-          { accessor: "name", title: "Processed By" },
+          { accessor: "name", title: "Processed By", sortable: true },
           {
             accessor: "filing.filingStatus.name",
             title: "Status",
@@ -73,6 +73,7 @@ export default function Filings() {
                 </div>
               );
             },
+            sortable: true,
           },
           {
             accessor: "attachment",
