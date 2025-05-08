@@ -25,7 +25,6 @@ import userRoutes from "@/modules/user/routes";
 
 import calendarRoutes from "@/modules/main/Calendar/routes";
 import Dashboard from "@/modules/main/Dashboard";
-import { Dropzone } from "@shared/template";
 
 export const router = createBrowserRouter([
   {
@@ -62,10 +61,6 @@ export const router = createBrowserRouter([
         children: [{ index: true, element: <Login /> }],
       },
     ],
-  },
-  {
-    path: "dropzone",
-    element: <Dropzone />,
   },
   {
     path: "*",
