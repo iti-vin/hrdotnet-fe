@@ -8,8 +8,6 @@ import { Stack, Text } from "@mantine/core";
 import bg from "./assets/background.png";
 import "./index.css";
 import UserDashboard from "./components/UserDashboard";
-// import Approver from "./components/Approver";
-// import Reviewer from "./components/Reviewer";
 
 export default function Dashboard() {
   return (
@@ -27,8 +25,6 @@ export default function Dashboard() {
           </Text>
         </Stack>
         <UserDashboard />
-        {/* <Reviewer /> */}
-        {/* <Approver /> */}
       </Stack>
     </Stack>
   );
