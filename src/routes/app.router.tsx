@@ -28,10 +28,10 @@ import Dashboard from "@/modules/main/Dashboard";
 
 export const router = createBrowserRouter([
   {
-    element: <Root />,
+    element: <ProtectedModule />,
     children: [
       {
-        element: <ProtectedModule />,
+        element: <Root />,
         children: [
           // Main
           calendarRoutes,
