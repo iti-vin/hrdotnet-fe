@@ -9,8 +9,6 @@ import { Avatar, Flex, Indicator, Menu, Text, rem } from "@mantine/core";
 import {
   IconUserCircle,
   IconReceipt,
-  IconInfoCircle,
-  IconShieldLock,
   IconLogout,
   IconAddressBook,
   IconFileTime,
@@ -19,9 +17,15 @@ import {
 
 //--- Sample-Image
 import mina from "@shared/assets/images/mina.jpg";
-import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useAuthGlobalStore } from "@shared/store/auth";
 
 export default function Profile() {
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    useAuthGlobalStore.getState().clear();
+    navigate("/login");
+  };
   return (
     <Menu
       shadow="md"
@@ -72,6 +76,7 @@ export default function Profile() {
           fw={500}
           className={`poppins ${location.pathname == "" && "text-white custom-gradient"}`}
           color="#6d6d6d"
+          onClick={handleLogout}
           leftSection={<IconLogout style={{ width: rem(20), height: rem(20) }} />}>
           Logout
         </Menu.Item>

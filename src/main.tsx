@@ -16,6 +16,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 //--- Global Style
 import "@mantine/core/styles.css";
+import "@mantine/core/styles/global.css";
 import "@/index.css";
 
 //--- Routes

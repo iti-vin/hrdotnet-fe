@@ -1,3 +1,4 @@
+import { useAuthGlobalStore } from "@shared/store/auth";
 import axios from "axios";
 
 const getRefreshTokenFromCookie = () => {
@@ -11,7 +12,7 @@ const getRefreshTokenFromCookie = () => {
   return null;
 };
 
-const API_BASE_URL = "http://localhost:4321";
+const API_BASE_URL = "http://192.168.1.45:4321";
 
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
@@ -21,7 +22,8 @@ apiClient.defaults.headers.post["Content-Type"] = "application/json";
 
 apiClient.interceptors.request.use(
   (config) => {
-    const token = sessionStorage.getItem("accessToken");
+    const token = useAuthGlobalStore((state) => state.token);
+
     if (token) {
       config.headers["Authorization"] = `Bearer ${token}`;
     }

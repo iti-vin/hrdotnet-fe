@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "application_type": "Overtime",
+    "application_date": "2025-05-01",
+    "transaction_date": "2025-05-02",
+    "status": "Filed"
+  },
+  {
+    "id": 2,
+    "application_type": "Offset",
+    "application_date": "2025-05-03",
+    "transaction_date": "2025-05-04",
+    "status": "Reviewed"
+  },
+  {
+    "id": 3,
+    "application_type": "Leave",
+    "application_date": "2025-05-05",
+    "transaction_date": "2025-05-06",
+    "status": "Filed"
+  },
+  {
+    "id": 4,
+    "application_type": "Sick Leave",
+    "application_date": "2025-05-07",
+    "transaction_date": "2025-05-08",
+    "status": "Reviewed"
+  },
+  {
+    "id": 5,
+    "application_type": "Vacation Leave",
+    "application_date": "2025-05-09",
+    "transaction_date": "2025-05-10",
+    "status": "Reviewed"
+  }
+]
