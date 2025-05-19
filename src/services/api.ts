@@ -1,4 +1,3 @@
-import { useAuthGlobalStore } from "@shared/store/auth";
 import axios from "axios";
 
 const getRefreshTokenFromCookie = () => {
@@ -22,7 +21,9 @@ apiClient.defaults.headers.post["Content-Type"] = "application/json";
 
 apiClient.interceptors.request.use(
   (config) => {
-    const token = useAuthGlobalStore((state) => state.token);
+    const getToken = localStorage.getItem("authToken");
+    const parsedToken = JSON.parse(getToken!);
+    const token = parsedToken.state?.token;
 
     if (token) {
       config.headers["Authorization"] = `Bearer ${token}`;

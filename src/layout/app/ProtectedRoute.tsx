@@ -18,11 +18,9 @@ const isAuthenticated = () => {
     console.log("Token expired and cleared");
   }
 
-  if (jwt === null) {
-    return false;
-  } else {
-    return true;
-  }
+  if (jwt === null) return false;
+
+  return true;
 };
 
 /**
