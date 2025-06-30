@@ -10,7 +10,8 @@ export default defineConfig({
       "@": path.resolve(__dirname, "src"),
       "@shared": path.resolve(__dirname, "shared"),
       "@public": path.resolve(__dirname, "public"),
+      "@tabler/icons-react": "@tabler/icons-react/dist/esm/icons/index.mjs",
     } as AliasOptions,
   },
-  server: { host: "0.0.0.0", port: 5173 },
+  server: { host: "0.0.0.0", port: 5174 },
 });

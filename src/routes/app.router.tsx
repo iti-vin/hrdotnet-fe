@@ -25,6 +25,7 @@ import userRoutes from "@/modules/user/routes";
 
 import calendarRoutes from "@/modules/main/Calendar/routes";
 import Dashboard from "@/modules/main/Dashboard";
+import Sample from "./try";
 
 export const router = createBrowserRouter([
   {
@@ -65,5 +66,10 @@ export const router = createBrowserRouter([
   {
     path: "*",
     element: <Navigate to="/auth/login" replace />,
+  },
+  {
+    path: "try",
+    element: <Root />,
+    children: [{ path: "hey", element: <Sample /> }],
   },
 ]);

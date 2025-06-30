@@ -9,7 +9,7 @@ import { useState } from "react";
 import { useForm } from "@mantine/form";
 import { Button, Flex, Image, PasswordInput, Text, TextInput } from "@mantine/core";
 //--- Icons
-import { IconMail, IconShieldLock } from "@tabler/icons-react";
+import { IconEye, IconEyeOff, IconMail, IconShieldLock } from "@tabler/icons-react";
 import loginBg from "./assets/loginBg.png";
 import loginLogo from "./assets/loginLogo.png";
 import useLogin from "./components/hooks";
@@ -25,7 +25,7 @@ interface Error {
   name: string;
 }
 
-export default function index() {
+export default function Login() {
   const loginForm = useForm({
     mode: "uncontrolled",
     initialValues: {
@@ -34,7 +34,7 @@ export default function index() {
     },
 
     validate: {
-      username: (value) => (value.length >= 5 ? null : "Password must be at least 8 characters"),
+      username: (value) => (value.length >= 5 ? null : "Password must be at least 5 characters"),
 
       password: (value) => (value.length >= 8 ? null : "Password must be at least 8 characters"),
     },
@@ -68,16 +68,18 @@ export default function index() {
       </div>
       <div className=" w-full sm:w-1/2">
         <div className="h-full w-full flex flex-col">
-          <form
-            onSubmit={loginForm.onSubmit(handleSubmit)}
-            className="flex flex-col gap-4 sm:h-[55%] sm:w-[55%] m-auto p-4 sm:p-0">
+          <form onSubmit={loginForm.onSubmit(handleSubmit)} className="flex flex-col gap-4 sm:h-[55%] sm:w-[55%] m-auto p-4 sm:p-0">
             <p className=" text-center font-semibold poppins text-4xl text-[#559CDA]">Admin Log-in</p>
-            <Flex className="gap-1">
-              <Text className="text-[#6d6d6d] text-sm">Forgot Password ?</Text>
-              <Text className="text-[#559cda] underline text-sm">Contact System Administrator</Text>
+            <Flex direction="row" justify="center" gap={5} className="w-full">
+              <Text c="#6d6d6d" size="sm" ta="center" fw={500}>
+                Forgot Password ?
+              </Text>
+              <Text c="#559cda" size="sm" ta="center" fw={500} className="underline cursor-pointer">
+                Contact System Administrator
+              </Text>
             </Flex>
             <div className="w-full text-start text-slate-700 mt-6">
-              <Text size="md" className="poppins ">
+              <Text size="md" className="poppins">
                 Username
               </Text>
               <TextInput
@@ -85,6 +87,7 @@ export default function index() {
                 size="md"
                 radius="md"
                 classNames={{ input: "poppins" }}
+                id="username"
                 placeholder="Enter your username"
                 rightSection={
                   <div className="bg-[#559CDA] p-2 rounded-lg text-white">
@@ -99,16 +102,21 @@ export default function index() {
                 Password
               </Text>
               <PasswordInput
-                classNames={{ input: "poppins" }}
+                classNames={{ input: "poppins text-[#6D6D6D] pr-10" }}
                 variant="default"
                 size="md"
-                visible={visible}
                 radius="md"
+                id="password"
                 placeholder="Enter your password"
                 error={serverError}
+                onVisibilityChange={() => setVisible((v) => !v)}
+                visible={visible!}
                 rightSection={
-                  <div className="bg-[#ED8028] p-2 rounded-lg text-white cursor-pointer">
-                    <IconShieldLock onClick={handleVisible} />
+                  <div className="flex flex-row items-center gap-3 pr-7">
+                    <div className=" cursor-pointer">{visible ? <IconEyeOff size={16} onClick={handleVisible} /> : <IconEye size={16} onClick={handleVisible} />}</div>
+                    <div className="bg-[#ED8028] p-2 rounded-lg text-white">
+                      <IconShieldLock />
+                    </div>
                   </div>
                 }
                 {...loginForm.getInputProps("password")}
@@ -118,6 +126,7 @@ export default function index() {
             <Button
               type="submit"
               size="lg"
+              id="submit-login"
               className="br-gradient border-none bg-blue-300 mt-7 shadow-sm shadow-orange-200"
               disabled={loginMutation.isPending}
               loading={loginMutation.isPending}>

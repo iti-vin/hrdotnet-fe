@@ -1,5 +1,5 @@
 .container {
-  @apply bg-white h-full mx-4 p-8 mt-16 rounded-lg select-none overflow-hidden;
+  @apply h-full bg-white mx-4 mb-3 p-8 rounded-lg select-none overflow-hidden;
 }
 .headContainer {
   @apply w-full items-center h-[30%] md:h-[10%] flex flex-col gap-10 md:items-start md:justify-between md:gap-20 md:flex-row;
