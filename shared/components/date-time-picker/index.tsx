@@ -17,6 +17,18 @@ interface DateTimePickerInputProps {
   labelClassName?: string;
 }
 
+const labelSizes: Record<string, string> = {
+  xs: "text-[0.78rem]",
+  sm: "text-[0.84rem]",
+  md: "text-[0.94rem]",
+  lg: "text-[1rem]",
+  xl: "text-[1.05rem]",
+};
+
+const iconSize: Record<string, number> = { xs: 20, sm: 22, md: 24, lg: 27, xl: 30 };
+
+const calendarSize: Record<string, MantineSize> = { xs: "xs", sm: "xs", md: "xs", lg: "sm", xl: "md" };
+
 export default function DateTimePickerInput({
   value,
   setValue,
@@ -56,18 +68,6 @@ export default function DateTimePickerInput({
   };
 
   const labelBaseClass = "font-medium text-[#6d6d6d] flex flex-row gap-1";
-
-  const labelSizes: Record<string, string> = {
-    xs: "text-[0.78rem]",
-    sm: "text-[0.84rem]",
-    md: "text-[0.94rem]",
-    lg: "text-[1rem]",
-    xl: "text-[1.05rem]",
-  };
-
-  const iconSize: Record<string, number> = { xs: 20, sm: 22, md: 24, lg: 27, xl: 30 };
-
-  const calendarSize: Record<string, MantineSize> = { xs: "xs", sm: "xs", md: "xs", lg: "sm", xl: "md" };
 
   return (
     <Flex align="flex-end" className="w-full" ref={wrapperRef}>

@@ -13,6 +13,14 @@ export interface FileAttachmentProps {
   label?: string;
 }
 
+const labelSizes: Record<string, string> = {
+  xs: "text-[0.78rem]",
+  sm: "text-[0.84rem]",
+  md: "text-[0.94rem]",
+  lg: "text-[1rem]",
+  xl: "text-[1.05rem]",
+};
+
 export default function FileAttachment({
   multiple = true,
   maxFiles = 10,
@@ -88,14 +96,6 @@ export default function FileAttachment({
   const formatSize = (bytes: number) => `${(bytes / 1024 / 1024).toFixed(2)} MB`;
 
   const labelBaseClass = "font-medium text-[#6d6d6d] flex flex-row gap-1";
-
-  const labelSizes: Record<string, string> = {
-    xs: "text-[0.78rem]",
-    sm: "text-[0.84rem]",
-    md: "text-[0.94rem]",
-    lg: "text-[1rem]",
-    xl: "text-[1.05rem]",
-  };
 
   return (
     <div className="w-full">

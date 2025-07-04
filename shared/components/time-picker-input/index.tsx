@@ -18,6 +18,16 @@ interface TimePickerInputProps {
   labelClassName?: string;
 }
 
+const labelSizes: Record<string, string> = {
+  xs: "text-[0.78rem]",
+  sm: "text-[0.84rem]",
+  md: "text-[0.94rem]",
+  lg: "text-[1rem]",
+  xl: "text-[1.05rem]",
+};
+
+const iconSize: Record<string, number> = { xs: 20, sm: 22, md: 24, lg: 27, xl: 30 };
+
 export default function TimePickerInput({
   label = "Add Label",
   withSeconds = false,
@@ -38,16 +48,6 @@ export default function TimePickerInput({
   useHotkeys([["tab", () => setOpen(false)]]);
 
   const labelBaseClass = "font-medium text-[#6d6d6d] flex flex-row gap-1";
-
-  const labelSizes: Record<string, string> = {
-    xs: "text-[0.78rem]",
-    sm: "text-[0.84rem]",
-    md: "text-[0.94rem]",
-    lg: "text-[1rem]",
-    xl: "text-[1.05rem]",
-  };
-
-  const iconSize: Record<string, number> = { xs: 20, sm: 22, md: 24, lg: 27, xl: 30 };
 
   const commonProps = () => ({
     className: "cursor-pointer hover:scale-105",
