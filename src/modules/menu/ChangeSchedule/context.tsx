@@ -43,8 +43,8 @@ const COSContext = createContext<CosContextType>({
 });
 
 export const CosProvider: React.FC<PropsWithChildren> = ({ children }) => {
-  const { setPage, storedPage, setLoading, setStoredPage, setStoredFilters, setScheduleItems } =
-    useChangeOfScheduleStore();
+  const { setPage, storedPage, setLoading, setStoredPage, setStoredFilters, setScheduleItems } = useChangeOfScheduleStore();
+
   const onHandleSubmitFilter = (filterParams: Record<string, any>) => {
     setLoading(true);
     setStoredFilters({ ...filterParams });

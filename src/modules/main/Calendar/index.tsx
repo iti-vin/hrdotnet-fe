@@ -18,7 +18,7 @@ function CalendarContent() {
             </NavLink>
           ))}
         </PanelNav>
-        <Stack className="h-[92%] bg-white mx-4 mt-16 p-8 rounded-lg select-none">
+        <Stack className="h-[92%] bg-white mx-4 p-8 rounded-lg select-none">
           <Outlet />
         </Stack>
       </Stack>

@@ -4,22 +4,20 @@ import {
   Button,
   Card,
   Flex,
+  Group,
   Image,
   LoadingOverlay,
   ScrollArea,
-  Select,
   Stack,
   Text,
-  TextInput,
 } from "@mantine/core";
 import {
-  IconChevronDown,
   IconCircleCheckFilled,
+  IconCirclePlus,
   IconCircleXFilled,
   IconLayoutGrid,
   IconList,
-  IconRefresh,
-  IconSearch,
+  IconTrash,
 } from "@tabler/icons-react";
 import Pagination from "../components/Pagination";
 import { useEffect, useState } from "react";
@@ -28,6 +26,8 @@ import TeamCalendar from "../dialog/TeamCalendar";
 import { useCalendarStore } from "../store";
 import { DateTimeUtils } from "@shared/utils/DateTimeUtils";
 import "../index.css";
+import { ListFilter } from "lucide-react";
+import DrawerFilter from "../components/DrawerFilter";
 interface Team {
   name: string;
   position: string;
@@ -38,7 +38,7 @@ interface Team {
 export default function Team() {
   const [players, setPlayers] = useState<Team[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const { dialog, setDialog } = useCalendarStore();
+  const { dialog, setDialog, setDrawer } = useCalendarStore();
   const [isList, setIsList] = useState<boolean>(true);
   const [name, setName] = useState<string>("");
   const dateToday = new Date();
@@ -60,21 +60,6 @@ export default function Team() {
           {DateTimeUtils.getIsoDateFullWord(dateToday.toString())}
         </Text>
         <Flex className="gap-4 items-center">
-          <Text className="font-semibold text-[#6d6d6d]">Search By:</Text>
-          <Select
-            placeholder="Employee Name"
-            classNames={{ input: "border-none bg-[#DFECFE] emp-select rounded-md" }}
-            rightSection={<IconChevronDown color="#559cda" />}
-            data={players.map((items) => ({ label: items.name, value: items.name }))}
-          />
-          <TextInput
-            placeholder="Search Name"
-            classNames={{ input: "border-none bg-[#DFECFE] emp-select rounded-md" }}
-            rightSection={<IconSearch color="#559cda" />}
-          />
-          <ActionIcon variant="light" color="#559cda" size="lg" radius="md" onClick={() => setLoading(true)}>
-            <IconRefresh style={{ width: "70%", height: "70%" }} stroke={2} />
-          </ActionIcon>
           {isList ? (
             <ActionIcon variant="filled" color="#7E7E7E" size="lg" radius="md" onClick={() => setIsList(false)}>
               <IconList style={{ width: "70%", height: "70%" }} stroke={2} />
@@ -84,6 +69,32 @@ export default function Team() {
               <IconLayoutGrid style={{ width: "70%", height: "70%" }} stroke={2} />
             </ActionIcon>
           )}
+        </Flex>
+      </Flex>
+
+      <Flex className="filter-container">
+        <Flex className="h-full flex flex-row items-center justify-center">
+          <Flex bg="#eeeeee" className="w-auto h-full items-center px-2 gap-4 rounded-l-md">
+            <ListFilter size={20} color="#6d6d6d" />
+            <Text fw={500} c="#6d6d6d" visibleFrom="md">
+              FILTERS APPLIED
+            </Text>
+          </Flex>
+          <Group></Group>
+        </Flex>
+
+        <Flex pr={10} py={8} gap={5}>
+          <ActionIcon
+            variant="transparent"
+            color="gray"
+            size="md"
+            aria-label="Settings"
+            onClick={() => setDrawer(true)}>
+            <IconCirclePlus style={{ width: "100%", height: "100%" }} stroke={1.5} color="#6d6d6d" />
+          </ActionIcon>
+          <ActionIcon variant="transparent" color="gray" size="md" aria-label="Settings">
+            <IconTrash style={{ width: "100%", height: "100%" }} stroke={1.5} color="#6d6d6d" onClick={() => {}} />
+          </ActionIcon>
         </Flex>
       </Flex>
       <ScrollArea className="h-full w-full">
@@ -169,6 +180,8 @@ export default function Team() {
         buttonClose={() => setDialog("")}
         name={name}
       />
+
+      <DrawerFilter />
     </Stack>
   );
 }

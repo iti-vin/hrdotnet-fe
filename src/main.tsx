@@ -20,8 +20,8 @@ import "@mantine/core/styles/global.css";
 import "@/index.css";
 
 //--- Routes
-import { router } from "@/routes/app.router";
 import { queryClient } from "./services/client";
+import { router } from "./router";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <StrictMode>

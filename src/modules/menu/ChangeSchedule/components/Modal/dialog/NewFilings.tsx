@@ -27,14 +27,16 @@ import { IconCaretDownFilled, IconDots, IconReload } from "@tabler/icons-react";
 import { ModalProps } from "@shared/assets/types/Modal";
 import { useState } from "react";
 import { DataTable } from "mantine-datatable";
+import { useChangeOfScheduleStore } from "../../../store";
 
 export default function NewFilings({ opened, onClose, buttonClose }: ModalProps) {
   const small = useMediaQuery("(max-width: 40em)");
   const [openModal, setOpenModal] = useState<boolean>(false);
+  const { setOpenDialog, setOpenConfirmation } = useChangeOfScheduleStore();
 
   return (
     <Modal title="New Filings" size="80%" opened={opened} onClose={onClose} buttonClose={buttonClose}>
-      <form onSubmit={() => {}} className="relative">
+      <form className="relative">
         <Stack className="w-full h-full">
           <ScrollArea
             px={small ? 20 : 30}
@@ -194,7 +196,13 @@ export default function NewFilings({ opened, onClose, buttonClose }: ModalProps)
           </ScrollArea>
         </Stack>
         <Stack className="pt-5 flex flex-row justify-end" px={small ? 20 : 30}>
-          <Button type="submit" size="md" className="w-44 border-none custom-gradient rounded-md" onClick={() => {}}>
+          <Button
+            size="md"
+            className="w-44 border-none custom-gradient rounded-md"
+            onClick={() => {
+              setOpenDialog("");
+              setOpenConfirmation("SummaryDetails");
+            }}>
             SUBMIT
           </Button>
         </Stack>

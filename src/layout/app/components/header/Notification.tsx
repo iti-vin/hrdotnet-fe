@@ -16,7 +16,7 @@ export default function Notification() {
   return (
     <Popover>
       <Popover.Target>
-        <Indicator inline processing color="red" size={12} className="cursor-pointer">
+        <Indicator inline color="red" size={12} className="cursor-pointer">
           <IconBell style={{ width: "100%", height: "100%" }} stroke={1.5} color="black" />
         </Indicator>
       </Popover.Target>

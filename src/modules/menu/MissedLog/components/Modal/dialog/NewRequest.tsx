@@ -98,7 +98,7 @@ export default function NewRequest({ opened, onClose, buttonClose }: ModalReques
                   styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
                   rightSection={<IconCalendar style={{ width: rem(18), height: rem(18) }} stroke={1.5} />}
                   value={dateFiled}
-                  onChange={(value) => setDateFiled(value)}
+                  onChange={(value) => setDateFiled(new Date(value))}
                 />
                 <TextInput
                   size="md"

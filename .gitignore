@@ -134,3 +134,7 @@ dist
 .vscode/
 
 .DS_Store
+
+
+# Others
+trash/

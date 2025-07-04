@@ -1,0 +1,19 @@
+.mantine-Table-thead .mantine-datatable-header {
+  color: #6d6d6d99;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+tbody .mantine-Table-tr.mantine-datatable-row .mantine-Table-td {
+  color: #00000099;
+  font-weight: 500;
+  font-size: 13px;
+}
+
+tbody .mantine-Table-tr.mantine-datatable-row:hover {
+  background-color: #e7f0f8;
+}
+
+.mantine-Checkbox-input {
+  border: 2px solid #9f9f9f;
+}

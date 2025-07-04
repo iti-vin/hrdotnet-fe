@@ -30,6 +30,6 @@
       "@public/*": ["public/*"]
     }
   },
-  "include": ["src", "shared"],
+  "include": ["src", "shared", "trash"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

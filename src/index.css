@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "Poppins";
+  src: url("../public/fonts/Poppins/Poppins-Regular.ttf") format("truetype");
+  font-style: normal;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+}
+
 .poppins {
   font-family: "Poppins", sans-serif;
 }
@@ -44,9 +54,9 @@ tbody .mantine-Table-tr.mantine-datatable-row:hover {
   background-color: #e7f0f8;
 }
 
-.mantine-Checkbox-input {
+/* .mantine-Checkbox-input {
   border: 2px solid #9f9f9f;
-}
+} */
 
 body {
   background-color: #e6f2fc;
@@ -66,19 +76,19 @@ body {
 }
 
 /* Select */
-.mantine-Select-input,
+/* .mantine-Select-input, */
 /* DatePicker */
-.mantine-DatePickerInput-input,
+/* .mantine-DatePickerInput-input, */
 /* Textarea */
-.mantine-Textarea-input,
+/* .mantine-Textarea-input, */
 /* Text */
-.mantine-TextInput-input,
+/* .mantine-TextInput-input, */
 /* Date */
-.mantine-DateInput-input,
+/* .mantine-DateInput-input, */
 /* Time */
-.mantine-TimeInput-input {
-  @apply text-[#6d6d6d];
-}
+/* .mantine-TimeInput-input {  */
+/* @apply text-[#6d6d6d]; */
+/* } */
 
 .mantine-Input-wrapper[data-disabled="true"] {
   @apply border-[1px] border-[#A8A8A8] rounded-lg;
@@ -126,4 +136,15 @@ body {
     size: portrait;
     margin: 1cm;
   }
+}
+
+.custom-dashed {
+  border-style: dashed;
+  border-width: 2px;
+  border-color: #9ca3af;
+  border-image: none;
+  background-image: repeating-linear-gradient(to right, transparent 0, transparent 4px, #9ca3af 4px, #9ca3af 6px),
+    repeating-linear-gradient(to bottom, transparent 0, transparent 4px, #9ca3af 4px, #9ca3af 6px);
+  background-origin: border-box;
+  background-clip: content-box, border-box;
 }

@@ -13,6 +13,7 @@ import { Batch, Cancel, Success } from "./alert";
 import Toast from "@/layout/main/alert/toast";
 import { Panel } from "@shared/assets/types/Global";
 import { useChangeOfScheduleStore } from "../../store";
+import SummaryDetails from "./confirmation/SummaryDetails";
 
 interface ModalProps {
   panel?: Panel;
@@ -77,6 +78,14 @@ export default function index({ panel, onHandleSingleEndorse, onHandleSingleAppr
       />
       <CancelConfirmation opened={openConfirmation === "SingleCancel"} onClose={() => setOpenConfirmation("")} />
       <UpdateConfirmation opened={openConfirmation === "UpdateRequest"} onClose={() => setOpenConfirmation("")} />
+      <SummaryDetails
+        opened={openConfirmation === "SummaryDetails"}
+        onClose={() => {}}
+        buttonClose={() => {
+          setOpenDialog("NewRequest");
+          setOpenConfirmation("");
+        }}
+      />
       {/* Alerts */}
       <Cancel opened={openAlert === "CancelAlert"} onClose={() => setOpenAlert("")} />
       <Success

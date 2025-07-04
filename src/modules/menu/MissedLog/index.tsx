@@ -4,7 +4,7 @@
  */
 
 // React Modules
-import { Fragment, useEffect } from "react";
+import { useEffect } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 // Mantine Modules
 import { Stack } from "@mantine/core";
@@ -25,25 +25,19 @@ function MissedLogContent() {
   }, [activeTab]);
 
   return (
-    <Fragment>
+    <Stack className="h-full">
       <title>Missed Log</title>
-      <Stack className="h-full">
-        <PanelNav>
-          {missedLogTabs.map((item) => (
-            <NavLink
-              key={item.index}
-              to={item.path}
-              className={({ isActive }) => (isActive ? "active" : "inactive")}
-              onClick={() => setActiveTab(item.index)}>
-              {item.label}
-            </NavLink>
-          ))}
-        </PanelNav>
-        <Stack className="h-full bg-white mx-4 mt-16 p-8 rounded-lg select-none">
-          <Outlet />
-        </Stack>
+      <PanelNav>
+        {missedLogTabs.map((item) => (
+          <NavLink key={item.index} to={item.path} className={({ isActive }) => (isActive ? "active" : "inactive")} onClick={() => setActiveTab(item.index)}>
+            {item.label}
+          </NavLink>
+        ))}
+      </PanelNav>
+      <Stack className="h-full bg-white mx-4 mb-3 p-8 rounded-lg select-none overflow-hidden">
+        <Outlet />
       </Stack>
-    </Fragment>
+    </Stack>
   );
 }
 

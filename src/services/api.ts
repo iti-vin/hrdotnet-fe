@@ -1,54 +1,56 @@
-import { useAuthGlobalStore } from "@shared/store/auth";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
-const getRefreshTokenFromCookie = () => {
-  const cookies = document.cookie.split("; ");
-  for (const cookie of cookies) {
-    const [name, value] = cookie.split("=");
-    if (name === "refreshTokenFlash") {
-      return value;
-    }
-  }
-  return null;
+const API_BASE_URL = import.meta.env.VITE_WEBHOST_BASE_URL;
+
+const getRefreshTokenFromCookie = (): string | null => {
+  return (
+    document.cookie
+      .split("; ")
+      .find((row) => row.startsWith("refreshTokenFlash="))
+      ?.split("=")[1] || null
+  );
 };
-
-const API_BASE_URL = "http://192.168.1.45:4321";
 
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
-
-apiClient.defaults.headers.post["Content-Type"] = "application/json";
 
 apiClient.interceptors.request.use(
   (config) => {
-    const token = useAuthGlobalStore((state) => state.token);
+    const storedToken = localStorage.getItem("authToken");
+    const parsed = storedToken ? JSON.parse(storedToken) : null;
+    const token = parsed?.state?.token;
 
     if (token) {
-      config.headers["Authorization"] = `Bearer ${token}`;
+      config.headers.Authorization = `Bearer ${token}`;
     }
+
     return config;
   },
-  (error) => {
-    return Promise.reject(error);
-  }
+  (error: AxiosError) => Promise.reject(error)
 );
 
 apiClient.interceptors.response.use(
   (response) => response,
-  async (error) => {
-    const originalRequest = error.config;
+  async (error: AxiosError) => {
+    const originalRequest = error.config as any;
+
     if (!originalRequest._retry) {
       originalRequest._retry = true;
+
       try {
         const refreshToken = getRefreshTokenFromCookie();
+
         if (refreshToken) {
           sessionStorage.setItem("accessToken", refreshToken);
           originalRequest.headers["Authorization"] = refreshToken;
           return apiClient(originalRequest);
         }
       } catch (err) {
-        console.error("Failed to refresh token", err);
+        console.error("Token refresh failed:", err);
       }
     }
 
