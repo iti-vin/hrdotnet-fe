@@ -1,0 +1,60 @@
+:root {
+  --color-white: #fff;
+  --color-primary: #559cda;
+  --color-tertiary: #6d6d6d;
+}
+
+.container {
+  @apply shadow-md bg-[var(--color-white)] p-8 z-[100] overflow-hidden;
+}
+
+.profile {
+  @apply w-[238px] h-[375px] rounded-[10px] overflow-hidden;
+}
+.settings {
+  @apply w-[238px] h-[274px] rounded-[10px] overflow-hidden;
+}
+.standard {
+  @apply w-[908px] h-[908px] rounded-2xl overflow-auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.small {
+  @apply w-[764px] h-[530px] rounded-[10px] overflow-auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.headerContainer {
+  @apply flex flex-row items-center w-full;
+}
+
+.profileHeader {
+  @apply flex-col text-center justify-center;
+}
+.profileText {
+  @apply font-semibold text-xl leading-[30px];
+  background: linear-gradient(90deg, #559cda 0%, #7badff 27%, #ffb58d 76%, #ed8028 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+
+.standardHeader {
+  @apply flex-row justify-between items-center border-b-2 border-[var(--color-tertiary)];
+}
+.closeBtn {
+  @apply text-[var(--color-tertiary)] w-[15px] h-[15px];
+}
+.standardText {
+  @apply text-[var(--color-primary)] text-xl font-semibold leading-[100%] mb-[14px];
+}
+.subHeader {
+  @apply text-[var(--color-tertiary)] font-normal text-[10px];
+}
+
+/* Body */
+.bodyContainer {
+  @apply flex flex-col gap-2 overflow-y-auto;
+}

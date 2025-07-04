@@ -25,6 +25,7 @@ import userRoutes from "@/modules/user/routes";
 
 import calendarRoutes from "@/modules/main/Calendar/routes";
 import Dashboard from "@/modules/main/Dashboard";
+import { customCosRoutes } from "@/modules/menu/CustomCos/routes";
 
 export const router = createBrowserRouter([
   {
@@ -38,6 +39,7 @@ export const router = createBrowserRouter([
           { path: "dashboard", element: <Dashboard /> },
           // Menu Modules
           cosRoutes,
+          customCosRoutes, //sample COS
           ctoRoutes,
           leaveRoutes,
           mlRoutes,

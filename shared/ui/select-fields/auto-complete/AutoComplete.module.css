@@ -1,0 +1,53 @@
+:root {
+  --color-label: #6d6d6d;
+  --color-text: #6d6d6d99;
+  --color-error: #ff4b34;
+  --color-border: #a8a8a8;
+  --color-input-bg: #ffff;
+  --color-bg-disabled-field: #eeeeee;
+  --color-bg-dropdown: #ffff;
+  --color-border-dropdown: #d1d5db;
+  --color-hover-dropdown-list: #f3f4f6;
+  --color-clearBtn: #9ca3af;
+  --color-hover-clearBtn: #4b5563;
+}
+
+.groupField {
+  @apply flex flex-col gap-2;
+}
+.label {
+  @apply text-[var(--color-label)] font-medium text-[15px] leading-[18px];
+}
+.span {
+  @apply text-[var(--color-error)];
+}
+.inputContainer {
+  @apply relative;
+}
+.inputField {
+  @apply w-full p-4 rounded-lg gap-[10px]  outline-[var(--color-focus)] text-[var(--color-text)] font-medium text-base leading-6;
+}
+.enableField {
+  @apply bg-[var(--color-input-bg)];
+}
+.disabledField {
+  @apply bg-[var(--color-bg-disabled-field)];
+}
+.inputValid {
+  @apply border border-[var(--color-border)];
+}
+.inputError {
+  @apply border border-[var(--color-error)];
+}
+.errorMessage {
+  @apply text-[var(--color-error)] font-medium text-[15px] leading-[18px];
+}
+.dropdownContainer {
+  @apply absolute z-10 mt-1 w-full bg-[var(--color-bg-dropdown)] border border-[var(--color-border-dropdown)] rounded-lg shadow-md max-h-48 overflow-auto;
+}
+.dropdownList {
+  @apply px-4 py-2 cursor-pointer hover:bg-[var(--color-hover-dropdown-list)];
+}
+.clearBtn {
+  @apply absolute right-6 top-1/2 -translate-y-1/2 text-[var(--color-clearBtn)] hover:text-[var(--color-hover-clearBtn)];
+}
