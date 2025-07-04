@@ -11,8 +11,8 @@
     { "label": "LOAN", "path": "/loan-ledger", "id": 8, "icon": "IconCalculator" }
   ],
   "main": [
-    { "label": "DASHBOARD", "path": "/dashboard", "id": 1, "icon": "IconLayoutDashboard" },
-    { "label": "CALENDAR", "path": "/calendar", "id": 2, "icon": "IconCalendarMonth" }
+    { "label": "PERSONAL DASHBOARD", "path": "/dashboard", "id": 1, "icon": "IconLayoutDashboard" },
+    { "label": "HR DASHBOARD", "path": "/hr", "id": 2, "icon": "IconCalendarMonth" }
   ],
   "201  FILES": [
     { "label": "EMPLOYEE LIST", "path": "/employee-list", "id": 1, "icon": "IconUsersGroup" },

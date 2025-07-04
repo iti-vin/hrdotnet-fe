@@ -25,6 +25,9 @@ interface CalendarStoreI {
   setIsRestDayShow(show: boolean): void;
   isHolidayShow: boolean;
   setIsHolidayShow(show: boolean): void;
+
+  drawer: boolean;
+  setDrawer(show: boolean): void;
 }
 
 export const useCalendarStore = create<CalendarStoreI>((set) => ({
@@ -43,4 +46,7 @@ export const useCalendarStore = create<CalendarStoreI>((set) => ({
   setIsRestDayShow: (show: boolean) => set({ isRestDayShow: show }),
   isHolidayShow: true,
   setIsHolidayShow: (show: boolean) => set({ isHolidayShow: show }),
+
+  drawer: false,
+  setDrawer: (drawer: boolean) => set({ drawer: drawer }),
 }));

@@ -13,11 +13,7 @@ export default function index() {
   const [opened, { toggle }] = useDisclosure();
   const { isLogowordVisible } = useLogoWidth();
   return (
-    <AppShell
-      layout="alt"
-      header={{ height: 70 }}
-      navbar={{ width: isLogowordVisible ? 250 : 70, breakpoint: "md", collapsed: { mobile: !opened } }}
-      padding="md">
+    <AppShell layout="alt" header={{ height: 70 }} navbar={{ width: isLogowordVisible ? 250 : 70, breakpoint: "md", collapsed: { mobile: !opened } }}>
       <Stack className="bg-red-200 w-full h-screen">
         <Header toggle={toggle} opened={opened} />
         <Sidebar toggle={toggle} />

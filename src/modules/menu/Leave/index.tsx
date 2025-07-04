@@ -4,7 +4,7 @@
  */
 
 //--- React Module
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 //--- Mantine Modules
 import { Stack } from "@mantine/core";
@@ -42,25 +42,19 @@ function LeaveContent() {
   }, [activeTab]);
 
   return (
-    <React.Fragment>
+    <Stack className="h-full">
       <title>Leave</title>
-      <Stack className="h-full">
-        <PanelNav>
-          {leaveTabs.map((item) => (
-            <NavLink
-              key={item.index}
-              to={item.path}
-              className={({ isActive }) => (isActive ? "active" : "inactive")}
-              onClick={() => setActiveTab(item.index)}>
-              {item.label}
-            </NavLink>
-          ))}
-        </PanelNav>
-        <Stack className="h-full bg-white mx-4 mt-16 p-8 rounded-lg select-none">
-          <Outlet />
-        </Stack>
+      <PanelNav>
+        {leaveTabs.map((item) => (
+          <NavLink key={item.index} to={item.path} className={({ isActive }) => (isActive ? "active" : "inactive")} onClick={() => setActiveTab(item.index)}>
+            {item.label}
+          </NavLink>
+        ))}
+      </PanelNav>
+      <Stack className="h-full bg-white mx-4 mb-3 p-8 rounded-lg select-none overflow-hidden">
+        <Outlet />
       </Stack>
-    </React.Fragment>
+    </Stack>
   );
 }
 

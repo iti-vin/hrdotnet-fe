@@ -3,11 +3,11 @@
  * @author     Hersvin Fred De La Cruz Labastida
  */
 //--- React Modules
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 //--- Mantine Modules
 import { ActionIcon, AppShell, Burger, Flex, Group } from "@mantine/core";
 //--- Tabler Icons
-import { IconArrowLeftBar } from "@tabler/icons-react";
+import { IconArrowLeftBar, IconCalendarMonth } from "@tabler/icons-react";
 
 //--- Header Components
 import Settings from "./header/Settings";
@@ -17,6 +17,7 @@ import Notification from "./header/Notification";
 import { HeaderProps } from "../assets/types";
 
 export default function Header({ opened, toggle, visibleBack }: HeaderProps) {
+  const navigate = useNavigate();
   return (
     <AppShell.Header>
       {visibleBack && (
@@ -33,6 +34,14 @@ export default function Header({ opened, toggle, visibleBack }: HeaderProps) {
       </Group>
       <Group h="100%" px="md" flex="">
         <Flex align="center" gap="md">
+          <ActionIcon variant="transparent" size="lg" aria-label="Settings">
+            <IconCalendarMonth
+              style={{ width: "70%", height: "70%" }}
+              stroke={1.5}
+              color="black"
+              onClick={() => navigate("/calendar")}
+            />
+          </ActionIcon>
           <Notification />
           <Settings />
           <Profile />

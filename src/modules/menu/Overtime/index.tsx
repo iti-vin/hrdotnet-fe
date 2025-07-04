@@ -3,7 +3,7 @@
  * @author     Hersvin Fred De La Cruz Labastida
  */
 
-import { Fragment, useEffect } from "react";
+import { useEffect } from "react";
 import { Stack } from "@mantine/core";
 import { NavLink, Outlet } from "react-router-dom";
 
@@ -24,25 +24,19 @@ const OvertimeContent = () => {
   }, [activeTab]);
 
   return (
-    <Fragment>
+    <Stack className="h-full">
       <title>Overtime</title>
-      <Stack className="h-full">
-        <PanelNav>
-          {overtimeTabs.map((item) => (
-            <NavLink
-              to={item.path}
-              key={item.index}
-              className={({ isActive }) => (isActive ? "active" : "inactive")}
-              onClick={() => setActiveTab(item.index)}>
-              {item.label}
-            </NavLink>
-          ))}
-        </PanelNav>
-        <Stack className="h-full bg-white mx-4 mt-16 p-8 rounded-lg select-none">
-          <Outlet />
-        </Stack>
+      <PanelNav>
+        {overtimeTabs.map((item) => (
+          <NavLink to={item.path} key={item.index} className={({ isActive }) => (isActive ? "active" : "inactive")} onClick={() => setActiveTab(item.index)}>
+            {item.label}
+          </NavLink>
+        ))}
+      </PanelNav>
+      <Stack className="h-full bg-white mx-4 mb-3 p-8 rounded-lg select-none overflow-hidden">
+        <Outlet />
       </Stack>
-    </Fragment>
+    </Stack>
   );
 };
 

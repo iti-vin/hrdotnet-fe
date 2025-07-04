@@ -84,10 +84,7 @@ export default function NewRequest() {
         <Stack className="flex flex-col gap-4 overflow-hidden" style={{ color: "#6D6D6D", maxWidth: "100%" }}>
           <Stack className="w-full h-auto p-0">
             <Text className="font-medium">Select Available Leave Type</Text>
-            <Carousel
-              slideSize={{ base: "70%", xs: "50%", sm: "33.333%", md: "20%" }}
-              slideGap="lg"
-              slidesToScroll={slidesNum}>
+            <Carousel slideSize={{ base: "70%", xs: "50%", sm: "33.333%", md: "20%" }} slideGap="lg">
               {LeaveTypes.map((leave, index) => (
                 <Tooltip key={index} label={leave.label}>
                   <Carousel.Slide onClick={() => setSelectedLeaveType(leave.label)}>

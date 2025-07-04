@@ -22,7 +22,20 @@ export const DateTimeUtils = {
   getCurrTimeWithSecondsUnits: () => dayjs().format("hh:mm:ss A"),
   getCurrWordMonth: () => dayjs().format("MMMM"),
   getCurrWordYear: () => dayjs().format("YYYY"),
-  getCurrDateDash: (date: string) => dayjs(date).format("YYYY-MM-DD"),
+  getCurrDateDash: () => dayjs().format("YYYY-MM-DD"),
+  getNextDateDash: (iso?: string) =>
+    dayjs(iso ?? dayjs().format("YYYY-MM-DD"))
+      .add(1, "day")
+      .format("YYYY-MM-DD"),
+
+  // parse either “June 3, 2025” or “2025-04-05” *strictly*:
+  parseToISO: (raw: string): string | null => {
+    const d = dayjs(raw, ["MMMM D, YYYY", "YYYY-MM-DD"], true);
+    return d.isValid() ? d.format("YYYY-MM-DD") : null;
+  },
+
+  // display in your “June 3, 2025” style:
+  // dayWithDate: (iso: string) => dayjs(iso).format("MMMM D, YYYY"),
   getCurrDateDashWithTZ: () => dayjs().format("YYYY-MM-DDT00:00:00"),
   getCurrDateWord: () => dayjs().format("MMMM DD, YYYY"),
   getCurrDateDashLessDay: () => dayjs().subtract(1, "day").format("YYYY-MM-DD"),
@@ -119,7 +132,7 @@ export const DateTimeUtils = {
 
   checkIsoNullValue: (date: string) => date === "0001-01-01T00:00:00",
 
-  dayWithDate: (date: string) => dayjs(date).format("MMM D, YYYY"),
+  dayWithDate: (date: string) => dayjs(date).format("MMMM D, YYYY"),
 
   dayWithFullDate: (date: string) => dayjs(date).format("MMMM D, YYYY"),
 };

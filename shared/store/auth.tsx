@@ -1,18 +1,9 @@
 // store/useJwtStore.ts
+import { JwtPayloadMain } from "@shared/assets/types/jwt";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-export interface JwtPayload {
-  jti: string;
-  sub: string;
-  UserId: string;
-  EmployeeCode: string;
-  EmployeeName: string;
-  CompanyId: string;
-  BranchId: string;
-  DepartmentId: string;
-  PositionId: string;
-  UserGroupId: string;
+export interface JwtPayload extends JwtPayloadMain {
   IsASystemAccount: boolean;
   IsBranchFilter: boolean;
   IsDepartmentFilter: boolean;
@@ -22,10 +13,6 @@ export interface JwtPayload {
   CanEditPayrollInformation: boolean;
   CanApprove: boolean;
   CanReview: boolean;
-  nbf: number;
-  exp: number;
-  iat: number;
-  iss: string;
 }
 
 interface JwtStore {

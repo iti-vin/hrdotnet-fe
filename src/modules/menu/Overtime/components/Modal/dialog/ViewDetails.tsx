@@ -13,7 +13,7 @@ import { ModalProps } from "@shared/assets/types/Modal";
 import { Panel, statusColors } from "@shared/assets/types/Global";
 import { useOvertimeStore } from "../../../store";
 import { DateTimeUtils } from "@shared/utils/DateTimeUtils";
-import ESSButton from "@shared/components/Buttons";
+import ESSButton from "@shared/ui/Buttons";
 import { OvertimeItems } from "../../../models/response";
 import { OvertimeServices } from "../../../services/api";
 import { useEffect } from "react";
@@ -26,14 +26,7 @@ interface ViewDetailsProps extends ModalProps {
   onHandleSingleApprove?: () => void;
 }
 
-export default function ViewDetails({
-  opened,
-  onClose,
-  buttonClose,
-  onHandleSingleEndorse,
-  onHandleSingleApprove,
-  panel,
-}: ViewDetailsProps) {
+export default function ViewDetails({ opened, onClose, buttonClose, onHandleSingleEndorse, onHandleSingleApprove, panel }: ViewDetailsProps) {
   const small = useMediaQuery("(max-width: 40em)");
   const { viewItems, setSingleItem, setOpenDialog, setOpenConfirmation } = useOvertimeStore();
   const onHandleSingleCancel = () => {
@@ -93,11 +86,7 @@ export default function ViewDetails({
 
   return (
     <Modal title="View Details" size="70%" opened={opened} onClose={onClose} buttonClose={buttonClose}>
-      <ScrollArea
-        className="flex flex-col gap-5 mt-3 w-full text-[#6d6d6d] relative"
-        h={650}
-        px={small ? 20 : 30}
-        styles={{ scrollbar: { display: "none" } }}>
+      <ScrollArea className="flex flex-col gap-5 mt-3 w-full text-[#6d6d6d] relative" h={650} px={small ? 20 : 30} styles={{ scrollbar: { display: "none" } }}>
         <div className="flex flex-col gap-5" style={{ color: "#6D6D6D" }}>
           <div className="flex flex-col md:flex-row gap-6">
             <div className="w-full md:w-1/2 flex flex-col gap-2  border-solid border-0.5 border-sky-500 p-4 rounded-lg">
@@ -126,14 +115,7 @@ export default function ViewDetails({
                     className="border-none w-full"
                     disabled
                   />
-                  <TextInput
-                    size={small ? "xs" : "md"}
-                    radius={8}
-                    label="Reference No."
-                    placeholder="0000-0000-0000"
-                    className="w-full"
-                    disabled
-                  />
+                  <TextInput size={small ? "xs" : "md"} radius={8} label="Reference No." placeholder="0000-0000-0000" className="w-full" disabled />
                 </Flex>
 
                 <Flex direction={{ base: "column", sm: "row" }} justify="space-between" className="w-full" gap={20}>
@@ -251,14 +233,7 @@ export default function ViewDetails({
                 />
               </div>
               <div className="flex flex-col">
-                <Textarea
-                  label="Cancellation Information"
-                  size={small ? "xs" : "md"}
-                  radius="md"
-                  placeholder="No Information"
-                  className="w-full"
-                  disabled
-                />
+                <Textarea label="Cancellation Information" size={small ? "xs" : "md"} radius="md" placeholder="No Information" className="w-full" disabled />
               </div>
             </div>
           </div>
@@ -267,23 +242,14 @@ export default function ViewDetails({
             <Text style={{ color: "#559CDA" }} className="text-xs md:text-lg font-bold text-center md:text-start">
               Reason{" "}
             </Text>
-            <Textarea
-              size="xl"
-              radius="md"
-              placeholder="Briefly state the reasons for filing leave."
-              disabled
-              defaultValue={viewItems.filing.reason}
-              onChange={() => {}}
-            />
+            <Textarea size="xl" radius="md" placeholder="Briefly state the reasons for filing leave." disabled defaultValue={viewItems.filing.reason} onChange={() => {}} />
           </div>
 
           <div className="flex flex-col gap-5 border-solid border-0.5 border-sky-500 p-4 rounded-lg">
             <Text style={{ color: "#559CDA" }} className="font-bold ">
               Attachment{" "}
             </Text>
-            <div
-              className="border-dashed border-0.5 border-sky-500 p-4 rounded-lg flex flex-col  items-center"
-              style={{ color: "#6D6D6D", background: "#EEEEEE", opacity: "0.5" }}>
+            <div className="border-dashed border-0.5 border-sky-500 p-4 rounded-lg flex flex-col  items-center" style={{ color: "#6D6D6D", background: "#EEEEEE", opacity: "0.5" }}>
               <div className="flex items-center">
                 <IconNotes />
                 <Text>File: attachment.pdf Size: 20 MB </Text>
