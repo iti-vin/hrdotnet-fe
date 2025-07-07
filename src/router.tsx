@@ -25,7 +25,7 @@ import userRoutes from "@/modules/user/routes";
 
 import calendarRoutes from "@/modules/main/Calendar/routes";
 import Dashboard from "@/modules/main/Dashboard";
-import { customCosRoutes } from "@/modules/menu/CustomCos/routes";
+import { customCosRoutes } from "trash/CustomCos/routes";
 
 export const router = createBrowserRouter([
   {

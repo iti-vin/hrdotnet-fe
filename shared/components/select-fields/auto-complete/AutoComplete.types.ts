@@ -1,21 +1,13 @@
-import { ChangeEvent } from "react";
-
 export interface IAutoComplete {
-  label: string;
+  disabled: boolean;
   id: string;
-  name: string;
+  label: string;
   placeholder: string;
   value: string;
-  errorMessage?: string;
-  disabled?: boolean;
   required?: boolean;
   showError?: boolean;
-  onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
-  options: Option[];
+  errorMessage?: string;
+  data: string[];
   code?: string;
-}
-
-export interface Option {
-  label: string;
-  value: string;
+  onChange: (value: string) => void;
 }

@@ -1,85 +1,40 @@
 :root {
-  --color-error: #ff4b34;
   --color-label: #6d6d6d;
   --color-border: #a8a8a8;
-  --color-border-dropdown: #d1d5db;
-  --color-white: #fff;
-  --color-focus: #559cda;
-  --color-text: #a8a8a8;
-  --color-text-selected: #6d6d6d;
-  --color-selected-container: #d9d9d9;
-  --color-hover: #f3f4f6;
-  --color-bg-disabled-field: #eeeeee;
-  --color-input-bg: #ffff;
+  --color-capsule: #d9d9d9;
+  --color-error: #ff4b34;
+  --color-text: #6d6d6d;
+  --color-disabled: #a8a8a8;
+  --color-white: #a8a8a8;
 }
 
-.groupField {
-  @apply flex flex-col gap-2;
+.inputField {
+  @apply border border-[var(--color-border)] rounded-lg p-4 text-[var(--color-text)];
 }
 
 .label {
-  @apply text-[var(--color-label)] font-medium text-[15px] leading-[18px];
+  @apply mb-2 text-[var(--color-label)] font-medium text-[15px] leading-[18px];
 }
 
-.span {
-  @apply text-[var(--color-error)];
+.valueCapsule {
+  @apply bg-[var(--color-capsule)] pr-[7px] pl-[13px] flex items-center gap-2 rounded-[10px] h-[21px] text-sm font-semibold text-[var(--color-text)];
 }
 
-.inputValid {
-  @apply border;
-  border-color: var(--color-border);
+.rightSection {
+  @apply mr-[18px];
 }
 
-.inputError {
-  @apply border;
-  border-color: var(--color-error);
-}
-.selectContainer {
-  @apply relative;
-}
-.selectField {
-  @apply relative text-[var(--color-text)] font-medium text-base leading-6 
-         p-4 rounded-lg outline-none focus:ring-2 focus:ring-[var(--color-focus)] 
-         transition-colors duration-200 appearance-none w-full;
-}
-.enableField {
-  @apply bg-[var(--color-input-bg)];
-}
-.disabledField {
-  @apply bg-[var(--color-bg-disabled-field)];
-}
 .errorMessage {
   @apply text-[var(--color-error)] font-medium text-[15px] leading-[18px];
 }
 
-.iconContainer {
-  @apply pointer-events-none absolute inset-y-0 right-6 flex items-center;
+.placeholder {
+  @apply text-[var(--color-label)] opacity-70;
 }
-.icon {
-  @apply w-3 h-3;
-}
-.selectedOptionContainer {
-  @apply flex flex-wrap gap-2 min-h-[21px];
-}
-.selectedOption {
-  @apply text-[var(--color-text-selected)] font-semibold text-xs bg-[var(--color-selected-container)] flex flex-row items-center pr-[7px] pl-[13px] py-1 justify-between gap-4 rounded-[10px];
-}
-.clearBtn {
-  @apply w-4 h-4;
+.enabledField {
+  @apply bg-[var(--color-white)];
 }
 
-.ulDropdown {
-  @apply absolute top-full left-0 mt-1 z-10 bg-[var(--color-white)] border border-[var(--color-border-dropdown)] rounded-lg shadow-md w-full max-h-48 overflow-auto;
-}
-.liDropdown {
-  @apply px-4 py-2 cursor-pointer hover:bg-[var(--color-hover)] flex justify-between items-center;
-}
-.liSelectedDropdown {
-  @apply text-[var(--color-text)] cursor-default;
-}
-.liNotSelectedDropdown {
-  @apply text-[var(--color-text-selected)];
-}
-.iconSelected {
-  @apply text-[var(--color-text)] text-sm ml-2;
+.disabledField {
+  @apply bg-[var(--color-disabled)];
 }

@@ -1,18 +1,13 @@
-interface Option {
-  label: string;
-  value: string;
-}
-
-interface IMultiSelect {
+export interface IMultiSelect {
   disabled: boolean;
   id: string;
-  name: string;
   label: string;
+  placeholder: string;
   value: string[];
   required?: boolean;
   showError?: boolean;
   errorMessage?: string;
-  options: Option[];
+  data: string[];
   code?: string;
-  onChange: (selected: string[]) => void;
+  onChange: (value: string[]) => void;
 }
