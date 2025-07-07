@@ -1,0 +1,29 @@
+:root {
+  --color-white: #ffff;
+  --color-warning: #ff4b34;
+  --color-primary: #559cda;
+  --color-border: #6d6d6d99;
+  --color-text: #6d6d6d;
+}
+
+.container {
+  @apply bg-[var(--color-white)] rounded-[10px] h-[366px] w-[606px] p-8 overflow-hidden;
+}
+.headerWarning {
+  @apply text-[var(--color-warning)];
+}
+.headerPrimary {
+  @apply text-[var(--color-primary)];
+}
+.header {
+  @apply font-semibold text-[22px] tracking-[-1%] border-b-2 border-[var(--color-border)] pb-2;
+}
+.bodyContainer {
+  @apply flex flex-col justify-center items-center gap-[20px] mt-[36px] overflow-y-hidden;
+}
+.bodyIcon {
+  @apply w-[90px] h-[90px];
+}
+.body {
+  @apply text-[var(--color-text)] font-semibold text-2xl tracking-[-1%] text-center;
+}

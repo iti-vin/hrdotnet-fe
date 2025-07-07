@@ -1,0 +1,60 @@
+:root {
+  --color-white: #ffff;
+  --color-primary: #559cda;
+  --color-border: #6d6d6d99;
+  --color-text: #6d6d6d;
+}
+
+.modalContainer {
+  @apply bg-[var(--color-white)] w-[606px] h-[421px] p-8 rounded-[10px] overflow-y-hidden;
+}
+.header {
+  @apply border-b-2 border-[var(--color-border)] flex items-center;
+}
+.title {
+  @apply text-[var(--color-primary)] font-semibold text-[22px] tracking-[-1%] h-[36px] flex items-center mb-[11px];
+}
+.bodybodyContainer {
+  @apply h-[261px] flex flex-col justify-center;
+}
+.icon {
+  @apply h-[90px] w-[90px] mb-[9px] mt-[29px] mx-auto;
+}
+.body {
+  @apply text-[var(--color-text)] font-semibold text-2xl text-center mb-[61px];
+}
+
+.footer {
+  @apply flex flex-row justify-center items-center gap-[61px] h-[42px] mb-[2px];
+}
+.primaryBtn {
+  @apply uppercase py-3 px-8 flex justify-center items-center rounded-[10px] text-[var(--color-white)] font-medium text-base;
+  background: linear-gradient(90deg, #559cda 0%, #7badff 24%, #ffb58d 73%, #ed8028 100%);
+}
+.secondaryBtn {
+  @apply uppercase py-3 px-8 flex justify-center items-center rounded-[10px] text-[var(--color-secondary)] font-medium text-base border-2 border-[var(--color-secondary)];
+}
+
+@keyframes modalEnter {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes modalExit {
+  0% {
+    @apply opacity-100;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    @apply opacity-0;
+    transform: translateY(-20px) scale(0.95);
+  }
+}
+
+.modalContainer {
+  animation: modalEnter 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}

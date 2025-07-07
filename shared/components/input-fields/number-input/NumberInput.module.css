@@ -1,0 +1,46 @@
+:root {
+  --color-error: #ff4b34;
+  --color-label: #6d6d6d;
+  --color-input-bg: #ffff;
+  --color-input-border: #a8a8a8;
+  --color-focus: #559cda;
+  --color-placeholder: #6d6d6d99;
+  --color-bg-disabled-field: #eeeeee;
+}
+
+.groupField {
+  @apply flex flex-col gap-2;
+}
+
+.label {
+  color: var(--color-label);
+  @apply text-[15px] font-medium leading-[18px];
+}
+
+.span {
+  color: var(--color-error);
+}
+
+.inputField {
+  @apply border transition-all outline-[var(--color-focus)] rounded-lg p-[16px] text-base font-medium leading-6 text-[var(--color-placeholder)];
+}
+.enableField {
+  @apply bg-[var(--color-input-bg)];
+}
+.disabledField {
+  @apply bg-[var(--color-bg-disabled-field)];
+}
+.inputError {
+  @apply border;
+  border-color: var(--color-error);
+}
+
+.inputValid {
+  @apply border;
+  border-color: var(--color-input-border);
+}
+
+.errorMessage {
+  color: var(--color-error);
+  @apply text-[15px] font-medium leading-[18px];
+}

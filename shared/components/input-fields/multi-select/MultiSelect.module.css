@@ -1,0 +1,40 @@
+:root {
+  --color-label: #6d6d6d;
+  --color-border: #a8a8a8;
+  --color-capsule: #d9d9d9;
+  --color-error: #ff4b34;
+  --color-text: #6d6d6d;
+  --color-disabled: #a8a8a8;
+  --color-white: #a8a8a8;
+}
+
+.inputField {
+  @apply border border-[var(--color-border)] rounded-lg p-4 text-[var(--color-text)];
+}
+
+.label {
+  @apply mb-2 text-[var(--color-label)] font-medium text-[15px] leading-[18px];
+}
+
+.valueCapsule {
+  @apply bg-[var(--color-capsule)] pr-[7px] pl-[13px] flex items-center gap-2 rounded-[10px] h-[21px] text-sm font-semibold text-[var(--color-text)];
+}
+
+.rightSection {
+  @apply mr-[18px];
+}
+
+.errorMessage {
+  @apply text-[var(--color-error)] font-medium text-[15px] leading-[18px];
+}
+
+.placeholder {
+  @apply text-[var(--color-label)] opacity-70;
+}
+.enabledField {
+  @apply bg-[var(--color-white)];
+}
+
+.disabledField {
+  @apply bg-[var(--color-disabled)];
+}
