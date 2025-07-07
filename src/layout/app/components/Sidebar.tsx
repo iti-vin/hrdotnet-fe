@@ -12,9 +12,6 @@ import { Search } from "lucide-react";
 //--- Shared Hooks
 import { useLogoWidth } from "@shared/hooks/useWidth";
 
-//--- Public Images
-import logoword from "@shared/assets/images/logoword.webp";
-import logoicon from "@shared/assets/images/icon.webp";
 //--- Sidebar Components
 import TooltipIcon from "./sidebar/TooltipIcon";
 //--- Assets
@@ -23,46 +20,41 @@ import sidebar from "../assets/menu.json";
 import "../assets/styles.css";
 
 import { iconMap } from "../components/sidebar/IconMap";
+import { useState } from "react";
 
 export default function Sidebar({ toggle }: SidebarProps) {
   const { isLogowordVisible, toggleLogos } = useLogoWidth();
+  const [searchFilter, setSearchFilter] = useState<string>("");
+
+  const filteredMain = sidebar.main.filter((link) => link.label.toLowerCase().includes(searchFilter.toLowerCase()));
+  const filteredMenu = sidebar.menu.filter((link) => link.label.toLowerCase().includes(searchFilter.toLowerCase()));
+  const filtered201 = sidebar["201  FILES"].filter((link) => link.label.toLowerCase().includes(searchFilter.toLowerCase()));
+  const filteredTK = sidebar.TIMEKEEPING.filter((link) => link.label.toLowerCase().includes(searchFilter.toLowerCase()));
+  const filteredPayroll = sidebar.PAYROLL.filter((link) => link.label.toLowerCase().includes(searchFilter.toLowerCase()));
+  const filteredReports = sidebar.REPORTS.filter((link) => link.label.toLowerCase().includes(searchFilter.toLowerCase()));
 
   return (
     <AppShell.Navbar>
       {/* Icon and Logo Section */}
       <AppShell.Section px="md" pt={15} display="flex" className="flex flex-row justify-center items-center">
-        <Image src={logoword} hiddenFrom="sm" className="logo" onClick={toggle} />
+        <Image src={`/images/new_logoword.png`} hiddenFrom="sm" className="logo" onClick={toggle} />
         <Transition transition="scale" exitDuration={3} enterDelay={5} mounted={true}>
           {(styles) => {
-            if (isLogowordVisible === true)
-              return (
-                <Image
-                  src={logoword}
-                  visibleFrom="sm"
-                  onClick={toggleLogos}
-                  style={styles}
-                  h={35}
-                  w="auto"
-                  className=""
-                />
-              );
-            else return <Image src={logoicon} h={35} w={35} visibleFrom="sm" onClick={toggleLogos} style={styles} />;
+            if (isLogowordVisible === true) return <Image src={`/images/new_logoword.png`} visibleFrom="sm" onClick={toggleLogos} style={styles} h={35} w="auto" className="" />;
+            else return <Image src={`/images/new_logoicon.png`} h={35} w={35} visibleFrom="sm" onClick={toggleLogos} style={styles} />;
           }}
         </Transition>
       </AppShell.Section>
 
       {/* Search Section */}
       <AppShell.Section px="md" mt="lg">
-        <Flex
-          justify="flex-start"
-          align={isLogowordVisible ? "flex-start" : "center"}
-          direction="column"
-          wrap="wrap"
-          gap={10}>
+        <Flex justify="flex-start" align={isLogowordVisible ? "flex-start" : "center"} direction="column" wrap="wrap" gap={10}>
           {isLogowordVisible ? (
             <TextInput
               leftSection={<Search color="#559CDA" />}
               placeholder="Search Menu...."
+              value={searchFilter}
+              onChange={(e) => setSearchFilter(e.currentTarget.value)}
               styles={{
                 input: {
                   borderColor: "#559CDA",
@@ -81,33 +73,17 @@ export default function Sidebar({ toggle }: SidebarProps) {
         </Flex>
       </AppShell.Section>
 
-      {/* Menu Section */}
+      {/* Modules List Section */}
       <AppShell.Section my="xs" p="md" component={ScrollArea}>
-        <AppShell.Section w="auto">
-          <div className="text-menuText text-xs">{isLogowordVisible ? "Dashboard" : <Divider my="md" />}</div>
-        </AppShell.Section>
-        <Flex
-          justify="flex-start"
-          align={isLogowordVisible ? "flex-start" : "center"}
-          direction="column"
-          wrap="wrap"
-          mt={10}
-          gap={10}>
-          {sidebar.main.map((item) => {
+        {/* Main Section */}
+        <AppShell.Section>{filteredMain.length != 0 && <div className="text-menuText text-xs">{isLogowordVisible ? "Dashboard" : <Divider my="md" />}</div>}</AppShell.Section>
+        <Flex justify="flex-start" align={isLogowordVisible ? "flex-start" : "center"} direction="column" wrap="wrap" mt={10} gap={10}>
+          {filteredMain.map((item) => {
             const Icon = iconMap[item.icon as keyof typeof iconMap];
             return (
-              <NavLink
-                key={item.id}
-                to={item.path}
-                className={({ isActive }) => (isActive ? "module-active w-full rounded-lg" : "w-full text-menuText")}>
-                <Flex
-                  justify={isLogowordVisible ? "flex-start" : "center"}
-                  className={`module flex-menu ${isLogowordVisible && "pl-4 font-regular rounded-lg"}`}>
-                  {isLogowordVisible ? (
-                    <Icon size={22} />
-                  ) : (
-                    <TooltipIcon label={item.label} icon={<Icon size={22} />} />
-                  )}
+              <NavLink key={item.id} to={item.path} className={({ isActive }) => (isActive ? "module-active w-full rounded-lg" : "w-full text-menuText")}>
+                <Flex justify={isLogowordVisible ? "flex-start" : "center"} className={`module flex-menu ${isLogowordVisible && "pl-4 font-regular rounded-lg"}`}>
+                  {isLogowordVisible ? <Icon size={22} /> : <TooltipIcon label={item.label} icon={<Icon size={22} />} />}
                   {isLogowordVisible && <Text className="no-underline  text-sm">{item.label}</Text>}
                 </Flex>
               </NavLink>
@@ -115,31 +91,33 @@ export default function Sidebar({ toggle }: SidebarProps) {
           })}
         </Flex>
 
+        {/* Menu Section */}
+        <AppShell.Section mt={10}>{filteredMenu.length != 0 && <div className="text-menuText text-xs">{isLogowordVisible ? "Menu" : <Divider my="md" />}</div>}</AppShell.Section>
+        <Flex justify="flex-start" align={isLogowordVisible ? "flex-start" : "center"} direction="column" wrap="wrap" mt={10} gap={10}>
+          {filteredMenu.map((item) => {
+            const Icon = iconMap[item.icon as keyof typeof iconMap];
+            return (
+              <NavLink key={item.id} to={item.path} className={({ isActive }) => (isActive ? "module-active w-full rounded-lg" : "w-full text-menuText")}>
+                <Flex justify={isLogowordVisible ? "flex-start" : "center"} className={`module flex-menu ${isLogowordVisible && "pl-4 font-regular rounded-lg"}`}>
+                  {isLogowordVisible ? <Icon size={22} /> : <TooltipIcon label={item.label} icon={<Icon size={22} />} />}
+                  {isLogowordVisible && <Text className="no-underline  text-sm">{item.label}</Text>}
+                </Flex>
+              </NavLink>
+            );
+          })}
+        </Flex>
+
+        {/* 201 Section */}
         <AppShell.Section mt={10}>
-          <div className="text-menuText text-xs">{isLogowordVisible ? "Menu" : <Divider my="md" />}</div>
+          {filtered201.length != 0 && <div className="text-menuText text-xs">{isLogowordVisible ? "201  FILES" : <Divider my="md" />}</div>}
         </AppShell.Section>
-        <Flex
-          justify="flex-start"
-          align={isLogowordVisible ? "flex-start" : "center"}
-          direction="column"
-          wrap="wrap"
-          mt={10}
-          gap={10}>
-          {sidebar.menu.map((item) => {
+        <Flex justify="flex-start" align={isLogowordVisible ? "flex-start" : "center"} direction="column" wrap="wrap" mt={20} gap={10}>
+          {filtered201.map((item) => {
             const Icon = iconMap[item.icon as keyof typeof iconMap];
             return (
-              <NavLink
-                key={item.id}
-                to={item.path}
-                className={({ isActive }) => (isActive ? "module-active w-full rounded-lg" : "w-full text-menuText")}>
-                <Flex
-                  justify={isLogowordVisible ? "flex-start" : "center"}
-                  className={`module flex-menu ${isLogowordVisible && "pl-4 font-regular rounded-lg"}`}>
-                  {isLogowordVisible ? (
-                    <Icon size={22} />
-                  ) : (
-                    <TooltipIcon label={item.label} icon={<Icon size={22} />} />
-                  )}
+              <NavLink key={item.id} to={item.path} className={({ isActive }) => (isActive ? "module-active w-full rounded-lg" : "w-full text-menuText")}>
+                <Flex justify={isLogowordVisible ? "flex-start" : "center"} className={`module flex-menu ${isLogowordVisible && "pl-4 font-regular rounded-lg"}`}>
+                  {isLogowordVisible ? <Icon size={22} /> : <TooltipIcon label={item.label} icon={<Icon size={22} />} />}
                   {isLogowordVisible && <Text className="no-underline  text-sm">{item.label}</Text>}
                 </Flex>
               </NavLink>
@@ -147,31 +125,17 @@ export default function Sidebar({ toggle }: SidebarProps) {
           })}
         </Flex>
 
-        <AppShell.Section mt={10} w="auto">
-          <div className="text-menuText text-xs">{isLogowordVisible ? "201  FILES" : <Divider my="md" />}</div>
+        {/* Timekeeping Section */}
+        <AppShell.Section mt={10}>
+          {filteredTK.length != 0 && <div className="text-menuText text-xs">{isLogowordVisible ? "TIMEKEEPING" : <Divider my="md" />}</div>}
         </AppShell.Section>
-        <Flex
-          justify="flex-start"
-          align={isLogowordVisible ? "flex-start" : "center"}
-          direction="column"
-          wrap="wrap"
-          mt={20}
-          gap={10}>
-          {sidebar["201  FILES"].map((item) => {
+        <Flex justify="flex-start" align={isLogowordVisible ? "flex-start" : "center"} direction="column" wrap="wrap" mt={20} gap={10}>
+          {filteredTK.map((item) => {
             const Icon = iconMap[item.icon as keyof typeof iconMap];
             return (
-              <NavLink
-                key={item.id}
-                to={item.path}
-                className={({ isActive }) => (isActive ? "module-active w-full rounded-lg" : "w-full text-menuText")}>
-                <Flex
-                  justify={isLogowordVisible ? "flex-start" : "center"}
-                  className={`module flex-menu ${isLogowordVisible && "pl-4 font-regular rounded-lg"}`}>
-                  {isLogowordVisible ? (
-                    <Icon size={22} />
-                  ) : (
-                    <TooltipIcon label={item.label} icon={<Icon size={22} />} />
-                  )}
+              <NavLink key={item.id} to={item.path} className={({ isActive }) => (isActive ? "module-active w-full rounded-lg" : "w-full text-menuText")}>
+                <Flex justify={isLogowordVisible ? "flex-start" : "center"} className={`module flex-menu ${isLogowordVisible && "pl-4 font-regular rounded-lg"}`}>
+                  {isLogowordVisible ? <Icon size={22} /> : <TooltipIcon label={item.label} icon={<Icon size={22} />} />}
                   {isLogowordVisible && <Text className="no-underline  text-sm">{item.label}</Text>}
                 </Flex>
               </NavLink>
@@ -179,31 +143,17 @@ export default function Sidebar({ toggle }: SidebarProps) {
           })}
         </Flex>
 
-        <AppShell.Section mt={10} w="auto">
-          <div className="text-menuText text-xs">{isLogowordVisible ? "TIMEKEEPING" : <Divider my="md" />}</div>
+        {/* Payroll Section */}
+        <AppShell.Section mt={10}>
+          {filteredPayroll.length != 0 && <div className="text-menuText text-xs">{isLogowordVisible ? "PAYROLL" : <Divider my="md" />}</div>}
         </AppShell.Section>
-        <Flex
-          justify="flex-start"
-          align={isLogowordVisible ? "flex-start" : "center"}
-          direction="column"
-          wrap="wrap"
-          mt={20}
-          gap={10}>
-          {sidebar["TIMEKEEPING"].map((item) => {
+        <Flex justify="flex-start" align={isLogowordVisible ? "flex-start" : "center"} direction="column" wrap="wrap" mt={20} gap={10}>
+          {filteredPayroll.map((item) => {
             const Icon = iconMap[item.icon as keyof typeof iconMap];
             return (
-              <NavLink
-                key={item.id}
-                to={item.path}
-                className={({ isActive }) => (isActive ? "module-active w-full rounded-lg" : "w-full text-menuText")}>
-                <Flex
-                  justify={isLogowordVisible ? "flex-start" : "center"}
-                  className={`module flex-menu ${isLogowordVisible && "pl-4 font-regular rounded-lg"}`}>
-                  {isLogowordVisible ? (
-                    <Icon size={22} />
-                  ) : (
-                    <TooltipIcon label={item.label} icon={<Icon size={22} />} />
-                  )}
+              <NavLink key={item.id} to={item.path} className={({ isActive }) => (isActive ? "module-active w-full rounded-lg" : "w-full text-menuText")}>
+                <Flex justify={isLogowordVisible ? "flex-start" : "center"} className={`module flex-menu ${isLogowordVisible && "pl-4 font-regular rounded-lg"}`}>
+                  {isLogowordVisible ? <Icon size={22} /> : <TooltipIcon label={item.label} icon={<Icon size={22} />} />}
                   {isLogowordVisible && <Text className="no-underline  text-sm">{item.label}</Text>}
                 </Flex>
               </NavLink>
@@ -211,63 +161,17 @@ export default function Sidebar({ toggle }: SidebarProps) {
           })}
         </Flex>
 
+        {/* Reports Section */}
         <AppShell.Section mt={10} w="auto">
-          <div className="text-menuText text-xs">{isLogowordVisible ? "PAYROLL" : <Divider my="md" />}</div>
+          {filteredReports.length != 0 && <div className="text-menuText text-xs">{isLogowordVisible ? "REPORTS" : <Divider my="md" />}</div>}
         </AppShell.Section>
-        <Flex
-          justify="flex-start"
-          align={isLogowordVisible ? "flex-start" : "center"}
-          direction="column"
-          wrap="wrap"
-          mt={20}
-          gap={10}>
-          {sidebar["PAYROLL"].map((item) => {
+        <Flex justify="flex-start" align={isLogowordVisible ? "flex-start" : "center"} direction="column" wrap="wrap" mt={20} gap={10}>
+          {filteredReports.map((item) => {
             const Icon = iconMap[item.icon as keyof typeof iconMap];
             return (
-              <NavLink
-                key={item.id}
-                to={item.path}
-                className={({ isActive }) => (isActive ? "module-active w-full rounded-lg" : "w-full text-menuText")}>
-                <Flex
-                  justify={isLogowordVisible ? "flex-start" : "center"}
-                  className={`module flex-menu ${isLogowordVisible && "pl-4 font-regular rounded-lg"}`}>
-                  {isLogowordVisible ? (
-                    <Icon size={22} />
-                  ) : (
-                    <TooltipIcon label={item.label} icon={<Icon size={22} />} />
-                  )}
-                  {isLogowordVisible && <Text className="no-underline  text-sm">{item.label}</Text>}
-                </Flex>
-              </NavLink>
-            );
-          })}
-        </Flex>
-
-        <AppShell.Section mt={10} w="auto">
-          <div className="text-menuText text-xs">{isLogowordVisible ? "REPORTS" : <Divider my="md" />}</div>
-        </AppShell.Section>
-        <Flex
-          justify="flex-start"
-          align={isLogowordVisible ? "flex-start" : "center"}
-          direction="column"
-          wrap="wrap"
-          mt={20}
-          gap={10}>
-          {sidebar["REPORTS"].map((item) => {
-            const Icon = iconMap[item.icon as keyof typeof iconMap];
-            return (
-              <NavLink
-                key={item.id}
-                to={item.path}
-                className={({ isActive }) => (isActive ? "module-active w-full rounded-lg" : "w-full text-menuText")}>
-                <Flex
-                  justify={isLogowordVisible ? "flex-start" : "center"}
-                  className={`module flex-menu ${isLogowordVisible && "pl-4 font-regular rounded-lg"}`}>
-                  {isLogowordVisible ? (
-                    <Icon size={22} />
-                  ) : (
-                    <TooltipIcon label={item.label} icon={<Icon size={22} />} />
-                  )}
+              <NavLink key={item.id} to={item.path} className={({ isActive }) => (isActive ? "module-active w-full rounded-lg" : "w-full text-menuText")}>
+                <Flex justify={isLogowordVisible ? "flex-start" : "center"} className={`module flex-menu ${isLogowordVisible && "pl-4 font-regular rounded-lg"}`}>
+                  {isLogowordVisible ? <Icon size={22} /> : <TooltipIcon label={item.label} icon={<Icon size={22} />} />}
                   {isLogowordVisible && <Text className="no-underline  text-sm">{item.label}</Text>}
                 </Flex>
               </NavLink>
