@@ -6,7 +6,7 @@ export interface FileAttachmentProps {
   multiple?: boolean;
   maxFiles?: number;
   accept?: string;
-  onChange?: (files: File[]) => void;
+  onChange: (files: File[]) => void;
   initialFiles?: File[];
   required?: boolean;
   lz?: "xs" | "sm" | "md" | "lg" | "xl";
@@ -48,9 +48,10 @@ export default function FileAttachment({
       const existingKeys = new Set(prev.map((f) => f.name + f.size));
       const filtered = incoming.filter((f) => !existingKeys.has(f.name + f.size));
       const combined = [...prev, ...filtered];
-      onChange?.(combined.slice(0, maxFiles));
+      const limited = combined.slice(0, maxFiles);
+      onChange = (limited) => limited;
 
-      return combined.slice(0, maxFiles);
+      return limited;
     });
   };
 
