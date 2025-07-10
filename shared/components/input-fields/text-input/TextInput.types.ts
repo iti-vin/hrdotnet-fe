@@ -1,16 +1,5 @@
-import { ChangeEvent, InputHTMLAttributes } from "react";
+import { TextInputProps } from "@mantine/core";
 
-export interface IInputField extends InputHTMLAttributes<HTMLInputElement> {
-  label: string;
-  type: string;
-  disabled: boolean;
-  name: string;
-  id: string;
-  value: string;
-  autoComplete: "on" | "off";
-  placeholder: string;
-  required?: boolean;
-  errorMessage?: string;
-  showError?: boolean;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+export interface ITextInput extends TextInputProps {
+  code?: string;
 }

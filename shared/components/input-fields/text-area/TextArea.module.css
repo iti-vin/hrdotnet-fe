@@ -1,41 +1,20 @@
 :root {
-  --color-error: #ff4b34;
-  --color-placeholder: #6d6d6d99;
   --color-label: #6d6d6d;
   --color-border: #a8a8a8;
-  --color-focus: #559cda;
-  --color-bg-disabled-field: #eeeeee;
-  --color-input-bg: #ffff;
-}
-
-.groupField {
-  @apply flex flex-col gap-2;
+  --color-placeholder: #6d6d6d99;
+  --color-focus: #228be6;
+  --color-header: #559cda;
 }
 .label {
   @apply text-[var(--color-label)] font-medium text-[15px] leading-[18px];
 }
-.span {
-  @apply text-[var(--color-error)];
+.labelHeder {
+  @apply text-[var(--color-header)] font-bold mb-2;
 }
-.textArea {
-  resize: none;
-  @apply outline-[var(--color-focus)] p-4 rounded-lg gap-[10px] text-[var(--color-placeholder)] leading-6 font-medium text-base;
-}
-.enableField {
-  @apply bg-[var(--color-input-bg)];
-}
-.disabledField {
-  @apply bg-[var(--color-bg-disabled-field)];
+.input {
+  @apply border border-[var(--color-border)] rounded-lg p-4 gap-[10px] focus:border-[var(--color-focus)];
 }
 
-.inputError {
-  @apply border;
-  border-color: var(--color-error);
-}
-.inputValid {
-  @apply border;
-  border-color: var(--color-border);
-}
-.errorMessage {
-  @apply text-[var(--color-error)] font-medium text-[15px] leading-[18px];
+.input::placeholder {
+  @apply text-[var(--color-placeholder)] font-medium text-base;
 }
