@@ -6,7 +6,7 @@
 }
 
 .modalContainer {
-  @apply bg-[var(--color-white)] w-[606px] h-[421px] p-8 rounded-[10px] overflow-y-hidden;
+  @apply bg-[var(--color-white)] w-[606px] p-8 rounded-[10px] overflow-y-hidden;
 }
 .header {
   @apply border-b-2 border-[var(--color-border)] flex items-center;
@@ -14,8 +14,8 @@
 .title {
   @apply text-[var(--color-primary)] font-semibold text-[22px] tracking-[-1%] h-[36px] flex items-center mb-[11px];
 }
-.bodybodyContainer {
-  @apply h-[261px] flex flex-col justify-center;
+.bodyContainer {
+  @apply flex flex-col;
 }
 .icon {
   @apply h-[90px] w-[90px] mb-[9px] mt-[29px] mx-auto;
@@ -25,7 +25,7 @@
 }
 
 .footer {
-  @apply flex flex-row justify-center items-center gap-[61px] h-[42px] mb-[2px];
+  @apply flex flex-row justify-center items-center gap-[61px] mb-[2px];
 }
 .primaryBtn {
   @apply uppercase py-3 px-8 flex justify-center items-center rounded-[10px] text-[var(--color-white)] font-medium text-base;

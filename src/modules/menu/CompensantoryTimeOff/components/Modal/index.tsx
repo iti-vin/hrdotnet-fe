@@ -14,7 +14,6 @@ import Toast from "@/layout/main/alert/toast";
 import { Panel } from "@shared/assets/types/Global";
 import { useCTOStore } from "../../store";
 import SummaryDetails from "./confirmation/SummaryDetails";
-import BatchConfirmation from "@shared/ui/modals/batch";
 
 interface ModalProps {
   panel?: Panel;
@@ -26,16 +25,6 @@ export default function index({ panel, onHandleSingleEndorse, onHandleSingleAppr
   const { openDialog, setOpenDialog, openAlert, setOpenAlert, openConfirmation, setOpenConfirmation, error, setError, warning, success } = useCTOStore();
   return (
     <Fragment>
-      <BatchConfirmation
-        variant="danger"
-        opened={true}
-        onClose={() => {}}
-        title="Batch Approve!"
-        description={`The CTO Request for ${new Date().toDateString()} has been successfully approved. Records have been updated.`}
-        yes={{ onClick: () => {}, title: "Done" }}
-        no={{ onClick: () => {}, title: "Discard" }}
-      />
-
       {/* Dialogs */}
       <EditRequest opened={openDialog === "EditRequest"} onClose={() => setOpenDialog("")} buttonClose={() => setOpenDialog("")} />
       <NewRequest opened={openDialog === "NewRequest"} onClose={() => setOpenDialog("")} buttonClose={() => setOpenDialog("")} />

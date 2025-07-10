@@ -13,6 +13,7 @@ export interface IBasicModal extends Omit<ModalProps, "children"> {
   containerClassName?: string;
   closeButton?: ReactNode;
   buttonClose?: () => void;
+  formProps?: React.FormHTMLAttributes<HTMLFormElement>;
 }
 
 export function BasicModal({
@@ -32,6 +33,7 @@ export function BasicModal({
   styles: sx,
   containerClassName,
   closeButton,
+  formProps,
   ...rest
 }: IBasicModal) {
   return (
@@ -69,8 +71,17 @@ export function BasicModal({
       <div className={cn(styles.modalContainer, containerClassName)}>
         <ModalHeader title={title} onClose={buttonClose} />
 
-        <ModalBody>{children}</ModalBody>
-        {footer && <ModalFooter>{footer}</ModalFooter>}
+        {formProps ? (
+          <form {...formProps} className="h-full flex flex-col justify-between">
+            <ModalBody>{children}</ModalBody>
+            {footer && <ModalFooter>{footer}</ModalFooter>}
+          </form>
+        ) : (
+          <>
+            <ModalBody>{children}</ModalBody>
+            {footer && <ModalFooter>{footer}</ModalFooter>}
+          </>
+        )}
       </div>
     </Modal>
   );

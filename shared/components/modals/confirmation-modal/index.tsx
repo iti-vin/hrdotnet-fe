@@ -1,18 +1,46 @@
-import { Modal } from "@mantine/core";
+import { Modal, ModalProps } from "@mantine/core";
 import { ModalHeader } from "./components/ModalHeader";
 import { ModalBody } from "./components/ModalBody";
 import { ModalFooter } from "./components/ModalFooter";
 import styles from "./assets/style/modal.module.css";
-import { useModalStore } from "./store/useModalStore";
+import { ReactNode } from "react";
 
-export function ConfirmationModal() {
-  const { isOpen, header, body, footer, width, closeModal } = useModalStore();
+export interface IConfirmationModal extends Omit<ModalProps, "children"> {
+  title: ReactNode;
+  children: ReactNode;
+  footer?: ReactNode;
+  containerClassName?: string;
+  closeButton?: ReactNode;
+  buttonClose?: () => void;
+  formProps?: React.FormHTMLAttributes<HTMLFormElement>;
+}
 
+export function ConfirmationModal({
+  opened,
+  onClose,
+  buttonClose,
+  title,
+  children,
+  footer,
+  size = "md",
+  centered = true,
+  withCloseButton = false,
+  overlayProps = { backgroundOpacity: 0.1 },
+  radius = 12,
+  padding = 0,
+  classNames,
+  styles: sx,
+  containerClassName,
+  closeButton,
+  formProps,
+  ...rest
+}: IConfirmationModal) {
   return (
     <Modal
-      opened={isOpen}
-      onClose={closeModal}
-      size={width ?? "md"}
+      {...rest}
+      opened={opened}
+      onClose={onClose}
+      size={size}
       centered
       withCloseButton={false}
       radius={12}
@@ -41,9 +69,19 @@ export function ConfirmationModal() {
         },
       }}>
       <div className={styles.modalContainer}>
-        {header && <ModalHeader>{header}</ModalHeader>}
-        {body && <ModalBody>{body}</ModalBody>}
-        {footer && <ModalFooter>{footer}</ModalFooter>}
+        {title && <ModalHeader>{title}</ModalHeader>}
+
+        {formProps ? (
+          <form {...formProps} className="h-full flex flex-col justify-between">
+            <ModalBody>{children}</ModalBody>
+            {footer && <ModalFooter>{footer}</ModalFooter>}
+          </form>
+        ) : (
+          <>
+            <ModalBody>{children}</ModalBody>
+            {footer && <ModalFooter>{footer}</ModalFooter>}
+          </>
+        )}
       </div>
     </Modal>
   );
