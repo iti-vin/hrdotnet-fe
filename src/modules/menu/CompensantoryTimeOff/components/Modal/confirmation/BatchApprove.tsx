@@ -5,8 +5,9 @@
 
 //--- Mantine Modules
 import { useMediaQuery } from "@mantine/hooks";
-import { Button, Divider, Modal, Stack, Text } from "@mantine/core";
+import { Stack, Text } from "@mantine/core";
 import { useCTOStore } from "../../../store";
+import { Button, Confirmation } from "@shared/components";
 
 interface BatchInterface {
   opened: boolean;
@@ -24,32 +25,27 @@ export default function BatchApprove({ opened, onClose, buttonClose }: BatchInte
   };
 
   return (
-    <Modal
+    <Confirmation
       opened={opened}
+      title="Batch Approve"
       size="lg"
       centered
       padding={small ? 20 : 30}
       radius={10}
       withCloseButton={false}
       onClose={onClose}
-      styles={{ body: { overflow: "hidden" } }}>
-      <div className="flex justify-between">
-        <Text fw={600} fz={small ? 15 : 22} c={"#559CDA"}>
-          Approve Request
-        </Text>
-      </div>
-      <Divider size="xs" color="#6D6D6D" mt={10} />
-      <Text className="text-[#6d6d6d] mt-5">2 Compensatory Time-Off </Text>
-      <div className="flex flex-col mt-3 w-full text-[#6d6d6d] items-center pt-4 gap-3 px-5">
-        <Stack className="flex flex-row w-full justify-end mt-5">
-          <Button variant="outline" className="rounded-md w-44" onClick={buttonClose}>
+      styles={{ body: { overflow: "hidden" } }}
+      footer={
+        <Stack className="flex flex-row w-full justify-end">
+          <Button variant="outline" className="text-[#559cda] border-[#559cda]" w={100} h={35} onClick={buttonClose}>
             CANCEL
           </Button>
-          <Button className="rounded-md br-gradient border-none w-44" onClick={handleBatchApprove}>
+          <Button variant="gradient" w={100} h={35} onClick={() => handleBatchApprove()}>
             CONFIRM
           </Button>
         </Stack>
-      </div>
-    </Modal>
+      }>
+      <Text className="text-[#6d6d6d] mt-5">2 Compensatory Time-Off </Text>
+    </Confirmation>
   );
 }
