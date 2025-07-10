@@ -1,48 +1,7 @@
-import inputStyle from "./TextInput.module.css";
-import { IInputField } from "./TextInput.types";
+import { TextInput } from "@mantine/core";
+import { ITextInput } from "./TextInput.types";
+import styles from "./TextInput.module.css";
 
-function TextInput({
-  label,
-  type,
-  name,
-  id,
-  value,
-  autoComplete,
-  placeholder,
-  disabled = false,
-  required = false,
-  errorMessage,
-  showError = false,
-  onChange,
-  ...props
-}: IInputField) {
-  const hasError = !disabled && required && showError && value.length === 0;
-
-  const inputClass = `
-  ${inputStyle.inputField} 
-  ${hasError ? inputStyle.inputError : inputStyle.inputValid}   
-  ${disabled ? inputStyle.disabledField : inputStyle.enableField}`;
-
-  return (
-    <div className={inputStyle.groupField}>
-      <label htmlFor={name} className={inputStyle.label}>
-        {label} {required && <span className={inputStyle.span}>*</span>}
-      </label>
-      <input
-        type={type}
-        name={name}
-        id={id}
-        disabled={disabled}
-        autoComplete={autoComplete}
-        placeholder={placeholder}
-        className={inputClass}
-        value={value}
-        onChange={onChange}
-        {...props}
-      />
-      {hasError && <p className={inputStyle.errorMessage}>{errorMessage}</p>}
-    </div>
-  );
+export default function CustomTextInput({ pattern, code, ...props }: ITextInput) {
+  return <TextInput pattern={pattern} v2-id={`text-input-${code}`} {...props} classNames={{ label: styles.label, input: styles.input }} />;
 }
-
-export default TextInput;

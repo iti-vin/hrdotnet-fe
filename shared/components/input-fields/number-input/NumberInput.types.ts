@@ -1,16 +1,6 @@
-import { ChangeEvent, InputHTMLAttributes } from "react";
+import { NumberInputProps } from "@mantine/core";
 
-export interface INumberInput extends InputHTMLAttributes<HTMLInputElement> {
-  label: string;
-  name: string;
-  id: string;
-  disabled?: boolean;
-  value: string;
+export interface INumberInput extends NumberInputProps {
   code?: string;
-  autoComplete: "on" | "off";
-  placeholder: string;
-  required?: boolean;
-  errorMessage?: string;
-  showError?: boolean;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  pattern?: string;
 }

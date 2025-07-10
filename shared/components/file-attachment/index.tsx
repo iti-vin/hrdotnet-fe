@@ -6,7 +6,7 @@ export interface FileAttachmentProps {
   multiple?: boolean;
   maxFiles?: number;
   accept?: string;
-  onChange: (files: File[]) => void;
+  onChange?: (files: File[]) => void;
   initialFiles?: File[];
   required?: boolean;
   lz?: "xs" | "sm" | "md" | "lg" | "xl";
