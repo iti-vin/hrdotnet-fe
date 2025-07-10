@@ -1,26 +1,32 @@
-import { Button, Divider, Flex, Modal, Stack, Text } from "@mantine/core";
+import { Flex, Stack, Text } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { ModalProps } from "@shared/assets/types/Modal";
+import { Button, Confirmation } from "@shared/components";
 import { IconCircleCheckFilled } from "@tabler/icons-react";
 
 export default function SummaryDetails({ opened, onClose, buttonClose }: ModalProps) {
   const small = useMediaQuery("(max-width: 40em)");
   return (
-    <Modal
+    <Confirmation
       opened={opened}
+      title="Summary Details"
       size="lg"
       centered
       padding={small ? 20 : 30}
       radius={10}
       withCloseButton={false}
       onClose={onClose}
-      styles={{ body: { overflow: "hidden" } }}>
-      <Stack className="flex justify-between">
-        <Text fw={600} fz={small ? 15 : 22} c={"#559CDA"}>
-          Summary Details
-        </Text>
-      </Stack>
-      <Divider size="xs" color="#6D6D6D" mt={10} />
+      styles={{ body: { overflow: "hidden" } }}
+      footer={
+        <Stack className="flex flex-row w-full justify-end mt-5">
+          <Button variant="outline" className="border-[#559cda] text-[#559cda]" radius="md" h={40} w={100} onClick={buttonClose}>
+            BACK
+          </Button>
+          <Button variant="gradient" radius="md" type="submit" h={40} w={100} onClick={() => {}}>
+            SUBMIT
+          </Button>
+        </Stack>
+      }>
       <Stack className="w-full h-full p-4">
         <Flex gap={10} align="center">
           <Text c="#559cda" fw={700}>
@@ -61,15 +67,6 @@ export default function SummaryDetails({ opened, onClose, buttonClose }: ModalPr
           </Text>
         </Flex>
       </Stack>
-
-      <Stack className="flex flex-row w-full justify-end mt-5">
-        <Button variant="outline" className="rounded-md w-44" onClick={buttonClose}>
-          BACK
-        </Button>
-        <Button className="rounded-md br-gradient border-none w-44" onClick={() => {}}>
-          SUBMIT
-        </Button>
-      </Stack>
-    </Modal>
+    </Confirmation>
   );
 }
