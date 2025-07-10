@@ -1,8 +1,9 @@
-import { DataTable, DataTableColumn, DataTableRowClickHandler } from "mantine-datatable";
+import { DataTableColumn, DataTableRowClickHandler } from "mantine-datatable";
 import { LeaveItems } from "../../assets/Types";
 import useLeaveStore from "../../store/LeaveStore";
 import { useLeave } from "../../context";
 import { useEffect } from "react";
+import { DataTable } from "@shared/components";
 
 interface DataTableProps {
   columns: DataTableColumn<{}>[];
@@ -24,18 +25,17 @@ export default function index({ columns, records, isLoading }: DataTableProps) {
   useEffect(() => {}, [activeTab]);
 
   return (
-    <DataTable
+    <DataTable<LeaveItems>
       key="filing.filingStatus.name"
-      idAccessor="filing.documentNo"
+      idAccessor={"code"}
       records={records}
       columns={columns}
       {...(activeTab !== 0 && {
+        selectable: true,
         selectedRecords,
         onSelectedRecordsChange: setSelectedRecords,
       })}
-      fetching={isLoading}
-      loaderSize="sm"
-      loaderColor="blue"
+      isLoading={isLoading}
       onRowClick={(data: RowData) => {
         setViewItems(data.record);
         setOpenDialog("ViewDetails");

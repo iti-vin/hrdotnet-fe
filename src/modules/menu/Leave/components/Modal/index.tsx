@@ -12,6 +12,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { BatchData } from "../../models/request";
 import { LeaveServices } from "../../services/main";
 import Toast from "@/layout/main/alert/toast";
+import SummaryDetails from "./Dialog/SummaryDetails";
 
 interface ModalProps {
   panel?: "FILINGS" | "REQUEST" | "REVIEWAL" | "APPROVAL";
@@ -21,7 +22,7 @@ interface ModalProps {
 
 export default function index({ panel, approve, endorse }: ModalProps) {
   const queryClient = useQueryClient();
-  const { selectedRecords, setSelectedRecords, setOpenDialog, error, setError } = useLeaveStore();
+  const { selectedRecords, setSelectedRecords, openDialog, setOpenDialog, error, setError } = useLeaveStore();
 
   const { mutate: batchCancelLeave } = useMutation({
     mutationFn: async () => {
@@ -79,6 +80,7 @@ export default function index({ panel, approve, endorse }: ModalProps) {
       <BatchCancel message={rndrContentMessage()} onClick={handleSubmit} />
       <BatchApproval message={rndrContentMessage()} />
       <BatchReviewal message={rndrContentMessage()} />
+      <SummaryDetails opened={openDialog === "SummaryDetails"} onClose={() => setOpenDialog("")} buttonClose={() => setOpenDialog("")} />
       {/*  */}
       <Toast opened={error != ""} type="error" message={error} onClose={() => setError("")} />
     </>
