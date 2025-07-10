@@ -1,29 +1,54 @@
-import { Modal } from "@mantine/core";
+import { Modal, ModalProps } from "@mantine/core";
 import { ModalHeader } from "./components/ModalHeader";
 import { ModalBody } from "./components/ModalBody";
 import { ModalFooter } from "./components/ModalFooter";
 import styles from "./modal.module.css";
-import { useModalStore } from "./store/useModalStore";
+import { cn } from "@/lib/utils";
+import { ReactNode } from "react";
 
-export function BasicModal() {
-  const { isOpen, title, content, footer, width, closeModal } = useModalStore();
+export interface IBasicModal extends Omit<ModalProps, "children"> {
+  title: ReactNode;
+  children: ReactNode;
+  footer?: ReactNode;
+  containerClassName?: string;
+  closeButton?: ReactNode;
+  buttonClose?: () => void;
+}
 
+export function BasicModal({
+  opened,
+  onClose,
+  buttonClose,
+  title,
+  children,
+  footer,
+  size = "md",
+  centered = true,
+  withCloseButton = false,
+  overlayProps = { backgroundOpacity: 0.1 },
+  radius = 12,
+  padding = 0,
+  classNames,
+  styles: sx,
+  containerClassName,
+  closeButton,
+  ...rest
+}: IBasicModal) {
   return (
     <Modal
-      opened={isOpen}
-      onClose={closeModal}
-      size={width ?? "md"}
-      centered
-      withCloseButton={false}
-      radius={12}
-      padding={0}
-      overlayProps={{
-        backgroundOpacity: 0.1,
-      }}
+      opened={opened}
+      onClose={onClose}
+      size={size}
+      centered={centered}
+      withCloseButton={withCloseButton}
+      radius={radius}
+      padding={padding}
+      overlayProps={overlayProps}
       classNames={{
         content: styles.modalOverrides,
         body: styles.modalOverrides,
         inner: styles.modalOverrides,
+        ...classNames,
       }}
       styles={{
         content: {
@@ -38,10 +63,13 @@ export function BasicModal() {
           margin: 0,
           boxShadow: "none",
         },
-      }}>
-      <div className={styles.modalContainer}>
-        <ModalHeader title={title} />
-        <ModalBody>{content}</ModalBody>
+        ...sx,
+      }}
+      {...rest}>
+      <div className={cn(styles.modalContainer, containerClassName)}>
+        <ModalHeader title={title} onClose={buttonClose} />
+
+        <ModalBody>{children}</ModalBody>
         {footer && <ModalFooter>{footer}</ModalFooter>}
       </div>
     </Modal>

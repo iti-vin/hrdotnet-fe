@@ -6,7 +6,7 @@ import styles from "./assets/style/modal.module.css";
 import { useModalStore } from "./store/useModalStore";
 
 export function ConfirmationModal() {
-  const { isOpen, title, body, footer, width, closeModal } = useModalStore();
+  const { isOpen, header, body, footer, width, closeModal } = useModalStore();
 
   return (
     <Modal
@@ -41,8 +41,8 @@ export function ConfirmationModal() {
         },
       }}>
       <div className={styles.modalContainer}>
-        <ModalHeader title={title} />
-        <ModalBody body={body} />
+        {header && <ModalHeader>{header}</ModalHeader>}
+        {body && <ModalBody>{body}</ModalBody>}
         {footer && <ModalFooter>{footer}</ModalFooter>}
       </div>
     </Modal>

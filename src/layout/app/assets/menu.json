@@ -1,7 +1,6 @@
 {
   "menu": [
     { "label": "CHANGE OF SCHEDULE", "path": "/change-schedule", "id": 1, "icon": "IconCalendarEvent" },
-    { "label": "CUSTOM CHANGE OF SCHEDULE", "path": "/custom-change-schedule", "id": 9, "icon": "IconCalendarEvent" },
     { "label": "CTO", "path": "/compensatory-timeoff", "id": 2, "icon": "IconCalendarTime" },
     { "label": "LEAVE", "path": "/leave", "id": 3, "icon": "IconBriefcase" },
     { "label": "MISSED LOG", "path": "/missed-log", "id": 4, "icon": "IconClockX" },

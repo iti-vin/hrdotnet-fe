@@ -16,3 +16,4 @@ export { default as FileAttachment } from "./file-attachment";
 export { DataTable } from "./table";
 export { DataTable as PaginatedDataTable } from "./table/data-table";
 export { default as Drawer } from "./drawer";
+export { default as ReferenceNoInput } from "./ReferenceInput";

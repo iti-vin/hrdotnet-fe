@@ -6,28 +6,19 @@
 //--- Node Modules
 import { useForm } from "@mantine/form";
 import { Fragment, useState } from "react";
-import { IconTransfer, IconX } from "@tabler/icons-react";
-import {
-  Button,
-  Container,
-  Divider,
-  Drawer,
-  Flex,
-  Group,
-  MultiSelect,
-  Select,
-  Tabs,
-  Text,
-  TextInput,
-} from "@mantine/core";
+import { IconTransfer } from "@tabler/icons-react";
+import { Container, Flex, Group, Tabs, Text } from "@mantine/core";
 //--- Shared Modules
-import RndrDateRange from "@shared/template/base/DateRange";
+
 import { useGlobalStore } from "@shared/store";
 
 //--- Missed Log
 import { DateTimeUtils } from "@shared/utils/DateTimeUtils";
 import { useChangeOfScheduleStore } from "../../store";
 import { useChangeOfScheduleContext } from "../../context";
+import CustomDivider from "../Divider";
+import Drawer from "@shared/components/drawer";
+import { Button, Select, DateRangePickerInput, MultiSelect, TextInput } from "@shared/components";
 
 interface DrawerFilterProps {
   isNotUser?: boolean;
@@ -47,6 +38,7 @@ interface FilterFormInterface {
 
 export default function DrawerFilter({ isNotUser = false }: DrawerFilterProps) {
   const { twoDate, setTwoDate } = useGlobalStore();
+  const [dateRange, setDateRange] = useState<[string | null, string | null]>([null, null]);
   const { openDrawer, setOpenDrawer } = useChangeOfScheduleStore();
   const { onHandleSubmitFilter, onHandleClearFilter } = useChangeOfScheduleContext();
 
@@ -98,6 +90,7 @@ export default function DrawerFilter({ isNotUser = false }: DrawerFilterProps) {
 
   return (
     <Drawer
+      title="Filter By"
       opened={openDrawer}
       onClose={() => setOpenDrawer(false)}
       position="right"
@@ -108,74 +101,34 @@ export default function DrawerFilter({ isNotUser = false }: DrawerFilterProps) {
       <form onSubmit={filterForm.onSubmit(submitFilter)} className="w-full h-full">
         <Flex className="w-full h-full flex flex-col gap justify-between">
           <Container className="flex flex-col gap-2 2xl:gap-4 p-0">
-            <Flex className="w-full" direction="column" gap={10} mt={5}>
-              <Flex direction="row" justify="space-between">
-                <Text fw={700} fz={22} c="#559CDA">
-                  Filter By
-                </Text>
-                <IconX className="cursor-pointer" onClick={() => setOpenDrawer(false)} size={30} color="gray" />
-              </Flex>
-            </Flex>
-            <Divider size={2} color="#edeeed" className="w-full" />
-
             <Flex className="flex flex-col gap-2">
-              <TextInput
-                label="Document No."
-                placeholder="Type Document No."
-                radius="md"
-                classNames={{ input: "poppins" }}
-                key={filterForm.key("DocumentNo")}
-                {...filterForm.getInputProps("DocumentNo")}
-                styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
-              />
-              <Divider size={2} h={10} color="#edeeed" className="w-full" />
+              <TextInput label="Document No." placeholder="Type Document No." key={filterForm.key("DocumentNo")} {...filterForm.getInputProps("DocumentNo")} />
+
+              <CustomDivider />
 
               {/* For Reviewal/Approval/Filings */}
               {isNotUser && (
                 <Fragment>
-                  <TextInput
-                    label="Branch Code"
-                    placeholder="Type Branch Code."
-                    radius="md"
-                    classNames={{ input: "poppins" }}
-                    key={filterForm.key("BranchCode")}
-                    {...filterForm.getInputProps("BranchCode")}
-                    styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
-                  />
-                  <Divider size={2} h={10} color="#edeeed" className="w-full" />
+                  <TextInput label="Branch Code" placeholder="Type Branch Code." key={filterForm.key("BranchCode")} {...filterForm.getInputProps("BranchCode")} />
+                  <CustomDivider />
 
-                  <TextInput
-                    label="Employee Code."
-                    placeholder="Type Employee Code."
-                    radius="md"
-                    classNames={{ input: "poppins" }}
-                    key={filterForm.key("EmployeeCode")}
-                    {...filterForm.getInputProps("EmployeeCode")}
-                    styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
-                  />
-                  <Divider size={2} h={10} color="#edeeed" className="w-full" />
-
-                  <TextInput
-                    label="Employee Name."
-                    placeholder="Type Employee Name."
-                    radius="md"
-                    classNames={{ input: "poppins" }}
-                    key={filterForm.key("EmployeeName")}
-                    {...filterForm.getInputProps("EmployeeName")}
-                    styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
-                  />
-                  <Divider size={2} h={10} color="#edeeed" className="w-full" />
+                  <TextInput label="Employee Code." placeholder="Type Employee Code." key={filterForm.key("EmployeeCode")} {...filterForm.getInputProps("EmployeeCode")} />
+                  <CustomDivider />
+                  <TextInput label="Employee Name." placeholder="Type Employee Name." key={filterForm.key("EmployeeName")} {...filterForm.getInputProps("EmployeeName")} />
+                  <CustomDivider />
                 </Fragment>
               )}
 
               <MultiSelect
                 label="Schedule"
-                radius="md"
-                classNames={{ input: "poppins" }}
-                data={[]}
-                styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
+                data={[
+                  { value: String(1), label: "Filed" },
+                  { value: String(2), label: "Approve" },
+                  { value: String(3), label: "Cancelled" },
+                  { value: String(4), label: "Reviewed" },
+                ]}
               />
-              <Divider size={2} h={10} color="#edeeed" className="w-full" />
+              <CustomDivider />
 
               {/* Date Range */}
               <Tabs value={activeTab} onChange={(val) => setActiveTab(val as "transaction" | "missedlog")}>
@@ -187,16 +140,17 @@ export default function DrawerFilter({ isNotUser = false }: DrawerFilterProps) {
                       </Text>
                       <IconTransfer onClick={toggleTab} className="cursor-pointer" />
                     </Flex>
-                    {RndrDateRange({
-                      fl: "Date From",
-                      fp: "From",
-                      sl: "Date To",
-                      sp: "To",
-                      dateProps: twoDate,
-                      setDateProps: (newValue: [Date | null, Date | null]) => {
-                        setTwoDate(newValue);
-                      },
-                    })}
+                    <DateRangePickerInput
+                      direction="column"
+                      dateValue={dateRange}
+                      setDateValue={(date) => {
+                        setDateRange(date);
+                      }}
+                      fl="Date From"
+                      sl="From"
+                      fp="Date To"
+                      sp="To"
+                    />
                   </Group>
                 </Tabs.Panel>
 
@@ -208,7 +162,8 @@ export default function DrawerFilter({ isNotUser = false }: DrawerFilterProps) {
                       </Text>
                       <IconTransfer onClick={toggleTab} className="cursor-pointer" />
                     </Flex>
-                    {RndrDateRange({
+
+                    {/* {RndrDateRange({
                       fl: "Date From",
                       fp: "From",
                       sl: "Date To",
@@ -220,16 +175,26 @@ export default function DrawerFilter({ isNotUser = false }: DrawerFilterProps) {
                           DateField: "dateTransaction",
                         });
                       },
-                    })}
+                    })} */}
+                    <DateRangePickerInput
+                      direction="column"
+                      dateValue={dateRange}
+                      setDateValue={(date) => {
+                        setDateRange(date);
+                      }}
+                      fl="Date From"
+                      sl="From"
+                      fp="Date To"
+                      sp="To"
+                    />
                   </Group>
                 </Tabs.Panel>
               </Tabs>
-              <Divider size={2} h={10} color="#edeeed" className="w-full" mt={5} />
+              <CustomDivider mt={5} />
+
               <Select
                 label="Requested Schedule"
                 radius="md"
-                classNames={{ input: "poppins" }}
-                styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
                 // defaultValue={requested}
                 // data={schedList.map((item) => ({ value: item.id.toString(), label: item.name }))}
                 // onChange={(value) => {
@@ -244,42 +209,32 @@ export default function DrawerFilter({ isNotUser = false }: DrawerFilterProps) {
               {!isNotUser && (
                 <Fragment>
                   {/* Processed By */}
-                  <Divider size={2} h={10} color="#edeeed" className="w-full" />
-                  <MultiSelect
-                    label="Processed By"
-                    placeholder="Select Name"
-                    radius="md"
-                    classNames={{ input: "poppins" }}
-                    styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
-                    data={[]}
-                  />
-                  <Divider size={2} h={10} color="#edeeed" className="w-full" />
+                  <CustomDivider />
+                  <MultiSelect label="Processed By" placeholder="Select Name" data={[]} />
+                  <CustomDivider />
                   {/* Status */}
                   <MultiSelect
                     label="Status"
-                    radius="md"
                     placeholder="Select Status"
-                    classNames={{ input: "poppins" }}
                     data={[
                       { value: String(1), label: "Filed" },
                       { value: String(2), label: "Approve" },
                       { value: String(3), label: "Cancelled" },
                       { value: String(4), label: "Reviewed" },
                     ]}
-                    styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
                     value={formStatus.map(String)}
                     onChange={handleChange}
                   />
                 </Fragment>
               )}
-              <Divider size={2} h={10} color="#edeeed" className="w-full" />
+              <CustomDivider />
             </Flex>
           </Container>
           <Flex className="w-full flex flex-row justify-end gap-3">
-            <Button variant="outline" radius="md" w={100} onClick={clearFilter}>
+            <Button variant="outlineBlue" onClick={clearFilter}>
               CLEAR
             </Button>
-            <Button className="border-none br-gradient" radius="md" type="submit" w={100}>
+            <Button variant="gradient" size="md" type="submit">
               FILTER
             </Button>
           </Flex>
