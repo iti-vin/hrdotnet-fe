@@ -9,26 +9,26 @@
 .gradient {
   @apply border-none custom-gradient text-white;
 }
-.primary {
+.orange {
   @apply bg-[#FF6266] text-white hover:bg-[#e65358];
 }
-.warning {
+.yellow {
   @apply bg-yellow-500 text-white hover:bg-yellow-600;
 }
-.error {
+.red {
   @apply bg-red-500 text-white hover:bg-red-600;
 }
-.info {
+.blue {
   @apply bg-blue-500 text-white hover:bg-blue-600;
 }
-.default {
+.dark {
   @apply bg-white text-gray-800 border border-gray-300 hover:bg-gray-100;
 }
 .ghost {
   @apply bg-transparent text-gray-700 hover:bg-gray-100;
 }
 .outline {
-  @apply border border-gray-300 text-gray-700 bg-transparent hover:bg-gray-100 dark:border-gray-600 dark:text-gray-100 dark:hover:bg-white/10;
+  @apply border bg-transparent hover:bg-transparent hover:text-black;
 }
 .outlineBlue {
   @apply border border-blue-500 text-blue-500 hover:border-blue-600 hover:text-blue-600;

@@ -21,6 +21,12 @@ interface GenericTableProps<T> {
   rootClassName?: string;
   tableClassName?: string;
   headerClassName?: string;
+
+  page?: number;
+  onPageChange?: (page: number) => void;
+  totalRecords?: number;
+  recordsPerPage?: number;
+  paginationText?: (params: { from: number; to: number; totalRecords: number }) => React.ReactNode;
 }
 
 export function DataTable<T>({
@@ -36,11 +42,15 @@ export function DataTable<T>({
   rootClassName,
   tableClassName,
   headerClassName,
+  page,
+  onPageChange,
+  totalRecords,
+  recordsPerPage,
+  paginationText,
 }: GenericTableProps<T>) {
   return (
     <MantineDataTable<T>
       classNames={{ root: cn(rootClassName), table: cn(tableClassName), header: cn(headerClassName) }}
-      styles={{}}
       records={records}
       columns={columns}
       fetching={isLoading}
@@ -55,6 +65,20 @@ export function DataTable<T>({
           selectedRecords,
           onSelectedRecordsChange,
         })}
+      page={page!}
+      onPageChange={onPageChange!}
+      totalRecords={totalRecords!}
+      recordsPerPage={recordsPerPage!}
+      paginationText={paginationText!}
+      styles={{
+        header: {
+          color: "rgba(109, 109, 109, 0.6)",
+          fontWeight: 500,
+        },
+        root: {
+          color: "rgba(0, 0, 0, 0.6)",
+        },
+      }}
     />
   );
 }

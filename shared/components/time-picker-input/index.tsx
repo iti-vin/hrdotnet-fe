@@ -11,7 +11,6 @@ interface TimePickerInputProps extends TimePickerProps {
   format?: "12h" | "24h";
   required?: boolean;
   size?: "xs" | "sm" | "md" | "lg" | "xl";
-  radius?: "xs" | "sm" | "md" | "lg" | "xl";
   setValue?(date: string | null): void;
   code?: string;
   labelClassName?: string;
