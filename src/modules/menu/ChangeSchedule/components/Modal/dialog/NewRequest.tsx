@@ -23,6 +23,7 @@ import { Button, FileAttachment, TextArea, Modal, Select, ReferenceNoInput, Date
 export default function NewRequest({ opened, onClose, buttonClose }: ModalProps) {
   const small = useMediaQuery("(max-width: 40em)");
   const [dateDuration, setDateDuration] = useState<[string | null, string | null]>([null, null]);
+  const [dateRange, setDateRange] = useState<[string | null, string | null]>([null, null]);
 
   const { setLoading, setOpenDialog, setOpenAlert, setError, scheduleItems, schedList, setSchedList, setOpenConfirmation } = useChangeOfScheduleStore();
 
@@ -159,14 +160,15 @@ export default function NewRequest({ opened, onClose, buttonClose }: ModalProps)
           <Group className="flex flex-col gap-3 pt-2">
             <Flex className="flex flex-col w-full md:flex-row gap-3 md:gap-5">
               <DateRangePickerInput
-                size="md"
-                dateValue={dateDuration}
-                setDateValue={(value) => setDateDuration(value)}
-                label="Duration"
-                placeholder="Start Date"
-                withAsterisk
-                className="border-none w-full"
-                styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
+                fl="From Date"
+                sl="To Date"
+                fp="From"
+                sp="To"
+                direction="row"
+                dateValue={dateRange}
+                setDateValue={(date) => {
+                  setDateRange(date);
+                }}
               />
             </Flex>
             <Flex className="flex flex-col w-full md:flex-row gap-3 md:gap-5">
@@ -212,8 +214,16 @@ export default function NewRequest({ opened, onClose, buttonClose }: ModalProps)
               {...newForm.getInputProps("Requested.IsRestDay", { type: "checkbox" })}
               className="select-none  w-full items-start cursor-pointer"
             />
-            <TextArea placeholder="enter brief reaso" label="Reason" className="w-full" key={newForm.key("Reason")} {...newForm.getInputProps("Reason")} required />
-            <FileAttachment />
+            <TextArea
+              placeholder="enter brief reaso"
+              label="Reason"
+              labelVariant="header"
+              className="w-full"
+              key={newForm.key("Reason")}
+              {...newForm.getInputProps("Reason")}
+              required
+            />
+            <FileAttachment label="Attachment" lz="md" required />
           </Group>
         </Stack>
       </form>
