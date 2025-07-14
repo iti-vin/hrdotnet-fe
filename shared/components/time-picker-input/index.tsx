@@ -1,21 +1,20 @@
 import { cn } from "@/lib/utils";
-import { TimePicker } from "@mantine/dates";
+import { TimePicker, TimePickerProps } from "@mantine/dates";
 import { useClickOutside, useHotkeys } from "@mantine/hooks";
 import { IconClock12, IconClock24 } from "@tabler/icons-react";
 import { useState } from "react";
 
-interface TimePickerInputProps {
+interface TimePickerInputProps extends TimePickerProps {
   label?: string;
   withSeconds?: boolean;
   withDropdown?: boolean;
   format?: "12h" | "24h";
   required?: boolean;
   size?: "xs" | "sm" | "md" | "lg" | "xl";
-  radius?: "xs" | "sm" | "md" | "lg" | "xl";
-  value?: string | null;
   setValue?(date: string | null): void;
   code?: string;
   labelClassName?: string;
+  disabled?: boolean;
 }
 
 const labelSizes: Record<string, string> = {
@@ -40,6 +39,7 @@ export default function TimePickerInput({
   setValue,
   code,
   labelClassName,
+  disabled,
 }: TimePickerInputProps) {
   const [open, setOpen] = useState<boolean>(false);
 
@@ -51,13 +51,14 @@ export default function TimePickerInput({
 
   const commonProps = () => ({
     className: "cursor-pointer hover:scale-105",
-    onClick: () => setOpen(!open),
+    onClick: () => !disabled && setOpen(!open),
     size: iconSize[size],
   });
 
   return (
     <div ref={timePickerRef} className="w-full">
       <TimePicker
+        disabled={disabled}
         v2-id={`time-picker-input-${code}`}
         label={
           <div className={cn(labelBaseClass, labelSizes[size], labelClassName)}>
@@ -78,6 +79,7 @@ export default function TimePickerInput({
           withinPortal: false,
         }}
         value={value!}
+        defaultValue={value!}
         onChange={(date) => {
           setValue?.(date);
           setOpen(false);

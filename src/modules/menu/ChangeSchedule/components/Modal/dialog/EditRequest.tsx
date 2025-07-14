@@ -6,11 +6,8 @@
 //--- Mantine Modules
 import { useForm } from "@mantine/form";
 import { useMediaQuery } from "@mantine/hooks";
-import { DatePickerInput } from "@mantine/dates";
-import { Button, Checkbox, Flex, Select, Stack, Textarea, TextInput } from "@mantine/core";
+import { Checkbox, Flex } from "@mantine/core";
 //-- Shared Modules
-import { Dropzone } from "@shared/template";
-import Modal from "@/layout/main/dialog/Modal";
 import { DateTimeUtils } from "@shared/utils/DateTimeUtils";
 
 //--- COS Modules
@@ -23,14 +20,15 @@ import { CosServices } from "../../../services/api";
 import { queryClient } from "@/services/client";
 import { ValidationErrorResponse } from "@shared/assets/types/Error";
 import { SingleData } from "../../../models/request";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 //--- Services
+import { FileAttachment, TextInput, Select, TextArea, Modal, Button, DateRangePickerInput } from "@shared/components";
 
 export default function EditRequest({ opened, onClose, buttonClose }: ModalProps) {
   // Media Screen for Smaller Size Width
   const small = useMediaQuery("(max-width: 40em)");
-  const { viewItems, setLoading, setOpenDialog, setOpenAlert, setError, scheduleItems, setSchedList, schedList } =
-    useChangeOfScheduleStore();
+  const { viewItems, setLoading, setOpenDialog, setOpenAlert, setError, scheduleItems, setSchedList, schedList } = useChangeOfScheduleStore();
+  const [dateRange, setDateRange] = useState<[string | null, string | null]>([null, null]);
 
   useEffect(() => {
     setSchedList(scheduleItems.items.map((item) => ({ id: item.id, name: item.name, isRestDay: item.isRestDay })));
@@ -60,12 +58,8 @@ export default function EditRequest({ opened, onClose, buttonClose }: ModalProps
         ...SingleData(viewItems),
         DateFiled: {
           ...values.DateFiled,
-          DateFrom: values.DateFiled.DateFrom
-            ? DateTimeUtils.dateTZToWithTZAddDay(new Date(values.DateFiled.DateFrom).toISOString())
-            : viewItems.filing.dateFiled.dateFrom,
-          DateTo: values.DateFiled.DateTo
-            ? DateTimeUtils.dateTZToWithTZAddDay(new Date(values.DateFiled.DateTo).toISOString())
-            : viewItems.filing.dateFiled.dateTo,
+          DateFrom: values.DateFiled.DateFrom ? DateTimeUtils.dateTZToWithTZAddDay(new Date(values.DateFiled.DateFrom).toISOString()) : viewItems.filing.dateFiled.dateFrom,
+          DateTo: values.DateFiled.DateTo ? DateTimeUtils.dateTZToWithTZAddDay(new Date(values.DateFiled.DateTo).toISOString()) : viewItems.filing.dateFiled.dateTo,
         },
         FileAttachment: values.FileAttachment ? values.FileAttachment : values.FileAttachment,
         Requested: {
@@ -96,45 +90,35 @@ export default function EditRequest({ opened, onClose, buttonClose }: ModalProps
   };
 
   return (
-    <Modal title="Edit Request" size="80%" opened={opened} onClose={onClose} buttonClose={buttonClose}>
+    <Modal
+      title="Edit Request"
+      size="xl"
+      opened={opened}
+      onClose={onClose}
+      buttonClose={buttonClose}
+      footer={
+        <Button type="submit" size="lg" variant="gradient">
+          UPDATE
+        </Button>
+      }>
       <form onSubmit={editForm.onSubmit(handleUpdate)}>
-        <Flex className="flex flex-col gap-3" px={small ? 20 : 30}>
+        <Flex className="flex flex-col gap-3">
           <Flex className="flex flex-col md:flex-row gap-3 md:gap-5">
-            <DatePickerInput
-              size={small ? "xs" : "md"}
-              valueFormat="MM/DD/YYYY"
-              label="From Date"
-              className="w-full"
-              placeholder={DateTimeUtils.getIsoDateWithBackSlash(viewItems.filing.dateFiled.dateFrom)}
-              onChange={(date) => {
-                if (!(date instanceof Date) || isNaN(date.getTime())) {
-                  console.error("Invalid Date Selected:", date);
-                  return;
-                }
-                editForm.setFieldValue("DateFiled.DateFrom", date.toString);
+            <DateRangePickerInput
+              fl="From Date"
+              sl="To Date"
+              fp="From"
+              sp="To"
+              direction="row"
+              dateValue={dateRange}
+              setDateValue={(date) => {
+                setDateRange(date);
               }}
-              radius={8}
-            />
-            <DatePickerInput
-              size={small ? "xs" : "md"}
-              valueFormat="MM/DD/YYYY"
-              label="To Date"
-              className="w-full"
-              placeholder={DateTimeUtils.getIsoDateWithBackSlash(viewItems.filing.dateFiled.dateTo)}
-              onChange={(date) => {
-                if (!(date instanceof Date) || isNaN(date.getTime())) {
-                  console.error("Invalid Date Selected:", date);
-                  return;
-                }
-                editForm.setFieldValue("DateFiled.DateTo", date.toString());
-              }}
-              radius={8}
             />
           </Flex>
           <Flex className="flex flex-col md:flex-row gap-3 md:gap-5">
             <Select
               size={small ? "xs" : "md"}
-              radius={8}
               label="Request Schedule"
               classNames={{ input: "text-black" }}
               className="w-full"
@@ -157,7 +141,6 @@ export default function EditRequest({ opened, onClose, buttonClose }: ModalProps
             />
             <TextInput
               size={small ? "xs" : "md"}
-              radius={8}
               label="Reference No."
               placeholder="0000-0000-0000"
               className="w-full"
@@ -165,15 +148,9 @@ export default function EditRequest({ opened, onClose, buttonClose }: ModalProps
               {...editForm.getInputProps("ReferenceNo")}
             />
           </Flex>
-          <Checkbox
-            label="Rest Day"
-            radius="xs"
-            {...editForm.getInputProps("Requested.IsRestDay", { type: "checkbox" })}
-            className="select-none cursor-pointer"
-          />
-          <Textarea
+          <Checkbox label="Rest Day" radius="xs" {...editForm.getInputProps("Requested.IsRestDay", { type: "checkbox" })} className="select-none cursor-pointer" />
+          <TextArea
             size={small ? "xs" : "lg"}
-            radius={8}
             label="Reason"
             placeholder={viewItems.filing.reason}
             className="w-full"
@@ -181,13 +158,8 @@ export default function EditRequest({ opened, onClose, buttonClose }: ModalProps
             key={editForm.key("Reason")}
             {...editForm.getInputProps("Reason")}
           />
-          <Dropzone />
+          <FileAttachment />
         </Flex>
-        <Stack className="pt-5 flex flex-row justify-end" px={small ? 20 : 30}>
-          <Button type="submit" size="md" className="w-44 border-none custom-gradient rounded-md">
-            UPDATE
-          </Button>
-        </Stack>
       </form>
     </Modal>
   );

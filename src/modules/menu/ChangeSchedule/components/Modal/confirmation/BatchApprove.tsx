@@ -21,8 +21,7 @@ interface BatchInterface {
 
 export default function BatchApprove({ opened, onClose, buttonClose }: BatchInterface) {
   const small = useMediaQuery("(max-width: 40em)");
-  const { selectedRecords, setError, setWarning, setSuccess, setOpenAlert, setSelectedRecords, setOpenConfirmation } =
-    useChangeOfScheduleStore();
+  const { selectedRecords, setError, setWarning, setSuccess, setOpenAlert, setSelectedRecords, setOpenConfirmation } = useChangeOfScheduleStore();
   const { mutate: batchApproveCos } = useMutation({
     mutationFn: async () => {
       const formData = BatchDataFiling(selectedRecords);
@@ -53,15 +52,7 @@ export default function BatchApprove({ opened, onClose, buttonClose }: BatchInte
   });
 
   return (
-    <Modal
-      opened={opened}
-      size="lg"
-      centered
-      padding={small ? 20 : 30}
-      radius={10}
-      withCloseButton={false}
-      onClose={onClose}
-      styles={{ body: { overflow: "hidden" } }}>
+    <Modal opened={opened} size="lg" centered padding={small ? 20 : 30} radius={10} withCloseButton={false} onClose={onClose} styles={{ body: { overflow: "hidden" } }}>
       <div className="flex justify-between">
         <Text fw={600} fz={small ? 15 : 22} c={"#559CDA"}>
           Approve Request

@@ -26,9 +26,9 @@ import { useMissedLogStore } from "../store/main";
 import { MissedLogResponse } from "../models/response";
 
 import { MissedLogServices } from "../services";
-import { Button } from "@mantine/core";
 import { queryClient } from "@/services/client";
 import { ApproveEndorseMissedLog } from "../assets/Values";
+import { Button } from "@shared/components";
 
 export default function index() {
   const { viewItems } = useMissedLogStore();
@@ -123,7 +123,7 @@ export default function index() {
       <Modals
         panel={panel}
         approve={
-          <Button className="border-none custom-gradient rounded-md" onClick={() => singleApprove(viewItems.filing.id)}>
+          <Button variant="gradient" onClick={() => singleApprove(viewItems.filing.id)}>
             APPROVE
           </Button>
         }

@@ -1,69 +1,26 @@
-import { Button, Divider, Flex, Modal, Stack, Text } from "@mantine/core";
-import { useMediaQuery } from "@mantine/hooks";
+import { Stack } from "@mantine/core";
 import { ModalProps } from "@shared/assets/types/Modal";
+import Details from "@shared/ui/display/Details";
+import Confirmation from "@shared/ui/modals/confirmation";
 import { IconCircleCheckFilled } from "@tabler/icons-react";
 
 export default function SummaryDetails({ opened, onClose, buttonClose }: ModalProps) {
-  const small = useMediaQuery("(max-width: 40em)");
   return (
-    <Modal
+    <Confirmation
       opened={opened}
-      size="lg"
-      centered
-      padding={small ? 20 : 30}
-      radius={10}
-      withCloseButton={false}
       onClose={onClose}
-      styles={{ body: { overflow: "hidden" } }}>
-      <Stack className="flex justify-between">
-        <Text fw={600} fz={small ? 15 : 22} c={"#559CDA"}>
-          Summary Details
-        </Text>
-      </Stack>
-      <Divider size="xs" color="#6D6D6D" mt={10} />
+      variant="danger"
+      title="Summary Details"
+      description="Are you sure you want to update this request? this will override your existing filing details"
+      yes={{ onClick: () => {}, title: "Confirm" }}
+      no={{ onClick: buttonClose!, title: "Keep Editing" }}>
       <Stack className="w-full h-full p-4">
-        <Flex gap={10} align="center">
-          <Text c="#559cda" fw={700}>
-            Leave Date From & Leave Date To :
-          </Text>
-          <Text c="#6d6d6d" fw={400}>
-            January 01-03, 2002
-          </Text>
-        </Flex>
-        <Flex gap={10} align="center">
-          <Text c="#559cda" fw={700}>
-            Leave Type :
-          </Text>
-          <Text c="#6d6d6d" fw={400}>
-            Sick Leave
-          </Text>
-        </Flex>
-        <Flex gap={10} align="center">
-          <Text c="#559cda" fw={700}>
-            Leave Option :
-          </Text>
-          <Text c="#6d6d6d" fw={400}>
-            Whole Day
-          </Text>
-        </Flex>
-        <Flex gap={10} align="center">
-          <Text c="#559cda" fw={700}>
-            Reason:
-          </Text>
-          <Text c="#6d6d6d" fw={400}>
-            I don't wanna live forever cause I know I'll be living in vain
-          </Text>
-        </Flex>
+        <Details direction="row" label="Date From & Date To:" value="January 01-03, 2002" />
+        <Details direction="row" label="Requested Schedule:" value={<IconCircleCheckFilled size={17} color="green" />} />
+        <Details direction="row" label="Reference No:" value="RFN1932782264" />
+        <Details direction="row" label="Rest Day:" value="January 01-03, 2002" />
+        <Details direction="row" label="Reason:" value="I don't wanna live forever cause I know I'll be living in vain" />
       </Stack>
-
-      <Stack className="flex flex-row w-full justify-end mt-5">
-        <Button variant="outline" className="rounded-md w-44" onClick={buttonClose}>
-          BACK
-        </Button>
-        <Button className="rounded-md br-gradient border-none w-44" onClick={() => {}}>
-          SUBMIT
-        </Button>
-      </Stack>
-    </Modal>
+    </Confirmation>
   );
 }

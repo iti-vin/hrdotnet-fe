@@ -4,9 +4,7 @@
  */
 
 //--- Mantine Modules
-import { useMediaQuery } from "@mantine/hooks";
 import { useMutation } from "@tanstack/react-query";
-import { Button, Divider, Modal, Stack, Text } from "@mantine/core";
 
 import { queryClient } from "@/services/client";
 import { ModalProps } from "@shared/assets/types/Modal";
@@ -15,13 +13,12 @@ import { countFilingsByError } from "@shared/utils/Errors";
 import { OffsetServices } from "../../../services/api";
 import { useOffsetStore } from "../../../store";
 import { BatchDataFiling } from "@shared/assets/values/Batch";
+import Confirmation from "@shared/ui/modals/confirmation";
 
 export default function BatchEndorse({ opened, onClose, buttonClose }: ModalProps) {
-  const small = useMediaQuery("(max-width: 40em)");
-  const { setOpenConfirmation, setSelectedRecords, setSuccess, setWarning, setOpenAlert, setError, selectedRecords } =
-    useOffsetStore();
+  const { setOpenConfirmation, setSelectedRecords, setSuccess, setWarning, setOpenAlert, setError, selectedRecords } = useOffsetStore();
 
-  const { mutate: batchEndorseOB } = useMutation({
+  const { mutate: batchEndorseOff } = useMutation({
     mutationFn: async () => {
       const formData = BatchDataFiling(selectedRecords);
       return OffsetServices.batchEndorseOFF(formData);
@@ -51,32 +48,15 @@ export default function BatchEndorse({ opened, onClose, buttonClose }: ModalProp
   });
 
   return (
-    <Modal
+    <Confirmation
       opened={opened}
-      size="lg"
-      centered
-      padding={small ? 20 : 30}
-      radius={10}
-      withCloseButton={false}
       onClose={onClose}
-      styles={{ body: { overflow: "hidden" } }}>
-      <div className="flex justify-between">
-        <Text fw={600} fz={small ? 15 : 22} c={"#559CDA"}>
-          Endorse Request
-        </Text>
-      </div>
-      <Divider size="xs" color="#6D6D6D" mt={10} />
-      <Text className="text-[#6d6d6d] mt-5">{selectedRecords.length} Offset</Text>
-      <div className="flex flex-col mt-3 w-full text-[#6d6d6d] items-center pt-4 gap-3 px-5">
-        <Stack className="flex flex-row w-full justify-end mt-5">
-          <Button variant="outline" className="rounded-md w-44" onClick={buttonClose}>
-            CANCEL
-          </Button>
-          <Button className="rounded-md br-gradient border-none w-44" onClick={() => batchEndorseOB()}>
-            CONFIRM
-          </Button>
-        </Stack>
-      </div>
-    </Modal>
+      variant="warning"
+      title="Batch Reviewal"
+      description={<div>Are you sure you want to batch endorse {selectedRecords.length > 1 ? "these" : "this"} request? </div>}
+      children={<div>{selectedRecords.length} Overtime Request</div>}
+      yes={{ onClick: batchEndorseOff, title: "Confirm" }}
+      no={{ onClick: buttonClose!, title: "Discard" }}
+    />
   );
 }

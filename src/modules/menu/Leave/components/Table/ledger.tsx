@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { DataTable } from "mantine-datatable";
 import "mantine-datatable/styles.layer.css";
+import { PaginatedDataTable as DataTable } from "@shared/components";
 
 export default function LeaveType() {
   const PAGE_SIZE = 15;
@@ -55,16 +55,11 @@ export default function LeaveType() {
   return (
     <div className="md:h-screen-65">
       <DataTable
-        style={{
-          color: "#6D6D6D",
-          fontWeight: 500,
-        }}
         totalRecords={leaveRecordsList.length}
         recordsPerPage={PAGE_SIZE}
-        withTableBorder
         page={page}
         onPageChange={(p) => setPage(p)}
-        paginationText={({ from, to, totalRecords }) => `Showing data ${to} out of ${totalRecords} entries found (0.225) seconds`}
+        paginationText={({ to, totalRecords }) => `Showing data ${to} out of ${totalRecords} entries found (0.225) seconds`}
         idAccessor="documentNo"
         columns={leaveListColumn as any}
         records={leaveRecordsList as any}

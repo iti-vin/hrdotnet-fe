@@ -3,9 +3,8 @@ import { create } from "zustand";
 
 interface ModalState {
   isOpen: boolean;
-  title: string;
-  body: string;
-  content?: ReactNode;
+  header?: ReactNode;
+  body?: ReactNode;
   footer?: ReactNode;
   width?: "xs" | "sm" | "md" | "lg" | "xl" | string;
   openModal: (config: Omit<ModalState, "isOpen" | "openModal" | "closeModal">) => void;
@@ -14,7 +13,7 @@ interface ModalState {
 
 export const useModalStore = create<ModalState>((set) => ({
   isOpen: false,
-  title: "",
+  header: "",
   body: "",
   footer: null,
   width: "md",

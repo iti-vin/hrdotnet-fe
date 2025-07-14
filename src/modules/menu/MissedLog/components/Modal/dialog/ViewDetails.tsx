@@ -1,16 +1,13 @@
-import Modal from "@/layout/main/dialog/Modal";
-import { Button, ScrollArea, Stack, Text, Textarea, TextInput } from "@mantine/core";
-import { DatePickerInput } from "@mantine/dates";
-import { IconNotes } from "@tabler/icons-react";
-import React from "react";
+import { Text } from "@mantine/core";
+import { ReactNode } from "react";
 import { useMissedLogStore } from "../../../store/main";
 import { statusColors } from "@shared/assets/types/Global";
 import { useMediaQuery } from "@mantine/hooks";
-
+import { Button, DatePickerInput, FileAttachment, Modal, Select, TextArea, TextInput } from "@shared/components";
 interface ViewDetailsProps {
   panel?: "FILINGS" | "REQUEST" | "REVIEWAL" | "APPROVAL";
-  endorse?: React.ReactNode;
-  approve?: React.ReactNode;
+  endorse?: ReactNode;
+  approve?: ReactNode;
 
   opened: boolean;
   onClose: () => void;
@@ -32,37 +29,34 @@ export default function ViewDetails({ opened, onClose, buttonClose, panel, appro
 
   const rndrBtnContent = () => {
     if (panel === "REQUEST") {
-      let button: React.ReactNode;
+      let button: ReactNode;
       if (viewItems.filing.filingStatus.name === "Filed") {
         button = (
           <>
-            <Button variant="outline" className="rounded-md" onClick={onHandleSingleCancel}>
+            <Button variant="outlineBlue" onClick={onHandleSingleCancel}>
               CANCEL REQUEST
             </Button>
-            <Button className="border-none custom-gradient rounded-md" onClick={() => setOpenDialog("EditRequest")}>
+            <Button variant="gradient" onClick={() => setOpenDialog("EditRequest")}>
               EDIT REQUEST
             </Button>
           </>
         );
       } else if (viewItems.filing.filingStatus.name === "Reviewed") {
         return (
-          <Button variant="outline" className="rounded-md" onClick={onHandleSingleCancel}>
+          <Button variant="outlineBlue" onClick={onHandleSingleCancel}>
             CANCEL REQUEST
           </Button>
         );
-      } else if (
-        viewItems.filing.filingStatus.name === "Approved" ||
-        viewItems.filing.filingStatus.name === "Cancelled"
-      ) {
+      } else if (viewItems.filing.filingStatus.name === "Approved" || viewItems.filing.filingStatus.name === "Cancelled") {
         return null;
       }
       return button;
     } else if (panel === "REVIEWAL") {
-      let button: React.ReactNode;
+      let button: ReactNode;
       if (viewItems.filing.filingStatus.name === "Filed") {
         button = (
           <>
-            <Button variant="outline" className="rounded-md" onClick={onHandleSingleCancel}>
+            <Button variant="outlineBlue" onClick={onHandleSingleCancel}>
               CANCEL
             </Button>
             {endorse}
@@ -70,18 +64,18 @@ export default function ViewDetails({ opened, onClose, buttonClose, panel, appro
         );
       } else {
         button = (
-          <Button variant="outline" className="rounded-md" onClick={onHandleSingleCancel}>
+          <Button variant="outlineBlue" onClick={onHandleSingleCancel}>
             CANCEL
           </Button>
         );
       }
       return button;
     } else if (panel === "APPROVAL" || "FILINGS") {
-      let button: React.ReactNode;
+      let button: ReactNode;
       if (viewItems.filing.filingStatus.name === "Filed" || "Reviewed") {
         button = (
           <>
-            <Button variant="outline" className="rounded-md" onClick={onHandleSingleCancel}>
+            <Button variant="outlineBlue" onClick={onHandleSingleCancel}>
               CANCEL
             </Button>
             {approve}
@@ -89,7 +83,7 @@ export default function ViewDetails({ opened, onClose, buttonClose, panel, appro
         );
       } else {
         button = (
-          <Button variant="outline" className="rounded-md" onClick={onHandleSingleCancel}>
+          <Button variant="outlineBlue" onClick={onHandleSingleCancel}>
             CANCEL
           </Button>
         );
@@ -101,163 +95,104 @@ export default function ViewDetails({ opened, onClose, buttonClose, panel, appro
   };
 
   return (
-    <Modal title="View Details" size="80%" opened={opened} onClose={onClose} buttonClose={buttonClose}>
-      <ScrollArea
-        className="flex flex-col gap-5 mt-3 w-full text-[#6d6d6d] relative"
-        h={650}
-        px={small ? 20 : 30}
-        styles={{ scrollbar: { display: "none" } }}>
-        <div className="flex flex-col gap-5" style={{ color: "#6D6D6D" }}>
-          <div className="flex flex-col md:flex-row gap-6">
-            <div className="w-full md:w-1/2 flex flex-col gap-2  border-solid border-0.5 border-sky-500 p-4 rounded-lg">
-              <Text style={{ color: "#559CDA" }} className="text-xs md:text-lg font-bold text-center md:text-start">
-                General Information
-              </Text>
-
-              <div>
-                <TextInput
-                  label="Date"
-                  size={small ? "xs" : "md"}
-                  radius="md"
-                  placeholder="Select Leave Type"
-                  className="w-full"
-                  value={viewItems.filing.dateFiled!}
-                  disabled
-                />
-              </div>
-              <div>
-                <TextInput
-                  label="Log Type"
-                  size={small ? "xs" : "md"}
-                  radius="md"
-                  placeholder="Select Leave Option"
-                  className="w-full"
-                  value={viewItems.filing.logType.name}
-                  disabled
-                />
-              </div>
-              <div>
-                <TextInput
-                  label="Log Time"
-                  size={small ? "xs" : "md"}
-                  radius="md"
-                  placeholder="Select Leave Type"
-                  className="w-full"
-                  value={viewItems.filing.timeInOut}
-                  disabled
-                />
-              </div>
-              <div>
-                <TextInput
-                  label="Reference Number"
-                  size={small ? "xs" : "md"}
-                  radius="md"
-                  placeholder="Select Leave Option"
-                  className="w-full"
-                  disabled
-                />
-              </div>
-            </div>
-
-            <div className="w-full md:w-1/2 flex flex-col gap-2 border-solid border-0.5 border-sky-500 p-4 rounded-lg">
-              <Text style={{ color: "#559CDA" }} className="text-xs md:text-lg font-bold text-center md:text-start">
-                Detailed Information
-              </Text>
-              <div>
-                <Text
-                  size="md"
-                  bg={statusInfo.color}
-                  className="font-medium text-sm lg:text-lg text-white text-center gap-1 rounded-md py-3"
-                  children={viewItems.filing.filingStatus.name}
-                />
-              </div>
-
-              <div className="flex flex-col md:flex-row justify-between gap-4">
-                <div className="flex flex-col w-full md:w-1/2">
-                  <TextInput
-                    label="Document No."
-                    radius="md"
-                    size={small ? "xs" : "md"}
-                    placeholder="00000000"
-                    value={viewItems.filing.documentNo}
-                    disabled
-                  />
-                </div>
-
-                <div className="flex flex-col w-full md:w-1/2">
-                  <DatePickerInput
-                    label="Transaction Date"
-                    radius="md"
-                    size={small ? "xs" : "md"}
-                    placeholder="mm/dd/yyyy"
-                    value={new Date(viewItems.filing.dateTransaction)}
-                    disabled
-                  />
-                </div>
-              </div>
-
-              <div className="flex flex-col">
-                <Textarea
-                  label="Endorsement Information"
-                  size={small ? "xs" : "md"}
-                  radius="md"
-                  placeholder="Endorsed by Jane Smith on October 25, 2024 at 6:43 PM."
-                  className="w-full"
-                  disabled
-                />
-              </div>
-              <div className="flex flex-col">
-                <Textarea
-                  label="Approval Information"
-                  size={small ? "xs" : "md"}
-                  radius="md"
-                  placeholder="Approved by Jane Smith on October 25, 2024 at 6:43 PM (Batch Approval)"
-                  className="w-full"
-                  disabled
-                />
-              </div>
-              <div className="flex flex-col">
-                <Textarea
-                  label="Cancellation Information"
-                  size={small ? "xs" : "md"}
-                  radius="md"
-                  placeholder="No Information"
-                  className="w-full"
-                  disabled
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-2 border-solid border-0.5 border-sky-500 p-4 rounded-lg">
+    <Modal title="View Details" size="xl" opened={opened} onClose={onClose} buttonClose={buttonClose} footer={<>{rndrBtnContent()}</>}>
+      <div className="flex flex-col gap-5" style={{ color: "#6D6D6D" }}>
+        <div className="flex flex-col md:flex-row gap-6">
+          <div className="w-full md:w-1/2 flex flex-col gap-5  border-solid border-0.5 border-sky-500 p-4 rounded-lg">
             <Text style={{ color: "#559CDA" }} className="text-xs md:text-lg font-bold text-center md:text-start">
-              Reason{" "}
+              General Information
             </Text>
-            <Textarea
-              size="xl"
-              radius="md"
-              placeholder="Briefly state the reasons for filing leave."
-              value={viewItems.filing.reason}
-              disabled
-            />
-          </div>
 
-          <div className="flex flex-col gap-5 border-solid border-0.5 border-sky-500 p-4 rounded-lg">
-            <Text style={{ color: "#559CDA" }} className="font-bold ">
-              Attachment{" "}
-            </Text>
-            <div
-              className="border-dashed border-0.5 border-sky-500 p-4 rounded-lg flex flex-col  items-center"
-              style={{ color: "#6D6D6D", background: "#EEEEEE", opacity: "0.5" }}>
-              <div className="flex items-center">
-                <IconNotes />
-                <Text>File: attachment.pdf Size: 20 MB </Text>
-              </div>
+            <div>
+              <DatePickerInput
+                size={small ? "xs" : "md"}
+                label="Date"
+                placeholder="MM-DD-YYYY"
+                className="w-full"
+                id="date_from"
+                value={viewItems.filing.dateFiled!}
+                setValue={() => {}}
+                disabled
+              />
+            </div>
+            <div>
+              <Select label="Log Type" size={small ? "xs" : "md"} placeholder="Select log type" className="w-full" value={viewItems.filing.logType.name} disabled />
+            </div>
+            <div>
+              <Select label="Log Time" size={small ? "xs" : "md"} placeholder="Select log time" className="w-full" value={viewItems.filing.timeInOut} disabled />
+            </div>
+            <div>
+              <TextInput label="Reference Number" size={small ? "xs" : "md"} placeholder="Select Leave Option" className="w-full" disabled />
             </div>
           </div>
 
-          <div className="flex flex-col md:flex-row  gap-4">
-            {/* {SELECTED_DATA.status != "Filed" && isMultipleDayLeave && (
+          <div className="w-full md:w-1/2 flex flex-col gap-5 border-solid border-0.5 border-sky-500 p-4 rounded-lg">
+            <Text style={{ color: "#559CDA" }} className="text-xs md:text-lg font-bold text-center md:text-start">
+              Detailed Information
+            </Text>
+            <div>
+              <Text
+                size="md"
+                bg={statusInfo.color}
+                className="font-medium text-sm lg:text-lg text-white text-center gap-1 rounded-md py-3"
+                children={viewItems.filing.filingStatus.name}
+              />
+            </div>
+
+            <div className="flex flex-col md:flex-row justify-between gap-4">
+              <div className="flex flex-col w-full md:w-1/2">
+                <TextInput label="Document No." size={small ? "xs" : "md"} placeholder="00000000" value={viewItems.filing.documentNo} disabled />
+              </div>
+
+              <div className="flex flex-col w-full md:w-1/2">
+                <DatePickerInput
+                  label="Transaction Date"
+                  size={small ? "xs" : "md"}
+                  placeholder="mm/dd/yyyy"
+                  value={viewItems.filing.dateTransaction}
+                  setValue={() => {}}
+                  disabled
+                />
+              </div>
+            </div>
+
+            <div className="flex flex-col">
+              <TextArea
+                label="Endorsement Information"
+                size={small ? "xs" : "md"}
+                placeholder="Endorsed by Jane Smith on October 25, 2024 at 6:43 PM."
+                className="w-full"
+                disabled
+              />
+            </div>
+            <div className="flex flex-col">
+              <TextArea
+                label="Approval Information"
+                size={small ? "xs" : "md"}
+                placeholder="Approved by Jane Smith on October 25, 2024 at 6:43 PM (Batch Approval)"
+                className="w-full"
+                disabled
+              />
+            </div>
+            <div className="flex flex-col">
+              <TextArea label="Cancellation Information" size={small ? "xs" : "md"} placeholder="No Information" className="w-full" disabled />
+            </div>
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-2 border-solid border-0.5 border-sky-500 p-4 rounded-lg">
+          <TextArea label="Reason" labelVariant="header" placeholder="Briefly state the reasons for filing leave." value={viewItems.filing.reason} disabled />
+        </div>
+
+        <div className="flex flex-col gap-2 border-solid border-0.5 border-sky-500 p-4 rounded-lg">
+          <Text style={{ color: "#559CDA" }} className="font-bold  text-[15px] leading-[18px]">
+            Attachment
+          </Text>
+          <FileAttachment />
+        </div>
+
+        <div className="flex flex-col md:flex-row  gap-4">
+          {/* {SELECTED_DATA.status != "Filed" && isMultipleDayLeave && (
                 <div className="flex flex-col w-full md:w-2/3 gap-2 border-solid border-0.5 border-sky-500 p-4 rounded-lg">
                 
               <Text style={{ color: "#559CDA" }} className="text-xs md:text-lg font-bold text-center md:text-start">
@@ -266,26 +201,11 @@ export default function ViewDetails({ opened, onClose, buttonClose, panel, appro
                   <FilingBreakdown />
                 </div>
               )} */}
-            <div className="flex flex-col gap-2  w-full border-solid border-0.5 border-sky-500 p-4 rounded-lg">
-              <Text style={{ color: "#559CDA" }} className="text-xs md:text-lg font-bold text-center md:text-start">
-                Edit Log
-              </Text>
-              <Textarea
-                styles={{ input: { height: "12.5rem" } }}
-                variant="filled"
-                size="xl"
-                radius="md"
-                placeholder="Date of Change  - Employee name changed the Application date from mm/dd/yyyy to mm/dd/yyyy."
-                disabled
-              />
-            </div>
+          <div className="flex flex-col gap-2  w-full border-solid border-0.5 border-sky-500 p-4 rounded-lg">
+            <TextArea label="Edit Log" labelVariant="header" placeholder="Date of Change  - Employee name changed the Application date from mm/dd/yyyy to mm/dd/yyyy." disabled />
           </div>
         </div>
-      </ScrollArea>
-
-      <Stack className="pt-5 flex flex-row justify-end" px={small ? 20 : 30}>
-        {rndrBtnContent()}
-      </Stack>
+      </div>
     </Modal>
   );
 }

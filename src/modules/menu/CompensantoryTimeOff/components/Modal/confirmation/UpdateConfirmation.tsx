@@ -3,24 +3,19 @@
  * @author     Hersvin Fred De La Cruz Labastida
  */
 
-import Alert from "@/layout/main/alert";
 import { ModalProps } from "@shared/assets/types/Modal";
+import Confirmation from "@shared/ui/modals/confirmation";
 
 export default function index({ opened, onClose }: ModalProps) {
   return (
-    <Alert
+    <Confirmation
       opened={opened}
       onClose={onClose}
-      headerTitle="Update Request"
-      size="lg"
-      icon="Warning"
-      title="Are you sure you want to update this request? this will override your existing filing details"
-      yes={{
-        onClick: () => {},
-      }}
-      no={{
-        onClick: () => {},
-      }}
+      variant="warning"
+      title="Update Request"
+      description="Are you sure you want to update this request? this will override your existing filing details"
+      yes={{ onClick: () => {}, title: "Confirm" }}
+      no={{ onClick: () => {}, title: "Keep Editing" }}
     />
   );
 }

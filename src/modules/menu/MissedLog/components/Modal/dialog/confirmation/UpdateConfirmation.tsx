@@ -3,8 +3,8 @@
  * @author     Hersvin Fred De La Cruz Labastida
  */
 
-import Alert from "@/layout/main/alert";
 import { useMissedLogStore } from "@/modules/menu/MissedLog/store/main";
+import Confirmation from "@shared/ui/modals/confirmation";
 
 interface CancelConfirmationInterface {
   opened: boolean;
@@ -19,19 +19,14 @@ export default function index({ opened, onClose }: CancelConfirmationInterface) 
     setOpenAlert("SuccessUpdate");
   };
   return (
-    <Alert
+    <Confirmation
       opened={opened}
       onClose={onClose}
-      headerTitle="Update Request"
-      size="lg"
-      icon="Warning"
-      title="Are you sure you want to update this request? this will override your existing filing details"
-      yes={{
-        onClick: onHandleUpdate,
-      }}
-      no={{
-        onClick: () => setOpenConfirmation(""),
-      }}
+      variant="warning"
+      title="Update Request"
+      description="Are you sure you want to update this request? this will override your existing filing details"
+      yes={{ onClick: () => onHandleUpdate(), title: "Confirm" }}
+      no={{ onClick: () => setOpenConfirmation(""), title: "Keep Editing" }}
     />
   );
 }

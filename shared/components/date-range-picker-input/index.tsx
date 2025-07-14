@@ -1,12 +1,12 @@
 import dayjs from "dayjs";
-import { Flex, MantineSize, Popover, TextInput } from "@mantine/core";
+import { Flex, MantineSize, Popover, TextInput, TextInputProps } from "@mantine/core";
 import { DatePicker } from "@mantine/dates";
 import { IconCalendarMonth } from "@tabler/icons-react";
 import { useState } from "react";
 import { DateTimeUtils } from "@shared/utils/DateTimeUtils"; // updated
 import { cn } from "@/lib/utils";
 
-interface DateRangeProps {
+interface DateRangeProps extends TextInputProps {
   fp?: string;
   sp?: string;
   fl?: string;
@@ -50,6 +50,7 @@ export default function DateRangePickerInput({
   gap = 4,
   className,
   labelClassName,
+  ...rest
 }: DateRangeProps) {
   // Date Range States
   const [inputs, setInputs] = useState<[string, string]>([
@@ -125,7 +126,7 @@ export default function DateRangePickerInput({
     <Flex direction={direction} justify="space-between" align="flex-end" className={cn(className, `w-full gap-${gap}`)}>
       <Popover opened={firstOpen} onChange={setFirstOpen} position="bottom" shadow="md" trapFocus returnFocus>
         <Popover.Target>
-          <TextInput {...common(0)} className="w-full" v2-id={`date-range-picker-input-first-${code}`} />
+          <TextInput {...common(0)} {...rest} className="w-full" v2-id={`date-range-picker-input-first-${code}`} />
         </Popover.Target>
         <Popover.Dropdown className="w-full">
           <DatePicker numberOfColumns={2} type="range" defaultDate={dateValue[0]!} value={pickerValue} onChange={onCalChange} size={calendarSize[size]} dir="column" />
@@ -134,7 +135,7 @@ export default function DateRangePickerInput({
 
       <Popover opened={secondOpen} onChange={setSecondOpen} position="bottom" shadow="md">
         <Popover.Target>
-          <TextInput {...common(1)} className="w-full" v2-id={`date-range-picker-input-second-${code}`} />
+          <TextInput {...common(1)} {...rest} className="w-full" v2-id={`date-range-picker-input-second-${code}`} />
         </Popover.Target>
         <Popover.Dropdown className="w-full">
           <DatePicker numberOfColumns={2} type="range" defaultDate={dateValue[1]!} value={pickerValue} onChange={onCalChange} size={calendarSize[size]} className="z-[9999]" />

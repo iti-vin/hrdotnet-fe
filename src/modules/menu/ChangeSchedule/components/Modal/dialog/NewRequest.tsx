@@ -7,23 +7,22 @@
 //--- Mantine Modules
 import { useForm } from "@mantine/form";
 import { useMediaQuery } from "@mantine/hooks";
-import { DatePickerInput } from "@mantine/dates";
-import { Button, Checkbox, Flex, Group, ScrollArea, Select, Stack, Textarea, TextInput } from "@mantine/core";
+import { Checkbox, Flex, Group, Stack } from "@mantine/core";
 import { useMutation } from "@tanstack/react-query";
 //--- Shared Modules
-import { useEffect } from "react";
-import { Dropzone } from "@shared/template";
+import { useEffect, useState } from "react";
 import { ModalProps } from "@shared/assets/types/Modal";
 import { DateTimeUtils } from "@shared/utils/DateTimeUtils";
 import { ValidationErrorResponse } from "@shared/assets/types/Error";
-import Modal from "@/layout/main/dialog/Modal";
 import { queryClient } from "@/services/client";
 import { CosServices } from "../../../services/api";
 import { useChangeOfScheduleStore } from "../../../store";
 import { handleMutationResponse } from "@shared/utils/onError";
+import { Button, FileAttachment, TextArea, Modal, Select, ReferenceNoInput, DateRangePickerInput } from "@shared/components";
 
 export default function NewRequest({ opened, onClose, buttonClose }: ModalProps) {
   const small = useMediaQuery("(max-width: 40em)");
+  const [dateRange, setDateRange] = useState<[string | null, string | null]>([null, null]);
 
   const { setLoading, setOpenDialog, setOpenAlert, setError, scheduleItems, schedList, setSchedList, setOpenConfirmation } = useChangeOfScheduleStore();
 
@@ -141,77 +140,97 @@ export default function NewRequest({ opened, onClose, buttonClose }: ModalProps)
   };
 
   return (
-    <Modal title="New Request" size="70%" opened={opened} onClose={onClose} buttonClose={buttonClose} pasteBtn={handlePaste}>
-      <form onSubmit={newForm.onSubmit(handleCreate)} className="relative">
-        <Stack className="w-full h-full">
-          <ScrollArea px={small ? 20 : 30} className="flex flex-col mt-3 w-full text-[#6d6d6d] relative" h={650} styles={{ scrollbar: { display: "none" } }}>
-            <Group className="flex flex-col gap-3 pt-2">
-              <Flex className="flex flex-col w-full md:flex-row gap-3 md:gap-5">
-                <DatePickerInput
-                  size={small ? "xs" : "md"}
-                  valueFormat="MM/DD/YYYY"
-                  label="From Date"
-                  className="w-full"
-                  placeholder="mm/dd/yyyy"
-                  key={newForm.key("DateFiled.DateFrom")}
-                  {...newForm.getInputProps("DateFiled.DateFrom")}
-                  radius={8}
-                  required
-                />
-                <DatePickerInput
-                  size={small ? "xs" : "md"}
-                  valueFormat="MM/DD/YYYY"
-                  label="To Date"
-                  className="w-full"
-                  placeholder="mm/dd/yyyy"
-                  key={newForm.key("DateFiled.DateTo")}
-                  {...newForm.getInputProps("DateFiled.DateTo")}
-                  radius={8}
-                  required
-                />
-              </Flex>
-              <Flex className="flex flex-col w-full md:flex-row gap-3 md:gap-5">
-                <Select
-                  size={small ? "xs" : "md"}
-                  radius={8}
-                  label="Request Schedule"
-                  className="w-full"
-                  placeholder="Same Day"
-                  data={schedList.map((item) => ({ value: item.id.toString(), label: item.name }))}
-                  onChange={(selectedValue) => {
-                    const selectedItem = schedList.find((item) => item.id.toString() === selectedValue);
-                    if (selectedItem) {
-                      newForm.setValues((prevValues) => ({
-                        Requested: {
-                          Id: selectedItem.id,
-                          Name: selectedItem.name,
-                          IsRestDay: prevValues.Requested?.IsRestDay ?? false,
-                        },
-                      }));
-                    }
-                  }}
-                  required
-                />
-                <TextInput size={small ? "xs" : "md"} radius={8} label="Reference No." placeholder="0000-0000-0000" className="w-full" />
-              </Flex>
-              <Checkbox
-                label="Rest Day"
-                radius="xs"
-                w-full
-                items-start
-                key={newForm.key("Requested.IsRestDay")}
-                {...newForm.getInputProps("Requested.IsRestDay", { type: "checkbox" })}
-                className="select-none  w-full items-start cursor-pointer"
-              />
-              <Textarea size={small ? "xs" : "lg"} radius={8} label="Reason" className="w-full" key={newForm.key("Reason")} {...newForm.getInputProps("Reason")} />
-              <Dropzone />
-            </Group>
-          </ScrollArea>
-        </Stack>
-        <Stack className="pt-5 flex flex-row justify-end" px={small ? 20 : 30}>
-          <Button type="submit" size="md" className="w-44 border-none custom-gradient rounded-md">
-            SUBMIT
+    <Modal
+      title="New Request"
+      size="xl"
+      opened={opened}
+      onClose={onClose}
+      buttonClose={buttonClose}
+      footer={
+        <>
+          <div className="hidden">
+            <Button onClick={handlePaste}>handlePaste</Button>
+          </div>
+
+          <Button variant="gradient" size="lg" type="submit">
+            Submit
           </Button>
+        </>
+      }
+      formProps={{
+        onSubmit: newForm.onSubmit(handleCreate),
+      }}>
+      <form className="relative">
+        <Stack className="w-full h-full">
+          <Group className="flex flex-col gap-3 pt-2">
+            <Flex className="flex flex-col w-full md:flex-row gap-3 md:gap-5">
+              <DateRangePickerInput
+                fl="From Date"
+                sl="To Date"
+                fp="From"
+                sp="To"
+                direction="row"
+                dateValue={dateRange}
+                setDateValue={(date) => {
+                  setDateRange(date);
+                }}
+              />
+            </Flex>
+            <Flex className="flex flex-col w-full md:flex-row gap-3 md:gap-5">
+              <Select
+                size={small ? "xs" : "md"}
+                radius={8}
+                label="Request Schedule"
+                className="w-full"
+                placeholder="Same Day"
+                data={schedList.map((item) => ({ value: item.id.toString(), label: item.name }))}
+                onChange={(selectedValue) => {
+                  const selectedItem = schedList.find((item) => item.id.toString() === selectedValue);
+                  if (selectedItem) {
+                    newForm.setValues((prevValues) => ({
+                      Requested: {
+                        Id: selectedItem.id,
+                        Name: selectedItem.name,
+                        IsRestDay: prevValues.Requested?.IsRestDay ?? false,
+                      },
+                    }));
+                  }
+                }}
+                required
+              />
+              <ReferenceNoInput
+                code="cto"
+                size="md"
+                radius={8}
+                label="Reference No."
+                placeholder="Input Reference Number(if necessary)"
+                className="w-full"
+                max={14}
+                classNames={{ input: "poppins" }}
+                styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
+              />
+            </Flex>
+            <Checkbox
+              label="Rest Day"
+              radius="xs"
+              w-full
+              items-start
+              key={newForm.key("Requested.IsRestDay")}
+              {...newForm.getInputProps("Requested.IsRestDay", { type: "checkbox" })}
+              className="select-none  w-full items-start cursor-pointer"
+            />
+            <TextArea
+              size={small ? "xs" : "md"}
+              placeholder="From"
+              label="Reason"
+              labelVariant="default"
+              className="w-full"
+              key={newForm.key("Reason")}
+              {...newForm.getInputProps("Reason")}
+              required
+            />
+            <FileAttachment label="Attachment" lz="md" required />
+          </Group>
         </Stack>
       </form>
     </Modal>

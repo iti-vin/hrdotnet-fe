@@ -4,10 +4,11 @@
  */
 
 //--- Mantine Data Table Modules
-import { DataTable, DataTableColumn } from "mantine-datatable";
+import { DataTableColumn } from "mantine-datatable";
 import { OvertimeItems } from "../../models/response";
 import { Panel } from "@shared/assets/types/Global";
 import { useOvertimeStore } from "../../store";
+import { DataTable } from "@shared/components";
 
 interface OvertimeI {
   columns: DataTableColumn<{}>[];
@@ -25,19 +26,17 @@ interface RowData {
 export default function index({ columns, records, isLoading, panel }: OvertimeI) {
   const { setViewItems, setOpenDialog, selectedRecords, setSelectedRecords } = useOvertimeStore();
   return (
-    <DataTable
+    <DataTable<OvertimeItems>
       key="filing.filingStatus.name"
-      idAccessor="filing.documentNo"
+      idAccessor={"filing.id"}
       records={records}
       columns={columns}
       {...(panel !== "REQUEST" && {
+        selectable: true,
         selectedRecords,
         onSelectedRecordsChange: setSelectedRecords,
       })}
-      fetching={isLoading}
-      loaderSize="sm"
-      loaderColor="blue"
-      highlightOnHover
+      isLoading={isLoading}
       onRowClick={(data: RowData) => {
         setViewItems(data.record);
         setOpenDialog("ViewDetails");

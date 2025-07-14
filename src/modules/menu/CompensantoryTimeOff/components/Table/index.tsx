@@ -4,9 +4,10 @@
  */
 
 //--- Mantine Data Table Modules
-import { DataTable, DataTableColumn } from "mantine-datatable";
+import { DataTableColumn } from "mantine-datatable";
 import { Panel } from "@shared/assets/types/Global";
 import { useCTOStore } from "../../store";
+import { DataTable } from "@shared/components";
 
 interface CTOI {
   columns: DataTableColumn<{}>[];
@@ -24,21 +25,18 @@ interface RowData {
 export default function index({ columns, records, isLoading }: CTOI) {
   const { setOpenDialog } = useCTOStore();
   return (
-    <DataTable
+    <DataTable<any>
       key="filing.filingStatus.name"
-      idAccessor="filing.documentNo"
+      idAccessor={"filing.id"}
       records={records}
       columns={columns}
       // {...(panel !== "REQUEST" && {
+      //   selectable: true,
       //   selectedRecords,
       //   onSelectedRecordsChange: setSelectedRecords,
       // })}
-      fetching={isLoading}
-      loaderSize="sm"
-      loaderColor="blue"
-      highlightOnHover
+      isLoading={isLoading}
       onRowClick={(data: RowData) => {
-        // setViewItems(data.record);
         setOpenDialog("ViewDetails");
         console.log(data.record);
       }}

@@ -1,17 +1,6 @@
-import { ChangeEvent, TextareaHTMLAttributes } from "react";
+import { TextareaProps } from "@mantine/core";
 
-export interface ITextArea extends TextareaHTMLAttributes<HTMLTextAreaElement> {
-  label: string;
-  name: string;
-  id: string;
-  value: string;
+export interface ITextArea extends TextareaProps {
   code?: string;
-  autoComplete: "on" | "off";
-  rows: number;
-  placeholder: string;
-  errorMessage?: string;
-  disabled?: boolean;
-  required?: boolean;
-  showError?: boolean;
-  onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
+  labelVariant?: "default" | "header";
 }

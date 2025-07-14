@@ -55,6 +55,9 @@ interface CosInterface {
 
   schedList: { id: number; name: string; isRestDay: boolean }[];
   setSchedList: (items: { id: number; name: string; isRestDay: boolean }[]) => void;
+
+  removeStoredFilter: (key: string) => void;
+  removeDocStatusId: (id: number) => void;
 }
 
 export const useChangeOfScheduleStore = create<CosInterface>((set) => ({
@@ -103,4 +106,21 @@ export const useChangeOfScheduleStore = create<CosInterface>((set) => ({
   setScheduleItems: (items: Schedules) => set({ scheduleItems: items }),
   schedList: [],
   setSchedList: (items: { id: number; name: string; isRestDay: boolean }[]) => set({ schedList: items }),
+
+  removeStoredFilter: (key: string) =>
+    set((state) => {
+      const updatedFilters = { ...state.storedFilters };
+      delete updatedFilters[key];
+      return { storedFilters: updatedFilters };
+    }),
+  removeDocStatusId: (id: number) =>
+    set((state) => {
+      const newStatus = (state.storedFilters.DocStatusIds || []).filter((v: number) => v !== id);
+      return {
+        storedFilters: {
+          ...state.storedFilters,
+          DocStatusIds: newStatus.length > 0 ? newStatus : undefined,
+        },
+      };
+    }),
 }));

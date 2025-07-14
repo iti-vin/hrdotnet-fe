@@ -15,14 +15,18 @@ import Drawer from "./Drawer";
 import { Panel } from "@shared/assets/types/Global";
 import { useChangeOfScheduleStore } from "../../store";
 import { useChangeOfScheduleContext } from "../../context";
+import FilterPill from "./components/FilterPill";
+import styles from "./style/filter.module.css";
 
 interface DrawerFilterI {
   panel?: Panel;
 }
 
 export default function ContainerFilter({ panel }: DrawerFilterI) {
-  const { setOpenDrawer, storedFilters } = useChangeOfScheduleStore();
+  const { storedFilters, setOpenDrawer, removeStoredFilter } = useChangeOfScheduleStore();
   const { onHandleClearFilter } = useChangeOfScheduleContext();
+
+  const removeDocStatusId = useChangeOfScheduleStore((s) => s.removeDocStatusId);
 
   const selectedStatus = () => {
     const statusPill = [
@@ -31,23 +35,18 @@ export default function ContainerFilter({ panel }: DrawerFilterI) {
       { value: 3, label: "Cancelled" },
       { value: 4, label: "Reviewed" },
     ];
-
-    if (!storedFilters || !storedFilters.DocStatusIds || storedFilters.DocStatusIds.length === 0) {
-      return null;
-    }
-
-    const selected = statusPill.filter(
-      (pill) => Array.isArray(storedFilters.DocStatusIds) && storedFilters.DocStatusIds.includes(pill.value)
-    );
-
+    if (!storedFilters?.DocStatusIds?.length) return null;
+    const selected = statusPill.filter((pill) => storedFilters.DocStatusIds.includes(pill.value));
     return (
-      <Pill.Group>
-        {selected.map((item) => (
-          <Pill key={item.value} onRemove={() => {}}>
-            {item.label}
-          </Pill>
-        ))}
-      </Pill.Group>
+      <div className={styles.pillGroupContainer}>
+        <Pill.Group>
+          {selected.map((item, index) => (
+            <FilterPill key={item.value} onRemove={() => removeDocStatusId(item.value)} className={index === selected.length - 1 ? styles.lastPill : ""}>
+              {item.label}
+            </FilterPill>
+          ))}
+        </Pill.Group>
+      </div>
     );
   };
 
@@ -61,32 +60,26 @@ export default function ContainerFilter({ panel }: DrawerFilterI) {
               FILTERS APPLIED
             </Text>
           </Flex>
-          <Group>
+          <Group mx={8}>
             {storedFilters.DocumentNo && (
-              <Flex direction="row" align="center" gap={7} mx={8} visibleFrom="md">
-                <Text>Doc No:</Text>
-                <Pill classNames={{ root: "bg-[#d9d9d9]", label: "text-[#6D6D6D] font-semibold" }} withRemoveButton>
-                  {storedFilters.DocumentNo}
-                </Pill>
-                <Text size="xl" c="#eeeeee">
-                  |
-                </Text>
-              </Flex>
+              <FilterPill title="Doc no:" onRemove={() => removeStoredFilter("DocumentNo")}>
+                {storedFilters.DocumentNo}
+              </FilterPill>
             )}
+
             {storedFilters.DateFrom && storedFilters.DateTo && (
-              <Flex direction="row" align="center" gap={7} mx={8} visibleFrom="md">
-                <Text>Date Transaction:</Text>
-                <Pill classNames={{ root: "bg-[#d9d9d9]", label: "text-[#6D6D6D] font-semibold" }} withRemoveButton>
-                  {storedFilters.DateFrom}- {storedFilters.DateTo}
-                </Pill>
-                <Text size="xl" c="#eeeeee">
-                  |
-                </Text>
-              </Flex>
+              <FilterPill
+                title="Date transaction"
+                onRemove={() => {
+                  removeStoredFilter("DateFom");
+                  removeStoredFilter("DateTo");
+                }}>
+                {storedFilters.DateFrom}- {storedFilters.DateTo}
+              </FilterPill>
             )}
             {storedFilters.DocStatusIds! && (
               <Flex direction="row" align="center" gap={7} mx={8} visibleFrom="md">
-                <Text>Status:</Text>
+                <Text className={styles.text}>Status:</Text>
                 {selectedStatus()}
               </Flex>
             )}
@@ -94,21 +87,11 @@ export default function ContainerFilter({ panel }: DrawerFilterI) {
         </Flex>
 
         <Flex pr={10} py={8} gap={5}>
-          <ActionIcon
-            variant="transparent"
-            color="gray"
-            size="md"
-            aria-label="Settings"
-            onClick={() => setOpenDrawer(true)}>
-            <IconCirclePlus style={{ width: "100%", height: "100%" }} stroke={1.5} color="#6d6d6d" />
+          <ActionIcon className={styles.iconBtn} aria-label="Settings" onClick={() => setOpenDrawer(true)}>
+            <IconCirclePlus className={styles.icon} />
           </ActionIcon>
-          <ActionIcon variant="transparent" color="gray" size="md" aria-label="Settings">
-            <IconTrash
-              style={{ width: "100%", height: "100%" }}
-              stroke={1.5}
-              color="#6d6d6d"
-              onClick={onHandleClearFilter}
-            />
+          <ActionIcon className={styles.iconBtn} aria-label="Settings" onClick={onHandleClearFilter}>
+            <IconTrash className={styles.icon} />
           </ActionIcon>
         </Flex>
       </Flex>

@@ -1,20 +1,17 @@
 import { X } from "lucide-react";
 import styles from "../modal.module.css";
-import { useModalStore } from "../store/useModalStore";
+import { ReactNode } from "react";
 
 interface Props {
-  title: string;
+  title: ReactNode;
+  onClose?: () => void;
 }
 
-export const ModalHeader: React.FC<Props> = ({ title }) => {
-  const closeModal = useModalStore((state) => state.closeModal);
-  const handleCloseModal = () => {
-    closeModal();
-  };
+export const ModalHeader: React.FC<Props> = ({ title = "Sample", onClose }) => {
   return (
     <div className={styles.header}>
       <div className={styles.title}>{title}</div>
-      <button onClick={handleCloseModal}>
+      <button onClick={onClose}>
         <X className={styles.closeIcon} />
       </button>
     </div>

@@ -22,36 +22,13 @@ interface ModalProps {
 }
 
 export default function index({ panel, onHandleSingleEndorse, onHandleSingleApprove }: ModalProps) {
-  const {
-    openDialog,
-    setOpenDialog,
-    openConfirmation,
-    setOpenConfirmation,
-    openAlert,
-    setOpenAlert,
-    error,
-    setError,
-    warning,
-    success,
-  } = useChangeOfScheduleStore();
+  const { openDialog, setOpenDialog, openConfirmation, setOpenConfirmation, openAlert, setOpenAlert, error, setError, warning, success } = useChangeOfScheduleStore();
   return (
     <Fragment>
       {/* Dialogs */}
-      <NewRequest
-        opened={openDialog === "NewRequest"}
-        onClose={() => setOpenDialog("")}
-        buttonClose={() => setOpenDialog("")}
-      />
-      <NewFilings
-        opened={openDialog === "NewFilings"}
-        onClose={() => setOpenDialog("")}
-        buttonClose={() => setOpenDialog("")}
-      />
-      <EditRequest
-        opened={openDialog === "EditRequest"}
-        onClose={() => setOpenDialog("")}
-        buttonClose={() => setOpenDialog("")}
-      />
+      <NewRequest opened={openDialog === "NewRequest"} onClose={() => setOpenDialog("")} buttonClose={() => setOpenDialog("")} />
+      <NewFilings opened={openDialog === "NewFilings"} onClose={() => setOpenDialog("")} buttonClose={() => setOpenDialog("")} />
+      <EditRequest opened={openDialog === "EditRequest"} onClose={() => setOpenDialog("")} buttonClose={() => setOpenDialog("")} />
       <ViewDetails
         opened={openDialog === "ViewDetails"}
         onClose={() => setOpenDialog("")}
@@ -61,21 +38,9 @@ export default function index({ panel, onHandleSingleEndorse, onHandleSingleAppr
         onHandleSingleApprove={onHandleSingleApprove}
       />
       {/* Confirmation */}
-      <BatchEndorse
-        opened={openConfirmation === "BatchEndorse"}
-        onClose={() => setOpenConfirmation("")}
-        buttonClose={() => setOpenConfirmation("")}
-      />
-      <BatchApprove
-        opened={openConfirmation === "BatchApprove"}
-        onClose={() => setOpenConfirmation("")}
-        buttonClose={() => setOpenConfirmation("")}
-      />
-      <BatchCancel
-        opened={openConfirmation === "BatchCancel"}
-        onClose={() => setOpenConfirmation("")}
-        buttonClose={() => setOpenConfirmation("")}
-      />
+      <BatchEndorse opened={openConfirmation === "BatchEndorse"} onClose={() => setOpenConfirmation("")} buttonClose={() => setOpenConfirmation("")} />
+      <BatchApprove opened={openConfirmation === "BatchApprove"} onClose={() => setOpenConfirmation("")} buttonClose={() => setOpenConfirmation("")} />
+      <BatchCancel opened={openConfirmation === "BatchCancel"} onClose={() => setOpenConfirmation("")} buttonClose={() => setOpenConfirmation("")} />
       <CancelConfirmation opened={openConfirmation === "SingleCancel"} onClose={() => setOpenConfirmation("")} />
       <UpdateConfirmation opened={openConfirmation === "UpdateRequest"} onClose={() => setOpenConfirmation("")} />
       <SummaryDetails
@@ -88,51 +53,13 @@ export default function index({ panel, onHandleSingleEndorse, onHandleSingleAppr
       />
       {/* Alerts */}
       <Cancel opened={openAlert === "CancelAlert"} onClose={() => setOpenAlert("")} />
-      <Success
-        opened={openAlert === "SuccessUpdate"}
-        onClose={() => setOpenAlert("")}
-        title="Request Updated"
-        message="Your Application has been successfully updated"
-      />
-      <Success
-        opened={openAlert === "SuccessSubmit"}
-        onClose={() => setOpenAlert("")}
-        title="Request Submitted"
-        message="Your Application has been successfully submitted!"
-      />
-      <Success
-        opened={openAlert === "SuccessApprove"}
-        onClose={() => setOpenAlert("")}
-        title="Request Approved"
-        message="Your Application has been successfully approved!"
-      />
-      <Success
-        opened={openAlert === "SuccessEndorse"}
-        onClose={() => setOpenAlert("")}
-        title="Request Endorse"
-        message="Your Application has been successfully endorsed!"
-      />
-      <Batch
-        opened={openAlert === "BatchApprove"}
-        onClose={() => setOpenAlert("")}
-        headerTitle="Approve"
-        failedFilings={`${warning}`}
-        successFilings={`${success}`}
-      />
-      <Batch
-        opened={openAlert === "BatchEndorse"}
-        onClose={() => setOpenAlert("")}
-        headerTitle="Endorse"
-        failedFilings={`${warning}`}
-        successFilings={`${success}`}
-      />
-      <Batch
-        opened={openAlert === "BatchCancel"}
-        onClose={() => setOpenAlert("")}
-        headerTitle="Cancel"
-        failedFilings={`${warning}`}
-        successFilings={`${success}`}
-      />
+      <Success opened={openAlert === "SuccessUpdate"} onClose={() => setOpenAlert("")} header="Request Updated" body="Your Application has been successfully updated" />
+      <Success opened={openAlert === "SuccessSubmit"} onClose={() => setOpenAlert("")} header="Request Submitted" body="Your Application has been successfully submitted!" />
+      <Success opened={openAlert === "SuccessApprove"} onClose={() => setOpenAlert("")} header="Request Approved" body="Your Application has been successfully approved!" />
+      <Success opened={openAlert === "SuccessEndorse"} onClose={() => setOpenAlert("")} header="Request Endorse" body="Your Application has been successfully endorsed!" />
+      <Batch opened={openAlert === "BatchApprove"} onClose={() => setOpenAlert("")} headerTitle="Approve" failedFilings={`${warning}`} successFilings={`${success}`} />
+      <Batch opened={openAlert === "BatchEndorse"} onClose={() => setOpenAlert("")} headerTitle="Endorse" failedFilings={`${warning}`} successFilings={`${success}`} />
+      <Batch opened={openAlert === "BatchCancel"} onClose={() => setOpenAlert("")} headerTitle="Cancel" failedFilings={`${warning}`} successFilings={`${success}`} />
       <Toast opened={error != ""} type="error" message={error} onClose={() => setError("")} />
     </Fragment>
   );

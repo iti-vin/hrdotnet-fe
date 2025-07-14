@@ -26,9 +26,9 @@ import { useMissedLogStore } from "../store/main";
 import { MissedLogResponse } from "../models/response";
 
 import { MissedLogServices } from "../services";
-import { Button } from "@mantine/core";
 import { queryClient } from "@/services/client";
 import { ApproveEndorseMissedLog } from "../assets/Values";
+import { Button } from "@shared/components";
 
 export default function index() {
   const { loading, setLoading, time, setTime, viewItems, setOpenAlert, setError, storedPage, storedFilters } = useMissedLogStore();
@@ -122,7 +122,7 @@ export default function index() {
       <Modals
         panel={panel}
         endorse={
-          <Button className="border-none custom-gradient rounded-md" onClick={() => singleEndorse(viewItems.filing.id)}>
+          <Button variant="gradient" onClick={() => singleEndorse(viewItems.filing.id)}>
             ENDORSE
           </Button>
         }

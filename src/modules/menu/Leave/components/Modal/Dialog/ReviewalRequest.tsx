@@ -7,11 +7,12 @@
 import { PropsWithChildren } from "react";
 //--- Mantine Modules
 import { useMediaQuery } from "@mantine/hooks";
-import { Button, Divider, Modal, Stack, Text } from "@mantine/core";
+import { Stack, Text } from "@mantine/core";
 import useLeaveStore from "../../../store/LeaveStore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { LeaveServices } from "../../../services/reviewal";
 import { BatchData } from "../../../models/request";
+import { Button, Confirmation } from "@shared/components";
 
 interface AlertProps extends PropsWithChildren {
   message?: React.ReactNode;
@@ -50,40 +51,36 @@ export default function BatchReviewal({ message }: AlertProps) {
     },
   });
   return (
-    <Modal
+    <Confirmation
       opened={openDialog === "BatchEndorse"}
       size="lg"
       centered
+      title="Endorse Request"
       padding={small ? 20 : 30}
       radius={10}
       withCloseButton={false}
       onClose={() => setOpenDialog("")}
-      styles={{ body: { overflow: "hidden" } }}>
-      <div className="flex justify-between">
-        <Text fw={600} fz={small ? 15 : 22} c={"#559CDA"}>
-          Endorse Request
-        </Text>
-      </div>
-      <Divider size="xs" color="#6D6D6D" mt={10} />
-
-      <Text className="text-[#6d6d6d] mt-5">{message}</Text>
-
-      <div className="flex flex-col mt-3 w-full text-[#6d6d6d] items-center pt-4 gap-3 px-5">
+      styles={{ body: { overflow: "hidden" } }}
+      footer={
         <Stack className="flex flex-row w-full justify-end mt-5">
           <Button
             variant="outline"
-            className="rounded-md w-44"
+            className="border-[#559cda] text-[#559cda]"
+            radius="md"
+            h={40}
+            w={100}
             onClick={() => {
               setSelectedRecords([]);
               setOpenDialog("");
             }}>
-            CANCEL
+            BACK
           </Button>
-          <Button className="rounded-md br-gradient border-none w-44" onClick={() => batchEndorseLeave()}>
-            CONFIRM
+          <Button variant="gradient" radius="md" type="submit" h={40} w={100} onClick={() => batchEndorseLeave()}>
+            SUBMIT
           </Button>
         </Stack>
-      </div>
-    </Modal>
+      }>
+      <Text className="text-[#6d6d6d] mt-5">{message}</Text>
+    </Confirmation>
   );
 }

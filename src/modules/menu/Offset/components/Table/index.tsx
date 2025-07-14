@@ -4,12 +4,13 @@
  */
 
 //--- Mantine Data Table Modules
-import { DataTable, DataTableColumn } from "mantine-datatable";
+import { DataTableColumn } from "mantine-datatable";
 import { OffsetItems } from "../../models/response";
 import { Panel } from "@shared/assets/types/Global";
 import { useOffsetStore } from "../../store";
+import { DataTable } from "@shared/components";
 
-interface OvertimeI {
+interface OffsetI {
   columns: DataTableColumn<{}>[];
   records: OffsetItems[] | undefined;
   isLoading?: boolean;
@@ -22,22 +23,20 @@ interface RowData {
   record: OffsetItems;
 }
 
-export default function index({ columns, records, isLoading, panel }: OvertimeI) {
+export default function index({ columns, records, isLoading, panel }: OffsetI) {
   const { setOpenDialog, setViewItems, selectedRecords, setSelectedRecords } = useOffsetStore();
   return (
-    <DataTable
+    <DataTable<OffsetItems>
       key="filing.filingStatus.name"
-      idAccessor="filing.documentNo"
+      idAccessor={"filing.id"}
       records={records}
       columns={columns}
       {...(panel !== "REQUEST" && {
+        selectable: true,
         selectedRecords,
         onSelectedRecordsChange: setSelectedRecords,
       })}
-      fetching={isLoading}
-      loaderSize="sm"
-      loaderColor="blue"
-      highlightOnHover
+      isLoading={isLoading}
       onRowClick={(data: RowData) => {
         setViewItems(data.record);
         setOpenDialog("ViewDetails");

@@ -12,8 +12,8 @@ interface GenericTableProps<T> {
   records: T[] | undefined;
   isLoading?: boolean;
   panel?: string;
-  idAccessor: keyof T | ((record: T) => string | number);
-  onRowClick?: (record: T) => void;
+  idAccessor?: keyof T | (string & {}) | ((record: T) => React.Key) | undefined;
+  onRowClick?: (record: { event: React.MouseEvent; record: T; index: number }) => void;
   selectable?: boolean;
   selectedRecords?: T[];
   onSelectedRecordsChange?: (records: T[]) => void;
@@ -49,7 +49,7 @@ export function DataTable<T>({
       loaderColor="blue"
       highlightOnHover
       rowStyle={() => ({ cursor: onRowClick ? "pointer" : "default" })}
-      onRowClick={(data) => onRowClick?.(data.record)}
+      onRowClick={(data) => onRowClick?.(data)}
       {...(panel !== "REQUEST" &&
         selectable && {
           selectedRecords,

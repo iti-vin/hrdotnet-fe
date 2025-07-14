@@ -3,11 +3,11 @@
  * @author     Hersvin Fred De La Cruz Labastida
  */
 
-import Alert from "@/layout/main/alert";
 import { CancelMissedLog } from "@/modules/menu/MissedLog/assets/Values";
 import { MissedLogServices } from "@/modules/menu/MissedLog/services";
 import { useMissedLogStore } from "@/modules/menu/MissedLog/store/main";
 import { queryClient } from "@/services/client";
+import Confirmation from "@shared/ui/modals/confirmation";
 import { useMutation } from "@tanstack/react-query";
 
 interface CancelConfirmationInterface {
@@ -35,20 +35,14 @@ export default function CancelConfirmation({ opened, onClose }: CancelConfirmati
   });
 
   return (
-    <Alert
+    <Confirmation
       opened={opened}
       onClose={onClose}
-      headerTitle="CANCEL REQUEST"
-      size="lg"
-      icon="Warning"
-      title="Are you sure you want to cancel this Missed Log request?"
-      description="Filing deadline for this cutoff period will end in a day."
-      yes={{
-        onClick: () => singleCancel(viewItems.filing.id),
-      }}
-      no={{
-        onClick: () => setOpenConfirmation(""),
-      }}
+      variant="warning"
+      title="Cancel Request"
+      description={<div>Are you sure you want to cancel this request? </div>}
+      yes={{ onClick: () => singleCancel(viewItems.filing.id), title: "Confirm" }}
+      no={{ onClick: () => setOpenConfirmation(""), title: "Discard" }}
     />
   );
 }

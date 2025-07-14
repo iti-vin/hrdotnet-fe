@@ -5,13 +5,13 @@
 
 import { useMutation } from "@tanstack/react-query";
 
-import Alert from "@/layout/main/alert";
 import { queryClient } from "@/services/client";
 
 import { useOfficialBusinessStore } from "../../../store";
 import { OfficialBusinessServices } from "../../../services/api";
 import { SingleDataOfficialBusiness } from "../../../assets/Values";
 import { ModalProps } from "@shared/assets/types/Modal";
+import Confirmation from "@shared/ui/modals/confirmation";
 
 export default function CancelConfirmation({ opened, onClose }: ModalProps) {
   const { viewItems, setOpenConfirmation, setOpenAlert, setError } = useOfficialBusinessStore();
@@ -35,20 +35,14 @@ export default function CancelConfirmation({ opened, onClose }: ModalProps) {
   });
 
   return (
-    <Alert
+    <Confirmation
       opened={opened}
       onClose={onClose}
-      headerTitle="CANCEL REQUEST"
-      size="lg"
-      icon="Warning"
-      title="Are you sure you want to cancel this Official Business request?"
-      description="Filing deadline for this cutoff period will end in a day."
-      yes={{
-        onClick: () => singleCancel(viewItems.filing.id),
-      }}
-      no={{
-        onClick: () => setOpenConfirmation(""),
-      }}
+      variant="warning"
+      title="Cancel Request"
+      description={<div>Are you sure you want to cancel this request? </div>}
+      yes={{ onClick: () => singleCancel(viewItems.filing.id), title: "Confirm" }}
+      no={{ onClick: () => setOpenConfirmation(""), title: "Discard" }}
     />
   );
 }

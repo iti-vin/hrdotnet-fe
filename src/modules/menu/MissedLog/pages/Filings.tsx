@@ -26,7 +26,7 @@ import { useMissedLogStore } from "../store/main";
 import { MissedLogResponse } from "../models/response";
 
 import { MissedLogServices } from "../services";
-import { Button } from "@mantine/core";
+import { Button } from "@shared/components";
 
 export default function index() {
   const { loading, setLoading, time, setTime, storedPage, storedFilters } = useMissedLogStore();
@@ -103,7 +103,7 @@ export default function index() {
       <Modals
         panel={panel}
         approve={
-          <Button className="border-none custom-gradient rounded-md" onClick={() => {}}>
+          <Button variant="gradient" onClick={() => {}}>
             APPROVE
           </Button>
         }

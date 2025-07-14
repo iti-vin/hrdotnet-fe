@@ -8,15 +8,16 @@ import { useForm } from "@mantine/form";
 import { TimeInput } from "@mantine/dates";
 import { Fragment, useState } from "react";
 import { IconTransfer, IconX } from "@tabler/icons-react";
-import { Button, Divider, Drawer, Flex, Group, MultiSelect, Select, Tabs, Text, TextInput } from "@mantine/core";
+import { Drawer, Flex, Group, Tabs, Text } from "@mantine/core";
 //--- Shared Modules
-import RndrDateRange from "@shared/template/base/DateRange";
 import { useGlobalStore } from "@shared/store";
 
 //--- Missed Log
 import { useMissedLogStore } from "../../store/main";
 import { useMissedLogContext } from "../../context";
 import { DateTimeUtils } from "@shared/utils/DateTimeUtils";
+import CustomDivider from "../Divider";
+import { Select, Button, TextInput, MultiSelect, DateRangePickerInput } from "@shared/components";
 // import { useMissedLogContext } from "../../context";
 
 interface DrawerFilterProps {
@@ -40,6 +41,7 @@ export default function DrawerFilter({ isNotUser = false }: DrawerFilterProps) {
   const { twoDate, setTwoDate } = useGlobalStore();
   const { showDrawer, setShowDrawer } = useMissedLogStore();
   const { onHandleSubmitFilter, onHandleClearFilter } = useMissedLogContext();
+  const [dateRange, setDateRange] = useState<[string | null, string | null]>([null, null]);
 
   const [activeTab, setActiveTab] = useState<"missedlog" | "transaction">("missedlog");
   const toggleTab = () => {
@@ -107,7 +109,7 @@ export default function DrawerFilter({ isNotUser = false }: DrawerFilterProps) {
                 <IconX className="cursor-pointer" onClick={() => setShowDrawer(false)} size={30} color="gray" />
               </Flex>
             </Flex>
-            <Divider size={2} color="#edeeed" className="w-full" />
+            <CustomDivider />
 
             <Flex className="flex flex-col gap-2">
               <TextInput
@@ -119,7 +121,7 @@ export default function DrawerFilter({ isNotUser = false }: DrawerFilterProps) {
                 {...filterForm.getInputProps("DocumentNo")}
                 styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
               />
-              <Divider size={2} h={10} color="#edeeed" className="w-full" />
+              <CustomDivider />
 
               {/* For Reviewal/Approval/Filings */}
               {isNotUser && (
@@ -133,7 +135,7 @@ export default function DrawerFilter({ isNotUser = false }: DrawerFilterProps) {
                     {...filterForm.getInputProps("BranchCode")}
                     styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
                   />
-                  <Divider size={2} h={10} color="#edeeed" className="w-full" />
+                  <CustomDivider />
 
                   <TextInput
                     label="Employee Code."
@@ -144,7 +146,7 @@ export default function DrawerFilter({ isNotUser = false }: DrawerFilterProps) {
                     {...filterForm.getInputProps("EmployeeCode")}
                     styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
                   />
-                  <Divider size={2} h={10} color="#edeeed" className="w-full" />
+                  <CustomDivider />
 
                   <TextInput
                     label="Employee Name."
@@ -155,7 +157,7 @@ export default function DrawerFilter({ isNotUser = false }: DrawerFilterProps) {
                     {...filterForm.getInputProps("EmployeeName")}
                     styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
                   />
-                  <Divider size={2} h={10} color="#edeeed" className="w-full" />
+                  <CustomDivider />
                 </Fragment>
               )}
               {/* Date Range */}
@@ -168,16 +170,18 @@ export default function DrawerFilter({ isNotUser = false }: DrawerFilterProps) {
                       </Text>
                       <IconTransfer onClick={toggleTab} className="cursor-pointer" />
                     </Flex>
-                    {RndrDateRange({
-                      fl: "Date From",
-                      fp: "From",
-                      sl: "Date To",
-                      sp: "To",
-                      dateProps: twoDate,
-                      setDateProps: (newValue: [Date | null, Date | null]) => {
-                        setTwoDate(newValue);
-                      },
-                    })}
+
+                    <DateRangePickerInput
+                      fl="From Date"
+                      sl="To Date"
+                      fp="From"
+                      sp="To"
+                      direction="column"
+                      dateValue={dateRange}
+                      setDateValue={(date) => {
+                        setDateRange(date);
+                      }}
+                    />
                   </Group>
                 </Tabs.Panel>
 
@@ -189,27 +193,25 @@ export default function DrawerFilter({ isNotUser = false }: DrawerFilterProps) {
                       </Text>
                       <IconTransfer onClick={toggleTab} className="cursor-pointer" />
                     </Flex>
-                    {RndrDateRange({
-                      fl: "Date From",
-                      fp: "From",
-                      sl: "Date To",
-                      sp: "To",
-                      dateProps: twoDate,
-                      setDateProps: (newValue: [Date | null, Date | null]) => {
-                        setTwoDate(newValue);
-                      },
-                    })}
+                    <DateRangePickerInput
+                      fl="From Date"
+                      sl="To Date"
+                      fp="From"
+                      sp="To"
+                      direction="column"
+                      dateValue={dateRange}
+                      setDateValue={(date) => {
+                        setDateRange(date);
+                      }}
+                    />
                   </Group>
                 </Tabs.Panel>
               </Tabs>
-              <Divider size={2} h={10} color="#edeeed" className="w-full" />
+              <CustomDivider />
               {/* Log Type */}
               <Select
-                size="md"
                 label="Log Type"
                 placeholder="Time In"
-                radius={8}
-                withAsterisk
                 data={[
                   { value: "1", label: "Time In" },
                   { value: "2", label: "Time Out" },
@@ -223,17 +225,12 @@ export default function DrawerFilter({ isNotUser = false }: DrawerFilterProps) {
                     LogTypeId: selectedOption?.value === null ? null : selectedOption?.value!,
                   });
                 }}
-                styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
               />
-              <Divider size={2} h={10} color="#edeeed" className="w-full" />
+              <CustomDivider />
 
               {/* Log Time */}
-              <TimeInput
-                label="Log Time"
-                placeholder="Select Log Time"
-                styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
-              />
-              <Divider size={2} h={10} color="#edeeed" className="w-full" />
+              <TimeInput label="Log Time" placeholder="Select Log Time" styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }} />
+              <CustomDivider />
 
               {!isNotUser && (
                 <Fragment>
@@ -246,7 +243,7 @@ export default function DrawerFilter({ isNotUser = false }: DrawerFilterProps) {
                     data={[]}
                     styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
                   />
-                  <Divider size={2} h={10} color="#edeeed" className="w-full" />
+                  <CustomDivider />
                   {/* Status */}
                   <MultiSelect
                     label="Status"
@@ -265,14 +262,14 @@ export default function DrawerFilter({ isNotUser = false }: DrawerFilterProps) {
                   />
                 </Fragment>
               )}
-              <Divider size={2} h={10} color="#edeeed" className="w-full" />
+              <CustomDivider />
             </Flex>
           </div>
           <Flex className="w-full flex flex-row justify-end gap-3">
-            <Button variant="outline" radius="md" w={100} onClick={() => setShowDrawer(false)}>
+            <Button variant="outlineBlue" onClick={() => setShowDrawer(false)}>
               CLEAR
             </Button>
-            <Button className="border-none br-gradient" radius="md" type="submit" w={100} onClick={clearFilter}>
+            <Button variant="gradient" type="submit" onClick={clearFilter}>
               FILTER
             </Button>
           </Flex>

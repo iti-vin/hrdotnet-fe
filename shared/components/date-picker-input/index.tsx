@@ -1,5 +1,5 @@
 import { DatePicker } from "@mantine/dates";
-import { Flex, MantineSize, Popover, TextInput } from "@mantine/core";
+import { Flex, MantineSize, Popover, TextInput, TextInputProps } from "@mantine/core";
 import { IconCalendarMonth } from "@tabler/icons-react";
 
 import { Key, ReactNode, useState } from "react";
@@ -8,7 +8,7 @@ import dayjs from "dayjs";
 import { DateTimeUtils } from "@shared/utils/DateTimeUtils";
 import { cn } from "@/lib/utils";
 
-interface DateProps {
+interface DateProps extends Omit<TextInputProps, "value"> {
   value: string | null;
   setValue(iso: string | null): void;
   label?: string;
@@ -46,6 +46,7 @@ export default function DatePickerInput({
   error,
   inputKey,
   labelClassName,
+  ...rest
 }: DateProps) {
   // local text input state (formatted or raw typing)
   const [input, setInput] = useState(value ? DateTimeUtils.dayWithDate(value) : "");
@@ -77,6 +78,7 @@ export default function DatePickerInput({
       <Popover opened={open} onChange={setOpen} position="bottom" shadow="md" trapFocus returnFocus>
         <Popover.Target>
           <TextInput
+            {...rest}
             value={input}
             vin-id={`date-picker-input-${code}`}
             onChange={(e) => setInput(e.target.value)}

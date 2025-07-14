@@ -59,10 +59,10 @@ export default function index({ panel, approve, endorse }: ModalProps) {
 
       {/* Alerts */}
       <Cancel opened={openAlert === "SuccessCancel"} onClose={() => setOpenAlert("")} />
-      <Success opened={openAlert === "SuccessUpdate"} onClose={() => setOpenAlert("")} title="Request Updated" message="Your Application has been successfully updated" />
-      <Success opened={openAlert === "SuccessSubmit"} onClose={() => setOpenAlert("")} title="Request Submitted" message="Your Application has been successfully submitted!" />
-      <Success opened={openAlert === "SuccessApprove"} onClose={() => setOpenAlert("")} title="Request Approved" message="Your Application has been successfully approved!" />
-      <Success opened={openAlert === "SuccessEndorse"} onClose={() => setOpenAlert("")} title="Request Endorse" message="Your Application has been successfully endorsed!" />
+      <Success opened={openAlert === "SuccessUpdate"} onClose={() => setOpenAlert("")} header="Request Updated" body="Your Application has been successfully updated" />
+      <Success opened={openAlert === "SuccessSubmit"} onClose={() => setOpenAlert("")} header="Request Submitted" body="Your Application has been successfully submitted!" />
+      <Success opened={openAlert === "SuccessApprove"} onClose={() => setOpenAlert("")} header="Request Approved" body="Your Application has been successfully approved!" />
+      <Success opened={openAlert === "SuccessEndorse"} onClose={() => setOpenAlert("")} header="Request Endorse" body="Your Application has been successfully endorsed!" />
 
       {/* Toast */}
       <Toast opened={error != ""} type="error" message={error} onClose={() => setError("")} />
