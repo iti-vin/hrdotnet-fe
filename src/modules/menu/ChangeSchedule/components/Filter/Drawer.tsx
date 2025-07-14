@@ -17,8 +17,7 @@ import { DateTimeUtils } from "@shared/utils/DateTimeUtils";
 import { useChangeOfScheduleStore } from "../../store";
 import { useChangeOfScheduleContext } from "../../context";
 import CustomDivider from "../Divider";
-import Drawer from "@shared/components/drawer";
-import { Button, Select, DateRangePickerInput, MultiSelect, TextInput } from "@shared/components";
+import { Button, Select, DateRangePickerInput, MultiSelect, TextInput, Drawer } from "@shared/components";
 
 interface DrawerFilterProps {
   isNotUser?: boolean;
@@ -83,8 +82,10 @@ export default function DrawerFilter({ isNotUser = false }: DrawerFilterProps) {
   };
 
   const clearFilter = () => {
+    filterForm.reset();
     setFormStatus([]);
     setTwoDate([null, null]);
+    setDateRange([null, null]);
     onHandleClearFilter();
   };
 
@@ -97,73 +98,84 @@ export default function DrawerFilter({ isNotUser = false }: DrawerFilterProps) {
       withCloseButton={false}
       size="xs"
       overlayProps={{ backgroundOpacity: 0, blur: 0 }}
-      styles={{ body: { height: "100%" } }}>
-      <form onSubmit={filterForm.onSubmit(submitFilter)} className="w-full h-full">
-        <Flex className="w-full h-full flex flex-col gap justify-between">
-          <Container className="flex flex-col gap-2 2xl:gap-4 p-0">
-            <Flex className="flex flex-col gap-2">
-              <TextInput label="Document No." placeholder="Type Document No." key={filterForm.key("DocumentNo")} {...filterForm.getInputProps("DocumentNo")} />
+      styles={{ body: { height: "100%" } }}
+      formProps={{
+        onSubmit: filterForm.onSubmit(submitFilter),
+      }}
+      footer={
+        <Flex className="w-full flex flex-row justify-end gap-3">
+          <Button variant="outlineBlue" onClick={clearFilter}>
+            CLEAR
+          </Button>
+          <Button variant="gradient" type="submit">
+            FILTER
+          </Button>
+        </Flex>
+      }>
+      <Flex className="w-full h-full flex flex-col gap justify-between">
+        <Container className="flex flex-col gap-2 2xl:gap-4 p-0">
+          <Flex className="flex flex-col gap-2">
+            <TextInput label="Document No." placeholder="Type Document No." key={filterForm.key("DocumentNo")} {...filterForm.getInputProps("DocumentNo")} />
 
-              <CustomDivider />
+            <CustomDivider />
 
-              {/* For Reviewal/Approval/Filings */}
-              {isNotUser && (
-                <Fragment>
-                  <TextInput label="Branch Code" placeholder="Type Branch Code." key={filterForm.key("BranchCode")} {...filterForm.getInputProps("BranchCode")} />
-                  <CustomDivider />
+            {/* For Reviewal/Approval/Filings */}
+            {isNotUser && (
+              <Fragment>
+                <TextInput label="Branch Code" placeholder="Type Branch Code." key={filterForm.key("BranchCode")} {...filterForm.getInputProps("BranchCode")} />
+                <CustomDivider />
+                <TextInput label="Employee Code." placeholder="Type Employee Code." key={filterForm.key("EmployeeCode")} {...filterForm.getInputProps("EmployeeCode")} />
+                <CustomDivider />
+                <TextInput label="Employee Name." placeholder="Type Employee Name." key={filterForm.key("EmployeeName")} {...filterForm.getInputProps("EmployeeName")} />
+                <CustomDivider />
+              </Fragment>
+            )}
 
-                  <TextInput label="Employee Code." placeholder="Type Employee Code." key={filterForm.key("EmployeeCode")} {...filterForm.getInputProps("EmployeeCode")} />
-                  <CustomDivider />
-                  <TextInput label="Employee Name." placeholder="Type Employee Name." key={filterForm.key("EmployeeName")} {...filterForm.getInputProps("EmployeeName")} />
-                  <CustomDivider />
-                </Fragment>
-              )}
+            <MultiSelect
+              label="Schedule"
+              data={[
+                { value: String(1), label: "Filed" },
+                { value: String(2), label: "Approve" },
+                { value: String(3), label: "Cancelled" },
+                { value: String(4), label: "Reviewed" },
+              ]}
+            />
+            <CustomDivider />
 
-              <MultiSelect
-                label="Schedule"
-                data={[
-                  { value: String(1), label: "Filed" },
-                  { value: String(2), label: "Approve" },
-                  { value: String(3), label: "Cancelled" },
-                  { value: String(4), label: "Reviewed" },
-                ]}
-              />
-              <CustomDivider />
+            {/* Date Range */}
+            <Tabs value={activeTab} onChange={(val) => setActiveTab(val as "transaction" | "missedlog")}>
+              <Tabs.Panel value="missedlog">
+                <Group>
+                  <Flex className="w-full flex flex-row justify-between">
+                    <Text c="#6d6d6d" fz={15}>
+                      Overtime Date
+                    </Text>
+                    <IconTransfer onClick={toggleTab} className="cursor-pointer" />
+                  </Flex>
+                  <DateRangePickerInput
+                    direction="column"
+                    dateValue={dateRange}
+                    setDateValue={(date) => {
+                      setDateRange(date);
+                    }}
+                    fl="Date From"
+                    sl="From"
+                    fp="Date To"
+                    sp="To"
+                  />
+                </Group>
+              </Tabs.Panel>
 
-              {/* Date Range */}
-              <Tabs value={activeTab} onChange={(val) => setActiveTab(val as "transaction" | "missedlog")}>
-                <Tabs.Panel value="missedlog">
-                  <Group>
-                    <Flex className="w-full flex flex-row justify-between">
-                      <Text c="#6d6d6d" fz={15}>
-                        Overtime Date
-                      </Text>
-                      <IconTransfer onClick={toggleTab} className="cursor-pointer" />
-                    </Flex>
-                    <DateRangePickerInput
-                      direction="column"
-                      dateValue={dateRange}
-                      setDateValue={(date) => {
-                        setDateRange(date);
-                      }}
-                      fl="Date From"
-                      sl="From"
-                      fp="Date To"
-                      sp="To"
-                    />
-                  </Group>
-                </Tabs.Panel>
+              <Tabs.Panel value="transaction">
+                <Group>
+                  <Flex className="w-full flex flex-row justify-between">
+                    <Text c="#6d6d6d" fz={15}>
+                      Transaction Date
+                    </Text>
+                    <IconTransfer onClick={toggleTab} className="cursor-pointer" />
+                  </Flex>
 
-                <Tabs.Panel value="transaction">
-                  <Group>
-                    <Flex className="w-full flex flex-row justify-between">
-                      <Text c="#6d6d6d" fz={15}>
-                        Transaction Date
-                      </Text>
-                      <IconTransfer onClick={toggleTab} className="cursor-pointer" />
-                    </Flex>
-
-                    {/* {RndrDateRange({
+                  {/* {RndrDateRange({
                       fl: "Date From",
                       fp: "From",
                       sl: "Date To",
@@ -176,70 +188,61 @@ export default function DrawerFilter({ isNotUser = false }: DrawerFilterProps) {
                         });
                       },
                     })} */}
-                    <DateRangePickerInput
-                      direction="column"
-                      dateValue={dateRange}
-                      setDateValue={(date) => {
-                        setDateRange(date);
-                      }}
-                      fl="Date From"
-                      sl="From"
-                      fp="Date To"
-                      sp="To"
-                    />
-                  </Group>
-                </Tabs.Panel>
-              </Tabs>
-              <CustomDivider mt={5} />
-
-              <Select
-                label="Requested Schedule"
-                radius="md"
-                // defaultValue={requested}
-                // data={schedList.map((item) => ({ value: item.id.toString(), label: item.name }))}
-                // onChange={(value) => {
-                //   const selectedItem = schedList.find((item) => item.id.toString() === value);
-                //   if (selectedItem) {
-                //     setRequested(selectedItem.name);
-                //   }
-                // }}
-                clearable
-              />
-
-              {!isNotUser && (
-                <Fragment>
-                  {/* Processed By */}
-                  <CustomDivider />
-                  <MultiSelect label="Processed By" placeholder="Select Name" data={[]} />
-                  <CustomDivider />
-                  {/* Status */}
-                  <MultiSelect
-                    label="Status"
-                    placeholder="Select Status"
-                    data={[
-                      { value: String(1), label: "Filed" },
-                      { value: String(2), label: "Approve" },
-                      { value: String(3), label: "Cancelled" },
-                      { value: String(4), label: "Reviewed" },
-                    ]}
-                    value={formStatus.map(String)}
-                    onChange={handleChange}
+                  <DateRangePickerInput
+                    direction="column"
+                    dateValue={dateRange}
+                    setDateValue={(date) => {
+                      setDateRange(date);
+                    }}
+                    fl="Date From"
+                    sl="From"
+                    fp="Date To"
+                    sp="To"
                   />
-                </Fragment>
-              )}
-              <CustomDivider />
-            </Flex>
-          </Container>
-          <Flex className="w-full flex flex-row justify-end gap-3">
-            <Button variant="outlineBlue" onClick={clearFilter}>
-              CLEAR
-            </Button>
-            <Button variant="gradient" size="md" type="submit">
-              FILTER
-            </Button>
+                </Group>
+              </Tabs.Panel>
+            </Tabs>
+            <CustomDivider mt={5} />
+
+            <Select
+              label="Requested Schedule"
+              radius="md"
+              // defaultValue={requested}
+              // data={schedList.map((item) => ({ value: item.id.toString(), label: item.name }))}
+              // onChange={(value) => {
+              //   const selectedItem = schedList.find((item) => item.id.toString() === value);
+              //   if (selectedItem) {
+              //     setRequested(selectedItem.name);
+              //   }
+              // }}
+              clearable
+            />
+
+            {!isNotUser && (
+              <Fragment>
+                {/* Processed By */}
+                <CustomDivider />
+                <MultiSelect label="Processed By" placeholder="Select Name" data={[]} />
+                <CustomDivider />
+                {/* Status */}
+                <MultiSelect
+                  label="Status"
+                  placeholder="Select Status"
+                  data={[
+                    { value: String(1), label: "Filed" },
+                    { value: String(2), label: "Approve" },
+                    { value: String(3), label: "Cancelled" },
+                    { value: String(4), label: "Reviewed" },
+                  ]}
+                  value={formStatus.map(String)}
+                  onChange={handleChange}
+                />
+              </Fragment>
+            )}
+            <CustomDivider />
           </Flex>
-        </Flex>
-      </form>
+        </Container>
+      </Flex>
     </Drawer>
   );
 }

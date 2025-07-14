@@ -188,7 +188,6 @@ export default function DrawerFilter({ isNotUser = false }: DrawerFilterProps) {
                     }}
                     direction="column"
                     size="sm"
-                    required
                   />
                 </Group>
               </Tabs.Panel>

@@ -31,5 +31,5 @@
   @apply border bg-transparent hover:bg-transparent hover:text-black;
 }
 .outlineBlue {
-  @apply border border-blue-500 text-blue-500 hover:border-blue-600 hover:text-blue-600;
+  @apply border  border-blue-500 text-blue-500 hover:border-blue-600 hover:text-blue-600 bg-white hover:bg-white;
 }

@@ -7,11 +7,10 @@
 //--- Mantine Modules
 import { useForm } from "@mantine/form";
 import { useMediaQuery } from "@mantine/hooks";
-import { DatePickerInput } from "@mantine/dates";
 import { Checkbox, Flex, Group, Stack } from "@mantine/core";
 import { useMutation } from "@tanstack/react-query";
 //--- Shared Modules
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ModalProps } from "@shared/assets/types/Modal";
 import { DateTimeUtils } from "@shared/utils/DateTimeUtils";
 import { ValidationErrorResponse } from "@shared/assets/types/Error";
@@ -19,10 +18,11 @@ import { queryClient } from "@/services/client";
 import { CosServices } from "../../../services/api";
 import { useChangeOfScheduleStore } from "../../../store";
 import { handleMutationResponse } from "@shared/utils/onError";
-import { Button, FileAttachment, TextInput, TextArea, Modal, Select } from "@shared/components";
+import { Button, FileAttachment, TextArea, Modal, Select, ReferenceNoInput, DateRangePickerInput } from "@shared/components";
 
 export default function NewRequest({ opened, onClose, buttonClose }: ModalProps) {
   const small = useMediaQuery("(max-width: 40em)");
+  const [dateDuration, setDateDuration] = useState<[string | null, string | null]>([null, null]);
 
   const { setLoading, setOpenDialog, setOpenAlert, setError, scheduleItems, schedList, setSchedList, setOpenConfirmation } = useChangeOfScheduleStore();
 
@@ -147,35 +147,26 @@ export default function NewRequest({ opened, onClose, buttonClose }: ModalProps)
       onClose={onClose}
       buttonClose={buttonClose}
       footer={
-        <Button variant="gradient" size="lg">
+        <Button variant="gradient" size="lg" type="submit">
           Submit
         </Button>
-      }>
-      <form onSubmit={newForm.onSubmit(handleCreate)} className="relative">
+      }
+      formProps={{
+        onSubmit: newForm.onSubmit(handleCreate),
+      }}>
+      <form className="relative">
         <Stack className="w-full h-full">
           <Group className="flex flex-col gap-3 pt-2">
             <Flex className="flex flex-col w-full md:flex-row gap-3 md:gap-5">
-              <DatePickerInput
-                size={small ? "xs" : "md"}
-                valueFormat="MM/DD/YYYY"
-                label="From Date"
-                className="w-full"
-                placeholder="mm/dd/yyyy"
-                key={newForm.key("DateFiled.DateFrom")}
-                {...newForm.getInputProps("DateFiled.DateFrom")}
-                radius={8}
-                required
-              />
-              <DatePickerInput
-                size={small ? "xs" : "md"}
-                valueFormat="MM/DD/YYYY"
-                label="To Date"
-                className="w-full"
-                placeholder="mm/dd/yyyy"
-                key={newForm.key("DateFiled.DateTo")}
-                {...newForm.getInputProps("DateFiled.DateTo")}
-                radius={8}
-                required
+              <DateRangePickerInput
+                size="md"
+                dateValue={dateDuration}
+                setDateValue={(value) => setDateDuration(value)}
+                label="Duration"
+                placeholder="Start Date"
+                withAsterisk
+                className="border-none w-full"
+                styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
               />
             </Flex>
             <Flex className="flex flex-col w-full md:flex-row gap-3 md:gap-5">
@@ -200,7 +191,17 @@ export default function NewRequest({ opened, onClose, buttonClose }: ModalProps)
                 }}
                 required
               />
-              <TextInput size={small ? "xs" : "md"} className="w-full" label="Reference No." placeholder="0000-0000-0000" pattern="\d{4}-\d{4}-\d{4}" required />
+              <ReferenceNoInput
+                code="cto"
+                size="md"
+                radius={8}
+                label="Reference No."
+                placeholder="Input Reference Number(if necessary)"
+                className="w-full"
+                max={14}
+                classNames={{ input: "poppins" }}
+                styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
+              />
             </Flex>
             <Checkbox
               label="Rest Day"
