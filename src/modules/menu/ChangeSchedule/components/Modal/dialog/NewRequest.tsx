@@ -214,9 +214,10 @@ export default function NewRequest({ opened, onClose, buttonClose }: ModalProps)
               className="select-none  w-full items-start cursor-pointer"
             />
             <TextArea
-              placeholder="enter brief reaso"
+              size={small ? "xs" : "md"}
+              placeholder="From"
               label="Reason"
-              labelVariant="header"
+              labelVariant="default"
               className="w-full"
               key={newForm.key("Reason")}
               {...newForm.getInputProps("Reason")}
