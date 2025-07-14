@@ -22,7 +22,6 @@ import { Button, FileAttachment, TextArea, Modal, Select, ReferenceNoInput, Date
 
 export default function NewRequest({ opened, onClose, buttonClose }: ModalProps) {
   const small = useMediaQuery("(max-width: 40em)");
-  const [dateDuration, setDateDuration] = useState<[string | null, string | null]>([null, null]);
   const [dateRange, setDateRange] = useState<[string | null, string | null]>([null, null]);
 
   const { setLoading, setOpenDialog, setOpenAlert, setError, scheduleItems, schedList, setSchedList, setOpenConfirmation } = useChangeOfScheduleStore();
