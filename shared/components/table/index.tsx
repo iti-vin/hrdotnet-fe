@@ -12,7 +12,7 @@ interface GenericTableProps<T> {
   records: T[] | undefined;
   isLoading?: boolean;
   panel?: string;
-  idAccessor: keyof T | ((record: T) => string | number);
+  idAccessor?: keyof T | (string & {}) | ((record: T) => React.Key) | undefined;
   onRowClick?: (record: { event: React.MouseEvent; record: T; index: number }) => void;
   selectable?: boolean;
   selectedRecords?: T[];

@@ -50,6 +50,7 @@ export default function FileAttachment({
       const combined = [...prev, ...filtered];
       const limited = combined.slice(0, maxFiles);
       onChange = (limited) => limited;
+      onChange(limited);
 
       return limited;
     });
