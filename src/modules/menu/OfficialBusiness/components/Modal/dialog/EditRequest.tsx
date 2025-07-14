@@ -4,7 +4,7 @@
  */
 
 //--- React Modules
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 //--- Mantine Modules
 import { Stack, Flex } from "@mantine/core";
 //--- Tabler Icons
@@ -19,10 +19,11 @@ import { ValidationErrorResponse } from "../../../assets/Types";
 import { SingleDataOfficialBusiness } from "../../../assets/Values";
 import { OfficialBusinessServices } from "../../../services/api";
 import { ModalProps } from "@shared/assets/types/Modal";
-import { Button, DatePickerInput, FileAttachment, Modal, Select, TextArea, TimePickerInput } from "@shared/components";
+import { Button, DateRangePickerInput, FileAttachment, Modal, Select, TextArea, TimePickerInput } from "@shared/components";
 
 export default function EditRequest({ opened, onClose, buttonClose }: ModalProps) {
   const { viewItems, locations, branches, setOpenDialog, setOpenAlert, setLoading, setError } = useOfficialBusinessStore();
+  const [dateRange, setDateRange] = useState<[string | null, string | null]>([null, null]);
 
   const editForm = useForm({
     mode: "uncontrolled",
@@ -92,29 +93,16 @@ export default function EditRequest({ opened, onClose, buttonClose }: ModalProps
           <Stack className="w-full h-full">
             <Flex gap={5} direction="column">
               <Flex gap={{ base: 5, md: 10 }} direction={{ base: "column", md: "row" }}>
-                <DatePickerInput
-                  label="From Date"
-                  size="md"
-                  required
-                  value={viewItems.filing.dateTransaction}
-                  placeholder={DateTimeUtils.isoToDateDash(String(viewItems.filing.dateRange.dateFrom))}
-                  setValue={(value) =>
-                    editForm.setValues({
-                      DateFrom: String(value),
-                    })
-                  }
-                />
-                <DatePickerInput
-                  label="To Date"
-                  size="md"
-                  required
-                  value={viewItems.filing.dateTransaction!}
-                  placeholder={DateTimeUtils.isoToDateDash(String(viewItems.filing.dateRange.dateTo))}
-                  setValue={(value) =>
-                    editForm.setValues({
-                      DateTo: String(value),
-                    })
-                  }
+                <DateRangePickerInput
+                  fl="From Date"
+                  sl="To Date"
+                  fp="From"
+                  sp="To"
+                  direction="row"
+                  dateValue={dateRange}
+                  setDateValue={(date) => {
+                    setDateRange(date);
+                  }}
                 />
               </Flex>
               <Flex gap={{ base: 5, md: 10 }} direction={{ base: "column", md: "row" }}>

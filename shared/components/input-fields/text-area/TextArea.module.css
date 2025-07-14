@@ -1,20 +1,21 @@
 :root {
-  --color-label: #6d6d6d;
-  --color-border: #a8a8a8;
-  --color-placeholder: #6d6d6d99;
-  --color-focus: #228be6;
-  --color-header: #559cda;
+  --label: #6d6d6d;
+  --border: #a8a8a8;
+  --placeholder: #6d6d6d99;
+  --focus: #228be6;
+  --header: #559cda;
+  --placeholder: #b9c0c7;
 }
 .label {
-  @apply text-[var(--color-label)] font-medium text-[15px] leading-[18px];
+  @apply text-[--label] font-light text-base leading-[18px] mb-2;
 }
 .labelHeder {
-  @apply text-[var(--color-header)] font-bold mb-2;
+  @apply text-[--header] font-bold mb-2;
 }
 .input {
-  @apply border border-[var(--color-border)] rounded-lg p-4 gap-[10px] focus:border-[var(--color-focus)];
+  @apply border border-[--border] rounded-lg focus:border-[--focus] text-lg;
 }
 
 .input::placeholder {
-  @apply text-[var(--color-placeholder)] font-medium text-base;
+  @apply text-[--placeholder] font-normal;
 }

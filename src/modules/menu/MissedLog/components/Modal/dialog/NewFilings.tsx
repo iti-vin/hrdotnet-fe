@@ -4,7 +4,7 @@
  */
 
 //--- React Modules
-import React from "react";
+import { ChangeEvent, useState } from "react";
 //--- Mantine Modules
 import { Flex, rem, Stack } from "@mantine/core";
 //--- Tabler Icons
@@ -26,12 +26,12 @@ interface OvertimeData {
 }
 
 export default function NewFilings({ opened, onClose, buttonClose }: ModalRequest) {
-  React.useState<OvertimeData | null>(null);
+  useState<OvertimeData | null>(null);
 
-  const [value, setValue] = React.useState<string>("");
-  const [date, setDate] = React.useState<string | null>(null);
+  const [value, setValue] = useState<string>("");
+  const [date, setDate] = useState<string | null>(null);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const input = event.target.value.replace(/\D/g, "");
     const formattedValue = formatInput(input);
     setValue(formattedValue);

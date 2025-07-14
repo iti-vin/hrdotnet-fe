@@ -5,7 +5,6 @@
 
 //--- Mantine Modules
 import { useMediaQuery } from "@mantine/hooks";
-import { DatePickerInput } from "@mantine/dates";
 import { Checkbox, Flex, Group, Popover, Stack, Text } from "@mantine/core";
 
 //--- Icons
@@ -15,12 +14,13 @@ import { useState } from "react";
 
 import { useChangeOfScheduleStore } from "../../../store";
 import { DataTable } from "@shared/components/table";
-import { Select, TextInput, Modal, FileAttachment, TextArea, Button } from "@shared/components";
+import { Select, TextInput, Modal, FileAttachment, TextArea, Button, DateRangePickerInput } from "@shared/components";
 
 export default function NewFilings({ opened, onClose, buttonClose }: ModalProps) {
   const small = useMediaQuery("(max-width: 40em)");
   const [openModal, setOpenModal] = useState<boolean>(false);
   const { setOpenDialog, setOpenConfirmation } = useChangeOfScheduleStore();
+  const [dateRange, setDateRange] = useState<[string | null, string | null]>([null, null]);
 
   return (
     <Modal
@@ -134,8 +134,17 @@ export default function NewFilings({ opened, onClose, buttonClose }: ModalProps)
               />
             </Modal>
             <Flex className="flex flex-col w-full md:flex-row gap-3 md:gap-5">
-              <DatePickerInput size={small ? "xs" : "md"} valueFormat="MM/DD/YYYY" label="From Date" className="w-full" placeholder="mm/dd/yyyy" required />
-              <DatePickerInput size={small ? "xs" : "md"} valueFormat="MM/DD/YYYY" label="To Date" className="w-full" placeholder="mm/dd/yyyy" required />
+              <DateRangePickerInput
+                fl="From Date"
+                sl="To Date"
+                fp="From"
+                sp="To"
+                direction="row"
+                dateValue={dateRange}
+                setDateValue={(date) => {
+                  setDateRange(date);
+                }}
+              />
             </Flex>
             <Flex className="flex flex-col w-full md:flex-row gap-3 md:gap-5">
               <Select size={small ? "xs" : "md"} label="Request Schedule" className="w-full" placeholder="Same Day" rightSection={"▼"} required />
