@@ -170,6 +170,7 @@ export default function EditRequest() {
               rightSection={<IconCaretDownFilled size={18} />}
             />
             <ReferenceNoInput
+              code="edit-request"
               size="md"
               radius="md"
               label="Reference Number"

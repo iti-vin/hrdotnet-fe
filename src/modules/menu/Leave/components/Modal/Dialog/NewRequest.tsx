@@ -132,7 +132,7 @@ export default function NewRequest() {
               className="w-full sm:w-1/2"
               rightSection={<IconCaretDownFilled size={18} />}
             />
-            <ReferenceNoInput size="md" radius="md" label="Reference Number" placeholder="Input Refence Number (if necessary)" className="w-full sm:w-1/2" />
+            <ReferenceNoInput code="new-request" size="md" radius="md" label="Reference Number" placeholder="Input Refence Number (if necessary)" className="w-full sm:w-1/2" />
           </div>
           <div className="flex flex-col sm:flex-row justify-between items-end sm:gap-8">
             <DateRangePickerInput

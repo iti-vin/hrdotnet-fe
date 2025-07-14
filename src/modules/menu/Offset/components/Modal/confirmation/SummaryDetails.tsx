@@ -1,71 +1,25 @@
-import { Flex, Stack, Text } from "@mantine/core";
-import { useMediaQuery } from "@mantine/hooks";
+import { Stack } from "@mantine/core";
 import { ModalProps } from "@shared/assets/types/Modal";
-import { Button, Confirmation } from "@shared/components";
+import Details from "@shared/ui/display/Details";
+import Confirmation from "@shared/ui/modals/confirmation";
 import { IconCircleCheckFilled } from "@tabler/icons-react";
 
 export default function SummaryDetails({ opened, onClose, buttonClose }: ModalProps) {
-  const small = useMediaQuery("(max-width: 40em)");
   return (
     <Confirmation
       opened={opened}
-      title="Summary Details"
-      size="lg"
-      centered
-      padding={small ? 20 : 30}
-      radius={10}
-      withCloseButton={false}
       onClose={onClose}
-      styles={{ body: { overflow: "hidden" } }}
-      footer={
-        <Stack className="flex flex-row w-full justify-end mt-5">
-          <Button variant="outline" className="border-[#559cda] text-[#559cda]" radius="md" h={40} w={100} onClick={buttonClose}>
-            BACK
-          </Button>
-          <Button variant="gradient" radius="md" type="submit" h={40} w={100} onClick={() => {}}>
-            SUBMIT
-          </Button>
-        </Stack>
-      }>
+      variant="danger"
+      title="Summary Details"
+      description="Are you sure you want to update this request? this will override your existing filing details"
+      yes={{ onClick: () => {}, title: "Confirm" }}
+      no={{ onClick: buttonClose!, title: "Keep Editing" }}>
       <Stack className="w-full h-full p-4">
-        <Flex gap={10} align="center">
-          <Text c="#559cda" fw={700}>
-            OT Date From & OT Date To :
-          </Text>
-          <Text c="#6d6d6d" fw={400}>
-            January 01-03, 2002
-          </Text>
-        </Flex>
-        <Flex gap={10} align="center">
-          <Text c="#559cda" fw={700}>
-            Requested Schedule :
-          </Text>
-          <Text c="#6d6d6d" fw={400}>
-            Same Day
-          </Text>
-        </Flex>
-        <Flex gap={10} align="center">
-          <Text c="#559cda" fw={700}>
-            Reference No :
-          </Text>
-          <Text c="#6d6d6d" fw={400}>
-            RFN1932782264
-          </Text>
-        </Flex>
-        <Flex gap={10} align="center">
-          <Text c="#559cda" fw={700}>
-            Rest Day :
-          </Text>
-          <IconCircleCheckFilled size={20} color="green" />
-        </Flex>
-        <Flex gap={10} align="center">
-          <Text c="#559cda" fw={700}>
-            Reason:
-          </Text>
-          <Text c="#6d6d6d" fw={400}>
-            I don't wanna live forever cause I know I'll be living in vain
-          </Text>
-        </Flex>
+        <Details direction="row" label="Date From & Date To:" value="January 01-03, 2002" />
+        <Details direction="row" label="Requested Schedule:" value={<IconCircleCheckFilled size={17} color="green" />} />
+        <Details direction="row" label="Reference No:" value="RFN1932782264" />
+        <Details direction="row" label="Rest Day:" value="January 01-03, 2002" />
+        <Details direction="row" label="Reason:" value="I don't wanna live forever cause I know I'll be living in vain" />
       </Stack>
     </Confirmation>
   );

@@ -3,26 +3,19 @@
  * @author     Hersvin Fred De La Cruz Labastida
  */
 
-import Alert from "@/layout/main/alert";
-
 import { ModalProps } from "@shared/assets/types/Modal";
+import Confirmation from "@shared/ui/modals/confirmation";
 
 export default function CancelConfirmation({ opened, onClose }: ModalProps) {
   return (
-    <Alert
+    <Confirmation
       opened={opened}
       onClose={onClose}
-      headerTitle="CANCEL REQUEST"
-      size="lg"
-      icon="Warning"
-      title="Are you sure you want to cancel this Overtime request?"
-      description="Filing deadline for this cutoff period will end in a day."
-      yes={{
-        onClick: () => {},
-      }}
-      no={{
-        onClick: () => {},
-      }}
+      variant="warning"
+      title="Cancel Request"
+      description={<div>Are you sure you want to cancel this request? </div>}
+      yes={{ onClick: () => {}, title: "Confirm" }}
+      no={{ onClick: () => {}, title: "Discard" }}
     />
   );
 }

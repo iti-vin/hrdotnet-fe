@@ -27,7 +27,7 @@ export default function index({ columns, records, isLoading }: CTOI) {
   return (
     <DataTable<any>
       key="filing.filingStatus.name"
-      idAccessor={"sda"}
+      idAccessor={"filing.id"}
       records={records}
       columns={columns}
       // {...(panel !== "REQUEST" && {

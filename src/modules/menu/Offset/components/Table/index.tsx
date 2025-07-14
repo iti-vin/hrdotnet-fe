@@ -28,7 +28,7 @@ export default function index({ columns, records, isLoading, panel }: OffsetI) {
   return (
     <DataTable<OffsetItems>
       key="filing.filingStatus.name"
-      idAccessor={"code"}
+      idAccessor={"filing.id"}
       records={records}
       columns={columns}
       {...(panel !== "REQUEST" && {

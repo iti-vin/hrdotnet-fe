@@ -4,10 +4,9 @@
  */
 
 //--- Mantine Modules
-import { useMediaQuery } from "@mantine/hooks";
-import { Stack, Text } from "@mantine/core";
 import { useCTOStore } from "../../../store";
-import { Button, Confirmation } from "@shared/components";
+import Confirmation from "@shared/ui/modals/confirmation";
+import { useState } from "react";
 
 interface BatchInterface {
   opened: boolean;
@@ -16,36 +15,25 @@ interface BatchInterface {
 }
 
 export default function BatchApprove({ opened, onClose, buttonClose }: BatchInterface) {
-  const small = useMediaQuery("(max-width: 40em)");
   const { setOpenAlert, setOpenConfirmation } = useCTOStore();
+  const [selectedRecords, setSelectedRecords] = useState<[]>([]);
 
   const handleBatchApprove = () => {
     setOpenConfirmation("");
     setOpenAlert("BatchApprove");
+    setSelectedRecords([]);
   };
 
   return (
     <Confirmation
       opened={opened}
-      title="Batch Approve"
-      size="lg"
-      centered
-      padding={small ? 20 : 30}
-      radius={10}
-      withCloseButton={false}
       onClose={onClose}
-      styles={{ body: { overflow: "hidden" } }}
-      footer={
-        <Stack className="flex flex-row w-full justify-end">
-          <Button variant="outline" className="text-[#559cda] border-[#559cda]" w={100} h={35} onClick={buttonClose}>
-            CANCEL
-          </Button>
-          <Button variant="gradient" w={100} h={35} onClick={() => handleBatchApprove()}>
-            CONFIRM
-          </Button>
-        </Stack>
-      }>
-      <Text className="text-[#6d6d6d] mt-5">2 Compensatory Time-Off </Text>
-    </Confirmation>
+      variant="warning"
+      title="Batch Approval"
+      description={<div>Are you sure you want to batch approve {selectedRecords.length > 1 ? "these" : "this"} request? </div>}
+      children={<div>{selectedRecords.length} Offset Request</div>}
+      yes={{ onClick: handleBatchApprove, title: "Confirm" }}
+      no={{ onClick: buttonClose, title: "Discard" }}
+    />
   );
 }

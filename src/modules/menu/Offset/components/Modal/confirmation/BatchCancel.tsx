@@ -4,9 +4,7 @@
  */
 
 //--- Mantine Modules
-import { useMediaQuery } from "@mantine/hooks";
 import { useMutation } from "@tanstack/react-query";
-import { Stack, Text } from "@mantine/core";
 
 import { queryClient } from "@/services/client";
 import { countFilingsByError } from "@shared/utils/Errors";
@@ -14,7 +12,7 @@ import { countFilingsByError } from "@shared/utils/Errors";
 import { OffsetServices } from "../../../services/api";
 import { useOffsetStore } from "../../../store";
 import { BatchDataFiling } from "@shared/assets/values/Batch";
-import { Button, Confirmation } from "@shared/components";
+import Confirmation from "@shared/ui/modals/confirmation";
 
 interface BatchInterface {
   opened: boolean;
@@ -23,7 +21,6 @@ interface BatchInterface {
 }
 
 export default function BatchCancel({ opened, onClose, buttonClose }: BatchInterface) {
-  const small = useMediaQuery("(max-width: 40em)");
   const { setOpenConfirmation, setSelectedRecords, setSuccess, setWarning, setOpenAlert, setError, selectedRecords } = useOffsetStore();
   const { mutate: batchCancelOff } = useMutation({
     mutationFn: async () => {
@@ -60,25 +57,13 @@ export default function BatchCancel({ opened, onClose, buttonClose }: BatchInter
   return (
     <Confirmation
       opened={opened}
-      title="CANCEL REQUEST"
-      size="lg"
-      centered
-      padding={small ? 20 : 30}
-      radius={10}
-      withCloseButton={false}
       onClose={onClose}
-      styles={{ body: { overflow: "hidden" } }}
-      footer={
-        <Stack className="flex flex-row w-full justify-end">
-          <Button variant="outline" className="border-[#559cda] text-[#559cda]" radius="md" h={40} w={100} onClick={buttonClose}>
-            CANCEL
-          </Button>
-          <Button variant="gradient" radius="md" type="submit" h={40} w={100} onClick={() => batchCancelOff()}>
-            CONFIRM
-          </Button>
-        </Stack>
-      }>
-      <Text className="text-[#6d6d6d] mt-5">{selectedRecords.length} Offset</Text>
-    </Confirmation>
+      variant="warning"
+      title="Batch Cancel"
+      description={<div>Are you sure you want to batch cancel {selectedRecords.length > 1 ? "these" : "this"} request? </div>}
+      children={<div>{selectedRecords.length} Offset Request</div>}
+      yes={{ onClick: batchCancelOff, title: "Confirm" }}
+      no={{ onClick: buttonClose, title: "Discard" }}
+    />
   );
 }

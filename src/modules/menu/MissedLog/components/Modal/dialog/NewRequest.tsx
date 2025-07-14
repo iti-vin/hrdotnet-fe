@@ -15,8 +15,7 @@ import { useMutation } from "@tanstack/react-query";
 import { MissedLogServices } from "../../../services";
 import { queryClient } from "@/services/client";
 import { useMissedLogStore } from "../../../store/main";
-import { Button, FileAttachment, Modal, Select, TextArea, TextInput, TimePickerInput } from "@shared/components";
-import { DatePickerInput } from "@mantine/dates";
+import { Button, DatePickerInput, FileAttachment, Modal, Select, TextArea, TextInput, TimePickerInput } from "@shared/components";
 import { IconCalendar } from "@tabler/icons-react";
 
 interface ModalRequest {
@@ -25,7 +24,7 @@ interface ModalRequest {
   buttonClose: () => void;
 }
 export default function NewRequest({ opened, onClose, buttonClose }: ModalRequest) {
-  const { setOpenAlert, setOpenDialog, setError, dateFiled, setDateFiled } = useMissedLogStore();
+  const { setOpenAlert, setOpenDialog, setError, dateFiled } = useMissedLogStore();
 
   const newForm = useForm({
     mode: "uncontrolled",
@@ -76,15 +75,14 @@ export default function NewRequest({ opened, onClose, buttonClose }: ModalReques
             <Flex direction={{ base: "column", sm: "row" }} justify="space-between" className="w-full" gap={20}>
               <DatePickerInput
                 size="md"
-                radius={8}
                 withAsterisk
                 label="Date"
                 placeholder="MM/DD/YYYY"
                 className="w-full"
                 styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
                 rightSection={<IconCalendar style={{ width: rem(18), height: rem(18) }} stroke={1.5} />}
-                value={dateFiled}
-                onChange={(value) => setDateFiled(new Date(value))}
+                value={null}
+                setValue={(value) => console.log(value)}
               />
               <TextInput
                 size="md"

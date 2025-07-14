@@ -3,29 +3,26 @@
  * @author     Hersvin Fred De La Cruz Labastida
  */
 
-import Alert from "@/layout/main/alert";
 import { ModalProps } from "@shared/assets/types/Modal";
+import Confirmation from "@shared/ui/modals/confirmation";
+import { useOffsetStore } from "../../../store";
 
 export default function index({ opened, onClose }: ModalProps) {
+  const { setOpenConfirmation } = useOffsetStore();
   const onHandleUpdate = () => {
     // setOpenConfirmation("");
     // setOpenAlert("SuccessUpdate");
   };
 
   return (
-    <Alert
+    <Confirmation
       opened={opened}
       onClose={onClose}
-      headerTitle="Update Request"
-      size="lg"
-      icon="Warning"
-      title="Are you sure you want to update this request? this will override your existing filing details"
-      yes={{
-        onClick: onHandleUpdate,
-      }}
-      no={{
-        onClick: () => {},
-      }}
+      variant="warning"
+      title="Update Request"
+      description="Are you sure you want to update this request? this will override your existing filing details"
+      yes={{ onClick: () => onHandleUpdate(), title: "Confirm" }}
+      no={{ onClick: () => setOpenConfirmation(""), title: "Keep Editing" }}
     />
   );
 }

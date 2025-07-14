@@ -27,7 +27,7 @@ export default function index({ columns, records, isLoading }: DataTableProps) {
   return (
     <DataTable<LeaveItems>
       key="filing.filingStatus.name"
-      idAccessor={"code"}
+      idAccessor={"filing.id"}
       records={records}
       columns={columns}
       {...(activeTab !== 0 && {

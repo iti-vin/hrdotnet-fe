@@ -4,13 +4,12 @@
  */
 
 //--- Mantine Modules
-import { useMediaQuery } from "@mantine/hooks";
-import { Button, Divider, Modal, Stack, Text } from "@mantine/core";
 import { useMissedLogStore } from "@/modules/menu/MissedLog/store/main";
 import { useMutation } from "@tanstack/react-query";
 import { MissedLogServices } from "@/modules/menu/MissedLog/services";
 import { queryClient } from "@/services/client";
 import { BatchMissedLog } from "@/modules/menu/MissedLog/assets/Values";
+import Confirmation from "@shared/ui/modals/confirmation";
 
 interface BatchInterface {
   opened: boolean;
@@ -19,7 +18,6 @@ interface BatchInterface {
 }
 
 export default function BatchApprove({ opened, onClose, buttonClose }: BatchInterface) {
-  const small = useMediaQuery("(max-width: 40em)");
   const { selectedRecords, setError, setWarning, setSuccess, setOpenAlert, setSelectedRecords, setOpenConfirmation } = useMissedLogStore();
 
   const { mutate: batchApproveMissedLog } = useMutation({
@@ -54,24 +52,15 @@ export default function BatchApprove({ opened, onClose, buttonClose }: BatchInte
   });
 
   return (
-    <Modal opened={opened} size="lg" centered padding={small ? 20 : 30} radius={10} withCloseButton={false} onClose={onClose} styles={{ body: { overflow: "hidden" } }}>
-      <div className="flex justify-between">
-        <Text fw={600} fz={small ? 15 : 22} c={"#559CDA"}>
-          Approve Request
-        </Text>
-      </div>
-      <Divider size="xs" color="#6D6D6D" mt={10} />
-      <Text className="text-[#6d6d6d] mt-5">{selectedRecords.length} Missed Log</Text>
-      <div className="flex flex-col mt-3 w-full text-[#6d6d6d] items-center pt-4 gap-3 px-5">
-        <Stack className="flex flex-row w-full justify-end mt-5">
-          <Button variant="outline" className="rounded-md w-44" onClick={buttonClose}>
-            CANCEL
-          </Button>
-          <Button className="rounded-md br-gradient border-none w-44" onClick={() => batchApproveMissedLog()}>
-            CONFIRM
-          </Button>
-        </Stack>
-      </div>
-    </Modal>
+    <Confirmation
+      opened={opened}
+      onClose={onClose}
+      variant="warning"
+      title="Batch Approval"
+      description={<div>Are you sure you want to batch approve {selectedRecords.length > 1 ? "these" : "this"} request? </div>}
+      children={<div>{selectedRecords.length} Official Business Request</div>}
+      yes={{ onClick: batchApproveMissedLog, title: "Confirm" }}
+      no={{ onClick: buttonClose, title: "Discard" }}
+    />
   );
 }

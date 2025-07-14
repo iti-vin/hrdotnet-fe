@@ -104,7 +104,16 @@ export default function ViewDetails({ opened, onClose, buttonClose, panel, appro
             </Text>
 
             <div>
-              <DatePickerInput size={small ? "xs" : "md"} label="Date" placeholder="MM-DD-YYYY" className="w-full" id="date_from" value={viewItems.filing.dateFiled!} disabled />
+              <DatePickerInput
+                size={small ? "xs" : "md"}
+                label="Date"
+                placeholder="MM-DD-YYYY"
+                className="w-full"
+                id="date_from"
+                value={viewItems.filing.dateFiled!}
+                setValue={() => {}}
+                disabled
+              />
             </div>
             <div>
               <Select label="Log Type" size={small ? "xs" : "md"} placeholder="Select log type" className="w-full" value={viewItems.filing.logType.name} disabled />
@@ -136,7 +145,14 @@ export default function ViewDetails({ opened, onClose, buttonClose, panel, appro
               </div>
 
               <div className="flex flex-col w-full md:w-1/2">
-                <DatePickerInput label="Transaction Date" size={small ? "xs" : "md"} placeholder="mm/dd/yyyy" value={new Date(viewItems.filing.dateTransaction)} disabled />
+                <DatePickerInput
+                  label="Transaction Date"
+                  size={small ? "xs" : "md"}
+                  placeholder="mm/dd/yyyy"
+                  value={viewItems.filing.dateTransaction}
+                  setValue={() => {}}
+                  disabled
+                />
               </div>
             </div>
 

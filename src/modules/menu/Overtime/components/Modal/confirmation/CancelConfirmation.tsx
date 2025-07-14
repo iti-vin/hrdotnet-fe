@@ -5,13 +5,13 @@
 
 import { useMutation } from "@tanstack/react-query";
 
-import Alert from "@/layout/main/alert";
 import { queryClient } from "@/services/client";
 
 import { ModalProps } from "@shared/assets/types/Modal";
 import { useOvertimeStore } from "../../../store";
 import { OvertimeServices } from "../../../services/api";
 import { SingleDataOvertime } from "../../../assets/Values";
+import Confirmation from "@shared/ui/modals/confirmation";
 
 export default function CancelConfirmation({ opened, onClose }: ModalProps) {
   const { singleItem, setOpenConfirmation, setOpenAlert, setError } = useOvertimeStore();
@@ -35,20 +35,14 @@ export default function CancelConfirmation({ opened, onClose }: ModalProps) {
   });
 
   return (
-    <Alert
+    <Confirmation
       opened={opened}
       onClose={onClose}
-      headerTitle="CANCEL REQUEST"
-      size="lg"
-      icon="Warning"
-      title="Are you sure you want to cancel this Overtime request?"
-      description="Filing deadline for this cutoff period will end in a day."
-      yes={{
-        onClick: () => singleCancel(singleItem.filing.id),
-      }}
-      no={{
-        onClick: () => setOpenConfirmation(""),
-      }}
+      variant="warning"
+      title="Cancel Request"
+      description={<div>Are you sure you want to cancel this request? </div>}
+      yes={{ onClick: () => singleCancel(singleItem.filing.id), title: "Confirm" }}
+      no={{ onClick: () => setOpenConfirmation(""), title: "Discard" }}
     />
   );
 }

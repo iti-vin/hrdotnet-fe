@@ -125,7 +125,7 @@ export default function ViewDetails({ opened, onClose, buttonClose, onHandleSing
                   className="border-none w-full"
                   disabled
                 />
-                <ReferenceNoInput size={small ? "xs" : "md"} radius={8} label="Reference No." placeholder="0000-0000-0000" className="w-full" disabled />
+                <ReferenceNoInput code="view-details" size={small ? "xs" : "md"} radius={8} label="Reference No." placeholder="0000-0000-0000" className="w-full" disabled />
               </Flex>
 
               <Flex direction={{ base: "column", sm: "row" }} justify="space-between" className="w-full" gap={20}>

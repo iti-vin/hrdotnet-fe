@@ -35,19 +35,20 @@ const CTOContext = createContext<CTOContextInterface>({
 });
 
 export const CTOProvider: FunctionComponent<PropsWithChildren> = ({ children }) => {
-  const onHandleSubmitFilter = (filterParams: Record<string, any>) => {};
+  const onHandleSubmitFilter = (filterParams: Record<string, any>) => {
+    console.log("Filter", filterParams);
+  };
 
   const onHandleClearFilter = () => {};
 
-  const onHandleChangePage = (newPage: number) => {};
+  const onHandleChangePage = (newPage: number) => {
+    console.log("Change Page", newPage);
+  };
 
-  const onHandlePageSize = (pageParams: Record<string, any>) => {};
-  return (
-    <CTOContext.Provider
-      value={{ ctoTabs, onHandleChangePage, onHandlePageSize, onHandleSubmitFilter, onHandleClearFilter }}>
-      {children}
-    </CTOContext.Provider>
-  );
+  const onHandlePageSize = (pageParams: Record<string, any>) => {
+    console.log("Change Page Size", pageParams);
+  };
+  return <CTOContext.Provider value={{ ctoTabs, onHandleChangePage, onHandlePageSize, onHandleSubmitFilter, onHandleClearFilter }}>{children}</CTOContext.Provider>;
 };
 
 export const useCTOContext = (): CTOContextInterface => {

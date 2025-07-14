@@ -55,6 +55,8 @@ export default function index({ panel, approve, endorse }: ModalProps) {
     batchCancelLeave();
   };
 
+  console.warn(handleSubmit);
+
   const rndrContentMessage = () => (
     <Stack>
       {Object.entries(
@@ -77,7 +79,7 @@ export default function index({ panel, approve, endorse }: ModalProps) {
       <CancelRequest />
       <EditRequest />
       <ViewDetails panel={panel} approve={approve} endorse={endorse} />
-      <BatchCancel message={rndrContentMessage()} onClick={handleSubmit} />
+      <BatchCancel opened={openDialog === "BatchCancel"} onClose={() => setOpenDialog("")} />
       <BatchApproval message={rndrContentMessage()} />
       <BatchReviewal message={rndrContentMessage()} />
       <SummaryDetails opened={openDialog === "SummaryDetails"} onClose={() => setOpenDialog("")} buttonClose={() => setOpenDialog("")} />
