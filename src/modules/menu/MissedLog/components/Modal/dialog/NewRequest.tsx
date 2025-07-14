@@ -6,7 +6,7 @@
 //--- React Modules
 import { Fragment } from "react";
 //--- Mantine Modules
-import { Flex, rem, Stack } from "@mantine/core";
+import { Flex, Stack } from "@mantine/core";
 //--- Tabler Icons
 //-- Shared Template
 
@@ -15,9 +15,7 @@ import { useMutation } from "@tanstack/react-query";
 import { MissedLogServices } from "../../../services";
 import { queryClient } from "@/services/client";
 import { useMissedLogStore } from "../../../store/main";
-import { Button, FileAttachment, Modal, Select, TextArea, TextInput, TimePickerInput } from "@shared/components";
-import { DatePickerInput } from "@mantine/dates";
-import { IconCalendar } from "@tabler/icons-react";
+import { Button, DatePickerInput, FileAttachment, Modal, Select, TextArea, TextInput, TimePickerInput } from "@shared/components";
 
 interface ModalRequest {
   opened: boolean;
@@ -74,18 +72,7 @@ export default function NewRequest({ opened, onClose, buttonClose }: ModalReques
         <form onSubmit={newForm.onSubmit(handleSubmit)}>
           <Stack className="w-full h-full">
             <Flex direction={{ base: "column", sm: "row" }} justify="space-between" className="w-full" gap={20}>
-              <DatePickerInput
-                size="md"
-                radius={8}
-                withAsterisk
-                label="Date"
-                placeholder="MM/DD/YYYY"
-                className="w-full"
-                styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
-                rightSection={<IconCalendar style={{ width: rem(18), height: rem(18) }} stroke={1.5} />}
-                value={dateFiled}
-                onChange={(value) => setDateFiled(new Date(value))}
-              />
+              <DatePickerInput size="md" label="Date" placeholder="MM/DD/YYYY" className="w-full" value={dateFiled} setValue={(value) => setDateFiled(new Date(value))} />
               <TextInput
                 size="md"
                 radius={8}

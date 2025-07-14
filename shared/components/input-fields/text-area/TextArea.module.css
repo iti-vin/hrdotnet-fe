@@ -7,7 +7,7 @@
   --placeholder: #b9c0c7;
 }
 .label {
-  @apply text-[--label] font-medium text-[15px] leading-[18px];
+  @apply text-[--label] font-light text-base leading-[18px] mb-2;
 }
 .labelHeder {
   @apply text-[--header] font-bold mb-2;

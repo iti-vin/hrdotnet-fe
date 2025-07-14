@@ -147,9 +147,15 @@ export default function NewRequest({ opened, onClose, buttonClose }: ModalProps)
       onClose={onClose}
       buttonClose={buttonClose}
       footer={
-        <Button variant="gradient" size="lg" type="submit">
-          Submit
-        </Button>
+        <>
+          <div className="hidden">
+            <Button onClick={handlePaste}>handlePaste</Button>
+          </div>
+
+          <Button variant="gradient" size="lg" type="submit">
+            Submit
+          </Button>
+        </>
       }
       formProps={{
         onSubmit: newForm.onSubmit(handleCreate),

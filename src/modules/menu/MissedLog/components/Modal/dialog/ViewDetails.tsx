@@ -104,7 +104,16 @@ export default function ViewDetails({ opened, onClose, buttonClose, panel, appro
             </Text>
 
             <div>
-              <DatePickerInput size={small ? "xs" : "md"} label="Date" placeholder="MM-DD-YYYY" className="w-full" id="date_from" value={viewItems.filing.dateFiled!} disabled />
+              <DatePickerInput
+                size={small ? "xs" : "md"}
+                label="Date"
+                placeholder="MM-DD-YYYY"
+                className="w-full"
+                id="date_from"
+                value={viewItems.filing.dateFiled!}
+                setValue={e!}
+                disabled
+              />
             </div>
             <div>
               <Select label="Log Type" size={small ? "xs" : "md"} placeholder="Select log type" className="w-full" value={viewItems.filing.logType.name} disabled />

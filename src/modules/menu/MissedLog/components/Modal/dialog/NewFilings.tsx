@@ -4,11 +4,11 @@
  */
 
 //--- React Modules
-import React from "react";
+import { ChangeEvent, useState } from "react";
 //--- Mantine Modules
-import { ActionIcon, Flex, rem, Stack } from "@mantine/core";
+import { Flex, rem, Stack } from "@mantine/core";
 //--- Tabler Icons
-import { IconCalendar, IconCaretDownFilled, IconClock } from "@tabler/icons-react";
+import { IconCalendar, IconCaretDownFilled } from "@tabler/icons-react";
 //-- Shared Template
 import { TextArea, TextInput, Select, Button, FileAttachment, Modal, DatePickerInput, TimePickerInput } from "@shared/components";
 
@@ -26,12 +26,12 @@ interface OvertimeData {
 }
 
 export default function NewFilings({ opened, onClose, buttonClose }: ModalRequest) {
-  React.useState<OvertimeData | null>(null);
+  useState<OvertimeData | null>(null);
 
-  const [value, setValue] = React.useState<string>("");
-  const [date, setDate] = React.useState<Date | null>(null);
+  const [value, setValue] = useState<string>("");
+  const [date, setDate] = useState<Date | null>(null);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const input = event.target.value.replace(/\D/g, "");
     const formattedValue = formatInput(input);
     setValue(formattedValue);
@@ -49,13 +49,13 @@ export default function NewFilings({ opened, onClose, buttonClose }: ModalReques
     return `${part1}${part2 ? "-" + part2 : ""}${part3 ? "-" + part3 : ""}`.trim();
   };
 
-  const ref = React.useRef<HTMLInputElement>(null);
+  // const ref =useRef<HTMLInputElement>(null);
 
-  const pickerControl = (
-    <ActionIcon variant="subtle" color="gray" onClick={() => ref.current?.showPicker()}>
-      <IconClock style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
-    </ActionIcon>
-  );
+  // const pickerControl = (
+  //   <ActionIcon variant="subtle" color="gray" onClick={() => ref.current?.showPicker()}>
+  //     <IconClock style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
+  //   </ActionIcon>
+  // );
 
   return (
     <>
@@ -78,7 +78,7 @@ export default function NewFilings({ opened, onClose, buttonClose }: ModalReques
               <DatePickerInput
                 size="md"
                 required
-                setValue={date}
+                value={date}
                 setVallue={setDate}
                 label="Date"
                 placeholder="MM/DD/YYYY"

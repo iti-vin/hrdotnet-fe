@@ -14,10 +14,9 @@ import { ModalProps } from "@shared/assets/types/Modal";
 import ESSButton from "@shared/ui/Buttons";
 import { useChangeOfScheduleStore } from "../../../store";
 import { CosServices } from "../../../services/api";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { CosItems } from "../../../models/response";
-import { DatePickerInput } from "@mantine/dates";
-import { Modal, TextInput, TextArea, FileAttachment } from "@shared/components";
+import { Modal, TextInput, TextArea, FileAttachment, DateRangePickerInput } from "@shared/components";
 
 //--- Store
 
@@ -28,6 +27,7 @@ interface ViewDetailsProps extends ModalProps {
 }
 export default function ViewDetails({ opened, onClose, buttonClose, onHandleSingleEndorse, onHandleSingleApprove, panel }: ViewDetailsProps) {
   const small = useMediaQuery("(max-width: 770px)");
+  const [dateRange, setDateRange] = useState<[string | null, string | null]>([null, null]);
 
   const { viewItems, setOpenDialog, setOpenConfirmation, setSingleItem } = useChangeOfScheduleStore();
   // const handleCopy = () => {
@@ -125,17 +125,17 @@ export default function ViewDetails({ opened, onClose, buttonClose, onHandleSing
               General Information
             </Text>
             <div className="flex flex-col gap-[29px]">
-              <DatePickerInput
-                size={small ? "xs" : "md"}
-                valueFormat="YYYY MMM DD"
-                label="From Date"
-                placeholder={viewItems.filing.dateFiled.dateFrom}
-                className="w-full"
-                id="date_from"
-                disabled
+              <DateRangePickerInput
+                fl="From Date"
+                sl="To Date"
+                fp="From"
+                sp="To"
+                direction="row"
+                dateValue={dateRange}
+                setDateValue={(date) => {
+                  setDateRange(date);
+                }}
               />
-              <DatePickerInput size={small ? "xs" : "md"} label="To Date" placeholder={viewItems.filing.dateFiled.dateFrom} className="w-full" id="date_to" disabled />
-
               <TextInput size={small ? "xs" : "md"} label="Request Schedule" placeholder={viewItems.filing.requested.name} className="w-full" disabled />
               <Checkbox label="Rest Day" radius="xs" checked={viewItems.filing.requested.isRestDay} readOnly />
               <TextInput size={small ? "xs" : "md"} label="Reference No." placeholder="0000-0000-0000" className="w-full" disabled />

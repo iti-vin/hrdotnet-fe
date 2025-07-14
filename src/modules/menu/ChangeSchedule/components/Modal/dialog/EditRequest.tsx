@@ -20,14 +20,15 @@ import { CosServices } from "../../../services/api";
 import { queryClient } from "@/services/client";
 import { ValidationErrorResponse } from "@shared/assets/types/Error";
 import { SingleData } from "../../../models/request";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 //--- Services
-import { DatePickerInput, FileAttachment, TextInput, Select, TextArea, Modal, Button } from "@shared/components";
+import { FileAttachment, TextInput, Select, TextArea, Modal, Button, DateRangePickerInput } from "@shared/components";
 
 export default function EditRequest({ opened, onClose, buttonClose }: ModalProps) {
   // Media Screen for Smaller Size Width
   const small = useMediaQuery("(max-width: 40em)");
   const { viewItems, setLoading, setOpenDialog, setOpenAlert, setError, scheduleItems, setSchedList, schedList } = useChangeOfScheduleStore();
+  const [dateRange, setDateRange] = useState<[string | null, string | null]>([null, null]);
 
   useEffect(() => {
     setSchedList(scheduleItems.items.map((item) => ({ id: item.id, name: item.name, isRestDay: item.isRestDay })));
@@ -103,30 +104,15 @@ export default function EditRequest({ opened, onClose, buttonClose }: ModalProps
       <form onSubmit={editForm.onSubmit(handleUpdate)}>
         <Flex className="flex flex-col gap-3">
           <Flex className="flex flex-col md:flex-row gap-3 md:gap-5">
-            <DatePickerInput
-              size={small ? "xs" : "md"}
-              value={viewItems.filing.dateTransaction}
-              label="From Date"
-              placeholder={DateTimeUtils.getIsoDateWithBackSlash(viewItems.filing.dateFiled.dateFrom)}
-              setValue={(date) => {
-                if (!(date instanceof Date) || isNaN(date.getTime())) {
-                  console.error("Invalid Date Selected:", date);
-                  return;
-                }
-                editForm.setFieldValue("DateFiled.DateFrom", date.toString);
-              }}
-            />
-            <DatePickerInput
-              size={small ? "xs" : "md"}
-              value={viewItems.filing.dateTransaction}
-              label="To Date"
-              placeholder={DateTimeUtils.getIsoDateWithBackSlash(viewItems.filing.dateFiled.dateTo)}
-              setValue={(date) => {
-                if (!(date instanceof Date) || isNaN(date.getTime())) {
-                  console.error("Invalid Date Selected:", date);
-                  return;
-                }
-                editForm.setFieldValue("DateFiled.DateTo", date.toString());
+            <DateRangePickerInput
+              fl="From Date"
+              sl="To Date"
+              fp="From"
+              sp="To"
+              direction="row"
+              dateValue={dateRange}
+              setDateValue={(date) => {
+                setDateRange(date);
               }}
             />
           </Flex>
