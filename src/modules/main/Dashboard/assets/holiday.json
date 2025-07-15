@@ -1,0 +1,50 @@
+[
+  {
+    "month": "JANUARY",
+    "day": 1,
+    "name": "New Year's Day",
+    "location": "Global"
+  },
+  {
+    "month": "FEBRUARY",
+    "day": 14,
+    "name": "Valentine's Day",
+    "location": "Global"
+  },
+  {
+    "month": "APRIL",
+    "day": 9,
+    "name": "Araw ng Kagitingan",
+    "location": "Philippines"
+  },
+  {
+    "month": "JULY",
+    "day": 4,
+    "name": "Independence Day",
+    "location": "United States"
+  },
+  {
+    "month": "JUNE",
+    "day": 12,
+    "name": "Independence Day",
+    "location": "Philippines"
+  },
+  {
+    "month": "DECEMBER",
+    "day": 25,
+    "name": "Christmas Day",
+    "location": "Global"
+  },
+  {
+    "month": "NOVEMBER",
+    "day": 1,
+    "name": "All Saints' Day",
+    "location": "Philippines"
+  },
+  {
+    "month": "OCTOBER",
+    "day": 31,
+    "name": "Halloween",
+    "location": "Global"
+  }
+]

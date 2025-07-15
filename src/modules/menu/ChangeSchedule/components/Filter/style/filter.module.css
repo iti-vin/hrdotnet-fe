@@ -1,0 +1,29 @@
+:root {
+  --light: #d9d9d9;
+  --dark: #6d6d6d;
+}
+
+/* Add this to your existing CSS */
+.lastPill .flexRow {
+  @apply border-r border-[--light];
+}
+
+/* And remove border-r from the base flexRow class */
+.flexRow {
+  @apply flex flex-row items-center gap-[7px] pr-3 border-r border-[--light];
+}
+
+.text {
+  @apply capitalize text-[--dark] font-semibold text-[14px];
+}
+.pill {
+  @apply bg-[--light] text-[--dark];
+}
+.iconBtn {
+  @apply bg-transparent hover:bg-transparent  h-6 w-6 text-[--dark] hover:text-[--dark];
+}
+.icon {
+  @apply stroke-[1.5px];
+}
+
+/* end */

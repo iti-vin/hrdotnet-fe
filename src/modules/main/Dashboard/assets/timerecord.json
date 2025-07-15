@@ -1,0 +1,6 @@
+[
+  { "name": "Attendance", "value": 18, "color": "#559CDA" },
+  { "name": "Absences", "value": 8, "color": "#FF4B34" },
+  { "name": "Tardy", "value": 12, "color": "#ED8028" },
+  { "name": "Undertime", "value": 4, "color": "#FFB703" }
+]

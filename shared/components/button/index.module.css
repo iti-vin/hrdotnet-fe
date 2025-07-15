@@ -1,0 +1,35 @@
+.base {
+  @apply flex items-center justify-center font-semibold rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-60 disabled:pointer-events-none h-12;
+}
+
+.custom-gradient {
+  background-image: linear-gradient(to right, #559cda, #7badff, #ffb58d, #ed8028);
+}
+/* variants */
+.gradient {
+  @apply border-none custom-gradient text-white;
+}
+.orange {
+  @apply bg-[#FF6266] text-white hover:bg-[#e65358];
+}
+.yellow {
+  @apply bg-yellow-500 text-white hover:bg-yellow-600;
+}
+.red {
+  @apply bg-red-500 text-white hover:bg-red-600;
+}
+.blue {
+  @apply bg-blue-500 text-white hover:bg-blue-600;
+}
+.dark {
+  @apply bg-white text-gray-800 border border-gray-300 hover:bg-gray-100;
+}
+.ghost {
+  @apply bg-transparent text-gray-700 hover:bg-gray-100;
+}
+.outline {
+  @apply border bg-transparent hover:bg-transparent hover:text-black;
+}
+.outlineBlue {
+  @apply border  border-blue-500 text-blue-500 hover:border-blue-600 hover:text-blue-600 bg-white hover:bg-white;
+}

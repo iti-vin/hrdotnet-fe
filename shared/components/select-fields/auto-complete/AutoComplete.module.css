@@ -1,0 +1,23 @@
+:root {
+  --color-label: #6d6d6d;
+  --color-border: #a8a8a8;
+  --color-focus: #3b82f6;
+  --color-disabled: #a8a8a8;
+}
+.label {
+  @apply mb-2 text-[var(--color-label)] font-medium text-[15px] leading-[18px];
+}
+.inputField {
+  @apply h-[51px] border border-[var(--color-border)] rounded-lg p-4 text-[var(--color-text)] focus:ring-1;
+  focus: var(--color-focus);
+}
+.errorMessage {
+  @apply text-[var(--color-error)] font-medium text-[15px] leading-[18px];
+}
+.enabledField {
+  @apply bg-[var(--color-white)];
+}
+
+.disabledField {
+  @apply bg-[var(--color-disabled)];
+}

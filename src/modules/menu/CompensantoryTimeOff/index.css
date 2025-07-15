@@ -1,0 +1,6 @@
+.active {
+  @apply py-1.5 px-5 text-center bg-white rounded-lg text-[#559CDA] font-bold text-sm;
+}
+.inactive {
+  @apply py-1.5 px-5 text-center text-white font-medium text-sm;
+}

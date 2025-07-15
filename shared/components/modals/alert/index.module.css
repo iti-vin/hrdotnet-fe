@@ -1,0 +1,30 @@
+:root {
+  --warning: #ff4b34;
+  --primary: #559cda;
+  --tertiary: #6d6d6d;
+  --border: #6d6d6d99;
+}
+.container {
+  @apply bg-white p-8 h-[366px] w-[606px];
+}
+.header {
+  @apply capitalize font-semibold text-[22px] leading-[100%] tracking-[-1%] mb-[11px];
+}
+.primaryHeader {
+  @apply text-[var(--primary)];
+}
+.warningHeader {
+  @apply text-[var(--warning)];
+}
+.divider {
+  @apply bg-[var(--border)] w-full h-[2px];
+}
+.primaryIcon {
+  @apply text-[var(--primary)] h-[90px] w-[90px] stroke-[.5] mx-auto mt-[40px] mb-[20px];
+}
+.warningIcon {
+  @apply text-[var(--warning)] h-[90px] w-[90px] stroke-[.5] mx-auto mt-[40px] mb-[20px];
+}
+.body {
+  @apply text-[var(--tertiary)] font-semibold text-2xl text-center mx-[34px];
+}

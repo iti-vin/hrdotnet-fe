@@ -1,0 +1,11 @@
+.container-carousel {
+  @apply w-full h-auto rounded-md py-4;
+}
+
+.unselected {
+  @apply bg-[#deecff] items-center container-carousel;
+}
+
+.selected {
+  @apply bg-[#559cda] items-center container-carousel;
+}

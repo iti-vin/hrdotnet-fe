@@ -1,0 +1,146 @@
+/* Calendar View Design */
+.fc-toolbar-chunk .fc-button-group button.fc-dayGridMonth-button.fc-button,
+.fc-toolbar-chunk .fc-button-group button.fc-timeGridWeek-button.fc-button,
+.fc-toolbar-chunk .fc-button-group button.fc-timeGridDay-button.fc-button,
+.fc-toolbar-chunk .fc-button-group button.fc-listWeek-button.fc-button {
+  color: #559cda;
+  background-color: #dfecfe;
+  border: none;
+  text-transform: capitalize;
+}
+
+button.fc-dayGridMonth-button.fc-button.fc-button-primary.fc-button-active,
+button.fc-timeGridWeek-button.fc-button.fc-button-primary.fc-button-active,
+button.fc-timeGridDay-button.fc-button.fc-button-primary.fc-button-active,
+button.fc-listWeek-button.fc-button.fc-button-primary.fc-button-active {
+  color: #0c63af;
+  background-color: #cddcf1;
+  font-weight: 500;
+  border: none;
+}
+button.fc-dayGridMonth-button.fc-button.fc-button-primary.fc-button-active:focus,
+button.fc-timeGridWeek-button.fc-button.fc-button-primary.fc-button-active:focus,
+button.fc-timeGridDay-button.fc-button.fc-button-primary.fc-button-active:focus,
+button.fc-listWeek-button.fc-button.fc-button-primary.fc-button-active:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+/* Today, Prev and Next Button */
+.fc-toolbar-chunk button.fc-today-button.fc-button.fc-button-primary,
+.fc-toolbar-chunk .fc-button-group button.fc-next-button.fc-button,
+.fc-toolbar-chunk .fc-button-group button.fc-prev-button.fc-button {
+  color: #3495e9;
+  background-color: #cddcf1;
+  border: none;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.fc-toolbar-chunk button.fc-today-button.fc-button.fc-button-primary:focus,
+.fc-toolbar-chunk .fc-button-group button.fc-next-button.fc-button:focus,
+.fc-toolbar-chunk .fc-button-group button.fc-prev-button.fc-button:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+/* Added Button on Today Btn */
+.fc--button.fc-button.fc-button-primary {
+  display: none;
+}
+
+.fc .fc-view-harness.fc-view-harness-active .fc-dayGridMonth-view.fc-view.fc-daygrid .fc-view table[role="grid"] {
+  border-spacing: 20px;
+  border: none;
+}
+.fc .fc-view-harness .fc-view table[role="grid"] thead[role="rowgroup"] tr th {
+  padding: 5px 0px 5px 0px;
+  font-weight: 600;
+  color: #6d6d6d;
+  border: none;
+  background-color: #deecff;
+}
+
+.fc .fc .fc-view-harness .fc-view table[role="grid"] tbody[role="rowgroup"] td {
+  border: 1px solid #6d6d6d !important;
+}
+
+table[role="presentation"]
+  tbody[role="presentation"]
+  tr[role="row"]
+  td[role="gridcell"]
+  .fc-daygrid-day-frame.fc-scrollgrid-sync-inner {
+  cursor: pointer;
+}
+
+table[role="presentation"]
+  tbody[role="presentation"]
+  tr[role="row"]
+  td[role="gridcell"]
+  .fc-daygrid-day-frame.fc-scrollgrid-sync-inner
+  .fc-daygrid-day-top
+  a.fc-daygrid-day-number {
+  color: #6d6d6d;
+}
+
+table[role="grid"] {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+/* 
+table[role="presentation"]
+  tbody[role="presentation"]
+  tr[role="row"]
+  td[role="gridcell"]
+  .fc-daygrid-day-frame.fc-scrollgrid-sync-inner
+  .fc-daygrid-day-events {
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  background: red;
+  position: relative;
+}
+
+table[role="presentation"]
+  tbody[role="presentation"]
+  tr[role="row"]
+  td[role="gridcell"]
+  .fc-daygrid-day-frame.fc-scrollgrid-sync-inner
+  .fc-daygrid-day-top {
+  background: yellow;
+}
+
+table[role="presentation"]
+  tbody[role="presentation"]
+  tr[role="row"]
+  td[role="gridcell"]
+  .fc-daygrid-day-frame.fc-scrollgrid-sync-inner
+  .fc-daygrid-day-bg {
+  background: orange;
+}
+
+table[role="presentation"]
+  tbody[role="presentation"]
+  tr[role="row"]
+  td[role="gridcell"]
+  .fc-daygrid-day-frame.fc-scrollgrid-sync-inner {
+  background-color: whitesmoke;
+} */
+
+.custom-all-day {
+  background-color: #eef7ff;
+  color: #0066cc;
+  font-weight: bold;
+}
+.custom-event {
+  background-color: transparent;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+  border: none;
+}
+
+input.emp-select::placeholder {
+  @apply text-[#559cda] font-bold;
+}

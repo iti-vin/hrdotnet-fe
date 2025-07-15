@@ -1,0 +1,15 @@
+.contentClass {
+  @apply w-full h-full flex flex-col justify-between;
+}
+
+.headerClass {
+  @apply w-full flex flex-col gap-10 mt-1;
+}
+
+.bodyClass {
+  @apply flex flex-col gap-2;
+}
+
+.footerClass {
+  @apply w-full flex flex-row justify-end gap-3 mt-4;
+}
