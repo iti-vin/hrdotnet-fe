@@ -23,18 +23,7 @@ import RequestDetails from "../dialog/RequestDetails";
 
 export default function Personal() {
   const { fetchCalendar } = useCalendarContext();
-  const {
-    calendarEvents,
-    setType,
-    date,
-    setDate,
-    dialog,
-    setDialog,
-    isRestDayShow,
-    setIsRestDayShow,
-    isHolidayShow,
-    setIsHolidayShow,
-  } = useCalendarStore();
+  const { calendarEvents, setType, date, setDate, dialog, setDialog, isRestDayShow, setIsRestDayShow, isHolidayShow, setIsHolidayShow } = useCalendarStore();
   const calendarRef = useRef<FullCalendar>(null);
   const api = calendarRef!.current?.getApi() as CalendarApi;
 
@@ -65,7 +54,7 @@ export default function Personal() {
 
   return (
     <Container>
-      <Stack className="mb-4 w-full h-full rounded-lg select-none">
+      <Stack className=" w-full h-full rounded-lg select-none">
         <ResponsiveContainer height="95%">
           <FullCalendar
             ref={calendarRef}
@@ -90,48 +79,13 @@ export default function Personal() {
         </ResponsiveContainer>
         <Stack className="w-full h-auto p-0">
           <Flex className="w-full flex flex-row justify-evenly">
-            <Checkbox
-              defaultChecked
-              classNames={{ label: "text-[#1E8449] font-semibold" }}
-              label="Shift Schedule"
-              color="#1E8449"
-            />
-            <Checkbox
-              defaultChecked
-              classNames={{ label: "text-[#ED8028] font-semibold" }}
-              label="Logs"
-              color="#ED8028"
-            />
-            <Checkbox
-              defaultChecked
-              classNames={{ label: "text-[#7E7E7E] font-semibold" }}
-              label="Missing Logs"
-              color="#7E7E7E"
-            />
-            <Checkbox
-              defaultChecked
-              classNames={{ label: "text-[#967BB6] font-semibold" }}
-              label="Leave"
-              color="#967BB6"
-            />
-            <Checkbox
-              defaultChecked
-              classNames={{ label: "text-[#967BB6] font-semibold" }}
-              label="CTO"
-              color="#967BB6"
-            />
-            <Checkbox
-              defaultChecked
-              classNames={{ label: "text-[#2F78D1] font-semibold" }}
-              label="Official Business"
-              color="#2F78D1"
-            />
-            <Checkbox
-              defaultChecked
-              classNames={{ label: "text-[#5D9FEF] font-semibold" }}
-              label="Overtime"
-              color="#5D9FEF"
-            />
+            <Checkbox defaultChecked classNames={{ label: "text-[#1E8449] font-semibold" }} label="Shift Schedule" color="#1E8449" />
+            <Checkbox defaultChecked classNames={{ label: "text-[#ED8028] font-semibold" }} label="Logs" color="#ED8028" />
+            <Checkbox defaultChecked classNames={{ label: "text-[#7E7E7E] font-semibold" }} label="Missing Logs" color="#7E7E7E" />
+            <Checkbox defaultChecked classNames={{ label: "text-[#967BB6] font-semibold" }} label="Leave" color="#967BB6" />
+            <Checkbox defaultChecked classNames={{ label: "text-[#967BB6] font-semibold" }} label="CTO" color="#967BB6" />
+            <Checkbox defaultChecked classNames={{ label: "text-[#2F78D1] font-semibold" }} label="Official Business" color="#2F78D1" />
+            <Checkbox defaultChecked classNames={{ label: "text-[#5D9FEF] font-semibold" }} label="Overtime" color="#5D9FEF" />
             <Checkbox
               defaultChecked
               checked={isRestDayShow}
@@ -152,18 +106,9 @@ export default function Personal() {
         </Stack>
       </Stack>
 
-      <DateDetails
-        opened={dialog === "DateDetails"}
-        onClose={() => setDialog("")}
-        buttonClose={() => setDialog("")}
-        date={selectedDate}
-      />
+      <DateDetails opened={dialog === "DateDetails"} onClose={() => setDialog("")} buttonClose={() => setDialog("")} date={selectedDate} />
 
-      <RequestDetails
-        opened={dialog === "RequestDetails"}
-        onClose={() => setDialog("")}
-        buttonClose={() => setDialog("DateDetails")}
-      />
+      <RequestDetails opened={dialog === "RequestDetails"} onClose={() => setDialog("")} buttonClose={() => setDialog("DateDetails")} />
     </Container>
   );
 }
