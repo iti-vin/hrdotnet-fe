@@ -4,19 +4,12 @@
  */
 
 //--- Mantine Modules
-import { Avatar, Flex, Indicator, Menu, Text, rem } from "@mantine/core";
+import { Avatar, Flex, Menu, rem } from "@mantine/core";
 //--- Tabler Icons
-import {
-  IconUserCircle,
-  IconReceipt,
-  IconLogout,
-  IconAddressBook,
-  IconFileTime,
-  IconSettings,
-} from "@tabler/icons-react";
+import { IconUserCircle, IconLogout, IconSettings } from "@tabler/icons-react";
 
 //--- Sample-Image
-import mina from "@shared/assets/images/mina.jpg";
+import mina from "@shared/assets/images/mina2.jpg";
 import { useNavigate } from "react-router-dom";
 import { useAuthGlobalStore } from "@shared/store/auth";
 
@@ -27,79 +20,43 @@ export default function Profile() {
     navigate("/login");
   };
   return (
-    <Menu
-      shadow="md"
-      width={250}
-      position="bottom-end"
-      radius={10}
-      transitionProps={{ transition: "fade-down", duration: 100 }}>
+    <Menu shadow="md" width={200} position="bottom-end" radius={10} transitionProps={{ transition: "fade-down", duration: 100 }}>
       <Menu.Target>
-        <Indicator label="PA" size={20} position="bottom-end" withBorder offset={5}>
-          <Avatar src={mina} alt="it's me" className="cursor-pointer" size="md" />
-        </Indicator>
+        <Avatar src={mina} alt="it's me" className="cursor-pointer" size="md" />
       </Menu.Target>
 
       <Menu.Dropdown className="pt-5 pb-2 px-2">
         <Flex mih={50} justify="center" align="center" direction="column" wrap="wrap" mb={20}>
-          <p className="custom-gradient bg-clip-text text-transparent font-semibold poppins text-2xl">Welcome, Jane!</p>
-          <p className="text-xs text-gray-600 poppins">HR Admin</p>
+          <Avatar src={mina} alt="it's me" className="cursor-pointer" size="lg" />
+          <p className="font-semibold poppins text-md text-gray-600">Myoui Mina</p>
+          <p className="text-xs text-gray-600">HR Admin</p>
         </Flex>
         <Menu.Item
           className={`poppins ${location.pathname == "/user/profile" && "text-white custom-gradient"}`}
           color="#6d6d6d"
+          fz={13}
           fw={500}
           leftSection={<IconUserCircle visibility="sm" style={{ width: rem(20), height: rem(20) }} />}>
           Profile
         </Menu.Item>
         <Menu.Item
-          fw={500}
           className={`poppins ${location.pathname == "/user/payslip" && "text-white custom-gradient"}`}
           color="#6d6d6d"
-          leftSection={<IconReceipt style={{ width: rem(20), height: rem(20) }} />}>
-          Payslip
-        </Menu.Item>
-        <Menu.Item
+          fz={13}
           fw={500}
-          className={`poppins ${location.pathname == "/user/attendance" ? "text-white custom-gradient" : ""}`}
-          color="#6d6d6d"
-          leftSection={<IconFileTime style={{ width: rem(20), height: rem(20) }} />}>
-          Attendance
+          leftSection={<IconSettings style={{ width: rem(20), height: rem(20) }} />}>
+          Account Settings
         </Menu.Item>
+
+        <Menu.Divider />
         <Menu.Item
-          fw={500}
-          className={`poppins ${location.pathname == "/user/contact" && "text-white custom-gradient"}`}
-          color="#6d6d6d"
-          leftSection={<IconAddressBook style={{ width: rem(20), height: rem(20) }} />}>
-          Contact
-        </Menu.Item>
-        <Menu.Item
-          fw={500}
           className={`poppins ${location.pathname == "" && "text-white custom-gradient"}`}
           color="#6d6d6d"
+          fw={500}
+          fz={13}
           onClick={handleLogout}
           leftSection={<IconLogout style={{ width: rem(20), height: rem(20) }} />}>
           Logout
-        </Menu.Item>
-        <Menu.Divider />
-        <Menu.Label>
-          <Flex direction="row" justify="space-between" align="center">
-            <Text size="xs">Switch Company</Text>
-            <IconSettings size={14} color="black" className="cursor-pointer" />
-          </Flex>
-        </Menu.Label>
-        <Menu.Item
-          fw={500}
-          className={`poppins ${location.pathname == "" && "text-white custom-gradient"}`}
-          color="#6d6d6d"
-          leftSection={<Avatar size="sm" name="Pan Asia" color="black" allowedInitialsColors={["white", "red"]} />}>
-          Pan Asia
-        </Menu.Item>
-        <Menu.Item
-          fw={500}
-          className={`poppins ${location.pathname == "" && "text-white custom-gradient"}`}
-          color="#6d6d6d"
-          leftSection={<Avatar size="sm" name="Toms World" color="black" allowedInitialsColors={["white", "red"]} />}>
-          Toms World
         </Menu.Item>
       </Menu.Dropdown>
     </Menu>

@@ -58,13 +58,19 @@ export function DataTable<T>({
       loaderSize="sm"
       loaderColor="blue"
       highlightOnHover
-      rowStyle={() => ({ cursor: onRowClick ? "pointer" : "default" })}
       onRowClick={(data) => onRowClick?.(data)}
       {...(panel !== "REQUEST" &&
         selectable && {
           selectedRecords,
           onSelectedRecordsChange,
         })}
+      rowStyle={(record) => {
+        const isSelected = selectedRecords?.some((r) => r === record);
+        return {
+          cursor: onRowClick ? "pointer" : "default",
+          backgroundColor: selectable && isSelected ? "rgba(0, 123, 255, 0.1)" : undefined,
+        };
+      }}
       page={page!}
       onPageChange={onPageChange!}
       totalRecords={totalRecords!}
