@@ -3,20 +3,15 @@
  * @author     Hersvin Fred De La Cruz Labastida
  */
 
-import { DataTable } from "mantine-datatable";
 import { useMediaQuery } from "@mantine/hooks";
 import { IconAlarmFilled, IconChevronDown, IconPlaneTilt } from "@tabler/icons-react";
 import { Box, Container, Divider, Flex, ScrollArea, Select, Stack, Text } from "@mantine/core";
-import { Bar, BarChart, CartesianGrid, Cell, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis } from "recharts";
+import { Bar, BarChart, CartesianGrid, Cell, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
-import approvals from "../assets/approvals.json";
-import pending from "../assets/pending.json";
 import worktime from "../assets/worktime.json";
 import holidays from "../assets/holiday.json";
 import timerec from "../assets/timerecord.json";
 import credits from "../assets/credits.json";
-
-import { statusColors } from "@shared/assets/types/Global";
 
 export default function Approver() {
   const small = useMediaQuery("(max-width: 40em)");
@@ -25,7 +20,7 @@ export default function Approver() {
       <Stack className="w-full h-auto lg:h-3/5 flex flex-col lg:flex-row gap-4">
         <Stack className="w-full h-full lg:w-2/3">
           <Stack className="w-full h-full lg:h-1/3 bg-white rounded-lg gap-1 p-4">
-            <Text c="#559cda" fw={600} fz={small ? 15 : 20} children="Leave Credits" />
+            <Text c="#559cda" fw={600} fz={{ base: 13, md: 17 }} children="Leave Credits" />
             <Flex className="flex flex-col lg:flex-row gap-3 h-full">
               {credits.map((item, index) => (
                 <Stack key={index} bg="#deecff" className="w-full h-full flex flex-row items-center rounded-lg">
@@ -42,80 +37,96 @@ export default function Approver() {
           </Stack>
           <Stack className="w-full h-full lg:h-2/3 bg-white rounded-lg p-4 gap-1">
             <Flex justify="space-between">
-              <Text c="#559cda" fw={600} fz={small ? 15 : 20} children="Pending Applications" />
-              <Box bg="#FF780033" c="#FF7800" className="px-4 lg:px-8 rounded-full font-bold flex items-center">
-                5
-              </Box>
+              <Flex justify="flex-start" gap={5}>
+                <Text c="#559cda" fw={600} fz={{ base: 13, md: 17 }} children="Pending Applications" />
+                <Text bg="#FF780033" c="#FF7800" fz={{ base: 10, md: 12 }} className="px-4 rounded-full font-bold flex items-center">
+                  5
+                </Text>
+              </Flex>
+              <Flex>
+                <Container className="flex flex-row items-center gap-2">
+                  <div className="p-1 bg-[#9B51E0] rounded-full" />
+                  <Text fz={12} c="#6d6d6d" fw={700}>
+                    Filed
+                  </Text>
+                </Container>
+                <Container className="flex flex-row items-center gap-2">
+                  <div className="p-1 bg-[#ED8028] rounded-full" />
+                  <Text fz={12} c="#6d6d6d" fw={700}>
+                    Reviewed
+                  </Text>
+                </Container>
+              </Flex>
             </Flex>
-            <DataTable
-              records={pending}
-              classNames={{ header: "text-[#559cda] header-dashboard" }}
-              columns={[
-                { accessor: "application_type", title: "APPLICATION TYPE" },
-                { accessor: "application_date", title: "APPLICATION DATE" },
-                { accessor: "transaction_date", title: "TRANSACTION DATE" },
-                {
-                  accessor: "status",
-                  title: "STATUS",
-                  textAlign: "center",
-                  render: (row: any) => {
-                    const statusInfo = statusColors.find((item) => item.status === row.status) || {
-                      status: "Unknown",
-                      color: "gray",
-                    };
-                    return (
-                      <div
-                        className="rounded-xl text-center p-1"
-                        style={{ background: statusInfo.color, color: "white" }}>
-                        {row.status}
-                      </div>
-                    );
-                  },
-                },
-              ]}
-            />
+            <ResponsiveContainer width="100%" height={"100%"}>
+              <BarChart
+                layout="vertical"
+                data={[
+                  { name: "Compensatory Time Off", filed: 5, reviewed: 5 },
+                  { name: "Offset", filed: 3, reviewed: 2 },
+                  { name: "Overtime", filed: 4, reviewed: 8 },
+                  { name: "Change Schedule", filed: 2, reviewed: 6 },
+                  { name: "Sick Leave", filed: 5, reviewed: 4 },
+                  { name: "Vacation Leave", filed: 1, reviewed: 10 },
+                ]}
+                margin={{ top: 10, right: 0, bottom: -10, left: 60 }}>
+                <XAxis type="number" fontSize={12} />
+                <YAxis dataKey="name" type="category" fontSize={12} />
+                <Tooltip />
+                <Bar dataKey="filed" stackId="a" fill="#9B51E0" name="Filed" barSize={15} />
+                <Bar dataKey="reviewed" stackId="a" fill="#ED8028" name="Reviewed" barSize={15} />
+              </BarChart>
+            </ResponsiveContainer>
           </Stack>
         </Stack>
         <Stack className="w-full h-full lg:w-1/3 bg-white rounded-lg p-4 gap-1">
           <Flex justify="space-between">
-            <Text c="#559cda" fw={600} fz={small ? 15 : 20} children="Pending Approvals" />
-            <Box bg="#FF780033" c="#FF7800" className="px-4 lg:px-8 rounded-full font-bold flex items-center">
-              5
-            </Box>
+            <Flex justify="flex-start" gap={5}>
+              <Text c="#559cda" fw={600} fz={{ base: 13, md: 17 }} children="Pending Approvals" />
+              <Text bg="#FF780033" c="#FF7800" fz={{ base: 10, md: 12 }} className="px-4 rounded-full font-bold flex items-center">
+                5
+              </Text>
+            </Flex>
+            <Flex>
+              <Container className="flex flex-row items-center gap-2">
+                <div className="p-1 bg-[#FFB703] rounded-full" />
+                <Text fz={12} c="#6d6d6d" fw={700}>
+                  For Review
+                </Text>
+              </Container>
+              <Container className="flex flex-row items-center gap-2">
+                <div className="p-1 bg-[#FF7800] rounded-full" />
+                <Text fz={12} c="#6d6d6d" fw={700}>
+                  For Approval
+                </Text>
+              </Container>
+            </Flex>
           </Flex>
-          <DataTable
-            records={approvals}
-            classNames={{ header: "text-[#559cda] header-dashboard" }}
-            columns={[
-              { accessor: "application_type", title: "APPLICATION TYPE" },
-              { accessor: "application_date", title: "DATE" },
-              {
-                accessor: "status",
-                title: "STATUS",
-                textAlign: "center",
-                render: (row: any) => {
-                  const statusInfo = statusColors.find((item) => item.status === row.status) || {
-                    status: "Unknown",
-                    color: "gray",
-                  };
-                  return (
-                    <div
-                      className="rounded-xl text-center p-1"
-                      style={{ background: statusInfo.color, color: "white" }}>
-                      {row.status}
-                    </div>
-                  );
-                },
-              },
-            ]}
-          />
+          <ResponsiveContainer width="100%" height={"100%"}>
+            <BarChart
+              data={[
+                { name: "CTO", forReviewal: 5, forApproval: 5 },
+                { name: "OFF", forReviewal: 3, forApproval: 2 },
+                { name: "OT", forReviewal: 4, forApproval: 8 },
+                { name: "SL", forReviewal: 5, forApproval: 4 },
+                { name: "VL", forReviewal: 1, forApproval: 10 },
+              ]}
+              margin={{ top: 30, right: 0, bottom: -10, left: -30 }}>
+              {/* <XAxis type="number" fontSize={12} /> */}
+              <XAxis dataKey="name" fontSize={12} />
+              <YAxis type="number" fontSize={12} />
+              <Tooltip />
+              <Bar dataKey="forReviewal" stackId="a" fill="#FFB703" name="For Reviewal" barSize={60} />
+              <Bar dataKey="forApproval" stackId="a" fill="#FF7800" name="For Approval" barSize={60} />
+            </BarChart>
+          </ResponsiveContainer>
         </Stack>
       </Stack>
       <Stack className="w-full h-auto lg:h-2/5 flex flex-col lg:flex-row gap-4">
         <Stack className="w-full h-full lg:w-2/3 flex flex-col lg:flex-row">
           <Stack className="w-full h-full lg:w-1/2 bg-white rounded-lg px-4 pt-4 pb-2">
             <Stack className="flex flex-col gap-1 h-[30%] mb-1">
-              <Text fz={small ? 15 : 20} fw={600} c="#559cda" children="Time at work" />
+              <Text fz={{ base: 13, md: 17 }} fw={600} c="#559cda" children="Time at work" />
               <Flex justify="space-between" className="">
                 <Flex direction="row" align="center" gap={4}>
                   <Text fz={12} fw={600} c="#559cda" children="Time In :" />
@@ -156,7 +167,7 @@ export default function Approver() {
           </Stack>
           <Stack className="w-full h-full lg:w-1/2 bg-white rounded-lg p-4 gap-0">
             <Flex direction="row" justify="space-between" className="h-[15%]">
-              <Text fz={small ? 15 : 20} c="#559cda" fw={600}>
+              <Text fz={{ base: 13, md: 17 }} c="#559cda" fw={600}>
                 Time Record
               </Text>
               <Stack className="flex flex-row w-[50%]">
@@ -183,16 +194,7 @@ export default function Approver() {
             </Flex>
             <ResponsiveContainer className="h-[65&]">
               <PieChart width={200} height={200}>
-                <Pie
-                  data={timerec}
-                  dataKey="value"
-                  nameKey="name"
-                  cx="50%"
-                  cy="50%"
-                  innerRadius={20}
-                  outerRadius={50}
-                  fill="color"
-                  label>
+                <Pie data={timerec} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={20} outerRadius={50} fill="color" label>
                   {timerec.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={entry.color} />
                   ))}
@@ -228,11 +230,11 @@ export default function Approver() {
           </Stack>
         </Stack>
         <Stack className="w-full h-full lg:w-1/3 bg-white rounded-lg p-4 gap-2">
-          <Flex justify="space-between">
-            <Text c="#559cda" fw={600} fz={small ? 15 : 20} children="Upcoming Events and Holidays" />
-            <Box bg="#FF780033" c="#FF7800" className="px-8 rounded-full font-bold flex items-center">
+          <Flex justify="flex-start" gap={5}>
+            <Text c="#559cda" fw={600} fz={{ base: 13, md: 17 }} children="Upcoming Events and Holidays" />
+            <Text bg="#FF780033" c="#FF7800" fz={{ base: 10, md: 12 }} className="px-4 rounded-full font-bold flex items-center">
               5
-            </Box>
+            </Text>
           </Flex>
           <ScrollArea className="h-full" type="auto">
             <Flex className="flex flex-col gap-2.5 overflow-hidden">

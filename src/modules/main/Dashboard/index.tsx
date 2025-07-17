@@ -31,16 +31,14 @@ export default function Dashboard() {
   };
 
   return (
-    <Stack className="h-full m-4 gap-0">
+    <Stack className="h-full p-4 gap-0">
       <title>Dashboard</title>
       <Stack className="w-full h-full select-none gap-0">
-        <Stack
-          className="bg-cover bg-center mb-4 w-full h-[15%] p-8 rounded-lg select-none justify-center gap-0"
-          style={{ backgroundImage: `url(${bg})` }}>
-          <Text fz={30} fw={600} c={"white"}>
+        <Stack className="bg-cover bg-center w-full h-[15%] mb-5 p-8 rounded-lg select-none justify-center gap-0" style={{ backgroundImage: `url(${bg})` }}>
+          <Text fz={{ base: 18, sm: 20, md: 22, lg: 24 }} fw={600} c={"white"}>
             Welcome, {decodedToken.EmployeeName}!
           </Text>
-          <Text fz={14} c={"white"}>
+          <Text fz={{ base: 10, sm: 12, md: 13, lg: 14 }} c={"white"}>
             You're looking at HRDotNet, your new tool for work.
           </Text>
         </Stack>

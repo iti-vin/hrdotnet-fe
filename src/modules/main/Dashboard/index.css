@@ -5,3 +5,11 @@
 .header-dashboard {
   @apply border-[#559cda] border-b-2;
 }
+text.recharts-layer.recharts-cartesian-axis-tick {
+  @apply text-sm;
+}
+
+.title,
+.desc {
+  @apply hidden;
+}

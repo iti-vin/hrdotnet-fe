@@ -28,6 +28,13 @@ import {
   IconChartHistogram,
   IconChartLine,
   IconMoneybag,
+  IconFolderCheck,
+  IconFolderRoot,
+  IconUserDollar,
+  IconReceipt,
+  IconCalendarClock,
+  IconPlaneTilt,
+  IconFaceMask,
 } from "@tabler/icons-react";
 import { ChartColumn, HandCoins, SquareChartGantt } from "lucide-react";
 
@@ -64,4 +71,11 @@ export const iconMap = {
   SquareChartGantt: SquareChartGantt,
   IconChartLine: IconChartLine,
   IconMoneybag: IconMoneybag,
+  IconFolderCheck: IconFolderCheck,
+  IconFolderRoot: IconFolderRoot,
+  IconUserDollar: IconUserDollar,
+  IconReceipt: IconReceipt,
+  IconCalendarClock: IconCalendarClock,
+  IconPlaneTilt: IconPlaneTilt,
+  IconFaceMask: IconFaceMask,
 };
