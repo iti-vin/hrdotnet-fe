@@ -4,27 +4,28 @@
  */
 
 //--- Mantine Modules
-import { Flex, Indicator, Popover, Tabs, Text } from "@mantine/core";
+import {
+  Popover,
+  // Flex,
+  // Tabs,
+  // Text
+} from "@mantine/core";
 //--- Icons Modules
 import { IconBell } from "@tabler/icons-react";
-import Items from "./notifications/NotificationItems";
+// import Items from "./notifications/NotificationItems";
 
 //--- Shared Icons
-import MessageGradient from "@shared/assets/icons/MessageGradient";
+// import MessageGradient from "@shared/assets/icons/MessageGradient";
 
 export default function Notification() {
   return (
     <Popover>
       <Popover.Target>
-        <Indicator inline color="red" size={12} className="cursor-pointer">
-          <IconBell style={{ width: "100%", height: "100%" }} stroke={1.5} color="black" />
-        </Indicator>
+        <IconBell style={{ width: "100%", height: "100%" }} stroke={2} color="#6d6d6d" />
       </Popover.Target>
-      <Popover.Dropdown px={0}>
+      {/* <Popover.Dropdown px={0}>
         <Flex justify="space-between" px={15}>
-          <Text className="custom-gradient bg-clip-text text-transparent font-semibold text-xl pb-3 ">
-            Notifications
-          </Text>
+          <Text className="custom-gradient bg-clip-text text-transparent font-semibold text-xl pb-3 ">Notifications</Text>
           <MessageGradient size={22} tooltip="Mark All as Read" />
         </Flex>
         <Tabs color="orange" variant="pills" radius="xs" defaultValue="all">
@@ -56,7 +57,7 @@ export default function Notification() {
             <Items filingStatus="reviewed" />
           </Tabs.Panel>
         </Tabs>
-      </Popover.Dropdown>
+      </Popover.Dropdown> */}
     </Popover>
   );
 }

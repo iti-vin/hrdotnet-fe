@@ -1,4 +1,9 @@
 {
+  "records": [
+    { "label": "ATTENDANCE", "path": "/attendance", "id": 1, "icon": "IconCalendarClock" },
+    { "label": "LOAN LEDGER", "path": "/loan-ledger", "id": 2, "icon": "IconCalculator" },
+    { "label": "PAYSLIP", "path": "/payslip", "id": 3, "icon": "IconReceipt" }
+  ],
   "menu": [
     { "label": "CHANGE OF SCHEDULE", "path": "/change-schedule", "id": 1, "icon": "IconCalendarEvent" },
     { "label": "CTO", "path": "/compensatory-timeoff", "id": 2, "icon": "IconCalendarTime" },
@@ -6,17 +11,18 @@
     { "label": "MISSED LOG", "path": "/missed-log", "id": 4, "icon": "IconClockX" },
     { "label": "OFFICIAL BUSINESS", "path": "/official-business", "id": 5, "icon": "IconBuildings" },
     { "label": "OFFSET", "path": "/offset", "id": 6, "icon": "IconAlarm" },
-    { "label": "OVERTIME", "path": "/overtime", "id": 7, "icon": "IconClockPlay" },
-    { "label": "LOAN", "path": "/loan-ledger", "id": 8, "icon": "IconCalculator" }
+    { "label": "OVERTIME", "path": "/overtime", "id": 7, "icon": "IconClockPlay" }
   ],
   "main": [
-    { "label": "PERSONAL DASHBOARD", "path": "/dashboard", "id": 1, "icon": "IconLayoutDashboard" },
-    { "label": "HR DASHBOARD", "path": "/hr", "id": 2, "icon": "IconCalendarMonth" }
+    { "label": "DASHBOARD", "path": "/dashboard", "id": 1, "icon": "IconLayoutDashboard" },
+    { "label": "CALENDAR", "path": "/calendar", "id": 2, "icon": "IconCalendarMonth" }
   ],
-  "201  FILES": [
-    { "label": "EMPLOYEE LIST", "path": "/employee-list", "id": 1, "icon": "IconUsersGroup" },
-    { "label": "PREVIOUS EMPLOYER", "path": "/previous-employer", "id": 2, "icon": "IconBuildings" },
-    { "label": "EMPLOYEE MOVEMENT", "path": "/employee-movement", "id": 3, "icon": "IconSitemap" }
+  "201 FILES": [
+    { "label": "EMPLOYEE PROFILE", "path": "/employee-list", "id": 1, "icon": "IconUsersGroup" },
+    { "label": "EMPLOYEE RECORD", "path": "/employee-record", "id": 2, "icon": "IconFolderRoot" },
+    { "label": "EMPLOYEE BENEFITS", "path": "/employee-benefits", "id": 3, "icon": "IconUserDollar" },
+    { "label": "EMPLOYEE MOVEMENT", "path": "/employee-movement", "id": 4, "icon": "IconSitemap" },
+    { "label": "ONBOARDING", "path": "/oonboarding", "id": 5, "icon": "IconFolderCheck" }
   ],
   "TIMEKEEPING": [
     { "label": "EMPLOYEE TIME RECORD", "path": "/employee-list", "id": 1, "icon": "IconFileReport" },

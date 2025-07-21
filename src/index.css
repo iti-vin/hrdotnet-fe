@@ -138,13 +138,24 @@ body {
   }
 }
 
-.custom-dashed {
-  border-style: dashed;
-  border-width: 2px;
-  border-color: #9ca3af;
-  border-image: none;
-  background-image: repeating-linear-gradient(to right, transparent 0, transparent 4px, #9ca3af 4px, #9ca3af 6px),
-    repeating-linear-gradient(to bottom, transparent 0, transparent 4px, #9ca3af 4px, #9ca3af 6px);
-  background-origin: border-box;
-  background-clip: content-box, border-box;
+/* ❶  Hide the column by default */
+.dt-select-col {
+  opacity: 0; /* fully transparent */
+  width: 0; /* collapses the column */
+  pointer-events: none; /* ignore clicks while hidden */
+  transition: opacity 150ms ease, width 150ms ease;
+}
+
+/* ❷  Show it when the row is hovered */
+.mantine-DataTable-row:hover .dt-select-col {
+  opacity: 1;
+  width: 2.625rem; /* ~42 px ‑ adjust to fit your checkbox */
+  pointer-events: auto;
+}
+
+/* ❸  Keep it visible once the row (or header) is selected */
+.dt-select-col input[type="checkbox"]:checked {
+  opacity: 1;
+  width: 2.625rem;
+  pointer-events: auto;
 }
