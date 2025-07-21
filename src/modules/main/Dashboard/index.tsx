@@ -34,7 +34,7 @@ export default function Dashboard() {
     <Stack className="h-full p-4 gap-0">
       <title>Dashboard</title>
       <Stack className="w-full h-full select-none gap-0">
-        <Stack className="bg-cover bg-center w-full h-[15%] mb-5 p-8 rounded-lg select-none justify-center gap-0" style={{ backgroundImage: `url(${bg})` }}>
+        <Stack className="bg-cover bg-center w-full h-[20%] mb-5 p-8 rounded-lg select-none justify-center gap-0" style={{ backgroundImage: `url(${bg})` }}>
           <Text fz={{ base: 18, sm: 20, md: 22, lg: 24 }} fw={600} c={"white"}>
             Welcome, {decodedToken.EmployeeName}!
           </Text>

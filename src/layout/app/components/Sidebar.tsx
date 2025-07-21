@@ -75,11 +75,11 @@ export default function Sidebar({ toggle }: SidebarProps) {
             if (isLogowordVisible === true)
               return (
                 <Flex>
-                  <Image src={`/images/new_logoicon.png`} h={35} w={35} visibleFrom="sm" onClick={toggleLogos} />
-                  <Image src={`/images/new_logoword.png`} visibleFrom="sm" onClick={toggleLogos} style={styles} h={35} w="auto" className="" />
+                  <Image src={`/images/new_logoicon.png`} h={35} w={35} visibleFrom="sm" />
+                  <Image src={`/images/new_logoword.png`} visibleFrom="sm" style={styles} h={35} w="auto" className="" />
                 </Flex>
               );
-            else return <Image src={`/images/new_logoicon.png`} h={35} w={35} visibleFrom="sm" onClick={toggleLogos} style={styles} />;
+            else return <Image src={`/images/new_logoicon.png`} h={35} w={35} visibleFrom="sm" style={styles} />;
           }}
         </Transition>
         {/* <IconChevronRight size={20} stroke={1.5} color="#6d6d6d" className="absolute border-[1px] bg-white rounded-full right-[-12px]" /> */}
