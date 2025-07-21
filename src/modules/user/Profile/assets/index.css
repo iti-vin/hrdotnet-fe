@@ -7,5 +7,9 @@
 }
 
 .btn-personal.mantine-Tabs-tab[tabindex="0"] {
-  @apply text-[#559cda];
+  @apply text-[#559cda] font-semibold;
+}
+
+.tabs-list.mantine-Tabs-list {
+  @apply bg-transparent;
 }

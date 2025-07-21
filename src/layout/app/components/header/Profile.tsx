@@ -36,11 +36,12 @@ export default function Profile() {
           color="#6d6d6d"
           fz={13}
           fw={500}
+          onClick={() => navigate("/user/profile")}
           leftSection={<IconUserCircle visibility="sm" style={{ width: rem(20), height: rem(20) }} />}>
           Profile
         </Menu.Item>
         <Menu.Item
-          className={`poppins ${location.pathname == "/user/payslip" && "text-white custom-gradient"}`}
+          className={`poppins ${location.pathname == "/user/account-settings" && "text-white custom-gradient"}`}
           color="#6d6d6d"
           fz={13}
           fw={500}
