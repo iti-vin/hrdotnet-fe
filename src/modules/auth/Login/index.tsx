@@ -7,12 +7,15 @@
 import { useState } from "react";
 //--- Mantine Modules
 import { useForm } from "@mantine/form";
-import { Button, Flex, Image, PasswordInput, Text, TextInput } from "@mantine/core";
+import { Button, Checkbox, Container, Flex, Image, PasswordInput, Stack, Text, TextInput } from "@mantine/core";
 //--- Icons
-import { IconEye, IconEyeOff, IconMail, IconShieldLock } from "@tabler/icons-react";
 import loginBg from "./assets/loginBg.png";
+import slideone from "./assets/slide_one.png";
+import slidetwo from "./assets/slide_two.png";
+import slidethree from "./assets/slide_three.png";
 import loginLogo from "./assets/loginLogo.png";
 import useLogin from "./components/hooks";
+import { Carousel } from "@mantine/carousel";
 
 interface Error {
   response: {
@@ -52,77 +55,91 @@ export default function Login() {
 
   JSON.stringify(loginForm.values);
 
-  const [visible, setVisible] = useState<boolean>(false);
-
-  const handleVisible = () => {
-    setVisible(!visible);
-  };
-
   return (
-    <div className=" h-full flex select-none">
+    <div className=" h-full flex select-none bg-white items-center">
       <title>Login</title>
-      <div className="bg-cover  w-1/2  hidden sm:block">
-        <div style={{ backgroundImage: `url(${loginBg})` }} className="bg-cover h-full w-full flex flex-col">
-          <Image src={loginLogo} className="cursor-pointer w-36 2xl:w-48 pl-10 py-10" alt="bg" />
+      <div className="bg-cover w-1/2 hidden sm:block p-5 h-full">
+        <div style={{ backgroundImage: `url(${loginBg})` }} className="bg-cover h-full w-full flex flex-col rounded-xl overflow-hidden">
+          <Stack className="h-full p-8">
+            <Image src={loginLogo} className="cursor-pointer w-36 2xl:w-48" alt="bg" />
+            <Stack className="h-full items-center justify-center">
+              <Carousel withIndicators withControls={false} height="100%">
+                <Carousel.Slide className="h-full">
+                  <Container className="h-full mb-28 items-center justify-center flex flex-col">
+                    <Image src={slideone} className="cursor-pointer  w-96" alt="bg" />
+                    <Text fz={25} c="white" fw={700} className="text-center" children="Track Your Time," />
+                    <Text fz={25} c="white" fw={700} className="text-center" children="Leaves and Schedules" />
+                    <Text w={370} c="white" className="items-center text-center" children="Check your time logs, file leave, OT, offset, OB, and manage your work schedule." />
+                  </Container>
+                </Carousel.Slide>
+                <Carousel.Slide>
+                  <Container className="h-full mb-28 items-center justify-center flex flex-col">
+                    <Image src={slidetwo} className="cursor-pointer w-96" alt="bg" />
+                    <Text fz={25} c="white" fw={700} className="text-center" children="View Your Payslips" />
+                    <Text fz={25} c="white" fw={700} className="text-center" children="and Loan Records" />
+                    <Text
+                      w={370}
+                      c="white"
+                      className="items-center text-center"
+                      children="Access your loan details, 13th month and final pay anytime-transparently and securely."
+                    />
+                  </Container>
+                </Carousel.Slide>
+                <Carousel.Slide>
+                  <Container className="h-full mb-28 items-center justify-center flex flex-col">
+                    <Image src={slidethree} className="cursor-pointer w-96" alt="bg" />
+                    <Text fz={25} c="white" fw={700} className="text-center" children="All Your Employee" />
+                    <Text fz={25} c="white" fw={700} className="text-center" children="Records in one Place" />
+                    <Text
+                      w={370}
+                      c="white"
+                      className="items-center text-center"
+                      children="Update your profile, check your benefits and review your employment history with ease."
+                    />
+                  </Container>
+                </Carousel.Slide>
+                {/* ...other slides */}
+              </Carousel>
+            </Stack>
+          </Stack>
         </div>
       </div>
       <div className=" w-full sm:w-1/2">
         <div className="h-full w-full flex flex-col">
           <form onSubmit={loginForm.onSubmit(handleSubmit)} className="flex flex-col gap-4 sm:h-[55%] sm:w-[55%] m-auto p-4 sm:p-0">
-            <p className=" text-center font-semibold poppins text-4xl text-[#559CDA]">Admin Log-in</p>
-            <Flex direction="row" justify="center" gap={5} className="w-full">
-              <Text c="#6d6d6d" size="sm" ta="center" fw={500}>
-                Forgot Password ?
-              </Text>
-              <Text c="#559cda" size="sm" ta="center" fw={500} className="underline cursor-pointer">
-                Contact System Administrator
+            <div className="text-center font-extrabold text-4xl text-[#334155]">Welcome Back</div>
+            <div className="text-center font-extrabold text-md text-[#969696]">Enter your username and password to proceed.</div>
+            <TextInput
+              id="username"
+              label="Username"
+              variant="default"
+              size="md"
+              radius="md"
+              classNames={{ input: "poppins" }}
+              placeholder="Enter your username"
+              disabled={loginMutation.isPending}
+              {...loginForm.getInputProps("username")}
+            />
+            <PasswordInput
+              id="password"
+              label="Password"
+              classNames={{ innerInput: "poppins" }}
+              variant="default"
+              size="md"
+              radius="md"
+              placeholder="Enter your password"
+              error={serverError}
+              disabled={loginMutation.isPending}
+              {...loginForm.getInputProps("password")}
+            />
+            {serverError && <Text c="red">{serverError}</Text>}
+
+            <Flex justify="space-between">
+              <Checkbox label="Remember me" c="#6d6d6d" />
+              <Text fz={14} c="#559CDA" fw={600}>
+                Forgot Password?
               </Text>
             </Flex>
-            <div className="w-full text-start text-slate-700 mt-6">
-              <Text size="md" className="poppins">
-                Username
-              </Text>
-              <TextInput
-                variant="default"
-                size="md"
-                radius="md"
-                classNames={{ input: "poppins" }}
-                id="username"
-                placeholder="Enter your username"
-                rightSection={
-                  <div className="bg-[#559CDA] p-2 rounded-lg text-white">
-                    <IconMail />
-                  </div>
-                }
-                {...loginForm.getInputProps("username")}
-              />
-            </div>
-            <div className="text-start text-slate-700">
-              <Text size="md" className="poppins">
-                Password
-              </Text>
-              <PasswordInput
-                classNames={{ input: "poppins text-[#6D6D6D] pr-10" }}
-                variant="default"
-                size="md"
-                radius="md"
-                id="password"
-                placeholder="Enter your password"
-                error={serverError}
-                onVisibilityChange={() => setVisible((v) => !v)}
-                visible={visible!}
-                rightSection={
-                  <div className="flex flex-row items-center gap-3 pr-7">
-                    <div className=" cursor-pointer">{visible ? <IconEyeOff size={16} onClick={handleVisible} /> : <IconEye size={16} onClick={handleVisible} />}</div>
-                    <div className="bg-[#ED8028] p-2 rounded-lg text-white">
-                      <IconShieldLock />
-                    </div>
-                  </div>
-                }
-                {...loginForm.getInputProps("password")}
-              />
-              {serverError && <Text c="red">{serverError}</Text>}
-            </div>
             <Button
               type="submit"
               size="lg"
@@ -130,7 +147,7 @@ export default function Login() {
               className="br-gradient border-none bg-blue-300 mt-7 shadow-sm shadow-orange-200"
               disabled={loginMutation.isPending}
               loading={loginMutation.isPending}>
-              <Text className="poppins text-white ">Login</Text>
+              <Text className="poppins text-white ">LOG IN</Text>
             </Button>
           </form>
         </div>
