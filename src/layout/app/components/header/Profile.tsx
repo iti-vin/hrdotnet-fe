@@ -41,6 +41,7 @@ export default function Profile() {
           Profile
         </Menu.Item>
         <Menu.Item
+          onClick={() => navigate("/user/account-settings")}
           className={`poppins ${location.pathname == "/user/account-settings" && "text-white custom-gradient"}`}
           color="#6d6d6d"
           fz={13}

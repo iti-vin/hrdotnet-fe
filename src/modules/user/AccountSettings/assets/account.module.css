@@ -1,0 +1,52 @@
+.container {
+  @apply h-full w-full bg-white p-6 rounded-lg select-none overflow-hidden;
+}
+
+.headerTitleContainer {
+  @apply flex flex-col h-[8%];
+}
+
+.headContainer {
+  @apply w-full items-start h-[20%] flex flex-row gap-10 p-4 rounded-lg;
+}
+
+.name {
+  @apply text-[#559cda] font-semibold text-2xl;
+}
+
+.employeeContainer {
+  @apply w-full flex flex-col;
+}
+
+.employeeInfoContent {
+  @apply flex flex-row w-full gap-1 text-[12px] md:text-[13px] justify-between;
+}
+
+.employeeInfo {
+  @apply flex flex-col font-semibold w-full text-[10px] gap-2 justify-between md:justify-start text-[#969696];
+}
+
+.employeeInfoValue {
+  @apply font-semibold text-[10px] text-[#6d6d6d] md:text-[13px] w-full;
+}
+
+/* components */
+.header {
+  @apply w-full justify-between text-[#6d6d6d] items-center;
+}
+
+.content {
+  @apply w-full justify-stretch gap-4 flex flex-col;
+}
+
+.contentContainer {
+  @apply flex flex-row w-full justify-between;
+}
+
+.textContainer {
+  @apply w-[25%] font-semibold gap-2 text-[11px] text-[#6d6d6d] flex flex-col;
+}
+
+.infoValue {
+  @apply font-semibold text-[13px];
+}
