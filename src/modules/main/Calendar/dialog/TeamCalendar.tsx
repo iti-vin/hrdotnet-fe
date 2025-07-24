@@ -20,6 +20,7 @@ import renderEventContent from "../components/Event";
 import { useCalendarStore } from "../store";
 import dayjs from "dayjs";
 import { Modal } from "@shared/components";
+import { ResponsiveContainer } from "recharts";
 
 interface TeamCalendarI extends ModalProps {
   name?: string;
@@ -87,26 +88,28 @@ export default function TeamCalendar({ opened, onClose, buttonClose, name }: Tea
         </Stack>
       }>
       <Stack className="mb-4 w-full h-[650px] rounded-lg select-none">
-        <FullCalendar
-          ref={calendarRef}
-          plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin]}
-          headerToolbar={{
-            left: " prev,next, today",
-            center: "title",
-            right: "dayGridMonth,timeGridDay,listWeek",
-          }}
-          themeSystem="bootstrap5"
-          datesSet={handleViewChange}
-          dayHeaderFormat={{ weekday: "long" }}
-          events={filteredEvents}
-          eventContent={renderEventContent}
-          dayHeaderClassNames="custom-header"
-          allDayClassNames="custom-all-day"
-          eventClassNames="custom-event"
-          initialView="dayGridMonth"
-          dayMaxEvents={true}
-          dateClick={handleDateClick}
-        />
+        <ResponsiveContainer height="90%">
+          <FullCalendar
+            ref={calendarRef}
+            plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin]}
+            headerToolbar={{
+              left: " prev,next, today",
+              center: "title",
+              right: "dayGridMonth,timeGridDay,listWeek",
+            }}
+            themeSystem="bootstrap5"
+            datesSet={handleViewChange}
+            dayHeaderFormat={{ weekday: "long" }}
+            events={filteredEvents}
+            eventContent={renderEventContent}
+            dayHeaderClassNames="custom-header"
+            allDayClassNames="custom-all-day"
+            eventClassNames="custom-event"
+            initialView="dayGridMonth"
+            dayMaxEvents={true}
+            dateClick={handleDateClick}
+          />
+        </ResponsiveContainer>
       </Stack>
     </Modal>
   );

@@ -1,33 +1,13 @@
-import {
-  ActionIcon,
-  Avatar,
-  Button,
-  Card,
-  Flex,
-  Group,
-  Image,
-  LoadingOverlay,
-  ScrollArea,
-  Stack,
-  Text,
-} from "@mantine/core";
-import {
-  IconCircleCheckFilled,
-  IconCirclePlus,
-  IconCircleXFilled,
-  IconLayoutGrid,
-  IconList,
-  IconTrash,
-} from "@tabler/icons-react";
-import Pagination from "../components/Pagination";
+import { ActionIcon, Avatar, Button, Card, Flex, Image, LoadingOverlay, ScrollArea, Stack, Text } from "@mantine/core";
+import { IconCaretDownFilled, IconCircleCheckFilled, IconCircleXFilled, IconLayoutGrid, IconList, IconSearch } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 import { basketballPlayers } from "../assets/array";
 import TeamCalendar from "../dialog/TeamCalendar";
 import { useCalendarStore } from "../store";
 import { DateTimeUtils } from "@shared/utils/DateTimeUtils";
 import "../index.css";
-import { ListFilter } from "lucide-react";
 import DrawerFilter from "../components/DrawerFilter";
+import { Select, TextInput } from "@shared/components";
 interface Team {
   name: string;
   position: string;
@@ -38,7 +18,7 @@ interface Team {
 export default function Team() {
   const [players, setPlayers] = useState<Team[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const { dialog, setDialog, setDrawer } = useCalendarStore();
+  const { dialog, setDialog } = useCalendarStore();
   const [isList, setIsList] = useState<boolean>(true);
   const [name, setName] = useState<string>("");
   const dateToday = new Date();
@@ -55,24 +35,57 @@ export default function Team() {
 
   return (
     <Stack className="h-full w-full overflow-hidden gap-2">
-      <Flex className="justify-between h-[5%]">
-        <Text className="text-lg lg:text-2xl font-bold text-[#6d6d6d]">
-          {DateTimeUtils.getIsoDateFullWord(dateToday.toString())}
-        </Text>
-        <Flex className="gap-4 items-center">
-          {isList ? (
+      <Flex className="justify-between h-[15%] md:h-[5%] flex flex-col md:flex-row items-center">
+        <Text className="text-lg lg:text-2xl font-bold text-[#6d6d6d]">{DateTimeUtils.getIsoDateFullWord(dateToday.toString())}</Text>
+
+        <Flex className="gap-2" align="center">
+          <Flex direction={{ base: "row", md: "row" }} align="center" justify="end" gap={5}>
+            <Text size="sm">Search By:</Text>
+            <Select
+              variant="outline"
+              size="md"
+              radius={8}
+              defaultValue={"Name"}
+              data={["Date", "Schedule", "Name"]}
+              rightSection={<IconCaretDownFilled size={18} color="#559CDA" className="hidden" />}
+              className="border-none w-16 md:w-24"
+              styles={{
+                input: {
+                  backgroundColor: "#deecff",
+                  color: "#559CDA",
+                  fontWeight: 600,
+                },
+              }}
+            />
+            <TextInput
+              variant="outline"
+              size="md"
+              defaultValue="Search"
+              onChange={() => {}}
+              radius={8}
+              className="border-none w-16 md:w-36"
+              rightSection={<IconSearch size={18} color="#559CDA" className="hidden md:block" />}
+              styles={{
+                input: {
+                  backgroundColor: "#deecff",
+                  color: "#559CDA",
+                  fontWeight: 600,
+                },
+              }}
+            />
+          </Flex>
+          <Flex className="gap-2">
             <ActionIcon variant="filled" color="#7E7E7E" size="lg" radius="md" onClick={() => setIsList(false)}>
               <IconList style={{ width: "70%", height: "70%" }} stroke={2} />
             </ActionIcon>
-          ) : (
             <ActionIcon variant="filled" color="#7E7E7E" size="lg" radius="md" onClick={() => setIsList(true)}>
               <IconLayoutGrid style={{ width: "70%", height: "70%" }} stroke={2} />
             </ActionIcon>
-          )}
+          </Flex>
         </Flex>
       </Flex>
 
-      <Flex className="filter-container">
+      {/* <Flex className="filter-container">
         <Flex className="h-full flex flex-row items-center justify-center">
           <Flex bg="#eeeeee" className="w-auto h-full items-center px-2 gap-4 rounded-l-md">
             <ListFilter size={20} color="#6d6d6d" />
@@ -96,16 +109,16 @@ export default function Team() {
             <IconTrash style={{ width: "100%", height: "100%" }} stroke={1.5} color="#6d6d6d" onClick={() => {}} />
           </ActionIcon>
         </Flex>
-      </Flex>
-      <ScrollArea className="h-full w-full">
+      </Flex> */}
+      <ScrollArea className="h-[85%] md:h-[95%] w-full">
         {isList ? (
-          <Stack className="h-[80%] w-full grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-7 items-center justify-center">
+          <Stack className="h-[85%] md:h-[95%] w-full grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-6 place-items-center gap-7">
             <LoadingOverlay visible={loading} />
             {players.map((player, index) => (
               <Card
                 key={index}
                 radius="md"
-                className="w-[200px] h-[280px] cursor-pointer shadow-md shadow-slate-400 hover:scale-105 bg-[#fafafa] hover:bg-slate-200"
+                className="w-[180px] h-[280px] cursor-pointer shadow-md shadow-slate-400 hover:scale-105 bg-[#fafafa] hover:bg-slate-200"
                 onClick={() => onHandleOpen(player.name)}>
                 <Flex className="w-full h-full flex flex-col justify-between">
                   <Flex>
@@ -136,7 +149,7 @@ export default function Team() {
             ))}
           </Stack>
         ) : (
-          <Stack className="w-full flex flex-col py-4 px-1">
+          <Stack className="h-[85%] md:h-[95%] w-full flex flex-col py-4 px-1">
             <LoadingOverlay visible={loading} />
             {players.map((player, index) => (
               <Flex
@@ -172,14 +185,9 @@ export default function Team() {
           </Stack>
         )}
       </ScrollArea>
-      <Pagination currentPage={1} pageSize={15} recordsLength={10} total={5} time="0.340" />
+      {/* <Pagination currentPage={1} pageSize={15} recordsLength={10} total={5} time="0.340" /> */}
 
-      <TeamCalendar
-        opened={dialog === "TeamCalendar"}
-        onClose={() => setDialog("")}
-        buttonClose={() => setDialog("")}
-        name={name}
-      />
+      <TeamCalendar opened={dialog === "TeamCalendar"} onClose={() => setDialog("")} buttonClose={() => setDialog("")} name={name} />
 
       <DrawerFilter />
     </Stack>

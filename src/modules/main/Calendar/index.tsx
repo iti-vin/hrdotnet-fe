@@ -1,14 +1,13 @@
 import PanelNav from "@/layout/main/panel";
 import { Stack } from "@mantine/core";
 import { NavLink, Outlet } from "react-router-dom";
-import { Fragment } from "react/jsx-runtime";
 import { CalendarProvider, useCalendarContext } from "./context";
 import "./index.css";
 
 function CalendarContent() {
   const { calendarTabs } = useCalendarContext();
   return (
-    <Fragment>
+    <Stack className="h-full">
       <title>Calendar</title>
       <Stack className="h-full">
         <PanelNav>
@@ -18,11 +17,11 @@ function CalendarContent() {
             </NavLink>
           ))}
         </PanelNav>
-        <Stack className="h-[92%] bg-white mx-4 p-8 rounded-lg select-none">
+        <Stack className="h-full bg-white mx-4 mb-3 p-8 rounded-lg select-none overflow-hidden">
           <Outlet />
         </Stack>
       </Stack>
-    </Fragment>
+    </Stack>
   );
 }
 

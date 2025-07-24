@@ -204,16 +204,9 @@ export default function Sidebar({ toggle }: SidebarProps) {
             const Icon = iconMap[item.icon as keyof typeof iconMap];
             return (
               <NavLink key={item.id} to={item.path} className={({ isActive }) => (isActive ? "module-active w-full rounded-lg" : "w-full text-menuText")}>
-                <Flex
-                  justify={isLogowordVisible ? "justify-between" : "center"}
-                  className={`module flex-menu ${isLogowordVisible && "px-2 font-regular rounded-lg items-center justify-between"}`}>
-                  <Flex gap={5} className="w-full">
-                    {isLogowordVisible ? <Icon size={22} /> : <TooltipIcon label={item.label} icon={<Icon size={22} />} />}
-                    {isLogowordVisible && <Text className="no-underline  text-sm">{item.label}</Text>}
-                  </Flex>
-                  {/* <Flex className={`w-5 ${location.pathname.includes(item.path) && "bg-blue-200 rounded-full text-black justify-center font-bold poppins"}`}>
-                    <Text fz={12}>4</Text>
-                  </Flex> */}
+                <Flex justify={isLogowordVisible ? "flex-start" : "center"} className={`module flex-menu ${isLogowordVisible && "pl-4 font-regular rounded-lg"}`}>
+                  {isLogowordVisible ? <Icon size={22} /> : <TooltipIcon label={item.label} icon={<Icon size={22} />} />}
+                  {isLogowordVisible && <Text className="no-underline  text-sm">{item.label}</Text>}
                 </Flex>
               </NavLink>
             );
