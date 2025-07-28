@@ -5,7 +5,7 @@
 
 //--- Node Modules
 import { IconNotes } from "@tabler/icons-react";
-import { Flex, Stack, Text, useMatches } from "@mantine/core";
+import { Flex, ScrollArea, Stack, Tabs, Text, useMatches } from "@mantine/core";
 //--- Layouts
 import { ModalProps } from "@shared/assets/types/Modal";
 import { Panel, statusColors } from "@shared/assets/types/Global";
@@ -28,7 +28,7 @@ interface ViewDetailsProps extends ModalProps {
 
 export default function ViewDetails({ opened, onClose, buttonClose, onHandleSingleEndorse, onHandleSingleApprove, panel }: ViewDetailsProps) {
   const small = useMediaQuery("(max-width: 40em)");
-  const size = useMatches({ base: "100%", sm: "60%" });
+  const size = useMatches({ base: "100%", sm: "50%" });
   const { viewItems, setSingleItem, setOpenDialog, setOpenConfirmation } = useOffsetStore();
 
   const onHandleSingleCancel = () => {
@@ -88,199 +88,208 @@ export default function ViewDetails({ opened, onClose, buttonClose, onHandleSing
 
   return (
     <Modal
-      title="View Details"
+      title={`Offset: ` + DateTimeUtils.getIsoDateWord(viewItems.filing.dateFiled)}
       size={size}
       opened={opened}
       onClose={onClose}
       buttonClose={buttonClose}
-      footer={
-        <Stack className="pt-5 flex flex-row justify-end" px={small ? 20 : 30}>
-          {rndrBtnContent()}
-        </Stack>
-      }>
+      footer={<Stack className="pt-5 flex flex-row justify-end">{rndrBtnContent()}</Stack>}>
       <div className="flex flex-col gap-5" style={{ color: "#6D6D6D" }}>
-        <div className="flex flex-col md:flex-row gap-6">
-          <div className="w-full md:w-1/2 flex flex-col gap-2  border-solid border-0.5 border-sky-500 p-4 rounded-lg">
-            <Text style={{ color: "#559CDA" }} className="text-xs md:text-lg font-bold text-center md:text-start">
-              General Information
-            </Text>
-            <Stack className="flex flex-col gap-2">
-              <DatePickerInput
-                size={small ? "xs" : "md"}
-                label="Offset Date"
-                value={viewItems.filing.dateFiled}
-                setValue={() => {}}
-                rightSection={<></>}
-                className="border-none w-full"
-                disabled
-              />
-              <Flex direction={{ base: "column", sm: "row" }} justify="space-between" className="w-full" gap={20}>
-                <Select
-                  size={small ? "xs" : "md"}
-                  label="Shift"
-                  placeholder="Schedule 001"
-                  radius={8}
-                  data={["React", "Angular", "Vue", "Svelte"]}
-                  rightSection={<></>}
-                  className="border-none w-full"
-                  disabled
-                />
-                <ReferenceNoInput code="view-details" size={small ? "xs" : "md"} radius={8} label="Reference No." placeholder="0000-0000-0000" className="w-full" disabled />
-              </Flex>
+        <Tabs variant="pills" defaultValue="overview">
+          <Tabs.List className="h-[5%]">
+            <Tabs.Tab value="overview" className="btn-view">
+              Overview
+            </Tabs.Tab>
+            <Tabs.Tab value="attachment" className="btn-view">
+              Attachment
+            </Tabs.Tab>
+            <Tabs.Tab value="history" className="btn-view">
+              History
+            </Tabs.Tab>
+          </Tabs.List>
 
-              <Flex direction={{ base: "column", sm: "row" }} justify="space-between" className="w-full" gap={20}>
-                <TimePickerInput
-                  size={small ? "xs" : "md"}
-                  radius={8}
-                  label="Actual OT In"
-                  defaultValue={DateTimeUtils.getCurrTimeDefault(viewItems.filing.actual.dateFrom)}
-                  onChange={() => {}}
-                  className="w-full"
-                  disabled
-                  styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
-                />
-                <TimePickerInput
-                  size={small ? "xs" : "md"}
-                  radius={8}
-                  label="Actual OT Out"
-                  defaultValue={DateTimeUtils.getCurrTimeDefault(viewItems.filing.actual.dateTo)}
-                  onChange={() => {}}
-                  className="w-full"
-                  disabled
-                  styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
-                />
-              </Flex>
-              <Flex direction={{ base: "column", sm: "row" }} justify="space-between" className="w-full" gap={20}>
-                <TimePickerInput
-                  size={small ? "xs" : "md"}
-                  radius={8}
-                  label="OT From"
-                  defaultValue={DateTimeUtils.getCurrTimeDefault(viewItems.filing.requested.dateFrom)}
-                  onChange={() => {}}
-                  className="w-full"
-                  disabled
-                  styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
-                />
-                <TimePickerInput
-                  size={small ? "xs" : "md"}
-                  radius={8}
-                  label="OT To"
-                  defaultValue={DateTimeUtils.getCurrTimeDefault(viewItems.filing.requested.dateTo)}
-                  onChange={() => {}}
-                  className="w-full"
-                  disabled
-                  styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
-                />
-              </Flex>
-              <TextInput label="Duration" placeholder="Pick date" className="w-full" size={small ? "xs" : "md"} onChange={() => {}} radius={8} disabled />
-            </Stack>
-          </div>
-
-          <div className="w-full md:w-1/2 flex flex-col gap-2 border-solid border-0.5 border-sky-500 p-4 rounded-lg">
-            <Text style={{ color: "#559CDA" }} className="text-xs md:text-lg font-bold text-center md:text-start">
-              Detailed Information
-            </Text>
-            <div>
-              <Text
-                size="md"
-                bg={statusInfo.color}
-                className="font-medium text-sm lg:text-lg text-white text-center gap-1 rounded-md py-3"
-                children={viewItems.filing.filingStatus.name}
-              />
-            </div>
-
-            <Flex gap={{ base: 5, md: 10 }} direction={{ base: "column", md: "row" }} align="end">
-              <TextInput
-                label="Document No."
-                className="w-full"
-                radius="md"
-                size={small ? "xs" : "md"}
-                placeholder="00000000"
-                disabled
-                defaultValue={viewItems.filing.documentNo}
-                onChange={() => {}}
-              />
-
-              <DatePickerInput
-                size={small ? "xs" : "md"}
-                label="Transaction Date"
-                value={viewItems.dateTransaction}
-                setValue={() => {}}
-                rightSection={<></>}
-                className="border-none w-full"
-                disabled
-              />
-            </Flex>
-
-            <div className="flex flex-col">
-              <TextArea
-                label="Endorsement Information"
-                size={small ? "xs" : "md"}
-                radius="md"
-                placeholder="Endorsed by Jane Smith on October 25, 2024 at 6:43 PM."
-                className="w-full"
-                disabled
-              />
-            </div>
-            <div className="flex flex-col">
-              <TextArea
-                label="Approval Information"
-                size={small ? "xs" : "md"}
-                radius="md"
-                placeholder="Approved by Jane Smith on October 25, 2024 at 6:43 PM (Batch Approval)"
-                className="w-full"
-                disabled
-              />
-            </div>
-            <div className="flex flex-col">
-              <TextArea label="Cancellation Information" size={small ? "xs" : "md"} radius="md" placeholder="No Information" className="w-full" disabled />
-            </div>
-          </div>
-        </div>
-
-        <div className="flex flex-col gap-2 border-solid border-0.5 border-sky-500 p-4 rounded-lg">
-          <Text style={{ color: "#559CDA" }} className="text-xs md:text-lg font-bold text-center md:text-start">
-            Reason{" "}
-          </Text>
-          <TextArea size="xl" radius="md" placeholder="Briefly state the reasons for filing leave." disabled defaultValue={viewItems.filing.reason} onChange={() => {}} />
-        </div>
-
-        <div className="flex flex-col gap-5 border-solid border-0.5 border-sky-500 p-4 rounded-lg">
-          <Text style={{ color: "#559CDA" }} className="font-bold ">
-            Attachment{" "}
-          </Text>
-          <div className="border-dashed border-0.5 border-sky-500 p-4 rounded-lg flex flex-col  items-center" style={{ color: "#6D6D6D", background: "#EEEEEE", opacity: "0.5" }}>
-            <div className="flex items-center">
-              <IconNotes />
-              <Text>File: attachment.pdf Size: 20 MB </Text>
-            </div>
-          </div>
-        </div>
-
-        <div className="flex flex-col md:flex-row  gap-4">
-          {/* {SELECTED_DATA.status != "Filed" && isMultipleDayLeave && (
-                <div className="flex flex-col w-full md:w-2/3 gap-2 border-solid border-0.5 border-sky-500 p-4 rounded-lg">
-                  
-              <Text style={{ color: "#559CDA" }} className="text-xs md:text-lg font-bold text-center md:text-start">
-                    Filing Breakdown
+          <Tabs.Panel value="overview" className="h-[95%] w-full py-4">
+            <ScrollArea className="h-full w-full" type="hover">
+              <div className="flex flex-col md:flex-row gap-6">
+                <div className="w-full md:w-1/2 flex flex-col gap-2  border-solid border-0.5 border-sky-500 p-4 rounded-lg">
+                  <Text style={{ color: "#559CDA" }} className="text-xs md:text-lg font-bold text-center md:text-start">
+                    General Information
                   </Text>
-                  <FilingBreakdown />
+                  <Stack className="flex flex-col gap-2">
+                    <DatePickerInput
+                      size={small ? "xs" : "md"}
+                      label="Offset Date"
+                      value={viewItems.filing.dateFiled}
+                      setValue={() => {}}
+                      rightSection={<></>}
+                      className="border-none w-full"
+                      disabled
+                    />
+                    <Flex direction={{ base: "column", sm: "row" }} justify="space-between" className="w-full" gap={20}>
+                      <Select
+                        size={small ? "xs" : "md"}
+                        label="Shift"
+                        placeholder="Schedule 001"
+                        radius={8}
+                        data={["React", "Angular", "Vue", "Svelte"]}
+                        rightSection={<></>}
+                        className="border-none w-full"
+                        disabled
+                      />
+                      <ReferenceNoInput code="view-details" size={small ? "xs" : "md"} radius={8} label="Reference No." placeholder="0000-0000-0000" className="w-full" disabled />
+                    </Flex>
+
+                    <Flex direction={{ base: "column", sm: "row" }} justify="space-between" className="w-full" gap={20}>
+                      <TimePickerInput
+                        size={small ? "xs" : "md"}
+                        radius={8}
+                        label="Actual OT In"
+                        defaultValue={DateTimeUtils.getCurrTimeDefault(viewItems.filing.actual.dateFrom)}
+                        onChange={() => {}}
+                        className="w-full"
+                        disabled
+                        styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
+                      />
+                      <TimePickerInput
+                        size={small ? "xs" : "md"}
+                        radius={8}
+                        label="Actual OT Out"
+                        defaultValue={DateTimeUtils.getCurrTimeDefault(viewItems.filing.actual.dateTo)}
+                        onChange={() => {}}
+                        className="w-full"
+                        disabled
+                        styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
+                      />
+                    </Flex>
+                    <Flex direction={{ base: "column", sm: "row" }} justify="space-between" className="w-full" gap={20}>
+                      <TimePickerInput
+                        size={small ? "xs" : "md"}
+                        radius={8}
+                        label="OT From"
+                        defaultValue={DateTimeUtils.getCurrTimeDefault(viewItems.filing.requested.dateFrom)}
+                        onChange={() => {}}
+                        className="w-full"
+                        disabled
+                        styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
+                      />
+                      <TimePickerInput
+                        size={small ? "xs" : "md"}
+                        radius={8}
+                        label="OT To"
+                        defaultValue={DateTimeUtils.getCurrTimeDefault(viewItems.filing.requested.dateTo)}
+                        onChange={() => {}}
+                        className="w-full"
+                        disabled
+                        styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
+                      />
+                    </Flex>
+                    <TextInput label="Duration" placeholder="Pick date" className="w-full" size={small ? "xs" : "md"} onChange={() => {}} radius={8} disabled />
+                  </Stack>
                 </div>
-              )} */}
-          <div className="flex flex-col gap-2  w-full border-solid border-0.5 border-sky-500 p-4 rounded-lg">
-            <Text style={{ color: "#559CDA" }} className="text-xs md:text-lg font-bold text-center md:text-start">
-              Edit Log
-            </Text>
-            <TextArea
-              styles={{ input: { height: "12.5rem" } }}
-              variant="filled"
-              size="xl"
-              radius="md"
-              placeholder="Date of Change  - Employee name changed the Application date from none to none."
-              disabled
-            />
-          </div>
-        </div>
+
+                <div className="w-full md:w-1/2 flex flex-col gap-2 border-solid border-0.5 border-sky-500 p-4 rounded-lg">
+                  <Text style={{ color: "#559CDA" }} className="text-xs md:text-lg font-bold text-center md:text-start">
+                    Detailed Information
+                  </Text>
+                  <div>
+                    <Text
+                      size="md"
+                      bg={statusInfo.color}
+                      className="font-medium text-sm lg:text-lg text-white text-center gap-1 rounded-md py-3"
+                      children={viewItems.filing.filingStatus.name}
+                    />
+                  </div>
+
+                  <Flex gap={{ base: 5, md: 10 }} direction={{ base: "column", md: "row" }} align="end">
+                    <TextInput
+                      label="Document No."
+                      className="w-full"
+                      radius="md"
+                      size={small ? "xs" : "md"}
+                      placeholder="00000000"
+                      disabled
+                      defaultValue={viewItems.filing.documentNo}
+                      onChange={() => {}}
+                    />
+
+                    <DatePickerInput
+                      size={small ? "xs" : "md"}
+                      label="Transaction Date"
+                      value={viewItems.dateTransaction}
+                      setValue={() => {}}
+                      rightSection={<></>}
+                      className="border-none w-full"
+                      disabled
+                    />
+                  </Flex>
+
+                  <div className="flex flex-col">
+                    <TextArea
+                      label="Endorsement Information"
+                      size={small ? "xs" : "md"}
+                      radius="md"
+                      placeholder="Endorsed by Jane Smith on October 25, 2024 at 6:43 PM."
+                      className="w-full"
+                      disabled
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <TextArea
+                      label="Approval Information"
+                      size={small ? "xs" : "md"}
+                      radius="md"
+                      placeholder="Approved by Jane Smith on October 25, 2024 at 6:43 PM (Batch Approval)"
+                      className="w-full"
+                      disabled
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <TextArea label="Cancellation Information" size={small ? "xs" : "md"} radius="md" placeholder="No Information" className="w-full" disabled />
+                  </div>
+                </div>
+              </div>
+            </ScrollArea>
+          </Tabs.Panel>
+
+          <Tabs.Panel value="attachment" className="h-[95%] w-full py-4">
+            <ScrollArea className="h-full w-full py-4" type="hover">
+              <div className="flex flex-col gap-5 border-solid border-0.5 border-[#6d6d6d] p-4 rounded-lg">
+                <Text style={{ color: "#6d6d6d" }} fz={{ base: 12, sm: 14, md: 15 }} className="font-bold text-center md:text-start">
+                  Attachment
+                </Text>
+                <div
+                  className="border-dashed border-0.5 border-sky-500 px-4 py-2 rounded-lg flex flex-col justify-center cursor-pointer"
+                  onClick={() => {}}
+                  style={{ background: "#EEEEEE", opacity: "0.5" }}>
+                  <div className="flex items-center gap-5">
+                    <IconNotes size={35} />
+
+                    <div className="flex flex-col">
+                      <Text fz={14} fw={700} c="#6d6d6d">
+                        File: attachment.pdf
+                      </Text>
+                      <Text fz={10}>Size: 20 MB </Text>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ScrollArea>
+          </Tabs.Panel>
+
+          <Tabs.Panel value="history" className="h-[95%] w-full py-4">
+            <Stack className="h-full w-full py-4">
+              <div className="w-full h-full flex flex-col gap-2 border-solid border-0.5 border-[#6d6d6d] p-4 rounded-lg">
+                <Text style={{ color: "#6d6d6d" }} fz={{ base: 12, sm: 14, md: 15 }} className="font-bold text-center md:text-start">
+                  History
+                </Text>
+
+                <ScrollArea className="h-full w-full" type="hover">
+                  <Flex></Flex>
+                </ScrollArea>
+              </div>
+            </Stack>
+          </Tabs.Panel>
+        </Tabs>
       </div>
     </Modal>
   );

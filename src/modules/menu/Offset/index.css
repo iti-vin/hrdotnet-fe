@@ -4,3 +4,19 @@
 .inactive {
   @apply py-1.5 px-5 text-center text-white font-medium text-sm;
 }
+
+.btn-view.mantine-Tabs-tab[role="tab"] {
+  @apply text-[#6d6d6d] font-semibold;
+}
+
+.btn-view.mantine-Tabs-tab[role="tab"]:hover {
+  @apply text-[#559cda] bg-transparent;
+}
+
+.btn-view.mantine-Tabs-tab[tabindex="0"] {
+  @apply text-[#559cda] font-semibold bg-[#E4F2F7];
+}
+
+.tabs-list.mantine-Tabs-list {
+  @apply bg-transparent;
+}

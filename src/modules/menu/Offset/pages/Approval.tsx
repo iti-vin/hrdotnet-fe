@@ -21,19 +21,7 @@ import { SingleDataOffset } from "../assets/Values";
 import { queryClient } from "@/services/client";
 
 export default function Approval() {
-  const {
-    time,
-    setTime,
-    loading,
-    setLoading,
-    storedFilters,
-    storedPage,
-    singleItem,
-    viewItems,
-    setOpenDialog,
-    setOpenAlert,
-    setError,
-  } = useOffsetStore();
+  const { time, setTime, loading, setLoading, storedFilters, storedPage, singleItem, viewItems, setOpenDialog, setOpenAlert, setError } = useOffsetStore();
   const panel = "APPROVAL";
 
   const { data, isLoading, refetch } = useQuery<OffsetResponse>({
@@ -69,10 +57,15 @@ export default function Approval() {
     refetch();
   }, [loading]);
 
+  const handleRefresh = () => {
+    setLoading(isLoading);
+    refetch();
+  };
+
   return (
     <Container>
       <Header panel={panel} />
-      <Filter panel={panel} />
+      <Filter panel={panel} refreshClick={handleRefresh} />
 
       <Table
         records={data && data.items}
@@ -123,15 +116,7 @@ export default function Approval() {
         panel={panel}
       />
 
-      {data && (
-        <Pagination
-          total={Math.ceil(data.total / data.pageSize)}
-          pageSize={data.pageSize}
-          recordsLength={data.total}
-          currentPage={data.page}
-          time={time}
-        />
-      )}
+      {data && <Pagination total={Math.ceil(data.total / data.pageSize)} pageSize={data.pageSize} recordsLength={data.total} currentPage={data.page} time={time} />}
 
       <Modals panel={panel} onHandleSingleApprove={() => singleApprove(viewItems.filing.id)} />
     </Container>

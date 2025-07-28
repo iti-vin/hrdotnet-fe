@@ -60,17 +60,30 @@ export default function NewRequest({ opened, onClose, buttonClose }: ModalProps)
         }>
         <Stack className="w-full h-full">
           <Group className="w-full">
-            <Select
-              size="md"
-              label="Offset Date"
-              withAsterisk
-              radius={8}
-              rightSection={<IconDots onClick={() => setOpen(true)} />}
-              className="border-none w-full"
-              styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
-              readOnly
-              onClick={() => setOpen(true)}
-            />
+            <Flex direction={{ base: "column", sm: "row" }} justify="space-between" className="w-full" gap={20}>
+              <Select
+                size="md"
+                label="Offset Date"
+                withAsterisk
+                radius={8}
+                rightSection={<IconDots onClick={() => setOpen(true)} />}
+                className="border-none w-full"
+                styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
+                readOnly
+                onClick={() => setOpen(true)}
+              />
+              <TextInput
+                size="md"
+                disabled
+                label="Shift"
+                // defaultValue={data!.schedule.name}
+                withAsterisk
+                radius={8}
+                rightSection={<IconCaretDownFilled size={18} />}
+                className="border-none w-full"
+                styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
+              />
+            </Flex>
 
             <Modal opened={open} onClose={() => setOpen(false)} buttonClose={() => setOpen(false)} title="Select Offset Date" size="lg">
               <Flex direction={{ base: "column", sm: "row" }} align="center" gap={10}>
@@ -161,28 +174,6 @@ export default function NewRequest({ opened, onClose, buttonClose }: ModalProps)
             </Modal>
 
             <Flex direction={{ base: "column", sm: "row" }} justify="space-between" className="w-full" gap={20}>
-              <TextInput
-                size="md"
-                disabled
-                label="Shift"
-                withAsterisk
-                radius={8}
-                rightSection={<IconCaretDownFilled size={18} />}
-                className="border-none w-full"
-                styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
-              />
-              <ReferenceNoInput
-                code="reference-no"
-                size="md"
-                radius={8}
-                label="Reference No."
-                placeholder="0000-0000-0000"
-                className="w-full"
-                max={14}
-                styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
-              />
-            </Flex>
-            <Flex direction={{ base: "column", sm: "row" }} justify="space-between" className="w-full" gap={20}>
               <TimePickerInput
                 disabled
                 size="md"
@@ -201,6 +192,27 @@ export default function NewRequest({ opened, onClose, buttonClose }: ModalProps)
             <Flex direction={{ base: "column", sm: "row" }} justify="space-between" className="w-full" gap={20}>
               <TimePickerInput size="md" label="Offset From" {...newForm.getInputProps("Requested.TimeIn")} />
               <TimePickerInput size="md" label="Offset To" {...newForm.getInputProps("Requested.TimeOut")} />
+            </Flex>
+            <Flex direction={{ base: "column", sm: "row" }} justify="space-between" className="w-full" gap={20}>
+              <TextInput
+                size="md"
+                disabled
+                label="Total Computed Hours"
+                withAsterisk
+                radius={8}
+                className="border-none w-full"
+                styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
+              />
+              <ReferenceNoInput
+                code="reference-no"
+                size="md"
+                radius={8}
+                label="Reference No."
+                placeholder="0000-0000-0000"
+                className="w-full"
+                max={14}
+                styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
+              />
             </Flex>
             <TextArea
               size="md"

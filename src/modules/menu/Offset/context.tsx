@@ -23,7 +23,7 @@ const offsetTabs: Tab[] = [
   { index: 0, path: "request", label: "My Request" },
   { index: 1, path: "reviewal", label: "For Review" },
   { index: 2, path: "approval", label: "For Approval" },
-  { index: 3, path: "filings", label: "Employee Filings" },
+  { index: 3, path: "filings", label: "All Request" },
 ];
 
 const OffsetContext = createContext<OffsetContextInterface>({
@@ -57,12 +57,7 @@ export const OffsetProvider: FunctionComponent<PropsWithChildren> = ({ children 
     setLoading(true);
     setStoredPage({ ...storedPage, ...pageParams });
   };
-  return (
-    <OffsetContext.Provider
-      value={{ offsetTabs, onHandleChangePage, onHandlePageSize, onHandleSubmitFilter, onHandleClearFilter }}>
-      {children}
-    </OffsetContext.Provider>
-  );
+  return <OffsetContext.Provider value={{ offsetTabs, onHandleChangePage, onHandlePageSize, onHandleSubmitFilter, onHandleClearFilter }}>{children}</OffsetContext.Provider>;
 };
 
 export const useOffsetContext = (): OffsetContextInterface => {

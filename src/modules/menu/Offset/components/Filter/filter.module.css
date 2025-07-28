@@ -1,0 +1,7 @@
+.container {
+  @apply w-full flex flex-row justify-between align-middle rounded-md border-[1px] border-[#a8a8a8];
+}
+
+.refresh {
+  @apply w-auto h-full;
+}

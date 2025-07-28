@@ -21,19 +21,7 @@ import { queryClient } from "@/services/client";
 import { SingleDataOffset } from "../assets/Values";
 
 export default function Reviewal() {
-  const {
-    time,
-    setTime,
-    loading,
-    setLoading,
-    storedFilters,
-    storedPage,
-    singleItem,
-    viewItems,
-    setOpenDialog,
-    setOpenAlert,
-    setError,
-  } = useOffsetStore();
+  const { time, setTime, loading, setLoading, storedFilters, storedPage, singleItem, viewItems, setOpenDialog, setOpenAlert, setError } = useOffsetStore();
   const panel = "REVIEWAL";
 
   const { data, isLoading, refetch } = useQuery<OffsetResponse>({
@@ -69,10 +57,15 @@ export default function Reviewal() {
     refetch();
   }, [loading]);
 
+  const handleRefresh = () => {
+    setLoading(isLoading);
+    refetch();
+  };
+
   return (
     <Container>
       <Header panel={panel} />
-      <Filter panel={panel} />
+      <Filter panel={panel} refreshClick={handleRefresh} />
 
       <Table
         records={data && data.items}
@@ -123,15 +116,7 @@ export default function Reviewal() {
         panel={panel}
       />
 
-      {data && (
-        <Pagination
-          total={Math.ceil(data.total / data.pageSize)}
-          pageSize={data.pageSize}
-          recordsLength={data.total}
-          currentPage={data.page}
-          time={time}
-        />
-      )}
+      {data && <Pagination total={Math.ceil(data.total / data.pageSize)} pageSize={data.pageSize} recordsLength={data.total} currentPage={data.page} time={time} />}
 
       <Modals panel={panel} onHandleSingleEndorse={() => singleEndorse(viewItems.filing.id)} />
     </Container>

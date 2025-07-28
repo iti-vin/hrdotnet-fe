@@ -12,7 +12,7 @@ import { useForm } from "@mantine/form";
 import { Button, FileAttachment, Modal, PaginatedDataTable, Select, TextArea, TextInput, TimePickerInput } from "@shared/components";
 
 export default function NewFilings({ opened, onClose, buttonClose }: ModalProps) {
-  const size = useMatches({ base: "100%", sm: "70%" });
+  const size = useMatches({ base: "100%", sm: "50%" });
 
   const newForm = useForm({
     mode: "uncontrolled",
@@ -71,17 +71,30 @@ export default function NewFilings({ opened, onClose, buttonClose }: ModalProps)
               readOnly
               onClick={() => setOpenEmployee(true)}
             />
-            <Select
-              size="md"
-              label="Offset Date"
-              withAsterisk
-              radius={8}
-              rightSection={<IconDots onClick={() => setOpen(true)} />}
-              className="border-none w-full"
-              styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
-              readOnly
-              onClick={() => setOpen(true)}
-            />
+            <Flex direction={{ base: "column", sm: "row" }} justify="space-between" className="w-full" gap={20}>
+              <Select
+                size="md"
+                label="Offset Date"
+                withAsterisk
+                radius={8}
+                rightSection={<IconDots onClick={() => setOpen(true)} />}
+                className="border-none w-full"
+                styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
+                readOnly
+                onClick={() => setOpen(true)}
+              />
+              <TextInput
+                size="md"
+                disabled
+                label="Shift"
+                // defaultValue={data!.schedule.name}
+                withAsterisk
+                radius={8}
+                rightSection={<IconCaretDownFilled size={18} />}
+                className="border-none w-full"
+                styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
+              />
+            </Flex>
             <Modal opened={open} onClose={() => setOpen(false)} buttonClose={() => setOpen(false)} title="Select Offset Date" size="lg">
               <Flex direction={{ base: "column", sm: "row" }} align="center" gap={10}>
                 <Text size="sm">Search By:</Text>
@@ -226,14 +239,20 @@ export default function NewFilings({ opened, onClose, buttonClose }: ModalProps)
             </Modal>
 
             <Flex direction={{ base: "column", sm: "row" }} justify="space-between" className="w-full" gap={20}>
+              <TimePickerInput disabled size="md" />
+              <TimePickerInput disabled size="md" label="Actual Offset out" />
+            </Flex>
+            <Flex direction={{ base: "column", sm: "row" }} justify="space-between" className="w-full" gap={20}>
+              <TimePickerInput size="md" label="Offset From" {...newForm.getInputProps("Requested.TimeIn")} />
+              <TimePickerInput size="md" label="Offset To" {...newForm.getInputProps("Requested.TimeOut")} />
+            </Flex>
+            <Flex direction={{ base: "column", sm: "row" }} justify="space-between" className="w-full" gap={20}>
               <TextInput
                 size="md"
                 disabled
-                label="Shift"
-                // defaultValue={data!.schedule.name}
+                label="Total Computed Hours"
                 withAsterisk
                 radius={8}
-                rightSection={<IconCaretDownFilled size={18} />}
                 className="border-none w-full"
                 styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
               />
@@ -246,14 +265,6 @@ export default function NewFilings({ opened, onClose, buttonClose }: ModalProps)
                 max={14}
                 styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
               />
-            </Flex>
-            <Flex direction={{ base: "column", sm: "row" }} justify="space-between" className="w-full" gap={20}>
-              <TimePickerInput disabled size="md" />
-              <TimePickerInput disabled size="md" label="Actual Offset out" />
-            </Flex>
-            <Flex direction={{ base: "column", sm: "row" }} justify="space-between" className="w-full" gap={20}>
-              <TimePickerInput size="md" label="Offset From" {...newForm.getInputProps("Requested.TimeIn")} />
-              <TimePickerInput size="md" label="Offset To" {...newForm.getInputProps("Requested.TimeOut")} />
             </Flex>
             <TextArea
               size="md"

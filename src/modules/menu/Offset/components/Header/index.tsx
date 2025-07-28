@@ -47,6 +47,7 @@ export default function index({ panel }: MissedLogHeaderI) {
           selectedRecords.length >= 1 && setOpenConfirmation("BatchCancel");
         },
         innerLabel: "ENDORSE",
+        disabled: selectedRecords.length === 0,
       };
     } else if (panel === PanelNavList.Approval || PanelNavList.Filings) {
       return {
@@ -59,15 +60,12 @@ export default function index({ panel }: MissedLogHeaderI) {
           selectedRecords.length >= 1 && setOpenConfirmation("BatchCancel");
         },
         innerLabel: "APPROVE",
+        disabled: selectedRecords.length === 0,
       };
     } else return undefined;
   };
 
   return (
-    <Header
-      title="Offset"
-      normalBtn={panel !== PanelNavList.Reviewal ? rndrNormalBtn() : undefined}
-      popoverBtn={panel !== PanelNavList.Request ? rndrPopOverBtn() : undefined}
-    />
+    <Header title="Offset" normalBtn={panel !== PanelNavList.Reviewal ? rndrNormalBtn() : undefined} popoverBtn={panel !== PanelNavList.Request ? rndrPopOverBtn() : undefined} />
   );
 }
