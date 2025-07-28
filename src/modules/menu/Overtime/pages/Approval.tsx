@@ -20,19 +20,7 @@ import { queryClient } from "@/services/client";
 
 export default function Approvals() {
   const panel = "APPROVAL";
-  const {
-    loading,
-    setLoading,
-    time,
-    setTime,
-    viewItems,
-    singleItem,
-    setError,
-    setOpenDialog,
-    setOpenAlert,
-    storedFilters,
-    storedPage,
-  } = useOvertimeStore();
+  const { loading, setLoading, time, setTime, viewItems, singleItem, setError, setOpenDialog, setOpenAlert, storedFilters, storedPage } = useOvertimeStore();
 
   const { data, isLoading, refetch } = useQuery<OvertimeResponse>({
     queryKey: ["approval_overtime", { ...storedFilters }, { ...storedPage }],
@@ -68,10 +56,15 @@ export default function Approvals() {
     refetch();
   }, [loading]);
 
+  const handleRefresh = () => {
+    setLoading(isLoading);
+    refetch();
+  };
+
   return (
     <Container>
       <Header panel={panel} />
-      <Filter panel={panel} />
+      <Filter panel={panel} refreshClick={handleRefresh} />
 
       <Table
         records={data && data.items}
@@ -121,15 +114,7 @@ export default function Approvals() {
         panel={panel}
       />
 
-      {data && (
-        <Pagination
-          total={Math.ceil(data.total / data.pageSize)}
-          pageSize={data.pageSize}
-          recordsLength={data.total}
-          currentPage={data.page}
-          time={time}
-        />
-      )}
+      {data && <Pagination total={Math.ceil(data.total / data.pageSize)} pageSize={data.pageSize} recordsLength={data.total} currentPage={data.page} time={time} />}
 
       <Modals panel={panel} onHandleSingleApprove={() => singleApprove(viewItems.filing.id)} />
     </Container>

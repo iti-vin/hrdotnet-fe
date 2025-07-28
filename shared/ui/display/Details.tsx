@@ -12,15 +12,11 @@ interface DetailsProps {
   gap?: StyleProp<MantineSpacing>;
 }
 
-export default function Details({ label, value, labelC = "#559cda", valueC = "#6d6d6d", labelFz = 13, valueFz = 12, direction = "column", gap = 10 }: DetailsProps) {
+export default function Details({ label, value, labelC = "#6d6d6d", valueC = "#6d6d6d", labelFz = 14, valueFz = 13, direction = "column", gap = 10 }: DetailsProps) {
   return (
-    <Flex gap={gap} align="start" direction={direction}>
-      <Text c={labelC} fw={700} fz={labelFz}>
-        {label}
-      </Text>
-      <Text c={valueC} fw={400} fz={valueFz}>
-        {value}
-      </Text>
+    <Flex gap={gap} align="start" direction={direction} justify={"space-between"}>
+      <Text c={labelC} fw={400} fz={labelFz} className="w-1/2" children={label} />
+      <Text c={valueC} fw={700} fz={valueFz} className="w-1/2" children={value} />
     </Flex>
   );
 }

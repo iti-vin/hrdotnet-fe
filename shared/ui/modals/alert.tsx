@@ -16,17 +16,13 @@ interface AlertProps extends PropsWithChildren {
   variant?: "success" | "danger" | "warning";
   title?: ReactNode;
   description?: ReactNode;
-  no?: {
-    onClick(): void;
-    title?: string;
-  };
-  yes?: {
+  confirm?: {
     onClick(): void;
     title?: string;
   };
 }
 
-export default function Confirmation({ opened, onClose, radius, size, variant = "success", title, description, no, yes, children }: AlertProps) {
+export default function Alert({ opened, onClose, radius, size, variant = "success", title, description, confirm, children }: AlertProps) {
   const small = useMediaQuery("(max-width: 40em)");
 
   const rndrIcon = () => {
@@ -61,15 +57,9 @@ export default function Confirmation({ opened, onClose, radius, size, variant = 
         {children && <div className="w-full">{children}</div>}
 
         <Stack className="flex flex-row w-full justify-evenly mt-5">
-          {no && (
-            <Button variant="outline" className="rounded-md w-full" onClick={no.onClick}>
-              {no.title ? no.title : "NO"}
-            </Button>
-          )}
-
-          {yes && (
-            <Button className="rounded-md br-gradient border-none w-full" onClick={yes.onClick}>
-              {yes.title ? yes.title : "YES"}
+          {confirm && (
+            <Button className="rounded-md br-gradient border-none w-full" onClick={confirm.onClick}>
+              {confirm.title ? confirm.title : "YES"}
             </Button>
           )}
         </Stack>

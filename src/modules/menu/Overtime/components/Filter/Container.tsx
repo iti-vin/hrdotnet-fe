@@ -7,7 +7,7 @@
 import { ActionIcon, Flex, Group, Pill, Text } from "@mantine/core";
 //--- Icons Modules
 import { ListFilter } from "lucide-react";
-import { IconCirclePlus, IconTrash } from "@tabler/icons-react";
+import { IconCirclePlus, IconRefresh, IconTrash } from "@tabler/icons-react";
 //--- React Modules
 import { Fragment } from "react";
 //---
@@ -15,12 +15,15 @@ import DrawerFilter from "./Drawer";
 import { Panel } from "@shared/assets/types/Global";
 import { useOvertimeStore } from "../../store";
 import { useOvertimeContext } from "../../context";
+import filter from "./filter.module.css";
+import { Button } from "@shared/components";
 
 interface DrawerFilterI {
   panel?: Panel;
+  refreshClick?: () => void;
 }
 
-export default function ContainerFilter({ panel }: DrawerFilterI) {
+export default function ContainerFilter({ panel, refreshClick }: DrawerFilterI) {
   const { setOpenDrawer, storedFilters } = useOvertimeStore();
   const { onHandleClearFilter } = useOvertimeContext();
 
@@ -36,9 +39,7 @@ export default function ContainerFilter({ panel }: DrawerFilterI) {
       return null;
     }
 
-    const selected = statusPill.filter(
-      (pill) => Array.isArray(storedFilters.DocStatusIds) && storedFilters.DocStatusIds.includes(pill.value)
-    );
+    const selected = statusPill.filter((pill) => Array.isArray(storedFilters.DocStatusIds) && storedFilters.DocStatusIds.includes(pill.value));
 
     return (
       <Pill.Group>
@@ -53,64 +54,61 @@ export default function ContainerFilter({ panel }: DrawerFilterI) {
 
   return (
     <Fragment>
-      <Flex className="filter-container">
-        <Flex className="h-full flex flex-row items-center justify-center">
-          <Flex bg="#eeeeee" className="w-auto h-full items-center px-2 gap-4 rounded-l-md">
-            <ListFilter size={20} color="#6d6d6d" />
-            <Text fw={500} c="#6d6d6d" visibleFrom="md">
-              FILTERS APPLIED
-            </Text>
+      <Flex direction="row" justify="space-between" gap={10}>
+        <Flex className={filter.container}>
+          <Flex className="h-full flex flex-row items-center justify-center">
+            <Flex bg="#eeeeee" className="w-auto h-full items-center px-2 gap-4 rounded-l-md">
+              <ListFilter size={20} color="#6d6d6d" />
+              <Text fw={500} c="#6d6d6d" visibleFrom="md">
+                FILTERS APPLIED
+              </Text>
+            </Flex>
+            <Group>
+              {storedFilters.DocumentNo && (
+                <Flex direction="row" align="center" gap={7} mx={8} visibleFrom="md">
+                  <Text>Doc No:</Text>
+                  <Pill classNames={{ root: "bg-[#d9d9d9]", label: "text-[#6D6D6D] font-semibold" }} withRemoveButton>
+                    {storedFilters.DocumentNo}
+                  </Pill>
+                  <Text size="xl" c="#eeeeee">
+                    |
+                  </Text>
+                </Flex>
+              )}
+              {storedFilters.DateFrom && storedFilters.DateTo && (
+                <Flex direction="row" align="center" gap={7} mx={8} visibleFrom="md">
+                  <Text>Date Transaction:</Text>
+
+                  <Pill classNames={{ root: "bg-[#d9d9d9]", label: "text-[#6D6D6D] font-semibold" }} withRemoveButton>
+                    {storedFilters.DateFrom}- {storedFilters.DateTo}
+                  </Pill>
+                  <Text size="xl" c="#eeeeee">
+                    |
+                  </Text>
+                </Flex>
+              )}
+              {storedFilters.DocStatusIds! && (
+                <Flex direction="row" align="center" gap={7} mx={8} visibleFrom="md">
+                  <Text>Status:</Text>
+                  {selectedStatus()}
+                </Flex>
+              )}
+            </Group>
           </Flex>
-          <Group>
-            {storedFilters.DocumentNo && (
-              <Flex direction="row" align="center" gap={7} mx={8} visibleFrom="md">
-                <Text>Doc No:</Text>
-                <Pill classNames={{ root: "bg-[#d9d9d9]", label: "text-[#6D6D6D] font-semibold" }} withRemoveButton>
-                  {storedFilters.DocumentNo}
-                </Pill>
-                <Text size="xl" c="#eeeeee">
-                  |
-                </Text>
-              </Flex>
-            )}
-            {storedFilters.DateFrom && storedFilters.DateTo && (
-              <Flex direction="row" align="center" gap={7} mx={8} visibleFrom="md">
-                <Text>Date Transaction:</Text>
 
-                <Pill classNames={{ root: "bg-[#d9d9d9]", label: "text-[#6D6D6D] font-semibold" }} withRemoveButton>
-                  {storedFilters.DateFrom}- {storedFilters.DateTo}
-                </Pill>
-                <Text size="xl" c="#eeeeee">
-                  |
-                </Text>
-              </Flex>
-            )}
-            {storedFilters.DocStatusIds! && (
-              <Flex direction="row" align="center" gap={7} mx={8} visibleFrom="md">
-                <Text>Status:</Text>
-                {selectedStatus()}
-              </Flex>
-            )}
-          </Group>
+          <Flex pr={10} py={8} gap={5}>
+            <ActionIcon variant="transparent" color="gray" size="md" aria-label="Settings" onClick={() => setOpenDrawer(true)}>
+              <IconCirclePlus style={{ width: "100%", height: "100%" }} stroke={1.5} color="#6d6d6d" />
+            </ActionIcon>
+            <ActionIcon variant="transparent" color="gray" size="md" aria-label="Settings">
+              <IconTrash style={{ width: "100%", height: "100%" }} stroke={1.5} color="#6d6d6d" onClick={onHandleClearFilter} />
+            </ActionIcon>
+          </Flex>
         </Flex>
-
-        <Flex pr={10} py={8} gap={5}>
-          <ActionIcon
-            variant="transparent"
-            color="gray"
-            size="md"
-            aria-label="Settings"
-            onClick={() => setOpenDrawer(true)}>
-            <IconCirclePlus style={{ width: "100%", height: "100%" }} stroke={1.5} color="#6d6d6d" />
-          </ActionIcon>
-          <ActionIcon variant="transparent" color="gray" size="md" aria-label="Settings">
-            <IconTrash
-              style={{ width: "100%", height: "100%" }}
-              stroke={1.5}
-              color="#6d6d6d"
-              onClick={onHandleClearFilter}
-            />
-          </ActionIcon>
+        <Flex className={filter.refresh}>
+          <Button onClick={refreshClick} leftSection={<IconRefresh color="#a8a8a8" />} w={120} variant="outline" className="text-[#6d6d6d] border-[#a8a8a8]">
+            Refresh
+          </Button>
         </Flex>
       </Flex>
       <DrawerFilter

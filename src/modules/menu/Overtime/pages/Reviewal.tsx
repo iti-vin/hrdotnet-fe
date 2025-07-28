@@ -20,19 +20,7 @@ import { queryClient } from "@/services/client";
 
 export default function Filings() {
   const panel = "REVIEWAL";
-  const {
-    loading,
-    setLoading,
-    time,
-    setTime,
-    viewItems,
-    singleItem,
-    setError,
-    setOpenDialog,
-    setOpenAlert,
-    storedFilters,
-    storedPage,
-  } = useOvertimeStore();
+  const { loading, setLoading, time, setTime, viewItems, singleItem, setError, setOpenDialog, setOpenAlert, storedFilters, storedPage } = useOvertimeStore();
 
   const { data, isLoading, refetch } = useQuery<OvertimeResponse>({
     queryKey: ["reviewal_overtime", { ...storedFilters }, { ...storedPage }],
@@ -67,10 +55,15 @@ export default function Filings() {
     refetch();
   }, [loading]);
 
+  const handleRefresh = () => {
+    setLoading(isLoading);
+    refetch();
+  };
+
   return (
     <Container>
       <Header panel={panel} />
-      <Filter panel={panel} />
+      <Filter panel={panel} refreshClick={handleRefresh} />
 
       <Table
         records={data && data.items}
@@ -120,15 +113,7 @@ export default function Filings() {
         panel={panel}
       />
 
-      {data && (
-        <Pagination
-          total={Math.ceil(data.total / data.pageSize)}
-          pageSize={data.pageSize}
-          recordsLength={data.total}
-          currentPage={data.page}
-          time={time}
-        />
-      )}
+      {data && <Pagination total={Math.ceil(data.total / data.pageSize)} pageSize={data.pageSize} recordsLength={data.total} currentPage={data.page} time={time} />}
 
       <Modals panel={panel} onHandleSingleEndorse={() => singleEndorse(viewItems.filing.id)} />
     </Container>

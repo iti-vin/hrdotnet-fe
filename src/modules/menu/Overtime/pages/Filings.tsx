@@ -37,10 +37,16 @@ export default function Filings() {
     setLoading(isLoading);
     refetch();
   }, [loading]);
+
+  const handleRefresh = () => {
+    setLoading(isLoading);
+    refetch();
+  };
+
   return (
     <Container>
       <Header panel={panel} />
-      <Filter panel={panel} />
+      <Filter panel={panel} refreshClick={handleRefresh} />
 
       <Table
         records={data && data.items}
@@ -90,15 +96,7 @@ export default function Filings() {
         panel={panel}
       />
 
-      {data && (
-        <Pagination
-          total={Math.ceil(data.total / data.pageSize)}
-          pageSize={data.pageSize}
-          recordsLength={data.total}
-          currentPage={data.page}
-          time={time}
-        />
-      )}
+      {data && <Pagination total={Math.ceil(data.total / data.pageSize)} pageSize={data.pageSize} recordsLength={data.total} currentPage={data.page} time={time} />}
 
       <Modals panel={panel} />
     </Container>

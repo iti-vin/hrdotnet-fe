@@ -68,18 +68,6 @@ export default function NewFilings({ opened, onClose, buttonClose }: ModalProps)
                 readOnly
                 onClick={() => setOpenEmployee(true)}
               />
-              <Select
-                size="md"
-                label="Overtime Date"
-                placeholder="Select Overtime Date"
-                withAsterisk
-                radius={8}
-                rightSection={<IconDots onClick={() => setOpenOtDate(true)} />}
-                className="border-none w-full"
-                styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
-                readOnly
-                onClick={() => setOpenOtDate(true)}
-              />
               <Modal opened={openOtDate} onClose={() => setOpenOtDate(false)} buttonClose={() => setOpenOtDate(false)} title="Select Overtime Date" size="lg">
                 <Flex direction={{ base: "column", sm: "row" }} align="center" gap={10}>
                   <Text size="sm">Search By:</Text>
@@ -249,6 +237,18 @@ export default function NewFilings({ opened, onClose, buttonClose }: ModalProps)
               </Modal>
               <Flex direction={{ base: "column", sm: "row" }} justify="space-between" className="w-full" gap={20}>
                 <Select
+                  size="md"
+                  label="Overtime Date"
+                  placeholder="Select Overtime Date"
+                  withAsterisk
+                  radius={8}
+                  rightSection={<IconDots onClick={() => setOpenOtDate(true)} />}
+                  className="border-none w-full"
+                  styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
+                  readOnly
+                  onClick={() => setOpenOtDate(true)}
+                />
+                <Select
                   disabled
                   size="md"
                   label="Shift"
@@ -260,17 +260,6 @@ export default function NewFilings({ opened, onClose, buttonClose }: ModalProps)
                   className="border-none w-full"
                   styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
                 />
-                <TextInput
-                  size="md"
-                  radius={8}
-                  label="Reference No."
-                  placeholder="0000-0000-0000"
-                  className="w-full"
-                  // defaultValue={value}
-                  // onChange={handleChange}
-                  max={14}
-                  styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
-                />
               </Flex>
               <Flex direction={{ base: "column", sm: "row" }} justify="space-between" className="w-full" gap={20}>
                 <TimePickerInput disabled size="md" label="Actual OT In" withDropdown withSeconds required />
@@ -279,6 +268,31 @@ export default function NewFilings({ opened, onClose, buttonClose }: ModalProps)
               <Flex direction={{ base: "column", sm: "row" }} justify="space-between" className="w-full" gap={20}>
                 <TimePickerInput label="OT From" size="md" withDropdown withSeconds required />
                 <TimePickerInput label="OT To" size="md" withDropdown withSeconds required />
+              </Flex>
+              <Flex direction={{ base: "column", sm: "row" }} justify="space-between" className="w-full" gap={20}>
+                <TextInput
+                  size="md"
+                  radius={8}
+                  label="Total Computed Hours"
+                  className="w-full"
+                  disabled
+                  // defaultValue={value}
+                  // onChange={handleChange}
+                  max={14}
+                  styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
+                />
+                <TextInput
+                  size="md"
+                  radius={8}
+                  label="Reference No."
+                  placeholder="Reference No"
+                  className="w-full"
+                  disabled
+                  // defaultValue={value}
+                  // onChange={handleChange}
+                  max={14}
+                  styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
+                />
               </Flex>
               <TextArea
                 size="md"

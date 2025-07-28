@@ -9,12 +9,11 @@ export default function SummaryDetails({ opened, onClose, buttonClose }: ModalPr
     <Confirmation
       opened={opened}
       onClose={onClose}
-      variant="danger"
-      title="Summary Details"
-      description="Are you sure you want to update this request? this will override your existing filing details"
-      yes={{ onClick: () => {}, title: "Confirm" }}
-      no={{ onClick: buttonClose!, title: "Keep Editing" }}>
-      <Stack className="w-full h-full p-4">
+      variant="warning"
+      title="Submit Request?"
+      yes={{ onClick: () => {}, title: "Submit" }}
+      no={{ onClick: buttonClose!, title: "Back" }}>
+      <Stack className="w-full h-full gap-2">
         <Details direction="row" label="Date From & Date To:" value="January 01-03, 2002" />
         <Details direction="row" label="Requested Schedule:" value={<IconCircleCheckFilled size={17} color="green" />} />
         <Details direction="row" label="Reference No:" value="RFN1932782264" />

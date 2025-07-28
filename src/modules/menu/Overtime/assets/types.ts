@@ -8,7 +8,7 @@ export interface PaginationI {
 
 export interface HeaderButtonProps {
   normalBtn: { label: string; icon?: React.ReactNode; onClick: () => void };
-  popoverBtn: { label: string; icon: React.ReactNode; innerLabel?: string; fOnClick: () => void; sOnClick: () => void };
+  popoverBtn: { label: string; icon: React.ReactNode; innerLabel?: string; fOnClick: () => void; sOnClick: () => void; disabled?: boolean };
 }
 
 export interface Batch {

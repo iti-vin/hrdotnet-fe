@@ -15,8 +15,6 @@ import { useMutation } from "@tanstack/react-query";
 import { OvertimeServices } from "../../../services/api";
 import { ValidationErrorResponse } from "../../../assets/types";
 
-import ReferenceNoInput from "@shared/components/ReferenceInput";
-
 import { Button, TimePickerInput, TextArea, TextInput, Select, Modal, FileAttachment } from "@shared/components";
 
 import useResponsive from "@shared/hooks/useResponsive";
@@ -76,8 +74,6 @@ export default function NewRequest({ opened, onClose, buttonClose }: ModalProps)
     },
   });
 
-  const [refNo, setRefNo] = useState("123456789012");
-
   const { isSmallHeight, isSmallWidth } = useResponsive();
 
   return (
@@ -105,18 +101,6 @@ export default function NewRequest({ opened, onClose, buttonClose }: ModalProps)
         }>
         <Stack className="w-full h-full">
           <Group className="w-full">
-            <TextInput
-              size="sm"
-              label="Overtime Date"
-              withAsterisk
-              radius={8}
-              rightSection={<IconDots onClick={() => setOpenOtDate(true)} className="cursor-pointer" />}
-              className="border-none w-full"
-              styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
-              readOnly
-              onClick={() => setOpenOtDate(true)}
-            />
-
             <Modal opened={openOtDate} onClose={() => setOpenOtDate(false)} buttonClose={() => setOpenOtDate(false)} title="Select Overtime Date" size="lg">
               <Flex direction={{ base: "column", sm: "row" }} align="center" gap={10}>
                 <Text size="sm">Search By:</Text>
@@ -208,6 +192,17 @@ export default function NewRequest({ opened, onClose, buttonClose }: ModalProps)
 
             <Flex direction={{ base: "column", sm: "row" }} justify="space-between" className="w-full" gap={20}>
               <TextInput
+                size="sm"
+                label="Overtime Date"
+                withAsterisk
+                radius={8}
+                rightSection={<IconDots onClick={() => setOpenOtDate(true)} className="cursor-pointer" />}
+                className="border-none w-full"
+                styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
+                readOnly
+                onClick={() => setOpenOtDate(true)}
+              />
+              <TextInput
                 size="md"
                 disabled
                 label="Shift"
@@ -215,21 +210,6 @@ export default function NewRequest({ opened, onClose, buttonClose }: ModalProps)
                 radius={8}
                 rightSection={<IconCaretDownFilled size={18} />}
                 className="border-none w-full"
-                styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
-              />
-              <ReferenceNoInput
-                code="reference-no"
-                size="md"
-                radius={8}
-                label="Reference No."
-                placeholder="0000-0000-0000"
-                className="w-full"
-                max={14}
-                value={refNo}
-                onValueChange={(no) => {
-                  newForm.setFieldValue("ReferenceNo", no);
-                  setRefNo(no);
-                }}
                 styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
               />
             </Flex>
@@ -257,6 +237,31 @@ export default function NewRequest({ opened, onClose, buttonClose }: ModalProps)
                 withDropdown
                 withSeconds
                 required
+              />
+            </Flex>
+            <Flex direction={{ base: "column", sm: "row" }} justify="space-between" className="w-full" gap={20}>
+              <TextInput
+                size="md"
+                radius={8}
+                label="Total Computed Hours"
+                className="w-full"
+                disabled
+                // defaultValue={value}
+                // onChange={handleChange}
+                max={14}
+                styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
+              />
+              <TextInput
+                size="md"
+                radius={8}
+                label="Reference No."
+                placeholder="Reference No"
+                className="w-full"
+                disabled
+                // defaultValue={value}
+                // onChange={handleChange}
+                max={14}
+                styles={{ label: { color: "#6d6d6d", fontSize: "15px" } }}
               />
             </Flex>
             <TextArea

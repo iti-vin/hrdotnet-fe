@@ -3,16 +3,22 @@
  * @author     Hersvin Fred De La Cruz Labastida
  */
 
-import Alert from "@/layout/main/alert";
 import { ModalProps } from "@shared/assets/types/Modal";
-import { useEffect } from "react";
+import Alert from "@shared/ui/modals/alert";
+import { ReactNode, useEffect } from "react";
 
-export default function Cancel({ opened, onClose }: ModalProps) {
+interface Props extends ModalProps {
+  title?: string;
+  message?: ReactNode;
+}
+
+export default function Cancel({ opened, onClose, title, message }: Props) {
   useEffect(() => {
     if (opened) {
       const timer = setTimeout(onClose!, 3000);
       return () => clearTimeout(timer);
     }
   }, [opened, onClose]);
-  return <Alert opened={opened} onClose={onClose} headerTitle={`Requested Cancelled`} size="lg" icon="Danger" title={`Your request has been cancelled!`} />;
+
+  return <Alert opened={opened} onClose={onClose} variant="danger" title={title} description={message} confirm={{ onClick: onClose, title: "Done" }} />;
 }

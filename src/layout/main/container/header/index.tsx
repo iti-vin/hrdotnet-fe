@@ -21,6 +21,7 @@ interface HeaderProps {
     innerLabel?: string;
     fOnClick: () => void;
     sOnClick: () => void;
+    disabled?: boolean;
   };
 }
 
@@ -45,6 +46,7 @@ export default function Header({ ...props }: HeaderProps) {
             type="button"
             onClick={normalBtn.onClick!}
             color="#559CDA"
+            w={150}
             leftSection={normalBtn.icon ? normalBtn.icon : <IconFilePlus size={25} stroke={2} />}
             h={36}>
             {normalBtn.label}
@@ -53,7 +55,15 @@ export default function Header({ ...props }: HeaderProps) {
         {popoverBtn && (
           <Popover width={200} trapFocus position="bottom" withArrow shadow="md" opened={opened} onChange={setOpened}>
             <Popover.Target>
-              <Button className="flex justify-between" radius="md" color="#559CDA" leftSection={popoverBtn.icon} h={36} onClick={() => setOpened((o) => !o)}>
+              <Button
+                className="flex justify-between"
+                radius="md"
+                color="#559CDA"
+                leftSection={popoverBtn.icon}
+                w={170}
+                h={36}
+                onClick={() => setOpened((o) => !o)}
+                disabled={popoverBtn.disabled!}>
                 {popoverBtn.label}
               </Button>
             </Popover.Target>
