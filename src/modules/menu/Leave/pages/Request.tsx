@@ -35,10 +35,15 @@ export default function Request() {
     refetch();
   }, [loading]);
 
+  const handleRefresh = () => {
+    setLoading(isLoading);
+    refetch();
+  };
+
   return (
     <Container>
       <Header panel="REQUEST" />
-      <Filter />
+      <Filter refreshClick={handleRefresh} />
 
       <Table
         records={data && data.items}

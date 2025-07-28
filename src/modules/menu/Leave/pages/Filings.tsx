@@ -12,7 +12,7 @@ import Container from "@/layout/main/container";
 import useLeaveStore from "../store/LeaveStore";
 export default function Filings() {
   const { time, setTime, storedFilters, storedPage } = useLeaveStore();
-  const { data, isLoading } = useQuery<LeaveResponse>({
+  const { data, isLoading, refetch } = useQuery<LeaveResponse>({
     queryKey: ["approval_leave", storedFilters, storedPage],
     queryFn: async () => {
       const startTime = performance.now();
@@ -25,10 +25,14 @@ export default function Filings() {
     staleTime: 1000 * 60 * 5,
   });
 
+  const handleRefresh = () => {
+    refetch();
+  };
+
   return (
     <Container>
       <Header panel="FILINGS" />
-      <Filter />
+      <Filter refreshClick={handleRefresh} />
       <Table
         records={data && data.items}
         isLoading={isLoading}

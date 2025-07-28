@@ -24,6 +24,7 @@ interface ButtonsProps {
     innerLabel?: string;
     fOnClick: () => void;
     sOnClick: () => void;
+    disabled?: boolean;
   };
 }
 
@@ -56,6 +57,7 @@ export default function index({ panel }: LeaveHeaderProps) {
           selectedRecords.length >= 1 && setOpenDialog("BatchCancel");
         },
         innerLabel: "ENDORSE",
+        disabled: selectedRecords.length >= 0,
       };
     } else if (panel === "APPROVAL" || "FILINGS") {
       return {
@@ -68,15 +70,10 @@ export default function index({ panel }: LeaveHeaderProps) {
           selectedRecords.length >= 1 && setOpenDialog("BatchCancel");
         },
         innerLabel: "APPROVE",
+        disabled: selectedRecords.length >= 0,
       };
     } else return undefined;
   };
 
-  return (
-    <Header
-      title="Leave"
-      normalBtn={panel !== "REVIEWAL" ? rndrNormalBtn() : undefined}
-      popoverBtn={panel !== "REQUEST" ? rndrPopoverBtn() : undefined}
-    />
-  );
+  return <Header title="Leave" normalBtn={panel !== "REVIEWAL" ? rndrNormalBtn() : undefined} popoverBtn={panel !== "REQUEST" ? rndrPopoverBtn() : undefined} />;
 }

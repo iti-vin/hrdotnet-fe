@@ -16,7 +16,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Alert from "@/layout/main/alert";
 import { LeaveTypes } from "./assets/leave-types";
 
-import { Button, DateRangePickerInput, FileAttachment, Modal, NumberInput, TextInput, TextArea, Select } from "@shared/components";
+import { Button, DateRangePickerInput, FileAttachment, Modal, TextInput, TextArea, Select } from "@shared/components";
 import ReferenceNoInput from "@shared/components/ReferenceInput";
 
 export default function EditRequest() {
@@ -135,7 +135,7 @@ export default function EditRequest() {
             </Carousel>
           </Stack>
 
-          <TextInput
+          {/* <TextInput
             size="md"
             label="Leave Type"
             placeholder={viewItems.filing.leaveParameter.name}
@@ -143,7 +143,7 @@ export default function EditRequest() {
             readOnly
             key={editForm.key("LeaveParameter.Name")}
             {...editForm.getInputProps("LeaveParameter.Name")}
-          />
+          /> */}
 
           <div className="flex flex-col sm:flex-row gap-4 justify-between sm:gap-8 w-full">
             <Select
@@ -183,14 +183,14 @@ export default function EditRequest() {
 
           <div className="flex flex-col sm:flex-row justify-between items-end sm:gap-8">
             <DateRangePickerInput
-              fl="Leave Dates"
+              fl="Leave Period"
               required
               dateValue={dateFiled}
               setDateValue={(value) => {
                 setDateFiled(value);
               }}
             />
-            <NumberInput code="duration" radius="md" size="md" label="Duration" value={viewItems.filing.numberOfDays} disabled className="w-1/2" />
+            <TextInput code="duration" radius="md" size="md" label="Duration" value={viewItems.filing.numberOfDays} disabled className="w-1/2" />
           </div>
           <TextArea
             size="xl"

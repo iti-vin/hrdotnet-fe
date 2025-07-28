@@ -29,7 +29,7 @@ const leaveTabs: Tab[] = [
   { index: 1, path: "ledger", label: "My Ledger" },
   { index: 2, path: "reviewal", label: "For Review" },
   { index: 3, path: "approval", label: "For Approval" },
-  { index: 4, path: "filings", label: "Employee Filing" },
+  { index: 4, path: "filings", label: "All Request" },
 ];
 
 const LeaveContext = createContext<LeaveContextType>({

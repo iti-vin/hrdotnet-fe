@@ -10,7 +10,7 @@ import useLeaveStore from "../../../store/LeaveStore";
 import { cloneElement, useState } from "react";
 import { LeaveTypes } from "./assets/leave-types";
 import { useMediaQuery } from "@mantine/hooks";
-import { Button, DateRangePickerInput, FileAttachment, Modal, NumberInput, Select, TextArea, TextInput, PaginatedDataTable as DataTable } from "@shared/components";
+import { Button, DateRangePickerInput, FileAttachment, Modal, Select, TextArea, TextInput, PaginatedDataTable as DataTable } from "@shared/components";
 
 export default function NewFilings() {
   const { openDialog, setOpenDialog } = useLeaveStore();
@@ -136,7 +136,7 @@ export default function NewFilings() {
           </Carousel>
         </Stack>
 
-        <TextInput size="md" label="Leave Type" placeholder="" className="w-full"></TextInput>
+        {/* <TextInput size="md" label="Leave Type" placeholder="" className="w-full"></TextInput> */}
 
         <div className="flex flex-col sm:flex-row gap-4 justify-between sm:gap-8">
           <Select
@@ -154,7 +154,7 @@ export default function NewFilings() {
 
         <div className="flex flex-col sm:flex-row justify-between items-end sm:gap-8">
           <DateRangePickerInput fl="Leave Dates" dateValue={[null, null]} setDateValue={(newValue) => console.log(newValue)} />
-          <NumberInput code="duration" radius="md" size="md" label="Duration" value="8 Days" disabled className="w-1/2" />
+          <TextInput code="duration" radius="md" size="md" label="Duration" value="8 Days" disabled className="w-1/2" />
         </div>
 
         <TextArea size="xl" radius="md" label="Reason" placeholder="Briefly state the reasons for filing leave." />

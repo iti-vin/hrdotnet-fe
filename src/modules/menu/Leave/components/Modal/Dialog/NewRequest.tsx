@@ -16,7 +16,7 @@ import { LeaveServices } from "../../../services/main";
 import { queryClient } from "@/services/client";
 import { LeaveTypes } from "./assets/leave-types";
 
-import { Button, DateRangePickerInput, FileAttachment, Modal, NumberInput, TextInput } from "@shared/components";
+import { Button, DateRangePickerInput, FileAttachment, Modal, TextInput } from "@shared/components";
 import ReferenceNoInput from "@shared/components/ReferenceInput";
 
 export default function NewRequest() {
@@ -107,7 +107,7 @@ export default function NewRequest() {
           </Carousel>
         </Stack>
         <Stack className="w-full h-auto">
-          <TextInput size="md" label="Leave Type" placeholder="" className="w-full" key={newForm.key("LeaveParameter.Name")} {...newForm.getInputProps("LeaveParameter.Name")} />
+          {/* <TextInput size="md" label="Leave Type" placeholder="" className="w-full" key={newForm.key("LeaveParameter.Name")} {...newForm.getInputProps("LeaveParameter.Name")} /> */}
           <div className="flex flex-col sm:flex-row gap-4 justify-between sm:gap-8 w-full">
             <Select
               withAsterisk
@@ -136,7 +136,7 @@ export default function NewRequest() {
           </div>
           <div className="flex flex-col sm:flex-row justify-between items-end sm:gap-8">
             <DateRangePickerInput
-              fl="Leave Dates"
+              fl="Leave Period"
               fp="Date From"
               sp="Date To"
               dateValue={dateFiled}
@@ -145,7 +145,7 @@ export default function NewRequest() {
               }}
               gap={10}
             />
-            <NumberInput code="duration" radius="md" size="md" label="Duration" disabled className="w-1/2" value={String(0)} />
+            <TextInput code="duration" radius="md" size="md" label="Duration" disabled className="w-1/2" value={String(0)} />
           </div>
           <FileAttachment
             label="Attachment"

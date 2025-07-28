@@ -57,10 +57,15 @@ export default function Approval() {
     refetch();
   }, [loading]);
 
+  const handleRefresh = () => {
+    setLoading(isLoading);
+    refetch();
+  };
+
   return (
     <Container>
       <Header panel="APPROVAL" />
-      <Filter />
+      <Filter refreshClick={handleRefresh} />
       <Table
         records={data && data.items}
         isLoading={isLoading}

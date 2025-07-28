@@ -4,11 +4,11 @@
  */
 
 //--- Layout
-import Alert from "@/layout/main/alert";
 import useLeaveStore from "../../../store/LeaveStore";
 import { CancelData } from "../../../models/request";
 import { LeaveServices } from "../../../services/main";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import Confirmation from "@shared/ui/modals/confirmation";
 
 export default function CancelRequest() {
   const queryClient = useQueryClient();
@@ -33,20 +33,14 @@ export default function CancelRequest() {
   });
 
   return (
-    <Alert
+    <Confirmation
       opened={openAlert === "Cancel"}
       onClose={() => setOpenAlert("")}
-      headerTitle="CANCEL REQUEST"
-      size="lg"
-      icon="Warning"
-      title="Are you sure you want to cancel this Leave request?"
-      description="Filing deadline for this cutoff period will end in a day."
-      yes={{
-        onClick: () => onHandleClear(),
-      }}
-      no={{
-        onClick: () => setOpenAlert(""),
-      }}
+      variant="warning"
+      title="Cancel Request"
+      description={<div>Are you sure you want to cancel this request? </div>}
+      yes={{ onClick: () => clearRequest(viewItems.filing.id), title: "Confirm" }}
+      no={{ onClick: onHandleClear, title: "Discard" }}
     />
   );
 }

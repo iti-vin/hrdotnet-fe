@@ -56,10 +56,15 @@ export default function Reviewal() {
     refetch();
   }, [loading]);
 
+  const handleRefresh = () => {
+    setLoading(isLoading);
+    refetch();
+  };
+
   return (
     <Container>
       <Header panel="REVIEWAL" />
-      <Filter />
+      <Filter refreshClick={handleRefresh} />
       <Table
         records={data && data.items}
         isLoading={isLoading}
