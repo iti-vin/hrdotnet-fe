@@ -93,8 +93,8 @@ export default function TeamCalendar({ opened, onClose, buttonClose, name }: Tea
             ref={calendarRef}
             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin]}
             headerToolbar={{
-              left: " prev,next, today",
-              center: "title",
+              left: "today, prev,next",
+              center: `title`,
               right: "dayGridMonth,timeGridDay,listWeek",
             }}
             themeSystem="bootstrap5"

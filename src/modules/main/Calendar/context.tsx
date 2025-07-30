@@ -49,17 +49,19 @@ export const CalendarProvider: FunctionComponent<PropsWithChildren> = ({ childre
         return;
       }
 
+      console.log(response.calendarDates);
+
       const mappedEvents: EventInput[] = response.calendarDates.flatMap((data) =>
         data.entries
           .filter((entry) => isRestDayShow || !entry.isRestDay)
           .map((entry) => ({
             id: createEventId(),
-            title: entry.isRestDay
-              ? "Rest Day"
-              : `${formatTime(entry.dateTimeRange.dateFrom)} - ${formatTime(entry.dateTimeRange.dateTo)}`,
+            title: entry.isRestDay ? "Rest Day" : `${formatTime(entry.dateTimeRange.dateFrom)} - ${formatTime(entry.dateTimeRange.dateTo)}`,
             start: data.date,
             allDay: true,
-            backgroundColor: entry.isRestDay ? "#9B51E0" : "#9B51E0",
+            borderColor: entry.isRestDay ? "#D4D4D4" : "#FFD8B0",
+            textColor: entry.isRestDay ? "#A3A3A3" : "#ED8028",
+            backgroundColor: entry.isRestDay ? "#F7F7F7" : "#FFF2E6",
           }))
       );
 
@@ -75,15 +77,17 @@ export const CalendarProvider: FunctionComponent<PropsWithChildren> = ({ childre
       //     }))
       // );
 
-      // const obEvents: EventInput[] = response.calendarDates.flatMap((data) =>
-      //   data.entries.map((entry) => ({
-      //     id: createEventId(),
-      //     title: entry.documentNo || "Official Business",
-      //     start: entry.dateTimeRange.dateFrom,
-      //     end: entry.dateTimeRange.dateTo,
-      //     backgroundColor: "#2F78D1",
-      //   }))
-      // );
+      const obEvents: EventInput[] = response.calendarDates.flatMap((data) =>
+        data.entries.map((entry) => ({
+          id: createEventId(),
+          title: entry.documentNo || "Official Business",
+          start: entry.dateTimeRange.dateFrom,
+          end: entry.dateTimeRange.dateTo,
+          borderColor: "#B7DAF4",
+          textColor: "#559CDA",
+          backgroundColor: "#F0F8FE",
+        }))
+      );
 
       // const leaveEvents: EventInput[] = response.calendarDates.flatMap((data) =>
       //   data.entries.map((entry) => ({
@@ -98,32 +102,33 @@ export const CalendarProvider: FunctionComponent<PropsWithChildren> = ({ childre
       // const testEvents: EventInput = {
       //   id: createEventId(),
       //   title: "Hersvin Day",
-      //   start: "2025-04-15T08:00:00",
-      //   end: "2025-04-17T08:00:00",
-      //   backgroundColor: "orange",
+      //   start: "2025-07-29T08:00:00",
+      //   end: "2025-07-29T20:00:00",
+      //   borderColor: "#D3E8C3",
+      //   textColor: "#5A9D27",
+      //   backgroundColor: "#F3FAEB",
       // };
 
-      // const tryEvents: EventInput = {
+      // const sampleLogs: EventInput = {
       //   id: createEventId(),
-      //   title: "Shift Schedule",
-      //   start: "2025-04-20T08:00:00",
-      //   end: "2025-04-22T08:00:00",
-      //   backgroundColor: "green",
+      //   title: "07:45 AM - 06:30 PM",
+      //   start: "2025-07-29T08:00:00",
+      //   end: "2025-07-29T20:00:00",
+      //   borderColor: "#B7DAF4",
+      //   textColor: "#559CDA",
+      //   backgroundColor: "#F0F8FE",
       // };
 
       setCalendarEvents([
         ...mappedEvents,
+        ...obEvents,
         // testEvents, tryEvents, ...holidayEvents, ...obEvents, ...leaveEvents
       ]);
     },
     [setCalendarEvents, isRestDayShow, isHolidayShow]
   );
 
-  return (
-    <CalendarContext.Provider value={{ calendarTabs, date, setDate, fetchCalendar }}>
-      {children}
-    </CalendarContext.Provider>
-  );
+  return <CalendarContext.Provider value={{ calendarTabs, date, setDate, fetchCalendar }}>{children}</CalendarContext.Provider>;
 };
 
 export const useCalendarContext = (): CalendarContextI => {

@@ -3,7 +3,7 @@
  * @author     Hersvin Fred De La Cruz Labastida
  */
 
-import { Checkbox, Flex, Stack } from "@mantine/core";
+import { Checkbox, Flex, Stack, Text } from "@mantine/core";
 import { ResponsiveContainer } from "recharts";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
@@ -11,7 +11,6 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import listPlugin from "@fullcalendar/list";
 import { useEffect, useRef, useState } from "react";
-import Container from "@/layout/main/container";
 import "../index.css";
 import { useCalendarContext } from "../context";
 import { CalendarApi } from "@fullcalendar/core";
@@ -53,17 +52,14 @@ export default function Personal() {
   };
 
   return (
-    <Container>
-      <Stack className=" w-full h-full rounded-lg select-none">
+    <Stack className="w-full h-full  flex flex-col lg:flex-row">
+      <Stack className=" w-full h-[80%] lg:h-full rounded-lg select-none bg-white p-4">
         <ResponsiveContainer height="100%">
           <FullCalendar
             ref={calendarRef}
             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin]}
-            headerToolbar={{
-              left: " prev,next, today",
-              center: "title",
-              right: "dayGridMonth,timeGridDay,listWeek",
-            }}
+            headerToolbar={{ left: "today, prev,next", center: `title, filter`, right: "dayGridMonth,timeGridDay,listWeek" }}
+            customButtons={{ filter: { click: () => {}, text: ">" } }}
             themeSystem="bootstrap5"
             datesSet={handleViewChange}
             dayHeaderFormat={{ weekday: "long" }}
@@ -77,38 +73,41 @@ export default function Personal() {
             dateClick={handleDateClick}
           />
         </ResponsiveContainer>
-        <Stack className="w-full h-auto p-0">
-          <Flex className="w-full flex flex-col md:flex-row justify-evenly">
-            <Checkbox defaultChecked classNames={{ label: "text-[#1E8449] font-semibold" }} label="Shift Schedule" color="#1E8449" />
-            <Checkbox defaultChecked classNames={{ label: "text-[#ED8028] font-semibold" }} label="Logs" color="#ED8028" />
-            <Checkbox defaultChecked classNames={{ label: "text-[#7E7E7E] font-semibold" }} label="Missing Logs" color="#7E7E7E" />
-            <Checkbox defaultChecked classNames={{ label: "text-[#967BB6] font-semibold" }} label="Leave" color="#967BB6" />
-            <Checkbox defaultChecked classNames={{ label: "text-[#967BB6] font-semibold" }} label="CTO" color="#967BB6" />
-            <Checkbox defaultChecked classNames={{ label: "text-[#2F78D1] font-semibold" }} label="Official Business" color="#2F78D1" />
-            <Checkbox defaultChecked classNames={{ label: "text-[#5D9FEF] font-semibold" }} label="Overtime" color="#5D9FEF" />
-            <Checkbox
-              defaultChecked
-              checked={isRestDayShow}
-              onChange={(e) => setIsRestDayShow(e.currentTarget.checked)}
-              classNames={{ label: "text-[#A738FF] font-semibold" }}
-              label="Rest Day"
-              color="#A738FF"
-            />
-            <Checkbox
-              defaultChecked
-              checked={isHolidayShow}
-              onChange={(e) => setIsHolidayShow(e.currentTarget.checked)}
-              classNames={{ label: "text-[#FF4B34] font-semibold" }}
-              label="Holiday"
-              color="#FF4B34"
-            />
-          </Flex>
-        </Stack>
+      </Stack>
+      <Stack className="w-full h-auto lg:w-1/5 rounded-lg select-none bg-white p-4">
+        <Text fz={20} c={"#6d6d6d"} fw={700}>
+          Filters
+        </Text>
+        <Flex className="w-full flex flex-col  justify-evenly gap-5">
+          <Checkbox defaultChecked classNames={{ label: "text-[#6D6D6D] font-semibold" }} label="Shift Schedule" color="#ED8028" />
+          <Checkbox defaultChecked classNames={{ label: "text-[#6D6D6D] font-semibold" }} label="Logs" color="#559CDA" />
+          <Checkbox defaultChecked classNames={{ label: "text-[#6D6D6D] font-semibold" }} label="Missing Logs" color="#FF4B34" />
+          <Checkbox defaultChecked classNames={{ label: "text-[#6D6D6D] font-semibold" }} label="Leave" color="#5A9D27" />
+          <Checkbox defaultChecked classNames={{ label: "text-[#6D6D6D] font-semibold" }} label="CTO" color="#54BF81" />
+          <Checkbox defaultChecked classNames={{ label: "text-[#6D6D6D] font-semibold" }} label="Official Business" color="#FEC001" />
+          <Checkbox defaultChecked classNames={{ label: "text-[#6D6D6D] font-semibold" }} label="Overtime" color="#3E72C6" />
+          <Checkbox
+            defaultChecked
+            checked={isRestDayShow}
+            onChange={(e) => setIsRestDayShow(e.currentTarget.checked)}
+            classNames={{ label: "text-[#6D6D6D] font-semibold" }}
+            label="Rest Day"
+            color="#A3A3A3"
+          />
+          <Checkbox
+            defaultChecked
+            checked={isHolidayShow}
+            onChange={(e) => setIsHolidayShow(e.currentTarget.checked)}
+            classNames={{ label: "text-[#6d6d6d] font-semibold" }}
+            label="Holiday"
+            color="#FFC4C4"
+          />
+        </Flex>
       </Stack>
 
       <DateDetails opened={dialog === "DateDetails"} onClose={() => setDialog("")} buttonClose={() => setDialog("")} date={selectedDate} />
 
       <RequestDetails opened={dialog === "RequestDetails"} onClose={() => setDialog("")} buttonClose={() => setDialog("DateDetails")} />
-    </Container>
+    </Stack>
   );
 }

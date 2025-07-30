@@ -1,4 +1,4 @@
-import { ActionIcon, Avatar, Button, Card, Flex, Image, LoadingOverlay, ScrollArea, Stack, Text } from "@mantine/core";
+import { ActionIcon, Avatar, Button, Card, Flex, Image, LoadingOverlay, ScrollArea, Stack, Text, TextInput } from "@mantine/core";
 import { IconCaretDownFilled, IconCircleCheckFilled, IconCircleXFilled, IconLayoutGrid, IconList, IconSearch } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 import { basketballPlayers } from "../assets/array";
@@ -7,7 +7,7 @@ import { useCalendarStore } from "../store";
 import { DateTimeUtils } from "@shared/utils/DateTimeUtils";
 import "../index.css";
 import DrawerFilter from "../components/DrawerFilter";
-import { Select, TextInput } from "@shared/components";
+import { Select } from "@shared/components";
 interface Team {
   name: string;
   position: string;
@@ -34,91 +34,65 @@ export default function Team() {
   };
 
   return (
-    <Stack className="h-full w-full overflow-hidden gap-2">
+    <Stack className="h-full w-full overflow-hidden gap-2 p-8 bg-white rounded-md">
       <Flex className="justify-between h-[15%] md:h-[5%] flex flex-col md:flex-row items-center">
         <Text className="text-lg lg:text-2xl font-bold text-[#6d6d6d]">{DateTimeUtils.getIsoDateFullWord(dateToday.toString())}</Text>
 
         <Flex className="gap-2" align="center">
           <Flex direction={{ base: "row", md: "row" }} align="center" justify="end" gap={5}>
-            <Text size="sm">Search By:</Text>
+            {/* <Text size="sm">Search By:</Text> */}
             <Select
               variant="outline"
               size="md"
               radius={8}
               defaultValue={"Name"}
+              w={150}
+              placeholder="Search By:"
               data={["Date", "Schedule", "Name"]}
-              rightSection={<IconCaretDownFilled size={18} color="#559CDA" className="hidden" />}
-              className="border-none w-16 md:w-24"
+              rightSection={<IconCaretDownFilled size={18} color="#6d6d6d" />}
               styles={{
                 input: {
-                  backgroundColor: "#deecff",
-                  color: "#559CDA",
+                  backgroundColor: "white",
                   fontWeight: 600,
+                  border: "1px solid #6d6d6d",
                 },
               }}
             />
             <TextInput
               variant="outline"
-              size="md"
-              defaultValue="Search"
               onChange={() => {}}
+              placeholder="Search...."
               radius={8}
-              className="border-none w-16 md:w-36"
-              rightSection={<IconSearch size={18} color="#559CDA" className="hidden md:block" />}
+              w={200}
+              leftSection={<IconSearch size={18} color="#6d6d6d" />}
               styles={{
                 input: {
-                  backgroundColor: "#deecff",
-                  color: "#559CDA",
+                  backgroundColor: "white",
                   fontWeight: 600,
+                  border: "1px solid #6d6d6d",
                 },
               }}
             />
           </Flex>
-          <Flex className="gap-2">
-            <ActionIcon variant="filled" color="#7E7E7E" size="lg" radius="md" onClick={() => setIsList(false)}>
-              <IconList style={{ width: "70%", height: "70%" }} stroke={2} />
+          <Flex className="gap-2 bg-[#EBF6FA] p-1 rounded-md">
+            <ActionIcon variant={isList ? "filled" : "transparent"} color="white" size="lg" className="rounded-md" onClick={() => setIsList(true)}>
+              <IconLayoutGrid style={{ width: "70%", height: "70%" }} stroke={2} color="#7E7E7E" />
             </ActionIcon>
-            <ActionIcon variant="filled" color="#7E7E7E" size="lg" radius="md" onClick={() => setIsList(true)}>
-              <IconLayoutGrid style={{ width: "70%", height: "70%" }} stroke={2} />
+            <ActionIcon variant={isList ? "transparent" : "filled"} color="white" size="lg" className="rounded-md" onClick={() => setIsList(false)}>
+              <IconList style={{ width: "70%", height: "70%" }} stroke={2} color="#7E7E7E" />
             </ActionIcon>
           </Flex>
         </Flex>
       </Flex>
-
-      {/* <Flex className="filter-container">
-        <Flex className="h-full flex flex-row items-center justify-center">
-          <Flex bg="#eeeeee" className="w-auto h-full items-center px-2 gap-4 rounded-l-md">
-            <ListFilter size={20} color="#6d6d6d" />
-            <Text fw={500} c="#6d6d6d" visibleFrom="md">
-              FILTERS APPLIED
-            </Text>
-          </Flex>
-          <Group></Group>
-        </Flex>
-
-        <Flex pr={10} py={8} gap={5}>
-          <ActionIcon
-            variant="transparent"
-            color="gray"
-            size="md"
-            aria-label="Settings"
-            onClick={() => setDrawer(true)}>
-            <IconCirclePlus style={{ width: "100%", height: "100%" }} stroke={1.5} color="#6d6d6d" />
-          </ActionIcon>
-          <ActionIcon variant="transparent" color="gray" size="md" aria-label="Settings">
-            <IconTrash style={{ width: "100%", height: "100%" }} stroke={1.5} color="#6d6d6d" onClick={() => {}} />
-          </ActionIcon>
-        </Flex>
-      </Flex> */}
       <ScrollArea className="h-[85%] md:h-[95%] w-full">
         {isList ? (
-          <Stack className="h-[85%] md:h-[95%] w-full grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-6 place-items-center gap-7">
+          <Stack className="h-[85%] md:h-[95%] w-full grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 place-items-center gap-7">
             <LoadingOverlay visible={loading} />
             {players.map((player, index) => (
               <Card
                 key={index}
                 radius="md"
-                className="w-[180px] h-[280px] cursor-pointer shadow-md shadow-slate-400 hover:scale-105 bg-[#fafafa] hover:bg-slate-200"
+                className="w-full h-[350px] md:h-[300px] lg:w-[220px] 2xl:w-[250px] cursor-pointer shadow-md shadow-slate-400 hover:scale-105 bg-[#fafafa] hover:bg-slate-200"
                 onClick={() => onHandleOpen(player.name)}>
                 <Flex className="w-full h-full flex flex-col justify-between">
                   <Flex>
