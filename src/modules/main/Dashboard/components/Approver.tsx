@@ -6,7 +6,7 @@
 import { useMediaQuery } from "@mantine/hooks";
 import { IconAlarmFilled, IconChevronDown, IconPlaneTilt } from "@tabler/icons-react";
 import { Box, Container, Divider, Flex, ScrollArea, Select, Stack, Text } from "@mantine/core";
-import { Bar, BarChart, CartesianGrid, Cell, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { Bar, BarChart, CartesianGrid, Cell, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis } from "recharts";
 
 import worktime from "../assets/worktime.json";
 import holidays from "../assets/holiday.json";
@@ -16,114 +16,25 @@ import credits from "../assets/credits.json";
 export default function Approver() {
   const small = useMediaQuery("(max-width: 40em)");
   return (
-    <Stack className="w-full h-[80%] rounded-lg select-none">
-      <Stack className="w-full h-auto lg:h-3/5 flex flex-col lg:flex-row gap-4">
-        <Stack className="w-full h-full lg:w-2/3">
-          <Stack className="w-full h-full lg:h-1/3 bg-white rounded-lg gap-1 p-4">
-            <Text c="#559cda" fw={600} fz={{ base: 13, md: 17 }} children="Leave Credits" />
-            <Flex className="flex flex-col lg:flex-row gap-3 h-full">
-              {credits.map((item, index) => (
-                <Stack key={index} bg="#deecff" className="w-full h-full flex flex-row items-center rounded-lg">
-                  <Box className="h-full bg-[#559cda] p-4 rounded-lg flex items-center">
-                    <IconPlaneTilt color="white" size={25} stroke={1.5} />
-                  </Box>
-                  <Flex justify="space-between" align="center" className="w-full pr-4">
-                    <Text fz={small ? 18 : 14} fw={600} c="#6d6d6d" children={item.name} />
-                    <Text fz={small ? 22 : 24} fw={600} c="#559cda" children={item.value} />
-                  </Flex>
-                </Stack>
-              ))}
-            </Flex>
-          </Stack>
-          <Stack className="w-full h-full lg:h-2/3 bg-white rounded-lg p-4 gap-1">
-            <Flex justify="space-between">
-              <Flex justify="flex-start" gap={5}>
-                <Text c="#559cda" fw={600} fz={{ base: 13, md: 17 }} children="Pending Applications" />
-                <Text bg="#FF780033" c="#FF7800" fz={{ base: 10, md: 12 }} className="px-4 rounded-full font-bold flex items-center">
-                  5
-                </Text>
-              </Flex>
-              <Flex>
-                <Container className="flex flex-row items-center gap-2">
-                  <div className="p-1 bg-[#9B51E0] rounded-full" />
-                  <Text fz={12} c="#6d6d6d" fw={700}>
-                    Filed
-                  </Text>
-                </Container>
-                <Container className="flex flex-row items-center gap-2">
-                  <div className="p-1 bg-[#ED8028] rounded-full" />
-                  <Text fz={12} c="#6d6d6d" fw={700}>
-                    Reviewed
-                  </Text>
-                </Container>
-              </Flex>
-            </Flex>
-            <ResponsiveContainer width="100%" height={"100%"}>
-              <BarChart
-                layout="vertical"
-                data={[
-                  { name: "Compensatory Time Off", filed: 5, reviewed: 5 },
-                  { name: "Offset", filed: 3, reviewed: 2 },
-                  { name: "Overtime", filed: 4, reviewed: 8 },
-                  { name: "Change Schedule", filed: 2, reviewed: 6 },
-                  { name: "Sick Leave", filed: 5, reviewed: 4 },
-                  { name: "Vacation Leave", filed: 1, reviewed: 10 },
-                ]}
-                margin={{ top: 10, right: 0, bottom: -10, left: 60 }}>
-                <XAxis type="number" fontSize={12} />
-                <YAxis dataKey="name" type="category" fontSize={12} />
-                <Tooltip />
-                <Bar dataKey="filed" stackId="a" fill="#9B51E0" name="Filed" barSize={15} />
-                <Bar dataKey="reviewed" stackId="a" fill="#ED8028" name="Reviewed" barSize={15} />
-              </BarChart>
-            </ResponsiveContainer>
-          </Stack>
-        </Stack>
-        <Stack className="w-full h-full lg:w-1/3 bg-white rounded-lg p-4 gap-1">
-          <Flex justify="space-between">
-            <Flex justify="flex-start" gap={5}>
-              <Text c="#559cda" fw={600} fz={{ base: 13, md: 17 }} children="Pending Approvals" />
-              <Text bg="#FF780033" c="#FF7800" fz={{ base: 10, md: 12 }} className="px-4 rounded-full font-bold flex items-center">
-                5
-              </Text>
-            </Flex>
-            <Flex>
-              <Container className="flex flex-row items-center gap-2">
-                <div className="p-1 bg-[#FFB703] rounded-full" />
-                <Text fz={12} c="#6d6d6d" fw={700}>
-                  For Review
-                </Text>
-              </Container>
-              <Container className="flex flex-row items-center gap-2">
-                <div className="p-1 bg-[#FF7800] rounded-full" />
-                <Text fz={12} c="#6d6d6d" fw={700}>
-                  For Approval
-                </Text>
-              </Container>
-            </Flex>
+    <Stack className="w-full h-auto lg:h-[80%] rounded-lg select-none flex flex-col lg:flex-row">
+      <Stack className="w-full lg:w-[65%] h-full flex flex-col">
+        <Stack className="w-full h-auto lg:h-[15%] bg-white rounded-lg gap-1 p-4">
+          <Text c="#559cda" fw={600} fz={{ base: 13, md: 17 }} children="Leave Credits" />
+          <Flex className="flex flex-col lg:flex-row gap-3 h-full">
+            {credits.map((item, index) => (
+              <Stack key={index} bg="#deecff" className="w-full h-auto flex flex-row items-center rounded-lg">
+                <Box className="h-full bg-[#559cda] p-2 rounded-lg flex items-center">
+                  <IconPlaneTilt color="white" size={25} stroke={1.5} />
+                </Box>
+                <Flex justify="space-between" align="center" className="w-full pr-4">
+                  <Text fz={small ? 18 : 14} fw={600} c="#6d6d6d" children={item.name} />
+                  <Text fz={small ? 22 : 24} fw={600} c="#559cda" children={item.value} />
+                </Flex>
+              </Stack>
+            ))}
           </Flex>
-          <ResponsiveContainer width="100%" height={"100%"}>
-            <BarChart
-              data={[
-                { name: "CTO", forReviewal: 5, forApproval: 5 },
-                { name: "OFF", forReviewal: 3, forApproval: 2 },
-                { name: "OT", forReviewal: 4, forApproval: 8 },
-                { name: "SL", forReviewal: 5, forApproval: 4 },
-                { name: "VL", forReviewal: 1, forApproval: 10 },
-              ]}
-              margin={{ top: 30, right: 0, bottom: -10, left: -30 }}>
-              {/* <XAxis type="number" fontSize={12} /> */}
-              <XAxis dataKey="name" fontSize={12} />
-              <YAxis type="number" fontSize={12} />
-              <Tooltip />
-              <Bar dataKey="forReviewal" stackId="a" fill="#FFB703" name="For Reviewal" barSize={60} />
-              <Bar dataKey="forApproval" stackId="a" fill="#FF7800" name="For Approval" barSize={60} />
-            </BarChart>
-          </ResponsiveContainer>
         </Stack>
-      </Stack>
-      <Stack className="w-full h-auto lg:h-2/5 flex flex-col lg:flex-row gap-4">
-        <Stack className="w-full h-full lg:w-2/3 flex flex-col lg:flex-row">
+        <Stack className="w-full h-full flex flex-col lg:flex-row">
           <Stack className="w-full h-full lg:w-1/2 bg-white rounded-lg px-4 pt-4 pb-2">
             <Stack className="flex flex-col gap-1 h-[30%] mb-1">
               <Text fz={{ base: 13, md: 17 }} fw={600} c="#559cda" children="Time at work" />
@@ -193,8 +104,8 @@ export default function Approver() {
               </Stack>
             </Flex>
             <ResponsiveContainer className="h-[65&]">
-              <PieChart width={200} height={200}>
-                <Pie data={timerec} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={20} outerRadius={50} fill="color" label>
+              <PieChart width={250} height={250}>
+                <Pie data={timerec} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={40} outerRadius={100} fill="color" label>
                   {timerec.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={entry.color} />
                   ))}
@@ -229,36 +140,36 @@ export default function Approver() {
             </Flex>
           </Stack>
         </Stack>
-        <Stack className="w-full h-full lg:w-1/3 bg-white rounded-lg p-4 gap-2">
-          <Flex justify="flex-start" gap={5}>
-            <Text c="#559cda" fw={600} fz={{ base: 13, md: 17 }} children="Upcoming Events and Holidays" />
-            <Text bg="#FF780033" c="#FF7800" fz={{ base: 10, md: 12 }} className="px-4 rounded-full font-bold flex items-center">
-              5
-            </Text>
-          </Flex>
-          <ScrollArea className="h-full" type="auto">
-            <Flex className="flex flex-col gap-2.5 overflow-hidden">
-              {holidays.map((item, index) => (
-                <Stack key={index} bg="#deecff" className="w-full h-full flex flex-row items-center rounded-lg">
-                  <Box className="h-full rounded-lg w-20">
-                    <Flex className="w-full bg-[#559cda] rounded-lg flex flex-col items-center gap-1">
-                      <Text fz={11} className="bg-[#ED8028] px-2 py-1 rounded-t-lg w-full text-center" c="#fff">
-                        {item.month}
-                      </Text>
-                      <Text fz={18} c="#fff" fw={600} className="py-0.5">
-                        {item.day}
-                      </Text>
-                    </Flex>
-                  </Box>
-                  <Flex className="flex flex-col">
-                    <Text fz={small ? 20 : 14} fw={600} c="#559cda" children={item.name} />
-                    <Text fz={small ? 16 : 12} c="#6d6d6d" children={item.location} />
+      </Stack>
+      <Stack className="w-[35%] h-full bg-white rounded-lg p-4 gap-2">
+        <Flex justify="flex-start" gap={5}>
+          <Text c="#559cda" fw={600} fz={{ base: 13, md: 17 }} children="Upcoming Events and Holidays" />
+          <Text bg="#FF780033" c="#FF7800" fz={{ base: 10, md: 12 }} className="px-4 rounded-full font-bold flex items-center">
+            {holidays.length}
+          </Text>
+        </Flex>
+        <ScrollArea className="h-full" type="auto">
+          <Flex className="flex flex-col gap-2.5 overflow-hidden">
+            {holidays.map((item, index) => (
+              <Stack key={index} bg="#deecff" className="w-full h-full flex flex-row items-center rounded-lg">
+                <Box className="h-full rounded-lg w-20">
+                  <Flex className="w-full bg-[#559cda] rounded-lg flex flex-col items-center gap-1">
+                    <Text fz={11} className="bg-[#ED8028] px-2 py-1 rounded-t-lg w-full text-center" c="#fff">
+                      {item.month}
+                    </Text>
+                    <Text fz={18} c="#fff" fw={600} className="py-0.5">
+                      {item.day}
+                    </Text>
                   </Flex>
-                </Stack>
-              ))}
-            </Flex>
-          </ScrollArea>
-        </Stack>
+                </Box>
+                <Flex className="flex flex-col">
+                  <Text fz={small ? 20 : 14} fw={600} c="#559cda" children={item.name} />
+                  <Text fz={small ? 16 : 12} c="#6d6d6d" children={item.location} />
+                </Flex>
+              </Stack>
+            ))}
+          </Flex>
+        </ScrollArea>
       </Stack>
     </Stack>
   );
